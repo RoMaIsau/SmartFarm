@@ -2,8 +2,10 @@
 _SmartFarm es una aplicación web de monitoreo de animales realizada para Taller Web I en la carrera Tecnicatura de Desarrollo Web._
 
 ## Construido con 🛠️
-* [Spring](https://spring.io/) - El framework utilizado
+* [Java](https://www.oracle.com/java/technologies) - Lenguaje utilizado
+* [Spring](https://spring.io/) - Framework Java
 * [Maven](https://maven.apache.org/) - Manejador de dependencias
+* [Hibernate](https://hibernate.org/) - Herramienta ORM
 * [Bootstrap](https://getbootstrap.com/) - Usado para los estilos CSS
 
 ## Autores ✒️
