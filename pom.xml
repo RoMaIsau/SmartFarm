@@ -4,7 +4,9 @@
 	<groupId>SmartFarm</groupId>
 	<artifactId>SmartFarm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<build>
+		<finalName>SmartFarm</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
