@@ -10,7 +10,7 @@ _SmartFarm es una aplicación web de monitoreo de animales realizada para Taller
 
 ## Autores ✒️
 
-* **Baudach Agustina** - []()
+* **Baudach Agustina** - [AgusBaudach](https://github.com/AgusBaudach)
 * **Isaurralde Rocio** - [RoMaIsau](https://github.com/RoMaIsau)
 * **Murineddu Cristian** - [Mury10](https://github.com/Mury10)
 * **Vasari Ernesto** - [EzeVasari](https://github.com/EzeVasari)
