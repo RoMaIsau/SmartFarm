@@ -55,8 +55,8 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 			 int edadVacaMeses=0;
 			 
 			if (fechaNacimiento != null) {
-			int años= actual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
-			edadVacaMeses= (años*12)+actual.get(Calendar.MONTH)-fechaNacimiento.get(Calendar.MONTH);
+			int anios= actual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
+			edadVacaMeses= (anios*12)+actual.get(Calendar.MONTH)-fechaNacimiento.get(Calendar.MONTH);
 			}
 			Vacuna vencida= null;
 			for(Vacuna v : gv.getVacunasParaAplicar()){
