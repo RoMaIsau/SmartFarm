@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,12 @@ public class ControladorUsuario {
 		// y se envian los datos a la misma  dentro del modelo
 		return new ModelAndView("login", modelo);
 	}
+	
+	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
+		@RequestMapping(path = "/", method = RequestMethod.GET)
+		public ModelAndView inicio() {
+			return new ModelAndView("redirect:/login");
+		}
 
 	// Este metodo escucha la URL validar-login siempre y cuando se invoque con metodo http POST
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
@@ -60,6 +67,37 @@ public class ControladorUsuario {
 		}
 		return new ModelAndView("login", model);
 	}
+	
+	@RequestMapping(path = "/registro")
+	public ModelAndView irARegistro() {
+		ModelMap modelo = new ModelMap();
+		
+		Usuario usuario = new Usuario();
+		
+		modelo.put("usuario", usuario);
+		
+		return new ModelAndView("registro", modelo);
+	}
+	
+	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
+	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
+			@RequestParam(name = "password2") String password2) {
+		ModelMap model = new ModelMap();
+
+		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+
+		if (usuarioBuscado != null) {
+			model.put("error", "Usuario ya registrado.");
+		} else {
+			if (servicioLogin.registrarUsuario(usuario) != null) {
+				model.put("mensaje", "Usuario creado correctamente");
+			} else {
+				model.put("mensaje", "No se pudo crear el usuario");
+			}
+		}
+
+		return new ModelAndView("registro", model);
+	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
@@ -67,9 +105,5 @@ public class ControladorUsuario {
 		return new ModelAndView("home");
 	}
 
-	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
-	@RequestMapping(path = "/", method = RequestMethod.GET)
-	public ModelAndView inicio() {
-		return new ModelAndView("redirect:/login");
-	}
+	
 }

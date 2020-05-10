@@ -17,16 +17,21 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Transactional
 public class ServicioUsuarioImpl implements ServicioUsuario {
 
-	private RepositorioUsuario servicioLoginDao;
+	private RepositorioUsuario servicioUsuarioDao;
 
 	@Autowired
-	public ServicioUsuarioImpl(RepositorioUsuario servicioLoginDao){
-		this.servicioLoginDao = servicioLoginDao;
+	public ServicioUsuarioImpl(RepositorioUsuario servicioUsuarioDao){
+		this.servicioUsuarioDao = servicioUsuarioDao;
 	}
 
 	@Override
 	public Usuario consultarUsuario (Usuario usuario) {
-		return servicioLoginDao.consultarUsuario(usuario);
+		return servicioUsuarioDao.consultarUsuario(usuario);
+	}
+
+	@Override
+	public Long registrarUsuario(Usuario usuario) {
+		return (Long) servicioUsuarioDao.registrarUsuario(usuario);
 	}
 
 }
