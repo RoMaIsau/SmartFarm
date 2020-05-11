@@ -181,5 +181,13 @@
 
 	<!-- Page level custom scripts -->
 	<script src="js/datatables-demo.js"></script>
+	
+	<!-- Asignar valor al boton eliminar -->
+	<script type="text/javascript">
+		$(document).on("click", ".open-Modal", function() {
+			var id = $(this).data('id');
+			$('.botonEliminar').attr('href', "eliminarUsuario?id=" + id);
+		});
+	</script>
 </body>
 </html>

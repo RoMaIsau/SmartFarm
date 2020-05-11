@@ -12,4 +12,8 @@ public interface ServicioUsuario {
 	Long registrarUsuario(Usuario usuario);
 
 	List<Usuario> listarUsuarios();
+
+	Usuario consultarUsuarioPorId(Long id);
+
+	void eliminarUsuario(Usuario usuario);
 }

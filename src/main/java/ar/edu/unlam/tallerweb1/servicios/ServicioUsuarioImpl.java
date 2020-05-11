@@ -46,4 +46,15 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return (List<Usuario>) servicioUsuarioDao.listarUsuarios();
 	}
 
+	@Override
+	public Usuario consultarUsuarioPorId(Long id) {
+		return (Usuario) servicioUsuarioDao.consultarUsuarioPorId(id);
+	}
+
+	@Override
+	public void eliminarUsuario(Usuario usuario) {
+		servicioUsuarioDao.eliminarUsuario(usuario);
+		
+	}
+
 }
