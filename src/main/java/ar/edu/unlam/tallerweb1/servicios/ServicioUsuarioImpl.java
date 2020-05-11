@@ -1,5 +1,10 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+
+
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +36,14 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Override
 	public Long registrarUsuario(Usuario usuario) {
+		Date myDate = new Date();
+		usuario.setFechaAlta(new java.text.SimpleDateFormat("dd-MM-yyyy").format(myDate));
 		return (Long) servicioUsuarioDao.registrarUsuario(usuario);
+	}
+
+	@Override
+	public List<Usuario> listarUsuarios() {
+		return (List<Usuario>) servicioUsuarioDao.listarUsuarios();
 	}
 
 }

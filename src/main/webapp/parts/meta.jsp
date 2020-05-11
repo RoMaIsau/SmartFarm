@@ -10,3 +10,6 @@
 	
 	<!-- Custom styles for this template-->
 	<link href="css/sb-admin-2.css" rel="stylesheet">
+	
+	<!-- Custom styles for this page -->
+  <link href="css/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">

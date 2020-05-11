@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -99,10 +102,23 @@ public class ControladorUsuario {
 		return new ModelAndView("registro", model);
 	}
 	
-	@RequestMapping(path = "/indexAdmin", method = RequestMethod.GET)
-	public ModelAndView irAIndexAdmin() {
-		return new ModelAndView("indexAdmin");
+	
+	@RequestMapping(path = "/indexAdmin")
+	public ModelAndView listarUsuarios() {
+
+		ModelMap model = new ModelMap();
+
+		List<Usuario> usuarios = servicioLogin.listarUsuarios();
+
+		if (usuarios != null) {
+			model.put("usuarios", usuarios);
+		} else {
+			model.put("error", "No hay usuarios registrados");
+		}
+
+		return new ModelAndView("indexAdmin", model);
 	}
+	
 
 	// Escucha la URL /home por GET, y redirige a una vista.
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
