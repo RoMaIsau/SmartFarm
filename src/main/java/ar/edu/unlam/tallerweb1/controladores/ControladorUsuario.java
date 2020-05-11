@@ -98,6 +98,11 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", model);
 	}
+	
+	@RequestMapping(path = "/indexAdmin", method = RequestMethod.GET)
+	public ModelAndView irAIndexAdmin() {
+		return new ModelAndView("indexAdmin");
+	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
