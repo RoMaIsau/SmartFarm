@@ -95,9 +95,7 @@
 												<button
 													class="btn btn-primary btn-user btn-block text-white"
 													type="submit">Registrar cuenta</button>
-												<hr>
 											</form:form>
-											<hr>
 										</div>
 									</div>
 								</div>

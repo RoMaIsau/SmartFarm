@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -32,14 +33,20 @@
 				<div class="container-fluid">
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">Usuarios/as</h1>
-					<p class="mb-4">
-						Todas las personas que se encuentran registradas en Smart Farm.
-					</p>
+					<p class="mb-4">Todas las personas que se encuentran
+						registradas en Smart Farm.</p>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-header py-3">
+						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+							<a href="registro" class="btn btn-success btn-icon-split"> <span
+								class="icon text-white-50"> <i class="fas fa-plus"></i>
+							</span> <span class="text">Agregar usuario</span>
+							</a>
+						</div>
+						<div>
+							
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -68,13 +75,15 @@
 									<tbody>
 										<c:forEach items="${usuarios}" var="usuario">
 											<tr>
-												<td><c:out value="${usuario.apellido}" />, <c:out value="${usuario.nombre}" /> </td>
+												<td><c:out value="${usuario.apellido}" />, <c:out
+														value="${usuario.nombre}" /></td>
 												<td><c:out value="${usuario.email}" /></td>
 												<td><c:out value="${usuario.rol}" /></td>
 												<td><c:out value="${usuario.id}" /></td>
 												<td><c:out value="${usuario.fechaAlta}" /></td>
-												<td class="text-center"><a href="#"><i class="fas fa-edit mx-2 text-info"></i></a>
-													<a href="#modalEliminar" data-id="${usuario.id}" role="button"
+												<td class="text-center"><a href="#"><i
+														class="fas fa-edit mx-2 text-info"></i></a> <a
+													href="#modalEliminar" data-id="${usuario.id}" role="button"
 													data-toggle="modal" class="open-Modal"><i
 														class="fas fa-trash mx-2 text-danger"></i></a></td>
 											</tr>
@@ -165,12 +174,12 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
-	
+
 	<!-- Page level plugins -->
 	<script src="css/datatables/jquery.dataTables.min.js"></script>
 	<script src="css/datatables/dataTables.bootstrap4.min.js"></script>
-	
+
 	<!-- Page level custom scripts -->
-  	<script src="js/datatables-demo.js"></script>
+	<script src="js/datatables-demo.js"></script>
 </body>
 </html>
