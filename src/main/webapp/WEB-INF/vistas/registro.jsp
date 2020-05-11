@@ -32,7 +32,7 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<div class="container">
+					<div class="container" style="max-width: 720px !important;">
 
 						<div class="card o-hidden border-0 shadow-lg my-5">
 							<div class="card-body p-0">
@@ -83,7 +83,6 @@
 													<div class="col-sm-6">
 														<input type="password" id="password2" name="password2"
 															required class="form-control form-control-user"
-															id="exampleRepeatPassword"
 															placeholder="Repita contraseña">
 													</div>
 												</div>

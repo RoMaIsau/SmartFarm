@@ -106,14 +106,18 @@ public class ControladorUsuario {
 
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 
-		if (usuarioBuscado != null) {
-			model.put("error", "Usuario ya registrado.");
-		} else {
-			if (servicioLogin.registrarUsuario(usuario) != null) {
-				model.put("mensaje", "Usuario creado correctamente");
+		if (usuario.getPassword().equals(password2)) {
+			if (usuarioBuscado != null) {
+				model.put("error", "Usuario ya registrado.");
 			} else {
-				model.put("mensaje", "No se pudo crear el usuario");
+				if (servicioLogin.registrarUsuario(usuario) != null) {
+					model.put("mensaje", "Usuario creado correctamente");
+				} else {
+					model.put("mensaje", "No se pudo crear el usuario");
+				}
 			}
+		} else {
+			model.put("error", "La contraseñas no coinciden");
 		}
 
 		return new ModelAndView("registro", model);
