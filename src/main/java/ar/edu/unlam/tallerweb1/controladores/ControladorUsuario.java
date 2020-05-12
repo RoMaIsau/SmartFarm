@@ -142,6 +142,13 @@ public class ControladorUsuario {
 		return new ModelAndView("redirect:/indexAdmin");
 
 	}
+	
+	/*Se elimina el atributo rol de la session y se redirecciona a la vista del login */
+	@RequestMapping(path = "/cerrarSesion")
+	public ModelAndView cerrarSesion(HttpServletRequest request) {
+		request.getSession().removeAttribute("ROL");
+		return new ModelAndView("redirect:/login");
+	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
 	@RequestMapping(path = "/home", method = RequestMethod.GET)

@@ -62,16 +62,6 @@
 											<th>Acciones</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>Nombre</th>
-											<th>Email</th>
-											<th>Rol</th>
-											<th>ID</th>
-											<th>Fecha de alta</th>
-											<th>Acciones</th>
-										</tr>
-									</tfoot>
 									<tbody>
 										<c:forEach items="${usuarios}" var="usuario">
 											<tr>
