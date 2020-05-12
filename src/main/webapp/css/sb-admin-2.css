@@ -3082,7 +3082,7 @@ input[type="button"].btn-block {
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #4e73df;
+  background-color: #22A45A;
 }
 
 .dropdown-item.disabled, .dropdown-item:disabled {
@@ -9363,7 +9363,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #4e73df !important;
+  color: #22A45A !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9998,8 +9998,8 @@ a:focus {
 }
 
 .topbar .dropdown-list .dropdown-header {
-  background-color: #4e73df;
-  border: 1px solid #4e73df;
+  background-color: #C4DBC1;
+  border: 1px solid #C4DBC1;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   color: #fff;

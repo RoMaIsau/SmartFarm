@@ -15,43 +15,66 @@
 	<!-- Divider -->
 	<hr class="sidebar-divider my-0">
 
+
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item active"><a class="nav-link" href="indexAdmin">
-			<i class="fas fa-fw fa-tachometer-alt"></i> <span>Inicio</span>
-	</a></li>
+	<li class="nav-item">
+		<!-- Segun cual sea el rol del usuario se muestran diferentes secciones del sidebar -->
+		<c:choose>
+			<c:when test="${ROL == 'Admin'}">
+				<a class="nav-link" href="usuarios"><i class="fas fa-user"></i>
+					<span>Usuarios/as</span> </a>
+			</c:when>
+			<c:when test="${ROL == 'Veterinario'}">
+				<a class="nav-link" href="seccion1"><i class="fas fa-user"></i>
+					<span>Seccion 1</span> </a>
+			</c:when>
+			<c:when test="${ROL == 'Empleado'}">
+				<a class="nav-link" href="seccion1"><i class="fas fa-user"></i>
+					<span>Seccion 1</span> </a>
+			</c:when>
+		</c:choose>
+	</li>
+	<!-- Divider -->
+	<hr class="sidebar-divider">
+
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item"><c:choose>
+			<c:when test="${ROL == 'Admin'}">
+				<a class="nav-link" href="animales"> <i class="fas fa-user"></i>
+					<span>Animales</span>
+				</a>
+			</c:when>
+			<c:when test="${ROL == 'Veterinario'}">
+				<a class="nav-link" href="seccion2"> <i class="fas fa-user"></i>
+					<span>Seccion 2</span>
+				</a>
+			</c:when>
+			<c:when test="${ROL == 'Empleado'}">
+				<a class="nav-link" href="seccion2"><i class="fas fa-user"></i>
+					<span>Seccion 2</span> </a>
+			</c:when>
+		</c:choose></li>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider">
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item"><a class="nav-link" href="indexAdmin"> <i
-			class="fas fa-user"></i> <span>Usuarios/as</span>
-	</a></li>
-
-	<!-- Divider -->
-	<hr class="sidebar-divider">
-
-	<!-- Nav Item - Dashboard -->
-	<li class="nav-item"><a class="nav-link" href="indexAdmin"> <i
-			class="fas fa-horse"></i> <span>Animales</span>
-	</a></li>
-
-	<!-- Divider -->
-	<hr class="sidebar-divider">
-
-	<!-- Nav Item - Graficos Collapse Menu -->
-	<li class="nav-item"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-		aria-controls="collapseTwo"> <i class="fas fa-chart-pie"></i> <span>Estadísticas</span>
-	</a>
-		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-			data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">Categorias:</h6>
-				<a class="collapse-item" href="buttons.html">Buttons</a> <a
-					class="collapse-item" href="cards.html">Cards</a>
-			</div>
-		</div></li>
+	<li class="nav-item"><c:choose>
+			<c:when test="${ROL == 'Admin'}">
+				<a class="nav-link" href="estadisticas"> <i class="fas fa-user"></i>
+					<span>Estadísticas</span>
+				</a>
+			</c:when>
+			<c:when test="${ROL == 'Veterinario'}">
+				<a class="nav-link" href="seccion3"> <i class="fas fa-user"></i>
+					<span>Seccion 3</span>
+				</a>
+			</c:when>
+			<c:when test="${ROL == 'Empleado'}">
+				<a class="nav-link" href="seccion3"><i class="fas fa-user"></i>
+					<span>Seccion 3</span> </a>
+			</c:when>
+		</c:choose></li>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">

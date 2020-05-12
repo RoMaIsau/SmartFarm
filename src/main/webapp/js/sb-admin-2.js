@@ -1,5 +1,12 @@
 (function($) {
   "use strict"; // Start of use strict
+  
+  
+  //Mandar id a modal de eliminar usuario
+  $(document).on("click", ".open-Modal", function() {
+		var id = $(this).data('id');
+		$('.botonEliminar').attr('href', "eliminarUsuario?id=" + id);
+	});
 
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

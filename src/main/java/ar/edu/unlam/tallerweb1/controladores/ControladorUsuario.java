@@ -28,11 +28,11 @@ public class ControladorUsuario {
 	 * Themenotada como @Service o @Repository y debe estar en un paquete de los
 	 * indicados en applicationContext.xml
 	 */
-	private ServicioUsuario servicioLogin;
+	private ServicioUsuario servicioUsuario;
 
 	@Autowired
-	public ControladorUsuario(ServicioUsuario servicioLogin) {
-		this.servicioLogin = servicioLogin;
+	public ControladorUsuario(ServicioUsuario servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
 	}
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es
@@ -71,15 +71,19 @@ public class ControladorUsuario {
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL
 		// /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 
 			String rol = (String) request.getSession().getAttribute("ROL");
 
 			switch (rol) {
-			case "admin":
+			case "Admin":
 				return new ModelAndView("redirect:/indexAdmin");
+			case "Veterinario": 
+				return new ModelAndView("redirect:/indexVeterinario");
+			case "Empleado": 
+				return new ModelAndView("redirect:/indexEmpleado");
 			}
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
@@ -98,19 +102,21 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", modelo);
 	}
-
+	
+	/* Se comprueba que el usuario no exista, que las contraseñas coincidan y se registra el usuario */
+	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÑA AL ADMINISTRADOR */
 	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
 			@RequestParam(name = "password2") String password2) {
 		ModelMap model = new ModelMap();
 
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 
 		if (usuario.getPassword().equals(password2)) {
 			if (usuarioBuscado != null) {
 				model.put("error", "Usuario ya registrado.");
 			} else {
-				if (servicioLogin.registrarUsuario(usuario) != null) {
+				if (servicioUsuario.registrarUsuario(usuario) != null) {
 					model.put("mensaje", "Usuario creado correctamente");
 				} else {
 					model.put("mensaje", "No se pudo crear el usuario");
@@ -122,32 +128,19 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", model);
 	}
-
+	
+	/* Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar se 
+	 * se elimina el usuario y se redirige al index 
+	 * HAY QUE MODIFICAR, CUANDO SE ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA */
 	@RequestMapping(path = "/eliminarUsuario")
 	public ModelAndView eliminarUsuario(@RequestParam(value = "id", required = true) Long id) {
 
-		Usuario usuario = servicioLogin.consultarUsuarioPorId(id);
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
 
-		servicioLogin.eliminarUsuario(usuario);
+		servicioUsuario.eliminarUsuario(usuario);
 
 		return new ModelAndView("redirect:/indexAdmin");
 
-	}
-
-	@RequestMapping(path = "/indexAdmin")
-	public ModelAndView listarUsuarios() {
-
-		ModelMap model = new ModelMap();
-
-		List<Usuario> usuarios = servicioLogin.listarUsuarios();
-
-		if (usuarios != null) {
-			model.put("usuarios", usuarios);
-		} else {
-			model.put("error", "No hay usuarios registrados");
-		}
-
-		return new ModelAndView("indexAdmin", model);
 	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
