@@ -25,12 +25,12 @@
 					<span>Usuarios/as</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
-				<a class="nav-link" href="seccion1"><i class="fas fa-user"></i>
-					<span>Seccion 1</span> </a>
+				<a class="nav-link" href="animales"><i
+					class="fab fa-sticker-mule"></i> <span>Animales</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Empleado'}">
-				<a class="nav-link" href="seccion1"><i class="fas fa-user"></i>
-					<span>Seccion 1</span> </a>
+				<a class="nav-link" href="animales"><i
+					class="fab fa-sticker-mule"></i> <span>Animales</span> </a>
 			</c:when>
 		</c:choose>
 	</li>
@@ -40,8 +40,8 @@
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
-				<a class="nav-link" href="animales"> <i class="fas fa-horse"></i>
-					<span>Animales</span>
+				<a class="nav-link" href="animales"> <i
+					class="fab fa-sticker-mule"></i> <span>Animales</span>
 				</a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
@@ -50,8 +50,8 @@
 				</a>
 			</c:when>
 			<c:when test="${ROL == 'Empleado'}">
-				<a class="nav-link" href="seccion2"><i class="fas fa-user"></i>
-					<span>Seccion 2</span> </a>
+				<a class="nav-link" href="stock"><i class="fas fa-boxes"></i> <span>Stock</span>
+				</a>
 			</c:when>
 		</c:choose></li>
 
@@ -61,8 +61,8 @@
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
-				<a class="nav-link" href="estadisticas"> <i class="fas fa-chart-pie"></i>
-					<span>Estadísticas</span>
+				<a class="nav-link" href="estadisticas"> <i
+					class="fas fa-chart-pie"></i> <span>Estadísticas</span>
 				</a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
@@ -75,6 +75,17 @@
 					<span>Seccion 3</span> </a>
 			</c:when>
 		</c:choose></li>
+
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item">
+		<a class="nav-link" href="mapa">
+			<i class="fas fa-map-marked-alt"></i>
+			<span>Mapa</span>
+		</a>
+	</li>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">
