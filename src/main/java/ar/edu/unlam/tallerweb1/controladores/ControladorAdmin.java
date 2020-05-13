@@ -18,33 +18,37 @@ public class ControladorAdmin {
 
 	@Inject
 	private ServicioUsuario servicioUsuario;
-	
-	/* El path de indexAdmin redirecciona a la primera seccion del sidebar, Usuarios */
+
+	/*
+	 * El path de indexAdmin redirecciona a la primera seccion del sidebar, Usuarios
+	 */
 	@RequestMapping(path = "/indexAdmin")
 	public ModelAndView irAIndexAdmin(HttpServletRequest request) {
-		
+
 		// Verifica que sea un usuario de tipo Admin, si no lo es, lo redirige al login
 		String rol = (String) request.getSession().getAttribute("ROL");
-		
-		if(rol.equals("Admin")) {
+
+		if (rol.equals("Admin")) {
 			return new ModelAndView("redirect:/usuarios");
-		}else {
+		} else {
 			return new ModelAndView("redirect:/login");
 		}
-		
-		
+
 	}
-	
-	/* La vista Usuarios muestra todos los usuarios registrados, trayendolos en una lista */
+
+	/*
+	 * La vista Usuarios muestra todos los usuarios registrados, trayendolos en una
+	 * lista
+	 */
 	@RequestMapping(path = "/usuarios")
 	public ModelAndView listarUsuario(HttpServletRequest request) {
-		
+
 		String rol = (String) request.getSession().getAttribute("ROL");
-		
-		if(!rol.equals("Admin")) {
+
+		if (!rol.equals("Admin")) {
 			return new ModelAndView("redirect:/login");
 		}
-		
+
 		ModelMap model = new ModelMap();
 
 		List<Usuario> usuarios = servicioUsuario.listarUsuarios();
@@ -56,6 +60,31 @@ public class ControladorAdmin {
 		}
 
 		return new ModelAndView("usuarios", model);
+	}
+
+	@RequestMapping(path = "/estadisticas")
+	public ModelAndView irAEstadisticas(HttpServletRequest request) {
+
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if (!rol.equals("Admin")) {
+			return new ModelAndView("redirect:/login");
+		}
+
+		return new ModelAndView("estadisticas");
+
+	}
+
+	@RequestMapping(path = "/mapa")
+	public ModelAndView irAMapa(HttpServletRequest request) {
+		
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if (!rol.equals("Admin") && !rol.equals("Empleado") && !rol.equals("")) {
+			return new ModelAndView("redirect:/login");
+		}
+		
+		return new ModelAndView("mapa");
 	}
 
 }
