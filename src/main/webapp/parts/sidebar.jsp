@@ -17,7 +17,7 @@
 
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item">
+	<li class="nav-item active">
 		<!-- Segun cual sea el rol del usuario se muestran diferentes secciones del sidebar -->
 		<c:choose>
 			<c:when test="${ROL == 'Admin'}">
@@ -40,7 +40,7 @@
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
-				<a class="nav-link" href="animales"> <i class="fas fa-user"></i>
+				<a class="nav-link" href="animales"> <i class="fas fa-horse"></i>
 					<span>Animales</span>
 				</a>
 			</c:when>
@@ -61,7 +61,7 @@
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
-				<a class="nav-link" href="estadisticas"> <i class="fas fa-user"></i>
+				<a class="nav-link" href="estadisticas"> <i class="fas fa-chart-pie"></i>
 					<span>Estadísticas</span>
 				</a>
 			</c:when>

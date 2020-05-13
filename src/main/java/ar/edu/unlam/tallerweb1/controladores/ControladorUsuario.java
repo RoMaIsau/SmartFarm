@@ -38,7 +38,22 @@ public class ControladorUsuario {
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es
 	// invocada por metodo http GET
 	@RequestMapping("/login")
-	public ModelAndView irALogin() {
+	public ModelAndView irALogin(HttpServletRequest request) {
+
+		String rol = request.getSession().getAttribute("ROL") != null
+				? (String) request.getSession().getAttribute("ROL")
+				: "";
+
+		switch (rol) {
+		case "Admin":
+			return new ModelAndView("redirect:/indexAdmin");
+
+		case "Empleado":
+			return new ModelAndView("redirect:/indexEmpleado");
+
+		case "Veterinario":
+			return new ModelAndView("redirect:/indexVeterinario");
+		}
 
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el
@@ -80,9 +95,9 @@ public class ControladorUsuario {
 			switch (rol) {
 			case "Admin":
 				return new ModelAndView("redirect:/indexAdmin");
-			case "Veterinario": 
+			case "Veterinario":
 				return new ModelAndView("redirect:/indexVeterinario");
-			case "Empleado": 
+			case "Empleado":
 				return new ModelAndView("redirect:/indexEmpleado");
 			}
 		} else {
@@ -102,8 +117,11 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", modelo);
 	}
-	
-	/* Se comprueba que el usuario no exista, que las contraseñas coincidan y se registra el usuario */
+
+	/*
+	 * Se comprueba que el usuario no exista, que las contraseñas coincidan y se
+	 * registra el usuario
+	 */
 	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÑA AL ADMINISTRADOR */
 	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
@@ -128,10 +146,12 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", model);
 	}
-	
-	/* Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar se 
-	 * se elimina el usuario y se redirige al index 
-	 * HAY QUE MODIFICAR, CUANDO SE ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA */
+
+	/*
+	 * Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar
+	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
+	 * ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA
+	 */
 	@RequestMapping(path = "/eliminarUsuario")
 	public ModelAndView eliminarUsuario(@RequestParam(value = "id", required = true) Long id) {
 
@@ -142,8 +162,11 @@ public class ControladorUsuario {
 		return new ModelAndView("redirect:/indexAdmin");
 
 	}
-	
-	/*Se elimina el atributo rol de la session y se redirecciona a la vista del login */
+
+	/*
+	 * Se elimina el atributo rol de la session y se redirecciona a la vista del
+	 * login
+	 */
 	@RequestMapping(path = "/cerrarSesion")
 	public ModelAndView cerrarSesion(HttpServletRequest request) {
 		request.getSession().removeAttribute("ROL");
