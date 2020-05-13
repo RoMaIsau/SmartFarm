@@ -47,11 +47,24 @@ public class ControladorEmpleado {
 			} else {
 				model.put("error", "No hay animales registrados");
 			}
-		}else {
+		} else {
 			return new ModelAndView("redirect:/login");
 		}
 
 		return new ModelAndView("animales", model);
+	}
+
+	@RequestMapping(path = "/stock")
+	public ModelAndView irAStock(HttpServletRequest request) {
+
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if (rol.equals("Empleado")) {
+			return new ModelAndView("stock");
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+
 	}
 
 }
