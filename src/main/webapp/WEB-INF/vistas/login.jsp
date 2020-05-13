@@ -26,7 +26,7 @@
 								<div class="p-5">
 									<div class="text-center">
 										<img class="mb-2" style="height: 90px;"
-											src="https://i.ibb.co/BqwTJW7/SF-logo.png" alt="logo"
+											src="img/SF-logo.png" alt="logo"
 											class="logo-img">
 										<p class="logo-letra">SMART FARM</p>
 									</div>
