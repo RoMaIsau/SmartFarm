@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 
 @Transactional
@@ -24,15 +25,20 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	}
 	
 	@Test
-	public void deberiaPersitirUnAnimal() {
+	public void deberiaPersitirUnAnimalDeTipoVacuno() {
+		
+		TipoAnimal tipoVacuno = new TipoAnimal();
+		tipoVacuno.setNombre("VACUNO");		
 		
 		AnimalDeGranja vaca = new AnimalDeGranja();
+		vaca.setTipo(tipoVacuno);
 		
-		Session session = this.sessionFactory.getCurrentSession();
-		
+		Session session = this.sessionFactory.getCurrentSession();		
+		session.save(tipoVacuno);
 		session.save(vaca);
 		
 		assertThat(vaca.getId()).isEqualTo(1L);
+		assertThat(vaca.getTipo().getId()).isEqualTo(1L);
 	}
 
 }
