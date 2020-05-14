@@ -8,6 +8,10 @@ _SmartFarm es una aplicación web de monitoreo de animales realizada para Taller
 * [Hibernate](https://hibernate.org/) - Herramienta ORM
 * [Bootstrap](https://getbootstrap.com/) - Usado para los estilos CSS
 
+## Integración Continua
+* [Travis](https://travis-ci.org/github/RoMaIsau/SmartFarm)
+[![Build Status](https://travis-ci.org/RoMaIsau/SmartFarm.svg?branch=master)](https://travis-ci.org/RoMaIsau/SmartFarm)
+
 ## Autores ✒️
 
 * **Baudach Agustina** - [AgusBaudach](https://github.com/AgusBaudach)
