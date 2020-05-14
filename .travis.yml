@@ -3,3 +3,9 @@ dist: trusty
 script: mvn clean test
 jdk:
   - oraclejdk8
+notifications:
+  email:
+    - rocio.isau@gmail.com
+    - ezequielvasari@gmail.com
+    - agustinabaudach@yahoo.com
+    - murinedducristian@hotmail.com
