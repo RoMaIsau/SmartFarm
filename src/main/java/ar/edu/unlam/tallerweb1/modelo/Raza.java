@@ -7,17 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class AnimalDeGranja {
-	
+public class Raza {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	private TipoAnimal tipo;
+	private String nombre;
 	
 	@ManyToOne
-	private Raza raza;
+	private TipoAnimal tipo;
 	
 	public Long getId() {
 		return id;
@@ -25,6 +24,14 @@ public class AnimalDeGranja {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	public TipoAnimal getTipo() {
@@ -34,13 +41,4 @@ public class AnimalDeGranja {
 	public void setTipo(TipoAnimal tipo) {
 		this.tipo = tipo;
 	}
-
-	public void setRaza(Raza raza) {
-		this.raza = raza;		
-	}
-	
-	public Raza getRaza() {
-		return raza;
-	}
-
 }
