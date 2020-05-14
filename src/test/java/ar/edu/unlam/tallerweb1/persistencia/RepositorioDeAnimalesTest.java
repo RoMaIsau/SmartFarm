@@ -42,7 +42,8 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		Session session = this.sessionFactory.getCurrentSession();		
 		session.save(tipoVacuno);
 		session.save(razaAberdeenAngus);
-		session.save(vaca);
+		
+		this.repositorioDeAnimales.guardar(vaca);
 		
 		assertThat(vaca.getId()).isEqualTo(1L);
 		assertThat(vaca.getTipo().getId()).isEqualTo(1L);
