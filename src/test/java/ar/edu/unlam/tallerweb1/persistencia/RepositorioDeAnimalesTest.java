@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 
@@ -25,20 +26,27 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	}
 	
 	@Test
-	public void deberiaPersitirUnAnimalDeTipoVacuno() {
+	public void deberiaPersitirUnAnimalDeTipoVacunoDeRazaAberdeenAngus() {
 		
 		TipoAnimal tipoVacuno = new TipoAnimal();
 		tipoVacuno.setNombre("VACUNO");		
 		
+		Raza razaAberdeenAngus = new Raza();
+		razaAberdeenAngus.setNombre("ABERDEEN ANGUS");
+		razaAberdeenAngus.setTipo(tipoVacuno);
+		
 		AnimalDeGranja vaca = new AnimalDeGranja();
 		vaca.setTipo(tipoVacuno);
+		vaca.setRaza(razaAberdeenAngus);
 		
 		Session session = this.sessionFactory.getCurrentSession();		
 		session.save(tipoVacuno);
+		session.save(razaAberdeenAngus);
 		session.save(vaca);
 		
 		assertThat(vaca.getId()).isEqualTo(1L);
 		assertThat(vaca.getTipo().getId()).isEqualTo(1L);
+		assertThat(vaca.getRaza().getId()).isEqualTo(1L);
 	}
 
 }
