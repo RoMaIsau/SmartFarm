@@ -4,17 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class AnimalDeGranja {
-	
+public class TipoAnimal {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	private TipoAnimal tipo;
+	private String nombre;
 	
 	public Long getId() {
 		return id;
@@ -24,12 +22,11 @@ public class AnimalDeGranja {
 		this.id = id;
 	}
 	
-	public TipoAnimal getTipo() {
-		return tipo;
+	public String getNombre() {
+		return nombre;
 	}
 	
-	public void setTipo(TipoAnimal tipo) {
-		this.tipo = tipo;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-
 }
