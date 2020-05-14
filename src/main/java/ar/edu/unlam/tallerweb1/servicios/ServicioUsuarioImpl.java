@@ -18,7 +18,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 // La anotacion @Transactional indica que se debe iniciar una transaccion de base de datos ante la invocacion de cada metodo del servicio,
 // dicha transaccion esta asociada al transaction manager definido en el archivo spring-servlet.xml y el mismo asociado al session factory definido
 // en hibernateCOntext.xml. De esta manera todos los metodos de cualquier dao invocados dentro de un servicio se ejecutan en la misma transaccion
-@Service("servicioLogin")
+@Service("servicioUsuario")
 @Transactional
 public class ServicioUsuarioImpl implements ServicioUsuario {
 
