@@ -41,4 +41,32 @@ public class Raza {
 	public void setTipo(TipoAnimal tipo) {
 		this.tipo = tipo;
 	}
+	
+	@Override
+    public boolean equals(Object objeto) {
+
+        boolean iguales = (this == objeto);
+        
+        if (! iguales && (objeto != null) && this.getClass().isAssignableFrom(objeto.getClass())) {
+            
+            Raza otraRaza = Raza.class.cast(objeto);
+            
+            iguales = (this.id != null) && (otraRaza.id != null) && 
+                      this.id.equals(otraRaza.id);       
+        }
+        
+        return iguales;
+    }
+	
+	@Override
+    public int hashCode() {
+     
+        return this.id != null ? this.id.hashCode() : super.hashCode();
+    }
+	
+	@Override
+    public String toString() {
+     
+        return this.getClass().getSimpleName() + "[id: " + this.id + "]";
+    }
 }
