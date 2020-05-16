@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
@@ -134,5 +135,19 @@ public class ControladorEmpleadoTest {
 		assertThat(modelo).containsKey("generos");
 		List<Genero> generos = (List<Genero>) modelo.get("generos");
 		assertThat(generos).isNotEmpty();
+	}
+
+	@Test
+	public void seSeleccionaPorDefaultElPrimerElementoDeLosCombosDeSeleccion() {
+
+		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		Map<String, Object> modelo = modelAndView.getModel();
+
+		assertThat(modelo).containsKey("animal");
+		AnimalDeGranja animal = (AnimalDeGranja) modelo.get("animal");
+
+		assertThat(animal).extracting("tipo").isNotNull();
+		assertThat(animal).extracting("raza").isNotNull();
+		assertThat(animal).extracting("genero").isNotNull();
 	}
 }

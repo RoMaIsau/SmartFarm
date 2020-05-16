@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
@@ -77,17 +78,21 @@ public class ControladorEmpleado {
 	@RequestMapping(path = "/animales/registrar")
 	public ModelAndView registrarAnimal() {
 
-		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
-		TipoAnimal tipoAnimalPorDefecto = tiposDeAnimales.get(0);
-
-		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimalPorDefecto);
+		AnimalDeGranja animal = new AnimalDeGranja();
 		
+		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
+		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tiposDeAnimales.get(0));
 		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
+
+		animal.setTipo(tiposDeAnimales.get(0));
+		animal.setRaza(razas.get(0));
+		animal.setGenero(generos.get(0));
 
 		ModelMap modelo = new ModelMap();
 		modelo.put("tiposDeAnimales", tiposDeAnimales);
 		modelo.put("razas", razas);
 		modelo.put("generos", generos);
+		modelo.put("animal", animal);
 
 		return new ModelAndView("registrarAnimal", modelo);
 	}

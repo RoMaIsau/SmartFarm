@@ -43,28 +43,22 @@
 											<div class="text-center">
 												<h1 class="h4 text-gray-900 mb-4">Registrar Animal</h1>
 											</div>
-											<form:form action="animales/guardar" method="post">
+											<form:form action="animales/guardar" method="post" modelAttribute="animal">
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="tipo">Tipo Animal</label>
-															<select id="tipo" class="form-control">
-																<option selected>Seleccionar</option>
-																<c:forEach items="${tiposDeAnimales}" var="tipoDeAnimal">
-																	<option value="${tipoDeAnimal.id}">${tipoDeAnimal.nombre}</option>
-																</c:forEach>
-															</select>
+															<form:select id="tipo" path="tipo" class="form-control">
+																<form:options items="${tiposDeAnimales}" itemLabel="nombre" itemValue="id"/>
+															</form:select>
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="raza">Raza</label>
-															<select id="raza" class="form-control">
-																<option selected>Seleccionar</option>
-																<c:forEach items="${razas}" var="raza">
-																	<option value="${raza.id}">${raza.nombre}</option>
-																</c:forEach>
-															</select>
+															<form:select id="raza" path="raza" class="form-control">
+																<form:options items="${razas}" itemLabel="nombre" itemValue="id"/>
+															</form:select>
 														</div>
 													</div>
 												</div>
@@ -72,12 +66,9 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="genero">Género</label>
-															<select id="genero" class="form-control">
-																<option selected>Seleccionar</option>
-																<c:forEach items="${generos}" var="genero">
-																	<option value="${genero.id}">${genero.nombre}</option>
-																</c:forEach>
-															</select>
+															<form:select id="genero" path="genero" class="form-control">
+																<form:options items="${generos}" itemLabel="nombre" itemValue="id"/>
+															</form:select>
 														</div>
 													</div>
 												</div>
