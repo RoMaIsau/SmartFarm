@@ -11,25 +11,43 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeTiposDeAnimales;
 
 public class ControladorEmpleadoTest {
 	
 	private ControladorEmpleado controlador;
 	
+	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioDeTiposDeAnimales servicioDeTiposDeAnimales;
 	
 	@Before
 	public void inicializar() {
 		
+		this.servicioDeAnimales = crearMockServicioDeAnimales();
 		this.servicioDeTiposDeAnimales = crearMockServicioDeTiposDeAnimales();
 		
 		this.controlador = new ControladorEmpleado();
+		this.controlador.setServicioDeAnimales(this.servicioDeAnimales);
 		this.controlador.setServicioDeTiposDeAnimales(this.servicioDeTiposDeAnimales);
 	}
 	
-	
+	private ServicioDeAnimales crearMockServicioDeAnimales() {
+
+		Raza caballoArabe = new Raza();
+		caballoArabe.setId(1L);
+		caballoArabe.setNombre("CABALLO ARABE");
+		List<Raza> razas = new LinkedList<Raza>();
+		razas.add(caballoArabe);
+
+		ServicioDeAnimales servicio = mock(ServicioDeAnimales.class);
+
+		when(servicio.obtenerRazasPorTipoAnimal(any())).thenReturn(razas);
+
+		return servicio;
+	}
 	private ServicioDeTiposDeAnimales crearMockServicioDeTiposDeAnimales() {
 		
 		TipoAnimal vacuno = new TipoAnimal();
@@ -71,5 +89,20 @@ public class ControladorEmpleadoTest {
 		
 		List<TipoAnimal> tiposDeAnimales = (List<TipoAnimal>) modelo.get("tiposDeAnimales");
 		assertThat(tiposDeAnimales).isNotEmpty();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void laVistaRegistrarAnimalMuestraUnaListaDeRazasDisponibles() {
+
+		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		Map<String, Object> modelo = modelAndView.getModel();
+
+		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(any(TipoAnimal.class));
+
+		assertThat(modelo).containsKey("razas");
+
+		List<Raza> razas = (List<Raza>) modelo.get("razas");
+		assertThat(razas).isNotEmpty();
 	}
 }

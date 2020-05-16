@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeTiposDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 
@@ -21,7 +23,8 @@ public class ControladorEmpleado {
 
 	@Inject
 	private ServicioGanado servicioGanado;
-	
+
+	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioDeTiposDeAnimales servicioDeTiposDeAnimales;
 
 	@RequestMapping(path = "/indexEmpleado")
@@ -74,18 +77,27 @@ public class ControladorEmpleado {
 
 	@RequestMapping(path = "/animales/registrar")
 	public ModelAndView registrarAnimal() {
-		
+
 		List<TipoAnimal> tiposDeAnimales = this.servicioDeTiposDeAnimales.obtenerDisponibles();
-		
+		TipoAnimal tipoAnimalPorDefecto = tiposDeAnimales.get(0);
+
+		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimalPorDefecto);
+
 		ModelMap modelo = new ModelMap();
 		modelo.put("tiposDeAnimales", tiposDeAnimales);
-		
+		modelo.put("razas", razas);
+
 		return new ModelAndView("registrarAnimal", modelo);
 	}
 
 	@Autowired
 	public void setServicioDeTiposDeAnimales(ServicioDeTiposDeAnimales servicioDeTiposDeAnimales) {
 		this.servicioDeTiposDeAnimales = servicioDeTiposDeAnimales;		
+	}
+
+	@Autowired
+	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales) {
+		this.servicioDeAnimales = servicioDeAnimales;
 	}
 
 }

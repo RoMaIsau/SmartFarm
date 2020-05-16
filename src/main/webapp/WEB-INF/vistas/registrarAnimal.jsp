@@ -43,9 +43,33 @@
 											<div class="text-center">
 												<h1 class="h4 text-gray-900 mb-4">Registrar Animal</h1>
 											</div>
-											
-											formulario
-											
+											<form:form action="animales/guardar" method="post">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="tipo">Tipo Animal</label> <select
+																id="tipo" class="form-control">
+																<option selected>Seleccionar</option>
+																<c:forEach items="${tiposDeAnimales}" var="tipoDeAnimal">
+																	<option value="${tipoDeAnimal.id}">${tipoDeAnimal.nombre}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="raza">Raza</label> <select
+																id="raza" class="form-control">
+																<option selected>Seleccionar</option>
+																<c:forEach items="${razas}" var="raza">
+																	<option value="${raza.id}">${raza.nombre}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+												</div>
+											</form:form>
+
 										</div>
 									</div>
 								</div>
