@@ -67,4 +67,9 @@ public class ControladorEmpleado {
 
 	}
 
+	@RequestMapping(path = "/animales/registrar")
+	public ModelAndView registrarAnimal() {
+		return new ModelAndView("registrarAnimal");
+	}
+
 }
