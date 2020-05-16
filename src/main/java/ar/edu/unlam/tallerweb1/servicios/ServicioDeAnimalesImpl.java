@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
 
@@ -19,11 +20,14 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 
 	private RepositorioDeTipos repositorioDeTipos;
 	private RepositorioDeRazas repositorioDeRazas;
+	private RepositorioDeGeneros repositorioDeGeneros;
 	
 	@Autowired
-	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas) {
+	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas, 
+			RepositorioDeGeneros repositorioDeGeneros) {
 		this.repositorioDeTipos = repositorioDeTipos;
 		this.repositorioDeRazas = repositorioDeRazas;
+		this.repositorioDeGeneros = repositorioDeGeneros;
 	}
 
 	@Override
@@ -37,9 +41,8 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	}
 
 	@Override
-	public List<Genero> obtenerSexos() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Genero> obtenerGeneros() {
+		return this.repositorioDeGeneros.listar();
 	}
 
 }

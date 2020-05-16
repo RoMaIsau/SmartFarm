@@ -12,5 +12,5 @@ public interface ServicioDeAnimales {
 
 	List<Raza> obtenerRazasPorTipoAnimal(TipoAnimal tipoAnimal);
 
-	List<Genero> obtenerSexos();
+	List<Genero> obtenerGeneros();
 }

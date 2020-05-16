@@ -41,7 +41,7 @@ public class ControladorEmpleadoTest {
 		ServicioDeAnimales servicio = mock(ServicioDeAnimales.class);
 		when(servicio.obtenerTiposDeAnimales()).thenReturn(tiposDeAnimales);
 		when(servicio.obtenerRazasPorTipoAnimal(any(TipoAnimal.class))).thenReturn(razas);
-		when(servicio.obtenerSexos()).thenReturn(sexos);
+		when(servicio.obtenerGeneros()).thenReturn(sexos);
 
 		return servicio;
 	}
@@ -129,7 +129,7 @@ public class ControladorEmpleadoTest {
 		ModelAndView modelAndView = this.controlador.registrarAnimal();
 		Map<String, Object> modelo = modelAndView.getModel();
 		
-		verify(this.servicioDeAnimales).obtenerSexos();
+		verify(this.servicioDeAnimales).obtenerGeneros();
 		
 		assertThat(modelo).containsKey("generos");
 		List<Genero> generos = (List<Genero>) modelo.get("generos");

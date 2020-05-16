@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 
 @Repository
-public class RepositorioDeGeneroImpl implements RepositorioDeGenero {
+public class RepositorioDeGenerosImpl implements RepositorioDeGeneros {
 	
 	private SessionFactory sessionFactory;
 	
 	@Autowired
-	public RepositorioDeGeneroImpl(SessionFactory sessionFactory) {
+	public RepositorioDeGenerosImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 

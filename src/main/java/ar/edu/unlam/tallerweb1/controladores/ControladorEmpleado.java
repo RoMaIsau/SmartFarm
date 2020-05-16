@@ -82,7 +82,7 @@ public class ControladorEmpleado {
 
 		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimalPorDefecto);
 		
-		List<Genero> generos = this.servicioDeAnimales.obtenerSexos();
+		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
 
 		ModelMap modelo = new ModelMap();
 		modelo.put("tiposDeAnimales", tiposDeAnimales);

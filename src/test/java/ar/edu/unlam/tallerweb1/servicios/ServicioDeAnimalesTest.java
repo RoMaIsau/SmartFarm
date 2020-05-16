@@ -1,7 +1,8 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
 
@@ -20,6 +23,7 @@ public class ServicioDeAnimalesTest {
 
 	private RepositorioDeTipos repositorioDeTipos;
 	private RepositorioDeRazas repositorioDeRazas;
+	private RepositorioDeGeneros repositorioDeGeneros;
 
 	
 	@Before
@@ -27,8 +31,9 @@ public class ServicioDeAnimalesTest {
 
 		this.repositorioDeTipos = mock(RepositorioDeTipos.class);
 		this.repositorioDeRazas = mock(RepositorioDeRazas.class);
+		this.repositorioDeGeneros = mock(RepositorioDeGeneros.class);
 		
-		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas);
+		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas, this.repositorioDeGeneros);
 	}
 	
 	@Test
@@ -59,6 +64,15 @@ public class ServicioDeAnimalesTest {
 		
 		verify(this.repositorioDeRazas).listarPorTipoAnimal(eq(equino));
 		assertThat(razas).isNotNull();
+	}
+	
+	@Test
+	public void debeObtenerLosGenerosDisponibles() {
+		
+		List<Genero> generos = this.servicio.obtenerGeneros();
+		
+		verify(this.repositorioDeGeneros).listar();
+		assertThat(generos).isNotNull();
 	}
 
 }
