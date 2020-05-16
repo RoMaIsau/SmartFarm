@@ -52,9 +52,9 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		
 		this.repositorioDeAnimales.guardar(vaca);
 		
-		assertThat(vaca.getId()).isEqualTo(1L);
-		assertThat(vaca.getTipo().getId()).isEqualTo(1L);
-		assertThat(vaca.getRaza().getId()).isEqualTo(1L);
+		assertThat(vaca.getId()).isNotNull();
+		assertThat(vaca.getTipo().getId()).isNotNull();
+		assertThat(vaca.getRaza().getId()).isNotNull();
 	}
 
 }
