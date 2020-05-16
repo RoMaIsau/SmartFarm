@@ -47,8 +47,8 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="tipo">Tipo Animal</label> <select
-																id="tipo" class="form-control">
+															<label for="tipo">Tipo Animal</label>
+															<select id="tipo" class="form-control">
 																<option selected>Seleccionar</option>
 																<c:forEach items="${tiposDeAnimales}" var="tipoDeAnimal">
 																	<option value="${tipoDeAnimal.id}">${tipoDeAnimal.nombre}</option>
@@ -58,11 +58,24 @@
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="raza">Raza</label> <select
-																id="raza" class="form-control">
+															<label for="raza">Raza</label>
+															<select id="raza" class="form-control">
 																<option selected>Seleccionar</option>
 																<c:forEach items="${razas}" var="raza">
 																	<option value="${raza.id}">${raza.nombre}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="genero">Género</label>
+															<select id="genero" class="form-control">
+																<option selected>Seleccionar</option>
+																<c:forEach items="${generos}" var="genero">
+																	<option value="${genero.id}">${genero.nombre}</option>
 																</c:forEach>
 															</select>
 														</div>
