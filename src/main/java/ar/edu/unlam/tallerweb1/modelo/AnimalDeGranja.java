@@ -13,11 +13,16 @@ public class AnimalDeGranja {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private TipoAnimal tipo;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Raza raza;
+	
+	@ManyToOne(optional = false)
+	private Sexo sexo;
+	
+	private Double peso;
 	
 	public Long getId() {
 		return id;
@@ -41,6 +46,22 @@ public class AnimalDeGranja {
 	
 	public Raza getRaza() {
 		return raza;
+	}
+	
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
+	
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public Double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Double peso) {
+		this.peso = peso;
 	}
 
 }

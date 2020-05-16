@@ -11,6 +11,7 @@ import org.junit.Test;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.Sexo;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 
@@ -35,13 +36,19 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		razaAberdeenAngus.setNombre("ABERDEEN ANGUS");
 		razaAberdeenAngus.setTipo(tipoVacuno);
 		
+		Sexo femenino = new Sexo();
+		femenino.setNombre("FEMENINO");
+		
 		AnimalDeGranja vaca = new AnimalDeGranja();
 		vaca.setTipo(tipoVacuno);
 		vaca.setRaza(razaAberdeenAngus);
+		vaca.setPeso(720.0);
+		vaca.setSexo(femenino);
 		
 		Session session = this.sessionFactory.getCurrentSession();		
 		session.save(tipoVacuno);
 		session.save(razaAberdeenAngus);
+		session.save(femenino);
 		
 		this.repositorioDeAnimales.guardar(vaca);
 		
