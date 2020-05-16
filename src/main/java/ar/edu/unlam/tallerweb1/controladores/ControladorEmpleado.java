@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
@@ -80,10 +81,13 @@ public class ControladorEmpleado {
 		TipoAnimal tipoAnimalPorDefecto = tiposDeAnimales.get(0);
 
 		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimalPorDefecto);
+		
+		List<Genero> generos = this.servicioDeAnimales.obtenerSexos();
 
 		ModelMap modelo = new ModelMap();
 		modelo.put("tiposDeAnimales", tiposDeAnimales);
 		modelo.put("razas", razas);
+		modelo.put("generos", generos);
 
 		return new ModelAndView("registrarAnimal", modelo);
 	}

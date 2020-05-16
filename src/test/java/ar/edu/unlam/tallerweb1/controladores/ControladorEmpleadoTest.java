@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 
@@ -35,14 +36,16 @@ public class ControladorEmpleadoTest {
 
 		List<TipoAnimal> tiposDeAnimales = this.crearTiposDeAnimales();
 		List<Raza> razas = this.crearRazas();
+		List<Genero> sexos = this.crearGeneros();
 		
 		ServicioDeAnimales servicio = mock(ServicioDeAnimales.class);
 		when(servicio.obtenerTiposDeAnimales()).thenReturn(tiposDeAnimales);
 		when(servicio.obtenerRazasPorTipoAnimal(any(TipoAnimal.class))).thenReturn(razas);
+		when(servicio.obtenerSexos()).thenReturn(sexos);
 
 		return servicio;
 	}
-	
+
 	private List<TipoAnimal> crearTiposDeAnimales() {
 		
 		TipoAnimal vacuno = new TipoAnimal();
@@ -64,6 +67,18 @@ public class ControladorEmpleadoTest {
 		razas.add(caballoArabe);
 
 		return razas;
+	}
+
+	private List<Genero> crearGeneros() {
+		
+		Genero femenino = new Genero();
+		femenino.setId(1L);
+		femenino.setNombre("FEMENINO");
+
+		List<Genero> generos = new LinkedList<Genero>();
+		generos.add(femenino);
+		
+		return generos;
 	}
 
 	@Test
@@ -105,5 +120,19 @@ public class ControladorEmpleadoTest {
 
 		List<Raza> razas = (List<Raza>) modelo.get("razas");
 		assertThat(razas).isNotEmpty();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void laVistaRegistrarAnimalMuestaUnaListaDeGeneros() {
+		
+		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		Map<String, Object> modelo = modelAndView.getModel();
+		
+		verify(this.servicioDeAnimales).obtenerSexos();
+		
+		assertThat(modelo).containsKey("generos");
+		List<Genero> generos = (List<Genero>) modelo.get("generos");
+		assertThat(generos).isNotEmpty();
 	}
 }

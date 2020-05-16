@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
@@ -33,6 +34,12 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	@Override
 	public List<Raza> obtenerRazasPorTipoAnimal(TipoAnimal tipoAnimal) {
 		return this.repositorioDeRazas.listarPorTipoAnimal(tipoAnimal);
+	}
+
+	@Override
+	public List<Genero> obtenerSexos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
