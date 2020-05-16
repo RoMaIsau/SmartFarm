@@ -20,7 +20,7 @@ public class AnimalDeGranja {
 	private Raza raza;
 	
 	@ManyToOne(optional = false)
-	private Genero sexo;
+	private Genero genero;
 	
 	private Double peso;
 	
@@ -48,12 +48,12 @@ public class AnimalDeGranja {
 		return raza;
 	}
 	
-	public void setSexo(Genero sexo) {
-		this.sexo = sexo;
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 	
-	public Genero getSexo() {
-		return sexo;
+	public Genero getGenero() {
+		return genero;
 	}
 
 	public Double getPeso() {

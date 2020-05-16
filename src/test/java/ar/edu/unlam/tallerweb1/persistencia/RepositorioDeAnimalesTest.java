@@ -43,7 +43,7 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		vaca.setTipo(tipoVacuno);
 		vaca.setRaza(razaAberdeenAngus);
 		vaca.setPeso(720.0);
-		vaca.setSexo(femenino);
+		vaca.setGenero(femenino);
 		
 		Session session = this.sessionFactory.getCurrentSession();		
 		session.save(tipoVacuno);
