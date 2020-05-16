@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
@@ -97,9 +99,16 @@ public class ControladorEmpleado {
 		return new ModelAndView("registrarAnimal", modelo);
 	}
 
+	@RequestMapping(path = "/animales/cargarRazas")
+	@ResponseBody
+	public List<Raza> cargarRazas(@RequestParam("idTipoAnimal") Long idTipoAnimal) {
+		TipoAnimal tipoAnimal = new TipoAnimal();
+		tipoAnimal.setId(idTipoAnimal);
+		return this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimal);
+	}
+
 	@Autowired
 	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales) {
 		this.servicioDeAnimales = servicioDeAnimales;
 	}
-
 }

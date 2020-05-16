@@ -7,7 +7,6 @@
 <head>
 
 <%@ include file="../../parts/meta.jsp"%>
-
 </head>
 <body id="page-top">
 
@@ -116,5 +115,6 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<%@ include file="../../parts/scripts.jsp"%>
+	<script src="<c:url value="/js/registrarAnimal.js"/>"></script>
 </body>
 </html>

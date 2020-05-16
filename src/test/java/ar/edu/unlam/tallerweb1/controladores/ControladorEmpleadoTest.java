@@ -12,9 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 
@@ -150,4 +150,19 @@ public class ControladorEmpleadoTest {
 		assertThat(animal).extracting("raza").isNotNull();
 		assertThat(animal).extracting("genero").isNotNull();
 	}
+	
+	@Test
+	public void cargarRazasSegunTipoDeAnimalSeleccionado() {
+		
+		final Long idTipoAnimal = 1L;
+		
+		List<Raza> razas = this.controlador.cargarRazas(idTipoAnimal);
+		
+		TipoAnimal tipoAnimalSeleccionado = new TipoAnimal();
+		tipoAnimalSeleccionado.setId(idTipoAnimal);
+		
+		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(eq(tipoAnimalSeleccionado));
+		assertThat(razas).isNotNull();
+	}
+	
 }
