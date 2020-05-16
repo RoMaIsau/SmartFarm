@@ -15,7 +15,6 @@ import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
-import ar.edu.unlam.tallerweb1.servicios.ServicioDeTiposDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 
 @Controller
@@ -25,7 +24,6 @@ public class ControladorEmpleado {
 	private ServicioGanado servicioGanado;
 
 	private ServicioDeAnimales servicioDeAnimales;
-	private ServicioDeTiposDeAnimales servicioDeTiposDeAnimales;
 
 	@RequestMapping(path = "/indexEmpleado")
 	public ModelAndView irAIndexEmpleado(HttpServletRequest request) {
@@ -78,7 +76,7 @@ public class ControladorEmpleado {
 	@RequestMapping(path = "/animales/registrar")
 	public ModelAndView registrarAnimal() {
 
-		List<TipoAnimal> tiposDeAnimales = this.servicioDeTiposDeAnimales.obtenerDisponibles();
+		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
 		TipoAnimal tipoAnimalPorDefecto = tiposDeAnimales.get(0);
 
 		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimalPorDefecto);
@@ -88,11 +86,6 @@ public class ControladorEmpleado {
 		modelo.put("razas", razas);
 
 		return new ModelAndView("registrarAnimal", modelo);
-	}
-
-	@Autowired
-	public void setServicioDeTiposDeAnimales(ServicioDeTiposDeAnimales servicioDeTiposDeAnimales) {
-		this.servicioDeTiposDeAnimales = servicioDeTiposDeAnimales;		
 	}
 
 	@Autowired

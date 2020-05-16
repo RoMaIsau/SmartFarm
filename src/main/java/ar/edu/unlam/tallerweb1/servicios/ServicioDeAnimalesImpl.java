@@ -10,16 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 
+	private RepositorioDeTipos repositorioDeTipos;
 	private RepositorioDeRazas repositorioDeRazas;
 	
 	@Autowired
-	public ServicioDeAnimalesImpl(RepositorioDeRazas repositorioDeRazas) {
+	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas) {
+		this.repositorioDeTipos = repositorioDeTipos;
 		this.repositorioDeRazas = repositorioDeRazas;
+	}
+
+	@Override
+	public List<TipoAnimal> obtenerTiposDeAnimales() {
+		return this.repositorioDeTipos.listarDisponibles();
 	}
 
 	@Override

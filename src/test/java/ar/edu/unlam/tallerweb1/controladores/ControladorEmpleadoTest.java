@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.LinkedList;
@@ -14,56 +15,56 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
-import ar.edu.unlam.tallerweb1.servicios.ServicioDeTiposDeAnimales;
 
 public class ControladorEmpleadoTest {
 	
 	private ControladorEmpleado controlador;
 	
 	private ServicioDeAnimales servicioDeAnimales;
-	private ServicioDeTiposDeAnimales servicioDeTiposDeAnimales;
 	
 	@Before
 	public void inicializar() {
 		
 		this.servicioDeAnimales = crearMockServicioDeAnimales();
-		this.servicioDeTiposDeAnimales = crearMockServicioDeTiposDeAnimales();
 		
 		this.controlador = new ControladorEmpleado();
 		this.controlador.setServicioDeAnimales(this.servicioDeAnimales);
-		this.controlador.setServicioDeTiposDeAnimales(this.servicioDeTiposDeAnimales);
 	}
 	
 	private ServicioDeAnimales crearMockServicioDeAnimales() {
 
-		Raza caballoArabe = new Raza();
-		caballoArabe.setId(1L);
-		caballoArabe.setNombre("CABALLO ARABE");
-		List<Raza> razas = new LinkedList<Raza>();
-		razas.add(caballoArabe);
-
+		List<TipoAnimal> tiposDeAnimales = this.crearTiposDeAnimales();
+		List<Raza> razas = this.crearRazas();
+		
 		ServicioDeAnimales servicio = mock(ServicioDeAnimales.class);
-
-		when(servicio.obtenerRazasPorTipoAnimal(any())).thenReturn(razas);
+		when(servicio.obtenerTiposDeAnimales()).thenReturn(tiposDeAnimales);
+		when(servicio.obtenerRazasPorTipoAnimal(any(TipoAnimal.class))).thenReturn(razas);
 
 		return servicio;
 	}
-	private ServicioDeTiposDeAnimales crearMockServicioDeTiposDeAnimales() {
+	
+	private List<TipoAnimal> crearTiposDeAnimales() {
 		
 		TipoAnimal vacuno = new TipoAnimal();
 		vacuno.setId(1L);
 		vacuno.setNombre("VACUNO");
-		List<TipoAnimal> listaDeTiposDeAnimales = new LinkedList<TipoAnimal>();
-		listaDeTiposDeAnimales.add(vacuno);		
+		List<TipoAnimal> tiposDeAnimales = new LinkedList<TipoAnimal>();
+		tiposDeAnimales.add(vacuno);
 		
-		ServicioDeTiposDeAnimales servicio = mock(ServicioDeTiposDeAnimales.class);
-
-		when(servicio.obtenerDisponibles())
-			.thenReturn(listaDeTiposDeAnimales);
-		
-		return servicio; 
+		return tiposDeAnimales;
 	}
 
+	private List<Raza> crearRazas() {
+
+		Raza caballoArabe = new Raza();
+		caballoArabe.setId(1L);
+		caballoArabe.setNombre("CABALLO ARABE");
+
+		List<Raza> razas = new LinkedList<Raza>();
+		razas.add(caballoArabe);
+
+		return razas;
+	}
 
 	@Test
 	public void registrarAnimalRedirigeALaVistaDeRegistrarAnimal() {
@@ -83,7 +84,7 @@ public class ControladorEmpleadoTest {
 		
 		Map<String, Object> modelo = modelAndView.getModel();
 		
-		verify(this.servicioDeTiposDeAnimales).obtenerDisponibles();
+		verify(this.servicioDeAnimales).obtenerTiposDeAnimales();
 
 		assertThat(modelo).containsKey("tiposDeAnimales");
 		
