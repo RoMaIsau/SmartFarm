@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.persistencia;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -30,26 +32,7 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test
 	public void deberiaPersitirUnAnimalDeTipoVacunoDeRazaAberdeenAngus() {
 		
-		TipoAnimal tipoVacuno = new TipoAnimal();
-		tipoVacuno.setNombre("VACUNO");		
-		
-		Raza razaAberdeenAngus = new Raza();
-		razaAberdeenAngus.setNombre("ABERDEEN ANGUS");
-		razaAberdeenAngus.setTipo(tipoVacuno);
-		
-		Genero femenino = new Genero();
-		femenino.setNombre("FEMENINO");
-		
-		AnimalDeGranja vaca = new AnimalDeGranja();
-		vaca.setTipo(tipoVacuno);
-		vaca.setRaza(razaAberdeenAngus);
-		vaca.setPeso(720.0);
-		vaca.setGenero(femenino);
-		
-		Session session = this.sessionFactory.getCurrentSession();		
-		session.save(tipoVacuno);
-		session.save(razaAberdeenAngus);
-		session.save(femenino);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0);
 		
 		this.repositorioDeAnimales.guardar(vaca);
 		
@@ -58,4 +41,42 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		assertThat(vaca.getRaza().getId()).isNotNull();
 	}
 
+	@Test
+	public void deberiaListarTodosLosAnimalesAlmacenados() {
+
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0);
+		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0);
+		this.repositorioDeAnimales.guardar(vaca);
+		this.repositorioDeAnimales.guardar(caballo);
+
+		List<AnimalDeGranja> animales = this.repositorioDeAnimales.listar();
+
+		assertThat(animales).hasSize(2);
+	}
+
+	private AnimalDeGranja crearAnimal(String nombreTipo, String nombreRaza, String nombreGenero, double peso) {
+
+		TipoAnimal tipo = new TipoAnimal();
+		tipo.setNombre(nombreTipo);
+
+		Raza raza = new Raza();
+		raza.setNombre(nombreRaza);
+		raza.setTipo(tipo);
+
+		Genero genero = new Genero();
+		genero.setNombre(nombreGenero);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.save(tipo);
+		session.save(raza);
+		session.save(genero);
+
+		AnimalDeGranja animal = new AnimalDeGranja();
+		animal.setTipo(tipo);
+		animal.setRaza(raza);
+		animal.setPeso(peso);
+		animal.setGenero(genero);
+
+		return animal;
+	}
 }
