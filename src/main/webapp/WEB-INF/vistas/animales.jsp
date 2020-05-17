@@ -40,7 +40,7 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Animales</h6>
-							<a href="registroAnimal" class="btn btn-success btn-icon-split">
+							<a href="animales/registrar" class="btn btn-success btn-icon-split">
 								<span class="icon text-white-50"> <i class="fas fa-plus"></i>
 							</span> <span class="text">Agregar animal</span>
 							</a>
@@ -53,18 +53,24 @@
 									<thead>
 										<tr>
 											<th>Id</th>
+											<th>Tipo de animal</th>
+											<th>Raza</th>
+											<th>Genero</th>
 											<th>Peso</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${ganadoVacuno}" var="ganadoVacuno">
+										<c:forEach items="${animales}" var="animal">
 											<tr>
-												<td><c:out value="${ganadoVacuno.id}" /></td>
-												<td><c:out value="${ganadoVacuno.peso}" /></td>
+												<td><c:out value="${animal.id}" /></td>
+												<td><c:out value="${animal.tipo.nombre}" /></td>
+												<td><c:out value="${animal.raza.nombre}" /></td>
+												<td><c:out value="${animal.genero.nombre}" /></td>
+												<td><c:out value="${animal.peso}" />&nbsp;Kg</td>
 												<td class="text-center"><a href="#"><i
 														class="fas fa-edit mx-2 text-info"></i></a> <a
-													href="#modalEliminar" data-id="${ganadoVacuno.id}"
+													href="#modalEliminar" data-id="${animal.id}"
 													role="button" data-toggle="modal" class="open-Modal"><i
 														class="fas fa-trash mx-2 text-danger"></i></a></td>
 											</tr>
