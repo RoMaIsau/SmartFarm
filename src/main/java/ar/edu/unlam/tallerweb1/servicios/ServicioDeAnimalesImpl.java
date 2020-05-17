@@ -56,4 +56,10 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 		this.repositorioDeAnimales.guardar(animal);
 	}
 
+	@Override
+	public List<AnimalDeGranja> obtenerTodos() {
+
+		return this.repositorioDeAnimales.listar();
+	}
+
 }

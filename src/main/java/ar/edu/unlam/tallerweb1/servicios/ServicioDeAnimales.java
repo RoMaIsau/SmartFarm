@@ -16,4 +16,6 @@ public interface ServicioDeAnimales {
 	List<Genero> obtenerGeneros();
 
 	void registrar(AnimalDeGranja animal);
+
+	List<AnimalDeGranja> obtenerTodos();
 }

@@ -78,7 +78,7 @@ public class ServicioDeAnimalesTest {
 		verify(this.repositorioDeGeneros).listar();
 		assertThat(generos).isNotNull();
 	}
-	
+
 	@Test
 	public void registrarDeberiaGuardarLosAnimales() {
 
@@ -89,4 +89,12 @@ public class ServicioDeAnimalesTest {
 		verify(this.repositorioDeAnimales).guardar(eq(animalNuevo));
 	}
 
+	@Test
+	public void deberiaObtenerTodosLosAnimales() {
+
+		List<AnimalDeGranja> animales = this.servicio.obtenerTodos();
+
+		verify(this.repositorioDeAnimales).listar();
+		assertThat(animales).isNotNull();
+	}
 }
