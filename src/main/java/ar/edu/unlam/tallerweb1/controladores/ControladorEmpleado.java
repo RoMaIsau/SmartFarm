@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
-import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
-import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 
 @Controller
 public class ControladorEmpleado {
-
-	@Inject
-	private ServicioGanado servicioGanado;
 
 	private ServicioDeAnimales servicioDeAnimales;
 
@@ -47,23 +41,21 @@ public class ControladorEmpleado {
 
 	@RequestMapping(path = "/animales")
 	public ModelAndView listarAnimales(HttpServletRequest request) {
-		ModelMap model = new ModelMap();
+
+		ModelAndView modelAndView = new ModelAndView("redirect:/login");
+
 		String rol = (String) request.getSession().getAttribute("ROL");
 
 		if (rol.equals("Empleado") || rol.equals("Admin")) {
 
-			List<GanadoVacuno> ganadoVacuno = servicioGanado.listar();
+			ModelMap modelo = new ModelMap();
 
-			if (ganadoVacuno != null) {
-				model.put("ganadoVacuno", ganadoVacuno);
-			} else {
-				model.put("error", "No hay animales registrados");
-			}
-		} else {
-			return new ModelAndView("redirect:/login");
+			List<AnimalDeGranja> animales = this.servicioDeAnimales.obtenerTodos();
+			modelo.put("animales", animales);
+			modelAndView = new ModelAndView("animales", modelo);
 		}
 
-		return new ModelAndView("animales", model);
+		return modelAndView;
 	}
 
 	@RequestMapping(path = "/stock")

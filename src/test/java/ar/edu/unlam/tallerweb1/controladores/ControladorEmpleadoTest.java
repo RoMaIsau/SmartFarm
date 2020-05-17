@@ -8,8 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
@@ -175,7 +179,41 @@ public class ControladorEmpleadoTest {
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
 		verify(this.servicioDeAnimales).registrar(eq(animalNuevo));
 	}
-	
 
-	
+	@Test
+	public void siElRolNoEsEmpleadoNiAdminRedirigeAlLogin() {
+
+		HttpServletRequest pedido = this.configurarRolLogueado("Veterinario");
+
+		ModelAndView view = this.controlador.listarAnimales(pedido);
+
+		assertThat(view.getViewName()).isEqualTo("redirect:/login");
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void siElRolEsAdminListaTodosLosAnimales() {
+
+		HttpServletRequest pedido = this.configurarRolLogueado("Admin");
+
+		ModelAndView view = this.controlador.listarAnimales(pedido);
+		ModelMap modelo = view.getModelMap();
+
+		verify(this.servicioDeAnimales).obtenerTodos();
+		assertThat(view.getViewName()).isEqualTo("animales");
+		assertThat(modelo).containsKeys("animales");
+
+		List<AnimalDeGranja> animales = (List<AnimalDeGranja>) modelo.get("animales");
+		assertThat(animales).isNotNull();
+	}
+
+	private HttpServletRequest configurarRolLogueado(String rol) {
+
+		HttpServletRequest pedido = mock(HttpServletRequest.class);
+		HttpSession sesionHttp = mock(HttpSession.class);
+		when(pedido.getSession()).thenReturn(sesionHttp);
+		when(sesionHttp.getAttribute("ROL")).thenReturn(rol);
+
+		return pedido;
+	}
 }
