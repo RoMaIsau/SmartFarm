@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,8 +79,8 @@ public class ControladorEmpleado {
 
 	}
 
-	@RequestMapping(path = "/animales/registrar")
-	public ModelAndView registrarAnimal() {
+	@RequestMapping(value = "/animales/registrar")
+	public ModelAndView irAFormularioDeRegistroDeAnimales() {
 
 		AnimalDeGranja animal = new AnimalDeGranja();
 		
@@ -99,7 +101,14 @@ public class ControladorEmpleado {
 		return new ModelAndView("registrarAnimal", modelo);
 	}
 
-	@RequestMapping(path = "/animales/cargarRazas")
+	@RequestMapping(value = "/animales/registrar", method = RequestMethod.POST)
+	public ModelAndView registrarAnimal(@ModelAttribute("animal") AnimalDeGranja animal) {
+
+		this.servicioDeAnimales.registrar(animal);
+		return new ModelAndView("redirect:/animales");
+	}
+
+	@RequestMapping(value = "/animales/cargarRazas")
 	@ResponseBody
 	public List<Raza> cargarRazas(@RequestParam("idTipoAnimal") Long idTipoAnimal) {
 		TipoAnimal tipoAnimal = new TipoAnimal();

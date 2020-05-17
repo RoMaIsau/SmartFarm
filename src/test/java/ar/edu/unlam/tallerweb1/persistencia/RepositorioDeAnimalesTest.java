@@ -14,6 +14,7 @@ import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimalesImpl;
 
 @Transactional
 public class RepositorioDeAnimalesTest extends SpringTest {

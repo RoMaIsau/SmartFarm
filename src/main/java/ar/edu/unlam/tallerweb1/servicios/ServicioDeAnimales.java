@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 
@@ -13,4 +14,6 @@ public interface ServicioDeAnimales {
 	List<Raza> obtenerRazasPorTipoAnimal(TipoAnimal tipoAnimal);
 
 	List<Genero> obtenerGeneros();
+
+	void registrar(AnimalDeGranja animal);
 }

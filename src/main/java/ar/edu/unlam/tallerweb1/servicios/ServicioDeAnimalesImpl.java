@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
@@ -21,13 +23,15 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	private RepositorioDeTipos repositorioDeTipos;
 	private RepositorioDeRazas repositorioDeRazas;
 	private RepositorioDeGeneros repositorioDeGeneros;
+	private RepositorioDeAnimales repositorioDeAnimales;
 	
 	@Autowired
 	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas, 
-			RepositorioDeGeneros repositorioDeGeneros) {
+			RepositorioDeGeneros repositorioDeGeneros, RepositorioDeAnimales repositorioDeAnimales) {
 		this.repositorioDeTipos = repositorioDeTipos;
 		this.repositorioDeRazas = repositorioDeRazas;
 		this.repositorioDeGeneros = repositorioDeGeneros;
+		this.repositorioDeAnimales = repositorioDeAnimales;
 	}
 
 	@Override
@@ -43,6 +47,13 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	@Override
 	public List<Genero> obtenerGeneros() {
 		return this.repositorioDeGeneros.listar();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void registrar(AnimalDeGranja animal) {
+
+		this.repositorioDeAnimales.guardar(animal);
 	}
 
 }

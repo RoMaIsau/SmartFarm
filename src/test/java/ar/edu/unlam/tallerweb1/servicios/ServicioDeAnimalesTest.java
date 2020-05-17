@@ -10,9 +10,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeRazas;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeTipos;
@@ -24,6 +26,7 @@ public class ServicioDeAnimalesTest {
 	private RepositorioDeTipos repositorioDeTipos;
 	private RepositorioDeRazas repositorioDeRazas;
 	private RepositorioDeGeneros repositorioDeGeneros;
+	private RepositorioDeAnimales repositorioDeAnimales;
 
 	
 	@Before
@@ -32,8 +35,9 @@ public class ServicioDeAnimalesTest {
 		this.repositorioDeTipos = mock(RepositorioDeTipos.class);
 		this.repositorioDeRazas = mock(RepositorioDeRazas.class);
 		this.repositorioDeGeneros = mock(RepositorioDeGeneros.class);
+		this.repositorioDeAnimales = mock(RepositorioDeAnimales.class);
 		
-		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas, this.repositorioDeGeneros);
+		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas, this.repositorioDeGeneros, this.repositorioDeAnimales);
 	}
 	
 	@Test
@@ -73,6 +77,16 @@ public class ServicioDeAnimalesTest {
 		
 		verify(this.repositorioDeGeneros).listar();
 		assertThat(generos).isNotNull();
+	}
+	
+	@Test
+	public void registrarDeberiaGuardarLosAnimales() {
+
+		AnimalDeGranja animalNuevo = new AnimalDeGranja();
+
+		this.servicio.registrar(animalNuevo);
+
+		verify(this.repositorioDeAnimales).guardar(eq(animalNuevo));
 	}
 
 }

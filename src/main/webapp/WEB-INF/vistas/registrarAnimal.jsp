@@ -42,12 +42,12 @@
 											<div class="text-center">
 												<h1 class="h4 text-gray-900 mb-4">Registrar Animal</h1>
 											</div>
-											<form:form action="animales/guardar" method="post" modelAttribute="animal">
+											<form:form action="registrar" method="post" modelAttribute="animal">
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="tipo">Tipo Animal</label>
-															<form:select id="tipo" path="tipo" class="form-control">
+															<form:select id="tipo" path="tipo.id" class="form-control">
 																<form:options items="${tiposDeAnimales}" itemLabel="nombre" itemValue="id"/>
 															</form:select>
 														</div>
@@ -55,7 +55,7 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="raza">Raza</label>
-															<form:select id="raza" path="raza" class="form-control">
+															<form:select id="raza" path="raza.id" class="form-control">
 																<form:options items="${razas}" itemLabel="nombre" itemValue="id"/>
 															</form:select>
 														</div>
@@ -65,14 +65,20 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="genero">Género</label>
-															<form:select id="genero" path="genero" class="form-control">
+															<form:select id="genero" path="genero.id" class="form-control">
 																<form:options items="${generos}" itemLabel="nombre" itemValue="id"/>
 															</form:select>
 														</div>
 													</div>
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="peso">Peso</label>
+															<form:input path="peso" class="form-control"/>
+														</div>
+													</div>
 												</div>
+												<form:button class="btn btn-primary btn-user btn-block text-white">Registrar</form:button>
 											</form:form>
-
 										</div>
 									</div>
 								</div>

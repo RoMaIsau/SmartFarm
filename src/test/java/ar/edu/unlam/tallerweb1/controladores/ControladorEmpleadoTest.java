@@ -85,7 +85,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void registrarAnimalRedirigeALaVistaDeRegistrarAnimal() {
 		
-		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
 		
 		String vista = modelAndView.getViewName();
 		
@@ -96,7 +96,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeTiposDeAnimalesDisponibles() {
 		
-		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
 		
 		Map<String, Object> modelo = modelAndView.getModel();
 		
@@ -112,7 +112,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeRazasDisponibles() {
 
-		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(any(TipoAnimal.class));
@@ -127,7 +127,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void laVistaRegistrarAnimalMuestaUnaListaDeGeneros() {
 		
-		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
 		Map<String, Object> modelo = modelAndView.getModel();
 		
 		verify(this.servicioDeAnimales).obtenerGeneros();
@@ -140,7 +140,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void seSeleccionaPorDefaultElPrimerElementoDeLosCombosDeSeleccion() {
 
-		ModelAndView modelAndView = this.controlador.registrarAnimal();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		assertThat(modelo).containsKey("animal");
@@ -164,5 +164,18 @@ public class ControladorEmpleadoTest {
 		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(eq(tipoAnimalSeleccionado));
 		assertThat(razas).isNotNull();
 	}
+	
+	@Test
+	public void registrarAnimalRedirigeHaciaAnimales() {
+
+		AnimalDeGranja animalNuevo = new AnimalDeGranja();
+
+		ModelAndView modelAndView = this.controlador.registrarAnimal(animalNuevo);
+
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
+		verify(this.servicioDeAnimales).registrar(eq(animalNuevo));
+	}
+	
+
 	
 }
