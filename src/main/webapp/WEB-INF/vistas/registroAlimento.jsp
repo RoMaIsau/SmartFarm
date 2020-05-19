@@ -31,13 +31,8 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<!-- Page Heading -->
-					<div class="d-flex flex-row-reverse">
-						<a href="registrarAlimento" class="btn btn-success btn-icon-split"> <span
-							class="icon text-white-50"> <i class="fas fa-plus"></i>
-						</span> <span class="text">Agregar alimento</span>
-						</a>
-					</div>
+				
+				
 				</div>
 				<!-- /.container-fluid -->
 

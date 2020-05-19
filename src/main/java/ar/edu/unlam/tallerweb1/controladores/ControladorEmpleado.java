@@ -17,13 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 
 @Controller
 public class ControladorEmpleado {
 
 	private ServicioDeAnimales servicioDeAnimales;
+	private ServicioAlimento servicioAlimento;
 
 	@RequestMapping(path = "/indexEmpleado")
 	public ModelAndView irAIndexEmpleado(HttpServletRequest request) {
@@ -71,11 +74,29 @@ public class ControladorEmpleado {
 
 	}
 
+	@RequestMapping(path = "registrarAlimento")
+	public ModelAndView irARegistroAlimento(HttpServletRequest request) {
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if (!rol.equals("Empleado")) {
+			return new ModelAndView("redirect:/login");
+		}
+		
+		ModelMap model = new ModelMap();
+		
+		List<TipoAlimento> tipoAlimento = servicioAlimento.obtenerTiposDeAlimentos();
+		
+		model.put("tipoAlimento", tipoAlimento);
+		
+		return new ModelAndView("registroAlimento", model);
+
+	}
+
 	@RequestMapping(value = "/animales/registrar")
 	public ModelAndView irAFormularioDeRegistroDeAnimales() {
 
 		AnimalDeGranja animal = new AnimalDeGranja();
-		
+
 		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
 		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tiposDeAnimales.get(0));
 		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
