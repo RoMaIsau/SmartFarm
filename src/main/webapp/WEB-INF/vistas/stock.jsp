@@ -56,6 +56,9 @@
 									<c:when test="${alimento.tipo.id == 2}">
 										<div class="card border-left-info shadow h-100 py-2">
 									</c:when>
+									<c:when test="${alimento.tipo.id == 3}">
+										<div class="card border-left-primary shadow h-100 py-2">
+									</c:when>
 								</c:choose>
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">
@@ -82,6 +85,10 @@
 													<c:when test="${alimento.tipo.id == 2}">
 														<i class="fas fa-seedling fa-2x text-gray-300"></i>
 													</c:when>
+													<c:when test="${alimento.tipo.id == 3}">
+														<i class="fas fa-feather-alt fa-2x text-gray-300"></i>
+													</c:when>
+													
 												</c:choose>
 
 											</div>
