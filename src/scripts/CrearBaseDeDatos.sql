@@ -9,9 +9,21 @@ INSERT INTO usuario VALUES
 (1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin"),
 (2, "Prueba", "empleado@gmail.com", "2020/05/12", "Usuario", "123", "Empleado");
 
-INSERT INTO tipoalimento VALUES 
+-- TIPO ALIMENTO
+INSERT INTO TipoAlimento VALUES 
 (1, "Granos"),
-(2, "Forrajes");
+(2, "Forrajes"),
+(3, "Cereales");
+
+-- ALIMENTO
+INSERT INTO Alimento (id, nombre, cantidad, stockMinimo, tipo_id) VALUES 
+(1, "Maiz", 200, 10, 1),
+(2, "Trigo", 200, 10, 1),
+(3, "Centeno", 200, 10, 1),
+(4, "Heno", 200, 10, 2),
+(5, "Pasto", 200, 10, 2),
+(6, "Avena", 200, 10, 3),
+(7, "Cebada", 200, 10, 3);
 
 -- TIPO ANIMAL
 INSERT INTO TipoAnimal VALUES(1, "CAPRINO");
@@ -49,5 +61,3 @@ INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 -- GENEROS
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
-
-
