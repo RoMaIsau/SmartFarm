@@ -16,7 +16,7 @@ public class Alimento {
 	private String nombre;
 	private Double cantidad;
 	private Double stockMinimo;
-	
+
 	@OneToOne
 	private TipoAlimento tipo;
 
@@ -27,13 +27,29 @@ public class Alimento {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getNombre() {
+		return nombre;
+	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 	public Double getCantidad() {
 		return cantidad;
 	}
 
 	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
+	}
+	
+	public Double getStockMinimo() {
+		return stockMinimo;
+	}
+
+	public void setStockMinimo(Double stockMinimo) {
+		this.stockMinimo = stockMinimo;
 	}
 
 	public TipoAlimento getTipo() {
