@@ -3,8 +3,17 @@ CREATE USER 'SmartFarmApp'@'localhost' IDENTIFIED BY 'SmartFarm2020';
 GRANT ALL ON SmartFarm.* TO 'SmartFarmApp'@'localhost';
 
 USE SmartFarm;
-INSERT INTO usuario VALUES (1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin");
 
+-- USUARIOS
+INSERT INTO usuario VALUES 
+(1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin"),
+(2, "Prueba", "empleado@gmail.com", "2020/05/12", "Usuario", "123", "Empleado");
+
+INSERT INTO tipoalimento VALUES 
+(1, "Granos"),
+(2, "Forrajes");
+
+-- TIPO ANIMAL
 INSERT INTO TipoAnimal VALUES(1, "CAPRINO");
 INSERT INTO TipoAnimal VALUES(2, "EQUINO");
 INSERT INTO TipoAnimal VALUES(3, "OVINO");
@@ -37,5 +46,8 @@ INSERT INTO Raza VALUES(18, "HOLANDO ARGENTINO", 5);
 INSERT INTO Raza VALUES(19, "LIMOUSIN", 5);
 INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 
+-- GENEROS
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
+
+
