@@ -53,14 +53,14 @@
 												<br>
 											</c:if>
 											<form:form method="POST" modelAttribute="alimento"
-												action="validar-registro-Alimento" class="user">
+												action="validar-registro-alimento" class="user">
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<form:input path="nombre" class="form-control"
 															placeholder="Nombre" required="true" type="text" />
 													</div>
 													<div class="col-sm-6">
-														<form:select id="alimento" path="tipo"
+														<form:select id="alimento" path="tipo.id"
 															class="form-control">
 															<form:options items="${tiposAlimentos}"
 																itemLabel="nombre" itemValue="id" class="dropdown-item" />
