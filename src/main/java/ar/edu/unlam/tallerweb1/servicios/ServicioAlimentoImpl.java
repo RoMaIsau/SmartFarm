@@ -40,4 +40,9 @@ public class ServicioAlimentoImpl implements ServicioAlimento {
 		return repositorioAlimento.consultarAlimento(alimento);
 	}
 
+	@Override
+	public List<Alimento> listarAlimentos() {
+		return repositorioAlimento.listarAlimentos();
+	}
+
 }

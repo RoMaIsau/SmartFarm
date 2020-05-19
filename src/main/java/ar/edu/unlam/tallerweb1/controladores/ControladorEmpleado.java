@@ -78,11 +78,18 @@ public class ControladorEmpleado {
 
 		String rol = (String) request.getSession().getAttribute("ROL");
 
-		if (rol.equals("Empleado")) {
-			return new ModelAndView("stock");
-		} else {
+		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
-		}
+			
+		} 
+		
+		ModelMap model = new ModelMap();
+		
+		List<Alimento> alimentos = servicioAlimento.listarAlimentos();
+		
+		model.put("alimentos", alimentos);
+		
+		return new ModelAndView("stock", model);
 
 	}
 

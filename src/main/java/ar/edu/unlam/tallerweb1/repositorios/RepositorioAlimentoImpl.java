@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,13 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 		Session session = sessionFactory.getCurrentSession();
 		return (Alimento) session.createCriteria(Alimento.class).add(Restrictions.eq("nombre", alimento.getNombre()))
 				.add(Restrictions.eq("tipo", alimento.getTipo())).uniqueResult();
+	}
+
+	@Override
+	public List<Alimento> listarAlimentos() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		return session.createCriteria(Alimento.class).list();
 	}
 
 }

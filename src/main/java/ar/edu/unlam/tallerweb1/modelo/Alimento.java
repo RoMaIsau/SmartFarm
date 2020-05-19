@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 @Entity
+
 public class Alimento {
 	
 	@Id
@@ -18,6 +20,7 @@ public class Alimento {
 	private Double stockMinimo;
 
 	@OneToOne
+	@OrderBy("Alimento.tipo")
 	private TipoAlimento tipo;
 
 	public Long getId() {

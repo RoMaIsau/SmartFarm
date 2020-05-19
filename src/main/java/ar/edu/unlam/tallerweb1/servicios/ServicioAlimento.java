@@ -12,4 +12,6 @@ public interface ServicioAlimento {
 	Long registrarAlimento(Alimento alimento);
 
 	Alimento consultarAlimento(Alimento Alimento);
+
+	List<Alimento> listarAlimentos();
 }
