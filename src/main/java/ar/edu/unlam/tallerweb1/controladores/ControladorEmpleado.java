@@ -29,6 +29,17 @@ public class ControladorEmpleado {
 	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioAlimento servicioAlimento;
 
+	@Autowired
+	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento) {
+		this.servicioDeAnimales = servicioDeAnimales;
+		this.servicioAlimento = servicioAlimento;
+	}
+
+	@Autowired
+	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales) {
+		this.servicioDeAnimales = servicioDeAnimales;
+	}
+
 	@RequestMapping(path = "/indexEmpleado")
 	public ModelAndView irAIndexEmpleado(HttpServletRequest request) {
 
@@ -82,17 +93,38 @@ public class ControladorEmpleado {
 		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
 		}
-		
+
 		ModelMap model = new ModelMap();
-		
-		List<TipoAlimento> tipoAlimento = servicioAlimento.obtenerTiposDeAlimentos();
+
+		List<TipoAlimento> tiposAlimentos = this.servicioAlimento.obtenerTiposDeAlimentos();
 		Alimento alimento = new Alimento();
-		
-		model.put("tipoAlimento", tipoAlimento);
+
+		model.put("tiposAlimentos", tiposAlimentos);
 		model.put("alimento", alimento);
-		
+
 		return new ModelAndView("registroAlimento", model);
 
+	}
+
+	@RequestMapping(path = "/validar-registro-alimento")
+	public ModelAndView validarRegistroAlimento(@ModelAttribute("alimento") Alimento alimento) {
+		ModelMap model = new ModelMap();
+
+		Alimento alimentoBuscado = servicioAlimento.consultarAlimento(alimento);
+
+		if (alimentoBuscado != null) {
+			model.put("error", "Alimento ya registrado");
+		} else {
+			if (servicioAlimento.registrarAlimento(alimento) != null) {
+				model.put("mensaje", "Alimento registrado correctamente");
+			} else {
+				model.put("mensaje", "No se pudo registrar el alimento");
+			}
+		}
+		List<TipoAlimento> tiposAlimentos = this.servicioAlimento.obtenerTiposDeAlimentos();
+		model.put("tiposAlimentos", tiposAlimentos);
+		
+		return new ModelAndView("registroAlimento", model);
 	}
 
 	@RequestMapping(value = "/animales/registrar")
@@ -132,8 +164,4 @@ public class ControladorEmpleado {
 		return this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimal);
 	}
 
-	@Autowired
-	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales) {
-		this.servicioDeAnimales = servicioDeAnimales;
-	}
 }
