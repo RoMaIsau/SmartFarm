@@ -13,7 +13,9 @@ public class Alimento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String nombre;
 	private Double cantidad;
+	private Double stockMinimo;
 	
 	@OneToOne
 	private TipoAlimento tipo;

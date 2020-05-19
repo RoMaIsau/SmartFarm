@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
@@ -85,8 +86,10 @@ public class ControladorEmpleado {
 		ModelMap model = new ModelMap();
 		
 		List<TipoAlimento> tipoAlimento = servicioAlimento.obtenerTiposDeAlimentos();
+		Alimento alimento = new Alimento();
 		
 		model.put("tipoAlimento", tipoAlimento);
+		model.put("alimento", alimento);
 		
 		return new ModelAndView("registroAlimento", model);
 
