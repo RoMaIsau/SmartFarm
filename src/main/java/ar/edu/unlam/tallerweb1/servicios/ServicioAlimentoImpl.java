@@ -46,8 +46,13 @@ public class ServicioAlimentoImpl implements ServicioAlimento {
 	}
 
 	@Override
-	public Alimento consultarAlimentoPorId(String id) {
+	public Alimento consultarAlimentoPorId(Long id) {
 		return repositorioAlimento.consultarAlimentoPorId(id);
+	}
+
+	@Override
+	public void actualizarAlimento(Alimento alimento) {
+		repositorioAlimento.actualizarAlimento(alimento);
 	}
 
 }

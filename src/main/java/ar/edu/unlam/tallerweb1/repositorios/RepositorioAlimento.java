@@ -12,5 +12,7 @@ public interface RepositorioAlimento {
 
 	List<Alimento> listarAlimentos();
 
-	Alimento consultarAlimentoPorId(String id);
+	Alimento consultarAlimentoPorId(Long id);
+
+	void actualizarAlimento(Alimento alimento);
 }

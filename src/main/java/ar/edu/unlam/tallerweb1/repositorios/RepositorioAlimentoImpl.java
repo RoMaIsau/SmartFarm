@@ -41,9 +41,15 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 	}
 
 	@Override
-	public Alimento consultarAlimentoPorId(String id) {
+	public Alimento consultarAlimentoPorId(Long id) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Alimento.class, id);
+	}
+
+	@Override
+	public void actualizarAlimento(Alimento alimento) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(alimento);
 	}
 
 }

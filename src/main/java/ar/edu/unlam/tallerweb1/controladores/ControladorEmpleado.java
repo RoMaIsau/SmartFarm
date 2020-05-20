@@ -80,15 +80,15 @@ public class ControladorEmpleado {
 
 		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
-			
-		} 
-		
+
+		}
+
 		ModelMap model = new ModelMap();
-		
+
 		List<Alimento> alimentos = servicioAlimento.listarAlimentos();
-		
+
 		List<TipoAlimento> tiposAlimentos = servicioAlimento.obtenerTiposDeAlimentos();
-		
+
 		model.put("alimentos", alimentos);
 		model.put("tipos", tiposAlimentos);
 		return new ModelAndView("stock", model);
@@ -132,17 +132,21 @@ public class ControladorEmpleado {
 		}
 		List<TipoAlimento> tiposAlimentos = this.servicioAlimento.obtenerTiposDeAlimentos();
 		model.put("tiposAlimentos", tiposAlimentos);
-		
+
 		return new ModelAndView("registroAlimento", model);
 	}
-	
+
 	@RequestMapping(path = "/cambiarStockMinimo")
-	public ModelAndView cambiarStockMinimo(@RequestParam(name = "id") String id, @RequestParam(name="stockMinimo") String stock) {
-		
+	public ModelAndView cambiarStockMinimo(@RequestParam(name = "id") Long id,
+			@RequestParam(name = "stockMinimo") Double stock) {
+
 		Alimento alimento = servicioAlimento.consultarAlimentoPorId(id);
-		
-		
-		return new ModelAndView ("redirect:/stock");
+
+		alimento.setStockMinimo(stock);
+
+		servicioAlimento.actualizarAlimento(alimento);
+
+		return new ModelAndView("redirect:/stock");
 	}
 
 	@RequestMapping(value = "/animales/registrar")
