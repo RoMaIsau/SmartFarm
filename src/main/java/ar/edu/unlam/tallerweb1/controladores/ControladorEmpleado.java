@@ -87,8 +87,10 @@ public class ControladorEmpleado {
 		
 		List<Alimento> alimentos = servicioAlimento.listarAlimentos();
 		
-		model.put("alimentos", alimentos);
+		List<TipoAlimento> tiposAlimentos = servicioAlimento.obtenerTiposDeAlimentos();
 		
+		model.put("alimentos", alimentos);
+		model.put("tipos", tiposAlimentos);
 		return new ModelAndView("stock", model);
 
 	}
