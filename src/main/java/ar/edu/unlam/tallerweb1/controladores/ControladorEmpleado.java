@@ -135,6 +135,15 @@ public class ControladorEmpleado {
 		
 		return new ModelAndView("registroAlimento", model);
 	}
+	
+	@RequestMapping(path = "/cambiarStockMinimo")
+	public ModelAndView cambiarStockMinimo(@RequestParam(name = "id") String id, @RequestParam(name="stockMinimo") String stock) {
+		
+		Alimento alimento = servicioAlimento.consultarAlimentoPorId(id);
+		
+		
+		return new ModelAndView ("redirect:/stock");
+	}
 
 	@RequestMapping(value = "/animales/registrar")
 	public ModelAndView irAFormularioDeRegistroDeAnimales() {

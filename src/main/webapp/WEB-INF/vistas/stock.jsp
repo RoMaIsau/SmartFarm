@@ -146,14 +146,16 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="cambiarStockMinimo" method="post">
+					<form action="cambiarStockMinimo" method="GET">
 						<label for="stockMinimo">Stock min.:</label>
-						<input class="form-control" name="stockMinimo">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cancelar</button>
-					<a type="submit" class="btn btn-primary botonCambiarStock">Cambiar</a>
+						<input class="form-control" type="text" name="stockMinimo" id="stockMinimo">
+						<input class="idInput" type="text" name="id" style="display:none;">
+						<hr>
+						<div class="d-flex justify-content-end mt-2">
+							<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary mx-2 botonCambiarStock">Cambiar</button>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -172,8 +174,7 @@
 				".modalStock",
 				function() {
 					var id = $(this).data('id');
-					$('.botonCambiarStock').attr('href',
-							"cambiarStockMinimo?id=" + id);
+					$('.idInput').attr('value', id);
 				});
 	</script>
 

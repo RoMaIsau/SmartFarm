@@ -14,4 +14,6 @@ public interface ServicioAlimento {
 	Alimento consultarAlimento(Alimento Alimento);
 
 	List<Alimento> listarAlimentos();
+
+	Alimento consultarAlimentoPorId(String id);
 }

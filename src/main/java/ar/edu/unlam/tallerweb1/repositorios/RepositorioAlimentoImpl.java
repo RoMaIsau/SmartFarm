@@ -40,4 +40,10 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 		return session.createCriteria(Alimento.class).list();
 	}
 
+	@Override
+	public Alimento consultarAlimentoPorId(String id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Alimento.class, id);
+	}
+
 }
