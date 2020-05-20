@@ -90,8 +90,11 @@
 															<i class="fas fa-feather-alt fa-2x text-gray-300"></i>
 														</c:when>
 													</c:choose>
-													<div class="text-primary editarAlimento" style="display:none">
-														<a href="#"><i class="fas fa-edit my-3 text-info"></i></a>
+													<div class="text-primary editarAlimento"
+														style="display: none">
+														<a href="#modalStock" data-id="${alimento.id}"
+															role="button" data-toggle="modal" class="modalStock"><i
+															class="fas fa-edit my-3 text-info"></i></a>
 													</div>
 												</div>
 											</div>
@@ -129,12 +132,50 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
+	<!-- Modal cambiar stock min -->
+	<div class="modal fade" id="modalStock" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Cambiar
+						stock mínimo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="cambiarStockMinimo" method="post">
+						<label for="stockMinimo">Stock min.:</label>
+						<input class="form-control" name="stockMinimo">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cancelar</button>
+					<a type="submit" class="btn btn-primary botonCambiarStock">Cambiar</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Logout Modal-->
 	<%@ include file="../../parts/modalCerrarSesion.jsp"%>
 
 	<!-- Bootstrap core JavaScript-->
 	<%@ include file="../../parts/scripts.jsp"%>
+
+	<!-- Asignar valor de id en modal -->
+	<script>
+		$(document).on(
+				"click",
+				".modalStock",
+				function() {
+					var id = $(this).data('id');
+					$('.botonCambiarStock').attr('href',
+							"cambiarStockMinimo?id=" + id);
+				});
+	</script>
 
 </body>
 </html>
