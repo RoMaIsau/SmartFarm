@@ -45,13 +45,15 @@ public class ControladorEmpleado {
 
 		// Verifica que sea un usuario de tipo Empleado, si no lo es, lo redirige al
 		// login
+		ModelAndView redirect = new ModelAndView("redirect:/login");
+
 		String rol = (String) request.getSession().getAttribute("ROL");
 
 		if (rol.equals("Empleado")) {
-			return new ModelAndView("indexEmpleado");
-		} else {
-			return new ModelAndView("redirect:/login");
+			redirect = new ModelAndView("redirect:/animales");
 		}
+
+		return redirect;
 	}
 
 	@RequestMapping(path = "/animales")

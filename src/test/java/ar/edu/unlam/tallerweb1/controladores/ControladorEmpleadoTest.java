@@ -207,6 +207,16 @@ public class ControladorEmpleadoTest {
 		assertThat(animales).isNotNull();
 	}
 
+	@Test
+	public void cuandoRedireccionaHaciaIndexEmpleadoDebeListarLosAnimales() {
+
+		HttpServletRequest pedido = this.configurarRolLogueado("Empleado");
+
+		ModelAndView modelAndView = this.controlador.irAIndexEmpleado(pedido);
+
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
+	}
+
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
