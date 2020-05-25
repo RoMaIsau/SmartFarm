@@ -32,4 +32,17 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 		return session.createQuery("SELECT a FROM AnimalDeGranja a", AnimalDeGranja.class).getResultList();
 	}
 
+	@Override
+	public AnimalDeGranja buscarPorId(Long id) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		return session.find(AnimalDeGranja.class, id);
+	}
+
+	@Override
+	public void actualizar(AnimalDeGranja animal) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(animal);
+	}
 }

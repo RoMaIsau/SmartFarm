@@ -10,4 +10,8 @@ public interface RepositorioDeAnimales {
 
 	List<AnimalDeGranja> listar();
 
+	AnimalDeGranja buscarPorId(Long id);
+
+	void actualizar(AnimalDeGranja animal);
+
 }
