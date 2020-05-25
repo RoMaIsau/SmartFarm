@@ -188,4 +188,26 @@ public class ControladorEmpleado {
 		return this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tipoAnimal);
 	}
 
+	@RequestMapping("/animales/editar")
+	public ModelAndView editarAnimal(@RequestParam("id") Long idAnimal) {
+
+		AnimalDeGranja animal = this.servicioDeAnimales.obtenerPorId(idAnimal);
+
+		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
+		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(animal.getTipo());
+		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("animalEditable", animal);
+		modelo.put("tiposDeAnimales", tiposDeAnimales);
+		modelo.put("razas", razas);
+		modelo.put("generos", generos);
+		return new ModelAndView("editarAnimal", modelo);
+	}
+
+	@RequestMapping(value = "/animales/editar", method = RequestMethod.POST)
+	public ModelAndView actualizarAnimal(@ModelAttribute AnimalDeGranja animal) {
+		this.servicioDeAnimales.actualizarAnimal(animal);
+		return new ModelAndView("redirect:/animales");
+	}
 }

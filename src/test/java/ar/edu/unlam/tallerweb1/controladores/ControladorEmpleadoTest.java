@@ -216,6 +216,35 @@ public class ControladorEmpleadoTest {
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
 	}
+	
+	@Test
+	public void cuandoSeEditaElAnimalSeDebeMostrarLaPantallaDeEdicion(){
+		
+		Long idAnimal = 1L;
+		when(servicioDeAnimales.obtenerPorId(eq(idAnimal))).thenReturn(new AnimalDeGranja());		
+		
+		ModelAndView modelAndView = this.controlador.editarAnimal(idAnimal);
+		
+		ModelMap modelo = modelAndView.getModelMap();
+		
+		AnimalDeGranja animal = (AnimalDeGranja) modelo.get("animalEditable");
+		assertThat(animal).isNotNull();
+
+		assertThat(modelo).containsKeys("tiposDeAnimales", "razas", "generos");
+		assertThat(modelAndView.getViewName()).isEqualTo("editarAnimal");
+	}
+
+	@Test
+	public void cuandoSeActualizaElAnimalSeRedirigeAlListadoDeAnimales() {
+
+		AnimalDeGranja animalEditado = new AnimalDeGranja();
+		animalEditado.setId(1L);
+
+		ModelAndView modelAndView = this.controlador.actualizarAnimal(animalEditado);
+
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
+		verify(this.servicioDeAnimales).actualizarAnimal(eq(animalEditado));
+	}
 
 	private HttpServletRequest configurarRolLogueado(String rol) {
 

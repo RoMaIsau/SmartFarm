@@ -62,4 +62,16 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 		return this.repositorioDeAnimales.listar();
 	}
 
+	@Override
+	public AnimalDeGranja obtenerPorId(Long idAnimal) {
+		return this.repositorioDeAnimales.buscarPorId(idAnimal);
+		
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void actualizarAnimal(AnimalDeGranja animal) {
+		this.repositorioDeAnimales.actualizar(animal);
+	}
+
 }
