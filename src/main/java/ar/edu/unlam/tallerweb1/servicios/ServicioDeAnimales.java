@@ -18,4 +18,8 @@ public interface ServicioDeAnimales {
 	void registrar(AnimalDeGranja animal);
 
 	List<AnimalDeGranja> obtenerTodos();
+
+	AnimalDeGranja obtenerPorId(Long idAnimal);
+
+	void actualizarAnimal(AnimalDeGranja animal);
 }
