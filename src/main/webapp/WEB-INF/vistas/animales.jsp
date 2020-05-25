@@ -68,11 +68,11 @@
 												<td><c:out value="${animal.raza.nombre}" /></td>
 												<td><c:out value="${animal.genero.nombre}" /></td>
 												<td><c:out value="${animal.peso}" />&nbsp;Kg</td>
-												<td class="text-center"><a href="#"><i
-														class="fas fa-edit mx-2 text-info"></i></a> <a
-													href="#modalEliminar" data-id="${animal.id}"
-													role="button" data-toggle="modal" class="open-Modal"><i
-														class="fas fa-trash mx-2 text-danger"></i></a></td>
+												<td class="text-center">
+													<a href="animales/editar?id=${animal.id}"><i class="fas fa-edit mx-2 text-info"></i></a>
+													<a href="#modalEliminar" data-id="${animal.id}" role="button" data-toggle="modal" class="open-Modal">
+														<i class="fas fa-trash mx-2 text-danger"></i></a>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
