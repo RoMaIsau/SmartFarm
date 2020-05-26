@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioNotificacion;
 
@@ -46,6 +47,11 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 				repositorioNotificacion.crearNotificacionStock(notificacion);
 			}
 		}
+	}
+
+	@Override
+	public List<Notificacion> listarNotificaciones(Usuario usuario) {
+		return repositorioNotificacion.listarNotificaciones(usuario);
 	}
 
 }

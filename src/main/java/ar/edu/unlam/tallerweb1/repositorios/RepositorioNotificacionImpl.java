@@ -15,7 +15,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	public RepositorioNotificacionImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -24,12 +24,19 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 	@Override
 	public void crearNotificacionStock(Notificacion notificacion) {
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		List<Usuario> usuarios = session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "Empleado")).list();
 
 		notificacion.setUsuarios(usuarios);
 		session.save(notificacion);
-			
+
 	}
-		
+
+	@Override
+	public List<Notificacion> listarNotificaciones(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Notificacion.class, "N").createAlias("N.Usuario", "U")
+				.add(Restrictions.eq("U.Id", usuario.getId())).list();
+	}
+
 }
