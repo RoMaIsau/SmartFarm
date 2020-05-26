@@ -1,12 +1,13 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Notificacion {
@@ -17,10 +18,11 @@ public class Notificacion {
 
 	private String titulo;
 	private String detalles;
-	private Date fecha;
+	private String fecha;
+	private Boolean estado;
 
-	@ManyToOne
-	private Usuario usuario;
+	@ManyToMany
+	private List<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
@@ -46,20 +48,28 @@ public class Notificacion {
 		this.detalles = detalles;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
-	public Usuario getUsuario() {
-		return usuario;
+	
+	public Boolean getEstado() {
+		return estado;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 }

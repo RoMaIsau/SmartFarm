@@ -22,17 +22,21 @@ import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 
 @Controller
 public class ControladorEmpleado {
 
 	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioAlimento servicioAlimento;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
-	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento) {
+	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
+			ServicioNotificacion servicioNotificacion) {
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAlimento = servicioAlimento;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 
 	@Autowired
@@ -67,6 +71,7 @@ public class ControladorEmpleado {
 
 			ModelMap modelo = new ModelMap();
 
+			servicioNotificacion.crearNotificacionStock();
 			List<AnimalDeGranja> animales = this.servicioDeAnimales.obtenerTodos();
 			modelo.put("animales", animales);
 			modelAndView = new ModelAndView("animales", modelo);
