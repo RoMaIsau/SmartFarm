@@ -86,6 +86,7 @@ public class ControladorUsuario {
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			request.getSession().setAttribute("ID", usuarioBuscado.getId());
 
 			String rol = (String) request.getSession().getAttribute("ROL");
 

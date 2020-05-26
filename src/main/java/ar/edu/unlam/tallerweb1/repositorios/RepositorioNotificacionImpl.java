@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -35,8 +36,9 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 	@Override
 	public List<Notificacion> listarNotificaciones(Usuario usuario) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Notificacion.class, "N").createAlias("N.Usuario", "U")
-				.add(Restrictions.eq("U.Id", usuario.getId())).list();
+		return (List<Notificacion>) session.createCriteria(Notificacion.class).createAlias("usuarios", "U")
+				.add(Restrictions.eq("U.id", usuario.getId())).list();
+
 	}
 
 }

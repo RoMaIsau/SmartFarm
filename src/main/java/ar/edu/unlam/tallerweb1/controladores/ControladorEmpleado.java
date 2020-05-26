@@ -17,12 +17,15 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
 public class ControladorEmpleado {
@@ -30,13 +33,15 @@ public class ControladorEmpleado {
 	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioAlimento servicioAlimento;
 	private ServicioNotificacion servicioNotificacion;
+	private ServicioUsuario servicioUsuario;
 
 	@Autowired
 	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
-			ServicioNotificacion servicioNotificacion) {
+			ServicioNotificacion servicioNotificacion, ServicioUsuario servicioUsuario) {
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioNotificacion = servicioNotificacion;
+		this.servicioUsuario = servicioUsuario;
 	}
 
 	@Autowired
@@ -66,14 +71,18 @@ public class ControladorEmpleado {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 
 		String rol = (String) request.getSession().getAttribute("ROL");
-
+		Long idUsuario = (Long) request.getSession().getAttribute("ID");
+		
 		if (rol.equals("Empleado") || rol.equals("Admin")) {
 
 			ModelMap modelo = new ModelMap();
 
 			servicioNotificacion.crearNotificacionStock();
+			Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);
+			List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(usuario);
 			List<AnimalDeGranja> animales = this.servicioDeAnimales.obtenerTodos();
 			modelo.put("animales", animales);
+			modelo.put("notificaciones", notificaciones);
 			modelAndView = new ModelAndView("animales", modelo);
 		}
 
