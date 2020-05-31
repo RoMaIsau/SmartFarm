@@ -212,7 +212,7 @@ public class ControladorEmpleado {
 	}
 
 	@RequestMapping(value = "/animales/eliminar", method = RequestMethod.POST)
-	public ModelAndView eliminarAnimal(@ModelAttribute Long idAnimal, HttpServletRequest request) {
+	public ModelAndView eliminarAnimal(@ModelAttribute("idAnimal") Long idAnimal, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 		String rol = (String) request.getSession().getAttribute("ROL");
 
