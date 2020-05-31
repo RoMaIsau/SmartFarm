@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,7 @@
 												<td><c:out value="${animal.peso}" />&nbsp;Kg</td>
 												<td class="text-center">
 													<a href="animales/editar?id=${animal.id}"><i class="fas fa-edit mx-2 text-info"></i></a>
-													<a href="#modalEliminar" data-id="${animal.id}" role="button" data-toggle="modal" class="open-Modal">
+													<a id="botonModalEliminarAnimal" href="#modalEliminar" data-id="${animal.id}" role="button" data-toggle="modal" class="open-Modal">
 														<i class="fas fa-trash mx-2 text-danger"></i></a>
 												</td>
 											</tr>
@@ -109,7 +110,7 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Modal eliminar usuario -->
+	<!-- Modal eliminar animal -->
 	<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -125,7 +126,10 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Cancelar</button>
-					<a type="button" class="btn btn-danger text-white botonEliminar">Aceptar</a>
+					<form action="animales/eliminar" method="POST">
+						<input id="idAnimalParaEliminar" type="hidden" name="idAnimal">
+						<input class="btn btn-danger botonEliminar" type="submit" value="Aceptar">
+					</form>
 				</div>
 			</div>
 		</div>
@@ -137,6 +141,6 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<%@ include file="../../parts/scripts.jsp"%>
-
+	<script src="<c:url value="/js/animales.js"/>"></script>
 </body>
 </html>
