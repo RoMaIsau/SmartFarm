@@ -45,4 +45,12 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(animal);
 	}
+
+	@Override
+	public void eliminar(AnimalDeGranja animal) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.delete(animal);
+	}
+
 }

@@ -82,6 +82,18 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		assertThat(animalBuscado.getPeso()).isEqualTo(800.0);
 	}
 
+	@Test
+	public void deberiaEliminarAnimal() {
+
+		AnimalDeGranja animalParaBorrar = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0);
+		this.repositorioDeAnimales.guardar(animalParaBorrar);
+
+		this.repositorioDeAnimales.eliminar(animalParaBorrar);
+
+		AnimalDeGranja animalEncontrado = this.repositorioDeAnimales.buscarPorId(animalParaBorrar.getId());
+		assertThat(animalEncontrado).isNull();
+	}
+
 	private AnimalDeGranja crearAnimal(String nombreTipo, String nombreRaza, String nombreGenero, double peso) {
 
 		TipoAnimal tipo = new TipoAnimal();

@@ -13,5 +13,5 @@ public interface RepositorioDeAnimales {
 	AnimalDeGranja buscarPorId(Long id);
 
 	void actualizar(AnimalDeGranja animal);
-
+	void eliminar(AnimalDeGranja animal);
 }
