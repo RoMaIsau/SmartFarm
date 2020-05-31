@@ -210,4 +210,17 @@ public class ControladorEmpleado {
 		this.servicioDeAnimales.actualizarAnimal(animal);
 		return new ModelAndView("redirect:/animales");
 	}
+
+	@RequestMapping(value = "/animales/eliminar", method = RequestMethod.POST)
+	public ModelAndView eliminarAnimal(@ModelAttribute("idAnimal") Long idAnimal, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/login");
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if("Empleado".equals(rol)) {
+
+			this.servicioDeAnimales.eliminarPorId(idAnimal);
+			modelAndView =  new ModelAndView("redirect:/animales");
+		}
+		return modelAndView;
+	}
 }

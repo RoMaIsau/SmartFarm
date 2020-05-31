@@ -1,19 +1,21 @@
 package ar.edu.unlam.tallerweb1.persistencia;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
+import org.assertj.core.api.Assertions;
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimalesImpl;
@@ -80,6 +82,27 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 		
 		AnimalDeGranja animalBuscado = this.repositorioDeAnimales.buscarPorId(vaca.getId());
 		assertThat(animalBuscado.getPeso()).isEqualTo(800.0);
+	}
+
+	@Test
+	public void deberiaEliminarAnimal() {
+
+		AnimalDeGranja animalParaBorrar = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0);
+		this.repositorioDeAnimales.guardar(animalParaBorrar);
+
+		this.repositorioDeAnimales.eliminar(animalParaBorrar);
+
+		AnimalDeGranja animalEncontrado = null;
+
+		try {
+
+			animalEncontrado = this.repositorioDeAnimales.buscarPorId(animalParaBorrar.getId());
+			Assertions.fail("No debería encontrar animal con id: " + animalParaBorrar.getId());
+
+		} catch (NoResultException e) {
+
+			assertThat(animalEncontrado).isNull();
+		}
 	}
 
 	private AnimalDeGranja crearAnimal(String nombreTipo, String nombreRaza, String nombreGenero, double peso) {
