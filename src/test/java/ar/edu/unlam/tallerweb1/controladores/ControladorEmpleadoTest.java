@@ -246,6 +246,30 @@ public class ControladorEmpleadoTest {
 		verify(this.servicioDeAnimales).actualizarAnimal(eq(animalEditado));
 	}
 
+	@Test
+	public void cuandoUnEmpleadoEliminaUnAnimalSeRedirigeAlListadoDeAnimales() {
+
+		Long idAnimal = 2L;
+		HttpServletRequest request = configurarRolLogueado("Empleado");
+
+		ModelAndView modelAndView = this.controlador.eliminarAnimal(idAnimal, request);
+
+		verify(this.servicioDeAnimales).eliminarPorId(eq(idAnimal));
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
+	}
+
+	@Test
+	public void cuandoElRolQueEliminaUnAnimalNoEsEmpleadoRedirigeAlLogin() {
+
+		Long idAnimal = 2L;
+		HttpServletRequest request = configurarRolLogueado("Veterinario");
+
+		ModelAndView modelAndView = this.controlador.eliminarAnimal(idAnimal, request);
+
+		verifyZeroInteractions(this.servicioDeAnimales);
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/login");
+	}
+
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
