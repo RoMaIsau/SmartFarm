@@ -60,8 +60,7 @@
 										<hr>
 									</form:form>
 									<div class="text-center">
-										<a class="small" href="#">¿Olvidó su
-											contraseña?</a>
+										<a class="small" href="#">¿Olvidó su contraseña?</a>
 									</div>
 								</div>
 							</div>

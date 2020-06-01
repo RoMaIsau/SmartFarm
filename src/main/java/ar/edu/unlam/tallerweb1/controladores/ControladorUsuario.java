@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import ar.edu.unlam.tallerweb1.modelo.TipoDeUsuario;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -31,7 +34,19 @@ public class ControladorUsuario {
 	public ControladorUsuario(ServicioUsuario servicioUsuario) {
 		this.servicioUsuario = servicioUsuario;
 	}
-
+	
+	@Inject
+	private ServicioTipoDeUsuario servicioTipoDeUsuario;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es
 	// invocada por metodo http GET
 	@RequestMapping("/login")
@@ -114,7 +129,22 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", modelo);
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * Se comprueba que el usuario no exista, que las contraseñas coincidan y se
 	 * registra el usuario
@@ -122,28 +152,55 @@ public class ControladorUsuario {
 	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÑA AL ADMINISTRADOR */
 	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
-			@RequestParam(name = "password2") String password2) {
+										@RequestParam(name = "password2") String password2) {
 		ModelMap model = new ModelMap();
-
+		
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 
 		if (usuario.getPassword().equals(password2)) {
 			if (usuarioBuscado != null) {
 				model.put("error", "Usuario ya registrado.");
 			} else {
-				if (servicioUsuario.registrarUsuario(usuario) != null) {
-					model.put("mensaje", "Usuario creado correctamente");
+				TipoDeUsuario tipoDeUsuarioBuscado = servicioTipoDeUsuario.consultarRol(usuario.getRol());
+				if(tipoDeUsuarioBuscado != null) {
+					if (servicioUsuario.registrarUsuario(usuario) != null) {
+						model.put("mensaje", "Usuario creado correctamente");
+					} else {
+						model.put("mensaje", "No se pudo crear el usuario");
+					}
 				} else {
-					model.put("mensaje", "No se pudo crear el usuario");
+					model.put("error", "El tipo de usuario elegido no es v�lido");
 				}
 			}
 		} else {
 			model.put("error", "La contraseñas no coinciden");
 		}
-
+		
 		return new ModelAndView("registro", model);
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar
 	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
@@ -177,3 +234,4 @@ public class ControladorUsuario {
 	}
 
 }
+
