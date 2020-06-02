@@ -49,7 +49,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public List<Usuario> listarUsuarios() {
 		final Session session = sessionFactory.getCurrentSession();
 
-		return (List<Usuario>) session.createCriteria(Usuario.class).list();
+		return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.ne("rol", "Admin")).list();
 	}
 
 	@Override
