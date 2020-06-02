@@ -8,5 +8,5 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 public interface ServicioNotificacion {
 	
 	void crearNotificacionStock();
-	List<Notificacion> listarNotificaciones(Usuario usuario);
+	List<Notificacion> listarNotificaciones(Long idUsuario);
 }

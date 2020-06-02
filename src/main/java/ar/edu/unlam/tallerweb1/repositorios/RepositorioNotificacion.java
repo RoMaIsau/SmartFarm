@@ -9,6 +9,6 @@ public interface RepositorioNotificacion {
 
 	void crearNotificacionStock(Notificacion notificacion);
 
-	List<Notificacion> listarNotificaciones(Usuario usuario);
+	List<Notificacion> listarNotificaciones(Long idUsuario);
 
 }

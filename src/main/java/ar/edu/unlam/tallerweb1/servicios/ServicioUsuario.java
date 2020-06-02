@@ -16,4 +16,6 @@ public interface ServicioUsuario {
 	Usuario consultarUsuarioPorId(Long id);
 
 	void eliminarUsuario(Usuario usuario);
+
+	List<Usuario> consultarUsuariosEmpleados();
 }

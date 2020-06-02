@@ -25,19 +25,15 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 	@Override
 	public void crearNotificacionStock(Notificacion notificacion) {
 		Session session = sessionFactory.getCurrentSession();
-
-		List<Usuario> usuarios = session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "Empleado")).list();
-
-		notificacion.setUsuarios(usuarios);
+		
 		session.save(notificacion);
-
 	}
 
 	@Override
-	public List<Notificacion> listarNotificaciones(Usuario usuario) {
+	public List<Notificacion> listarNotificaciones(Long idUsuario) {
 		Session session = sessionFactory.getCurrentSession();
 		return (List<Notificacion>) session.createCriteria(Notificacion.class).createAlias("usuarios", "U")
-				.add(Restrictions.eq("U.id", usuario.getId())).list();
+				.add(Restrictions.eq("U.id", idUsuario)).list();
 
 	}
 

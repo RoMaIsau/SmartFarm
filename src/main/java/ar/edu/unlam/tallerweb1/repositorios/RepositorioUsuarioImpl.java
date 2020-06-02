@@ -67,4 +67,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	}
 
+	@Override
+	public List<Usuario> consultarUsuariosEmpleados() {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "Empleado")).list();
+	}
+
 }

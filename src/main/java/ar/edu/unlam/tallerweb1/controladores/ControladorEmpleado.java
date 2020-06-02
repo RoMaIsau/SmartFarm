@@ -34,10 +34,10 @@ public class ControladorEmpleado {
 	private ServicioAlimento servicioAlimento;
 	private ServicioNotificacion servicioNotificacion;
 	private ServicioUsuario servicioUsuario;
-
+	
 	@Autowired
 	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
-			ServicioNotificacion servicioNotificacion, ServicioUsuario servicioUsuario) {
+			ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion) {
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioNotificacion = servicioNotificacion;
@@ -71,28 +71,24 @@ public class ControladorEmpleado {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 
 		String rol = (String) request.getSession().getAttribute("ROL");
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-		
+	
 		if (rol.equals("Empleado") || rol.equals("Admin")) {
 
 			ModelMap modelo = new ModelMap();
 
-			servicioNotificacion.crearNotificacionStock();
-			Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);
-			List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(usuario);
 			List<AnimalDeGranja> animales = this.servicioDeAnimales.obtenerTodos();
 			modelo.put("animales", animales);
-			modelo.put("notificaciones", notificaciones);
 			modelAndView = new ModelAndView("animales", modelo);
 		}
-
+		
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(path = "/stock")
 	public ModelAndView irAStock(HttpServletRequest request) {
 
 		String rol = (String) request.getSession().getAttribute("ROL");
+		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
 		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
@@ -100,15 +96,20 @@ public class ControladorEmpleado {
 		}
 
 		ModelMap model = new ModelMap();
+		servicioNotificacion.crearNotificacionStock();
+		
 
 		List<Alimento> alimentos = servicioAlimento.listarAlimentos();
 
 		List<TipoAlimento> tiposAlimentos = servicioAlimento.obtenerTiposDeAlimentos();
-
+		
+		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
+		
+		model.put("notificaciones", notificaciones);
 		model.put("alimentos", alimentos);
 		model.put("tipos", tiposAlimentos);
+		
 		return new ModelAndView("stock", model);
-
 	}
 
 	@RequestMapping(path = "registrarAlimento")
