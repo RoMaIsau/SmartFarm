@@ -40,9 +40,9 @@
 									<div class="col-lg-12">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Registrar usuario/a!</h1>
+												<h1 class="h4 text-gray-900 mb-4">Ingresar nuevo registro</h1>
 											</div>
-											<%--Bloque que es visible si el elemento error no esta vacio --%>
+											
 											<c:if test="${not empty error}">
 												<span class="text-danger" style="float: left;">${error}</span>
 												<br>
@@ -51,48 +51,31 @@
 												<span class="text-success" style="float: left;">${mensaje}</span>
 												<br>
 											</c:if>
-											<form:form method="POST" modelAttribute="usuario"
-												action="validar-registro" class="user">
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<form:input path="nombre" type="text" id="nombre"
-															name="nombre" required="true"
-															class="form-control form-control-user"
-															placeholder="Nombre" />
-													</div>
-													<div class="col-sm-6">
-														<form:input path="apellido" type="text" id="apellido"
-															name="apellido" required="true"
-															class="form-control form-control-user"
-															placeholder="Apellido" />
+											
+											<form:form method="POST" modelAttribute="gastos" action="validarnuevaestadistica" class="user">
+												<div class="form-group row"><label class="mt-2">$</label>
+													<div class="col-sm-11">
+														<form:input path="gastosAlimenticios" type="number" id="gastosAlimenticios" name="gastosAlimenticios"
+														class="form-control form-control-user" placeholder="Gastos alimenticios" />
 													</div>
 												</div>
-												<div class="form-group">
-													<form:input path="email" type="email" id="email"
-														name="email" required="true"
-														class="form-control form-control-user" placeholder="Email" />
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<form:input path="password" type="password" id="password"
-															name="password" required="true"
-															class="form-control form-control-user"
-															placeholder="Contraseña" />
+												<div class="form-group row"><label class="mt-2">$</label>
+													<div class="col-sm-11">
+														<form:input path="gastosEmpresariales" type="number" id="gastosEmpresariales" name="gastosEmpresariales"
+														class="form-control form-control-user" placeholder="Gastos empresariales" />
 													</div>
-													<div class="col-sm-6">
-														<input type="password" id="password2" name="password2"
-															required class="form-control form-control-user"
-															placeholder="Repita contraseña">
+												</div><div class="form-group row"><label class="mt-2">$</label>
+													<div class="col-sm-11">
+														<form:input path="gastosMedicos" type="number" id="gastosMedicos" name="gastosMedicos"
+														class="form-control form-control-user" placeholder="Gastos médicos" />
+													</div>
+												</div><div class="form-group row"><label class="mt-2">$</label>
+													<div class="col-sm-11">
+														<form:input path="gastosTecnologicos" type="number" id="gastosTecnologicos" name="gastosTecnologicos"
+														class="form-control form-control-user" placeholder="Gastos tecnológicos" />
 													</div>
 												</div>
-												<div class="form-group">
-													<form:input path="rol" type="text" id="rol" name="rol"
-														required="true" class="form-control form-control-user"
-														placeholder="Rol" />
-												</div>
-												<button
-													class="btn btn-primary btn-user btn-block text-white"
-													type="submit">Registrar cuenta</button>
+												<button class="btn btn-primary btn-user btn-block text-white" type="submit">Añadir registro</button>
 											</form:form>
 										</div>
 									</div>
