@@ -34,7 +34,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		// objeto recibido como parametro
 		// uniqueResult da error si se encuentran más de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
-		return (Usuario) session.createCriteria(Usuario.class).add(Restrictions.eq("email", usuario.getEmail())).uniqueResult();
+		return (Usuario) session.createCriteria(Usuario.class).add(Restrictions.eq("email", usuario.getEmail()))
+				.add(Restrictions.eq("password", usuario.getPassword()))
+				.uniqueResult();
 	}
 
 	@Override

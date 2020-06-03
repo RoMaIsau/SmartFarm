@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -70,8 +72,8 @@ public class Gastos {
 	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFecha(String fechaNac) {
+		this.fecha = fechaNac;
 	}
 	
 	
