@@ -11,15 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.UsuarioNotificacion;
 
 @Repository("repositorioNotificacion")
 public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 
 	private SessionFactory sessionFactory;
+	private RepositorioUsuario repositorioUsuario;
 
 	@Autowired
-	public RepositorioNotificacionImpl(SessionFactory sessionFactory) {
+	public RepositorioNotificacionImpl(SessionFactory sessionFactory, RepositorioUsuario repositorioUsuario) {
 		this.sessionFactory = sessionFactory;
+		this.repositorioUsuario = repositorioUsuario;
 	}
 
 	@Override
@@ -27,13 +30,27 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 		Session session = sessionFactory.getCurrentSession();
 		
 		session.save(notificacion);
+		
+		List<Usuario> empleados = repositorioUsuario.consultarUsuariosEmpleados();
+		
+		for (Usuario e : empleados) {
+			UsuarioNotificacion usuarioNotificacion = new UsuarioNotificacion();
+			usuarioNotificacion.setNotificacion(notificacion);
+			usuarioNotificacion.setUsuario(e);
+			session.save(usuarioNotificacion);
+		}
+		
 	}
 
 	@Override
 	public List<Notificacion> listarNotificaciones(Long idUsuario) {
 		Session session = sessionFactory.getCurrentSession();
-		return (List<Notificacion>) session.createCriteria(Notificacion.class).createAlias("usuarios", "U")
-				.add(Restrictions.eq("U.id", idUsuario)).list();
+		
+	
+		return (List<Notificacion>) session.createCriteria(UsuarioNotificacion.class)
+				.add(Restrictions.eq("usuario.id", idUsuario))
+				.createAlias("notificacion", "n")
+				.list();
 
 	}
 

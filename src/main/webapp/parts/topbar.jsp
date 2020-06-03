@@ -55,10 +55,10 @@
 								</div>
 							</div>
 							<div>
-								<div class="small text-gray-500"><c:out value="${noti.fecha}" /></div>
-								<span class="font-weight-bold"><c:out value="${noti.titulo}" /></span> 
+								<div class="small text-gray-500"><c:out value="${noti.notificacion.fecha}" /></div>
+								<span class="font-weight-bold"><c:out value="${noti.notificacion.titulo}" /></span> 
 								<br /> 
-								<span><c:out value="${noti.detalles}" /></span>
+								<span><c:out value="${noti.notificacion.detalles}" /></span>
 							</div>
 						</a> 
 					</c:forEach>
