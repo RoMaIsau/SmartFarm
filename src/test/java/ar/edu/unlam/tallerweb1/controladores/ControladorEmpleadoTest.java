@@ -24,6 +24,8 @@ import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
 
 public class ControladorEmpleadoTest {
@@ -33,6 +35,8 @@ public class ControladorEmpleadoTest {
 	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioAlimento servicioAlimento;
 	private ValidadorDeAnimalDeGranja validadorDeAnimales;
+	private ServicioUsuario servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Before
 	public void inicializar() {
@@ -40,9 +44,12 @@ public class ControladorEmpleadoTest {
 		this.servicioDeAnimales = crearMockServicioDeAnimales();
 		this.servicioAlimento = crearMockServicioAlimento();
 		this.validadorDeAnimales = crearMockValidadorDeAnimales();
+		this.servicioUsuario = mock(ServicioUsuario.class);
+		this.servicioNotificacion = mock(ServicioNotificacion.class);
 		
 		this.controlador = new ControladorEmpleado(this.servicioDeAnimales,
-				this.servicioAlimento, this.validadorDeAnimales);
+				this.servicioAlimento, this.servicioUsuario, this.servicioNotificacion,
+				this.validadorDeAnimales);
 	}
 
 	private ServicioDeAnimales crearMockServicioDeAnimales() {
