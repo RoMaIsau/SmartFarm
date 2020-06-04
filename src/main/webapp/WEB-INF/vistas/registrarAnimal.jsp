@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,6 @@
 				<%@ include file="../../parts/topbar.jsp"%>
 
 				<!-- End of Topbar -->
-
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<div class="container" style="max-width: 720px !important;">
@@ -43,20 +43,36 @@
 												<h1 class="h4 text-gray-900 mb-4">Registrar Animal</h1>
 											</div>
 											<form:form action="registrar" method="post" modelAttribute="animal">
+											<spring:hasBindErrors name="animal">
+													<c:forEach var="error" items="${errors.fieldErrors}">
+														<c:choose>
+															<c:when test="${error.field == 'peso'}">
+																<script type="text/javascript">
+																	var errorPeso = 'peso';
+																</script>
+															</c:when>
+														</c:choose>
+													<br />
+												</c:forEach>
+											</spring:hasBindErrors>
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="tipo">Tipo Animal</label>
-															<form:select id="tipo" path="tipo.id" class="form-control">
-																<form:options items="${tiposDeAnimales}" itemLabel="nombre" itemValue="id"/>
+															<form:select id="tipo" path="tipo.id"
+																class="form-control">
+																<form:options items="${tiposDeAnimales}"
+																	itemLabel="nombre" itemValue="id" />
 															</form:select>
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="raza">Raza</label>
-															<form:select id="raza" path="raza.id" class="form-control">
-																<form:options items="${razas}" itemLabel="nombre" itemValue="id"/>
+															<form:select id="raza" path="raza.id"
+																class="form-control">
+																<form:options items="${razas}" itemLabel="nombre"
+																	itemValue="id" />
 															</form:select>
 														</div>
 													</div>
@@ -65,8 +81,10 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="genero">Género</label>
-															<form:select id="genero" path="genero.id" class="form-control">
-																<form:options items="${generos}" itemLabel="nombre" itemValue="id"/>
+															<form:select id="genero" path="genero.id"
+																class="form-control">
+																<form:options items="${generos}" itemLabel="nombre"
+																	itemValue="id" />
 															</form:select>
 														</div>
 													</div>
@@ -74,6 +92,7 @@
 														<div class="form-group">
 															<label for="peso">Peso</label>
 															<form:input path="peso" class="form-control"/>
+															<form:errors path="peso" element="div" cssClass="invalid-feedback is-invalid"/>
 														</div>
 													</div>
 												</div>
@@ -84,28 +103,29 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 
-
 				</div>
-				<!-- /.container-fluid -->
+
 
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2019</span>
-					</div>
-				</div>
-			</footer>
-			<!-- End of Footer -->
+			<!-- /.container-fluid -->
 
 		</div>
-		<!-- End of Content Wrapper -->
+		<!-- End of Main Content -->
+
+		<!-- Footer -->
+		<footer class="sticky-footer bg-white">
+			<div class="container my-auto">
+				<div class="copyright text-center my-auto">
+					<span>Copyright &copy; Your Website 2019</span>
+				</div>
+			</div>
+		</footer>
+		<!-- End of Footer -->
+
+	</div>
+	<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->
