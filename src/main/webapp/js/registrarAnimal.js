@@ -33,9 +33,9 @@
 })(jQuery); // End of use strict
 
 window.onload = function() {
-	cargarErrores();
+	mostrarErrores();
 
-	function cargarErrores() {
+	function mostrarErrores() {
 		if (errorPeso !== undefined) {
 			$('#' + errorPeso).addClass('is-invalid');
 		}
