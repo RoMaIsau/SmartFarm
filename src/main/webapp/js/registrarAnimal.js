@@ -36,8 +36,8 @@ window.onload = function() {
 	mostrarErrores();
 
 	function mostrarErrores() {
-		if (errorPeso !== undefined) {
-			$('#' + errorPeso).addClass('is-invalid');
+		if (hayError !== undefined && hayError == true) {
+			$('#peso').addClass('is-invalid');
 		}
 
 	}

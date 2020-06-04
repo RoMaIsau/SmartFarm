@@ -43,15 +43,9 @@
 											</div>
 											<form:form action="registrar" method="post" modelAttribute="animal">
 											<spring:hasBindErrors name="animal">
-													<c:forEach var="error" items="${errors.fieldErrors}">
-														<c:choose>
-															<c:when test="${error.field == 'peso'}">
-																<script type="text/javascript">
-																	var errorPeso = 'peso';
-																</script>
-															</c:when>
-														</c:choose>
-												</c:forEach>
+												<script type="text/javascript">
+													var hayError = true;
+												</script>
 											</spring:hasBindErrors>
 												<div class="row">
 													<div class="col-sm-6">
@@ -89,7 +83,7 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="peso">Peso</label>
-															<form:input path="peso" class="form-control"/>
+															<form:input id="peso" path="peso" class="form-control"/>
 															<form:errors path="peso" element="div" cssClass="invalid-feedback is-invalid"/>
 														</div>
 													</div>
