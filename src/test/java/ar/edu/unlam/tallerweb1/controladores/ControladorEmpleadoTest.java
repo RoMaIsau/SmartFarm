@@ -14,29 +14,44 @@ import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
 
 public class ControladorEmpleadoTest {
 	
 	private ControladorEmpleado controlador;
 	
 	private ServicioDeAnimales servicioDeAnimales;
+	private ServicioAlimento servicioAlimento;
+	private ValidadorDeAnimalDeGranja validadorDeAnimales;
+	private ServicioUsuario servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Before
 	public void inicializar() {
 		
 		this.servicioDeAnimales = crearMockServicioDeAnimales();
+		this.servicioAlimento = crearMockServicioAlimento();
+		this.validadorDeAnimales = crearMockValidadorDeAnimales();
+		this.servicioUsuario = mock(ServicioUsuario.class);
+		this.servicioNotificacion = mock(ServicioNotificacion.class);
 		
-		this.controlador = new ControladorEmpleado();
-		this.controlador.setServicioDeAnimales(this.servicioDeAnimales);
+		this.controlador = new ControladorEmpleado(this.servicioDeAnimales,
+				this.servicioAlimento, this.servicioUsuario, this.servicioNotificacion,
+				this.validadorDeAnimales);
 	}
-	
+
 	private ServicioDeAnimales crearMockServicioDeAnimales() {
 
 		List<TipoAnimal> tiposDeAnimales = this.crearTiposDeAnimales();
@@ -49,6 +64,14 @@ public class ControladorEmpleadoTest {
 		when(servicio.obtenerGeneros()).thenReturn(sexos);
 
 		return servicio;
+	}
+
+	private ServicioAlimento crearMockServicioAlimento() {
+		return mock(ServicioAlimento.class);
+	}
+
+	private ValidadorDeAnimalDeGranja crearMockValidadorDeAnimales() {
+		return mock(ValidadorDeAnimalDeGranja.class);
 	}
 
 	private List<TipoAnimal> crearTiposDeAnimales() {
@@ -89,18 +112,18 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void registrarAnimalRedirigeALaVistaDeRegistrarAnimal() {
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
 		
 		String vista = modelAndView.getViewName();
 		
 		assertThat(vista).isEqualTo("registrarAnimal");
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeTiposDeAnimalesDisponibles() {
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
 		
 		Map<String, Object> modelo = modelAndView.getModel();
 		
@@ -116,7 +139,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeRazasDisponibles() {
 
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(any(TipoAnimal.class));
@@ -131,7 +154,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void laVistaRegistrarAnimalMuestaUnaListaDeGeneros() {
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 		
 		verify(this.servicioDeAnimales).obtenerGeneros();
@@ -144,7 +167,7 @@ public class ControladorEmpleadoTest {
 	@Test
 	public void seSeleccionaPorDefaultElPrimerElementoDeLosCombosDeSeleccion() {
 
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales();
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		assertThat(modelo).containsKey("animal");
@@ -155,6 +178,27 @@ public class ControladorEmpleadoTest {
 		assertThat(animal).extracting("genero").isNotNull();
 	}
 	
+	@Test
+	public void cuandoSeRedirigeALaPantallaDeRegistroDeAnimalDebidoAUnErrorEntoncesSeMantienenLosDatosCargados() {
+
+		TipoAnimal tipoSeleccionado = new TipoAnimal();
+		tipoSeleccionado.setId(1L);
+
+		AnimalDeGranja animalInvalido = new AnimalDeGranja();
+		animalInvalido.setPeso(-500d);
+		animalInvalido.setTipo(tipoSeleccionado);
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("animal", animalInvalido);
+
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(modelo);
+
+		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(eq(tipoSeleccionado));
+
+		AnimalDeGranja animal = (AnimalDeGranja) modelAndView.getModelMap().get("animal");
+		assertThat(animal.getPeso()).isEqualTo(-500d);
+	}
+
 	@Test
 	public void cargarRazasSegunTipoDeAnimalSeleccionado() {
 		
@@ -174,10 +218,29 @@ public class ControladorEmpleadoTest {
 
 		AnimalDeGranja animalNuevo = new AnimalDeGranja();
 
-		ModelAndView modelAndView = this.controlador.registrarAnimal(animalNuevo);
+		BindingResult bindingResult = mock(BindingResult.class);
+		when(bindingResult.hasErrors()).thenReturn(false);
+
+		RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+
+		ModelAndView modelAndView = this.controlador.registrarAnimal(animalNuevo, bindingResult, redirectAttributes);
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
 		verify(this.servicioDeAnimales).registrar(eq(animalNuevo));
+	}
+
+	@Test
+	public void cuandoFallaLaValidacionAlRegistrarAnimalSeDebeRedigirALaPantallaDeRegistrarAnimal() {
+
+		AnimalDeGranja animalNuevo = new AnimalDeGranja();
+
+		RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+
+		BindingResult bindingResult = mock(BindingResult.class);
+		when(bindingResult.hasErrors()).thenReturn(true);
+
+		ModelAndView modelAndView = this.controlador.registrarAnimal(animalNuevo, bindingResult, redirectAttributes);
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales/registrar");
 	}
 
 	@Test

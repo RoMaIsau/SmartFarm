@@ -1,26 +1,44 @@
 (function($) {
 	"use strict"; // Start of use strict
-	$('#tipo').change(
-			function() {
+	jQuery(window).on("load", function(){
 
-				$.getJSON('cargarRazas', {
-					idTipoAnimal : $(this).val()
-				}, function(respuesta) {
+		// Cada vez que se selecciona un tipo de animal
+		$('#tipo').change(function() {
+			cargarRazas($(this).val());
+		});
 
-					var opciones = '';
-					var cantidadDeRazas = respuesta.length;
+	});
 
-					for (var i = 0; i < cantidadDeRazas; i++) {
+	function cargarRazas(idTipoAnimal) {
+		$.getJSON('cargarRazas', {
+			idTipoAnimal : idTipoAnimal
+		}, function(respuesta) {
 
-						var seleccionada = i == 0 ? 'selected="selected"' : '';
+			var opciones = '';
+			var cantidadDeRazas = respuesta.length;
 
-						var raza = respuesta[i];
+			for (var i = 0; i < cantidadDeRazas; i++) {
 
-						opciones += '<option value="' + raza.id + '" ' + seleccionada + '>' + raza.nombre + '</option>';
-					}
+				var seleccionada = i == 0 ? 'selected="selected"' : '';
 
-					$('#raza').html(opciones);
+				var raza = respuesta[i];
 
-				});
-			});
+				opciones += '<option value="' + raza.id + '" ' + seleccionada + '>' + raza.nombre + '</option>';
+			}
+
+			$('#raza').html(opciones);
+
+		});
+	}
 })(jQuery); // End of use strict
+
+window.onload = function() {
+	mostrarErrores();
+
+	function mostrarErrores() {
+		if (hayError !== undefined && hayError == true) {
+			$('#peso').addClass('is-invalid');
+		}
+
+	}
+};

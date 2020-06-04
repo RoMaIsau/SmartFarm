@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
@@ -26,6 +28,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
 
 @Controller
 public class ControladorEmpleado {
@@ -34,19 +37,17 @@ public class ControladorEmpleado {
 	private ServicioAlimento servicioAlimento;
 	private ServicioNotificacion servicioNotificacion;
 	private ServicioUsuario servicioUsuario;
-	
+	private ValidadorDeAnimalDeGranja validadorDeAnimales;
+
 	@Autowired
-	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
-			ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion) {
+	public ControladorEmpleado(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
+			ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion,
+			ValidadorDeAnimalDeGranja validadorDeAnimales) {
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioUsuario = servicioUsuario;
-	}
-
-	@Autowired
-	public void setServicioDeAnimales(ServicioDeAnimales servicioDeAnimales) {
-		this.servicioDeAnimales = servicioDeAnimales;
+		this.validadorDeAnimales = validadorDeAnimales;
 	}
 
 	@RequestMapping(path = "/indexEmpleado")
@@ -71,7 +72,7 @@ public class ControladorEmpleado {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 
 		String rol = (String) request.getSession().getAttribute("ROL");
-	
+
 		if (rol.equals("Empleado") || rol.equals("Admin")) {
 
 			ModelMap modelo = new ModelMap();
@@ -80,10 +81,10 @@ public class ControladorEmpleado {
 			modelo.put("animales", animales);
 			modelAndView = new ModelAndView("animales", modelo);
 		}
-		
+
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(path = "/stock")
 	public ModelAndView irAStock(HttpServletRequest request) {
 
@@ -167,32 +168,54 @@ public class ControladorEmpleado {
 	}
 
 	@RequestMapping(value = "/animales/registrar")
-	public ModelAndView irAFormularioDeRegistroDeAnimales() {
-
-		AnimalDeGranja animal = new AnimalDeGranja();
+	public ModelAndView irAFormularioDeRegistroDeAnimales(ModelMap modelo) {
 
 		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
-		List<Raza> razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tiposDeAnimales.get(0));
 		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
 
-		animal.setTipo(tiposDeAnimales.get(0));
-		animal.setRaza(razas.get(0));
-		animal.setGenero(generos.get(0));
+		List<Raza> razas;
+		AnimalDeGranja animal = null;
+		if (!modelo.containsAttribute("animal")) {
+			razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(tiposDeAnimales.get(0));
 
-		ModelMap modelo = new ModelMap();
+			animal = new AnimalDeGranja();
+			animal.setTipo(tiposDeAnimales.get(0));
+			animal.setRaza(razas.get(0));
+			animal.setGenero(generos.get(0));
+			modelo.put("animal", animal);
+
+		} else {
+
+			animal = (AnimalDeGranja) modelo.get("animal");
+			razas = this.servicioDeAnimales.obtenerRazasPorTipoAnimal(animal.getTipo());
+		}
+
 		modelo.put("tiposDeAnimales", tiposDeAnimales);
 		modelo.put("razas", razas);
 		modelo.put("generos", generos);
-		modelo.put("animal", animal);
 
 		return new ModelAndView("registrarAnimal", modelo);
 	}
 
 	@RequestMapping(value = "/animales/registrar", method = RequestMethod.POST)
-	public ModelAndView registrarAnimal(@ModelAttribute("animal") AnimalDeGranja animal) {
+	public ModelAndView registrarAnimal(@ModelAttribute("animal") AnimalDeGranja animal,
+			BindingResult result, RedirectAttributes redirectAttributes) {
 
-		this.servicioDeAnimales.registrar(animal);
-		return new ModelAndView("redirect:/animales");
+		ModelAndView modelAndView = null;
+
+		this.validadorDeAnimales.validate(animal, result);
+
+		if (result.hasErrors()) {
+			 redirectAttributes.addFlashAttribute("animal", animal);
+			 redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.animal", result);
+			 modelAndView = new ModelAndView("redirect:/animales/registrar");
+		} else {
+
+			this.servicioDeAnimales.registrar(animal);
+			modelAndView = new ModelAndView("redirect:/animales");
+		}
+
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/animales/cargarRazas")
