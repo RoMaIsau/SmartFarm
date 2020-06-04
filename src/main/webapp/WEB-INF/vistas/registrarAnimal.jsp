@@ -52,7 +52,6 @@
 																</script>
 															</c:when>
 														</c:choose>
-													<br />
 												</c:forEach>
 											</spring:hasBindErrors>
 												<div class="row">
