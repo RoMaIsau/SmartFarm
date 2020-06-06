@@ -75,6 +75,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public Usuario consultarUsuarioPorEmail(String email) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
 		.add(Restrictions.eq("email", email)).uniqueResult();
+	}
   
 	public List<Usuario> consultarUsuariosEmpleados() {
 		Session session = sessionFactory.getCurrentSession();
