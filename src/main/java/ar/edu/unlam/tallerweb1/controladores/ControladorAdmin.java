@@ -79,12 +79,11 @@ public class ControladorAdmin {
 		
 		ModelMap modelo = new ModelMap();
 		
-		/*
-		Long idEncontrado = (Long) request.getSession().getAttribute("ID");
-		List<Gastos> gastos = servicioGastos.consultarGastosPorUsuario(idEncontrado);*/
 		
+		Long id = (Long) request.getSession().getAttribute("ID");
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
+		List<Gastos> gastos = servicioGastos.consultarGastosPorUsuario(usuario);
 		
-		List<Gastos> gastos = servicioGastos.consultarGastos();
 		modelo.put("gastos", gastos);
 		
 		return new ModelAndView("estadisticas", modelo);
@@ -100,7 +99,7 @@ public class ControladorAdmin {
 	
 	@RequestMapping(path = "/validarnuevaestadistica", method = RequestMethod.POST)
 	public ModelAndView validarNuevaEstadistica(@ModelAttribute("gastos") Gastos gastos, HttpServletRequest request) {
-		Usuario usuario = (Usuario) request.getSession().getAttribute("ID");
+		Long id = (Long) request.getSession().getAttribute("ID");
 		ModelMap modelo = new ModelMap();
 		
 		if(gastos.getGastosAlimenticios() == null) {
@@ -115,21 +114,79 @@ public class ControladorAdmin {
 		if(gastos.getGastosTecnologicos() == null) {
 			gastos.setGastosTecnologicos(0.0);
 		}
+		
 		if(gastos.getGastosAlimenticios() == 0 && gastos.getGastosEmpresariales() == 0
 			  && gastos.getGastosMedicos() == 0 && gastos.getGastosTecnologicos() == 0) {
 			modelo.put("error", "Debe contabilizar al menos un gasto.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		}
 		
-		if(servicioGastos.guardarNuevoRegistro(gastos, usuario) != null){
-			modelo.put("error", "No se pudo guardar el registro.");
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
+		gastos.setUsuario(usuario);
+		
+		if(servicioGastos.guardarNuevoRegistro(gastos) != null){
+			modelo.put("mensaje", "Registro guardado exitosamente.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		} else {
-			modelo.put("mensaje", "Registro guardado exitosamente.");
-			return new ModelAndView("estadisticasNuevas");
+			modelo.put("error", "No se pudo guardar el registro.");
+			return new ModelAndView("estadisticasNuevas", modelo);
+		}
+	}
+	
+	@RequestMapping(path = "/estadisticasamodificar")
+	public ModelAndView irAModificarEstadistica(@RequestParam(value = "id", required = true) Long id) {
+		ModelMap modelo = new ModelMap();
+		Gastos gastos = (Gastos) servicioGastos.consultaGastosPorID(id);
+		modelo.put("gastos", gastos);
+		
+		Gastos gastosNuevos = new Gastos();
+		modelo.put("gastosNuevos", gastosNuevos);
+		
+		return new ModelAndView("estadisticasAModificar", modelo);
+	}
+	
+	@RequestMapping(path = "/validarcambiosenestadistica")
+	public ModelAndView validarCambiosEnGastos(@RequestParam(value = "id", required = true) Long id,
+											   @ModelAttribute("gastosNuevos") Gastos gastosAModificar) {
+		ModelMap modelo = new ModelMap();
+		Gastos gastosAntiguos = (Gastos) servicioGastos.consultaGastosPorID(id);
+		Gastos gastosActuales = (Gastos) servicioGastos.consultaGastosPorID(id);
+		
+		if(gastosAModificar.getGastosAlimenticios() == null &&
+		   gastosAModificar.getGastosEmpresariales() == null &&
+		   gastosAModificar.getGastosMedicos() == null &&
+		   gastosAModificar.getGastosTecnologicos() == null) {
+		   modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
+		   modelo.put("gastos", gastosActuales);
+		   return new ModelAndView("estadisticasAModificar", modelo);
 		}
 		
+		modelo.put("gastosAntiguos", gastosAntiguos);
 		
+		if(gastosAModificar.getGastosAlimenticios() != null) {
+			gastosActuales.setGastosAlimenticios(gastosAModificar.getGastosAlimenticios());
+		}
+		if(gastosAModificar.getGastosEmpresariales() != null) {
+			gastosActuales.setGastosEmpresariales(gastosAModificar.getGastosEmpresariales());
+		}
+		if(gastosAModificar.getGastosMedicos() != null) {
+			gastosActuales.setGastosMedicos(gastosAModificar.getGastosMedicos());
+		}
+		if(gastosAModificar.getGastosTecnologicos() != null) {
+			gastosActuales.setGastosTecnologicos(gastosAModificar.getGastosTecnologicos());
+		}
+		
+		servicioGastos.modificarGasto(gastosActuales);
+		modelo.put("gastos", gastosActuales);
+		
+		return new ModelAndView("estadisticasAModificar", modelo);
+	}
+	
+	@RequestMapping(path = "/estadisticasaeliminar", method = RequestMethod.GET)
+	public ModelAndView irAEliminarEstadistica(@RequestParam(value = "id", required = true) Long id) {
+		Gastos gastos = (Gastos) servicioGastos.consultaGastosPorID(id);
+		servicioGastos.eliminarGastos(gastos);
+		return new ModelAndView("redirect:/estadisticas");
 	}
 	
 	@RequestMapping(path = "/mapa")

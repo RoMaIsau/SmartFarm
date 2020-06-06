@@ -59,4 +59,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return (List<Usuario>) servicioUsuarioDao.consultarUsuariosEmpleados();
 	}
 
+	@Override
+	public Usuario consultarUsuarioPorEmail(String email) {
+		return servicioUsuarioDao.consultarUsuarioPorEmail(email);
+	}
+
 }
