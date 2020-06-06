@@ -34,7 +34,7 @@
 				<div class="container-fluid">
 				
 					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
-					<p class="mb-4">A continuación se muestran todos los gastos que ha contabilizado</p>
+					<p class="mb-4">A continuación se muestran todos los gastos que usted ha contabilizado</p>
 					 
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 mx-0 row justify-content-between">
@@ -55,25 +55,34 @@
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Usuario</th>
+											<th>Nº registro</th>
 											<th>Fecha</th>
-											<th>Gastos Alimenticios</th>
-											<th>Gastos Empresariales</th>
-											<th>Gastos Medicos</th>
-											<th>Gastos Tecnologicos</th>
-											<th>Gastos Total</th>
+											<th>Gastos alimenticios</th>
+											<th>Gastos empresariales</th>
+											<th>Gastos médicos</th>
+											<th>Gastos tecnológicos</th>
+											<th>Gastos total</th>
+											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${gastos}" var="gastos">
 											<tr>
-												<td><c:out value="${gastos.usuario.id}"/></td>
+												<td><c:out value="${gastos.id}"/></td>
 												<td><c:out value="${gastos.fecha}"/></td>
 												<td>$ <c:out value="${gastos.gastosAlimenticios}" /></td>
 												<td>$ <c:out value="${gastos.gastosEmpresariales}" /></td>
 												<td>$ <c:out value="${gastos.gastosMedicos}" /></td>
 												<td>$ <c:out value="${gastos.gastosTecnologicos}" /></td>
 												<td>$ <c:out value="${gastos.gastosTotal}" /></td>
+												<td class="text-center">
+													<a href="estadisticasamodificar?id=${gastos.id}">
+														<i class="fas fa-edit mx-2 text-info"></i>
+													</a>
+													<a href="#modalEliminar" data-id="${gastos.id}" role="button" data-toggle="modal" class="open-Modal">
+														<i class="fas fa-trash mx-2 text-danger"></i>
+													</a>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -107,6 +116,25 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	<!-- Modal eliminar registro -->
+	<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Borrar registro</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">¿Quiere borrar el registro?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<a type="button" class="btn btn-danger text-white botonEliminarGastos" >Aceptar</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Logout Modal-->
 	<%@ include file="../../parts/modalCerrarSesion.jsp"%>

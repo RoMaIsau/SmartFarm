@@ -38,15 +38,6 @@ public class ControladorUsuario {
 	@Inject
 	private ServicioTipoDeUsuario servicioTipoDeUsuario;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es
 	// invocada por metodo http GET
 	@RequestMapping("/login")
@@ -101,7 +92,7 @@ public class ControladorUsuario {
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-
+			request.getSession().setAttribute("ID", usuarioBuscado.getId());
 			String rol = (String) request.getSession().getAttribute("ROL");
 
 			switch (rol) {
@@ -129,21 +120,6 @@ public class ControladorUsuario {
 
 		return new ModelAndView("registro", modelo);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/*
 	 * Se comprueba que el usuario no exista, que las contraseñas coincidan y se
@@ -179,28 +155,6 @@ public class ControladorUsuario {
 		return new ModelAndView("registro", model);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*
 	 * Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar
 	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
@@ -224,6 +178,7 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/cerrarSesion")
 	public ModelAndView cerrarSesion(HttpServletRequest request) {
 		request.getSession().removeAttribute("ROL");
+		request.getSession().removeAttribute("ID");
 		return new ModelAndView("redirect:/login");
 	}
 

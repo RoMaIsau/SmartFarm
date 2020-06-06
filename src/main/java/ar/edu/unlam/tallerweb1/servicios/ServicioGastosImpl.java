@@ -24,8 +24,8 @@ public class ServicioGastosImpl implements ServicioGastos {
 	private RepositorioGastos repositorioGastos;
 	
 	@Override
-	public List<Gastos> consultarGastosPorUsuario(Long idEncontrado) {
-		return repositorioGastos.consultarGastosPorUsuario(idEncontrado);
+	public List<Gastos> consultarGastosPorUsuario(Usuario usuario) {
+		return repositorioGastos.consultarGastosPorUsuario(usuario);
 	}
 
 	@Override
@@ -34,21 +34,37 @@ public class ServicioGastosImpl implements ServicioGastos {
 	}
 
 	@Override
-	public Long guardarNuevoRegistro(Gastos gastos, Usuario usuario) {
-		Double gastoTotal =+ gastos.getGastosAlimenticios();
-		gastoTotal =+ gastos.getGastosEmpresariales();
-		gastoTotal =+ gastos.getGastosMedicos();
-		gastoTotal =+ gastos.getGastosTecnologicos();
+	public Long guardarNuevoRegistro(Gastos gastos) {
+		Double gastoTotal = gastos.getGastosAlimenticios();
+		gastoTotal += gastos.getGastosEmpresariales();
+		gastoTotal += gastos.getGastosMedicos();
+		gastoTotal += gastos.getGastosTecnologicos();
 		gastos.setGastosTotal(gastoTotal);
 		
-		Date date = Calendar.getInstance().getTime();  
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
-		String fechaNac = dateFormat.format(date);  
-        gastos.setFecha(fechaNac);
-        
-        gastos.setUsuario(usuario);
+		Date myDate = new Date();
+        gastos.setFecha(new java.text.SimpleDateFormat("dd-MM-yyyy").format(myDate));
 		
 		return repositorioGastos.guardarNuevoRegistro(gastos);
+	}
+
+	@Override
+	public Gastos consultaGastosPorID(Long id) {
+		return repositorioGastos.consultaGastosPorID(id);
+	}
+
+	@Override
+	public void eliminarGastos(Gastos gastos) {
+		repositorioGastos.eliminarGastos(gastos);
+	}
+
+	@Override
+	public void modificarGasto(Gastos gastosActuales) {
+		Double gastoTotal = gastosActuales.getGastosAlimenticios();
+		gastoTotal += gastosActuales.getGastosEmpresariales();
+		gastoTotal += gastosActuales.getGastosMedicos();
+		gastoTotal += gastosActuales.getGastosTecnologicos();
+		gastosActuales.setGastosTotal(gastoTotal);
+		repositorioGastos.modificarGasto(gastosActuales);
 	}
 
 }

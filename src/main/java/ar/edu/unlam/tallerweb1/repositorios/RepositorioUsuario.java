@@ -16,4 +16,6 @@ public interface RepositorioUsuario {
 	Usuario consultarUsuarioPorId(Long id);
 
 	void eliminarUsuario(Usuario usuario);
+
+	Usuario consultarUsuarioPorEmail(String email);
 }

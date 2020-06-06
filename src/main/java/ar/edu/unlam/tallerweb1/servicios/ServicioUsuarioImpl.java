@@ -57,4 +57,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		
 	}
 
+	@Override
+	public Usuario consultarUsuarioPorEmail(String email) {
+		return servicioUsuarioDao.consultarUsuarioPorEmail(email);
+	}
+
 }

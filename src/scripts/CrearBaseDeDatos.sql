@@ -61,3 +61,6 @@ INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 -- GENEROS
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
+
+-- TIPOS DE USUARIOS
+INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado");
