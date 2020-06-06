@@ -53,7 +53,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public List<Usuario> listarUsuarios() {
 		final Session session = sessionFactory.getCurrentSession();
 
-		return (List<Usuario>) session.createCriteria(Usuario.class).list();
+		return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.ne("rol", "Admin")).list();
 	}
 
 	@Override
@@ -75,6 +75,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public Usuario consultarUsuarioPorEmail(String email) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
 		.add(Restrictions.eq("email", email)).uniqueResult();
+  
+	public List<Usuario> consultarUsuariosEmpleados() {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "Empleado")).list();
 	}
-
 }

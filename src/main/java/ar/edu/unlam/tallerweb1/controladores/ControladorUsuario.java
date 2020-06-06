@@ -21,7 +21,7 @@ public class ControladorUsuario {
 
 	/*
 	 * La anotacion @Autowired indica a Spring que se debe utilizar el contructor
-	 * como mecanismo de inyección de dependencias, es decir, qeue lo parametros del
+	 * como mecanismo de inyecciÃ³n de dependencias, es decir, qeue lo parametros del
 	 * mismo deben ser un bean de spring y el framewrok automaticamente pasa como
 	 * parametro el bean correspondiente, en este caso, un objeto de una clase que
 	 * implemente la interface ServicioLogin, dicha clase debe estar aDarkest Dark
@@ -79,7 +79,7 @@ public class ControladorUsuario {
 
 	// Este metodo escucha la URL validar-login siempre y cuando se invoque con
 	// metodo http POST
-	// El método recibe un objeto Usuario el que tiene los datos ingresados en el
+	// El mÃ©todo recibe un objeto Usuario el que tiene los datos ingresados en el
 	// form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
@@ -88,11 +88,12 @@ public class ControladorUsuario {
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL
 		// /home, esto es, en lugar de enviar a una vista
-		// hace una llamada a otro action a través de la URL correspondiente a ésta
+		// hace una llamada a otro action a travÃ©s de la URL correspondiente a Ã©sta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			request.getSession().setAttribute("ID", usuarioBuscado.getId());
+
 			String rol = (String) request.getSession().getAttribute("ROL");
 
 			switch (rol) {
@@ -122,10 +123,10 @@ public class ControladorUsuario {
 	}
 	
 	/*
-	 * Se comprueba que el usuario no exista, que las contraseñas coincidan y se
+	 * Se comprueba que el usuario no exista, que las contraseÃ±as coincidan y se
 	 * registra el usuario
 	 */
-	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÑA AL ADMINISTRADOR */
+	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÃ‘A AL ADMINISTRADOR */
 	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
 										@RequestParam(name = "password2") String password2) {
@@ -145,18 +146,18 @@ public class ControladorUsuario {
 						model.put("mensaje", "No se pudo crear el usuario");
 					}
 				} else {
-					model.put("error", "El tipo de usuario elegido no es v�lido");
+					model.put("error", "El tipo de usuario elegido no es válido");
 				}
 			}
 		} else {
-			model.put("error", "La contraseñas no coinciden");
+			model.put("error", "La contraseÃ±as no coinciden");
 		}
 		
 		return new ModelAndView("registro", model);
 	}
 	
 	/*
-	 * Se manda al modal el id del Usuario que seleccionó para borrar, y al aceptar
+	 * Se manda al modal el id del Usuario que seleccionÃ³ para borrar, y al aceptar
 	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
 	 * ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA
 	 */

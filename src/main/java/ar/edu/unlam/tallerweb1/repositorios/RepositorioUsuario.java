@@ -18,4 +18,6 @@ public interface RepositorioUsuario {
 	void eliminarUsuario(Usuario usuario);
 
 	Usuario consultarUsuarioPorEmail(String email);
+
+	List<Usuario> consultarUsuariosEmpleados();
 }

@@ -118,6 +118,17 @@ public class ServicioDeAnimalesTest {
 		this.servicio.actualizarAnimal(animalParaActualizar); 
 		
 		verify(this.repositorioDeAnimales).actualizar(eq(animalParaActualizar));
-		
+	}
+
+	@Test
+	public void deberiaEliminarAUnAnimal() {
+
+		Long idAnimal = 2L;
+
+		this.servicio.eliminarPorId(idAnimal);
+
+		AnimalDeGranja animalParaBorrar = new AnimalDeGranja();
+		animalParaBorrar.setId(idAnimal);
+		verify(this.repositorioDeAnimales).eliminar(eq(animalParaBorrar));
 	}
 }

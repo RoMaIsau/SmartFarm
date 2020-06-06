@@ -22,4 +22,6 @@ public interface ServicioDeAnimales {
 	AnimalDeGranja obtenerPorId(Long idAnimal);
 
 	void actualizarAnimal(AnimalDeGranja animal);
+
+	void eliminarPorId(Long idAnimal);
 }
