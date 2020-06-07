@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Location;
 import ar.edu.unlam.tallerweb1.modelo.ServerLocation;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 
 @Controller
 public class MapController {
@@ -66,8 +69,8 @@ public class MapController {
 	 */
 	public List<Location> getFilteredLocations() {
 		int rangeKm = 2;
-		Location centreLocation = new Location(new ServerLocation(-34.624646f, -58.671073f, 1), "INTA");
-
+		Location centreLocation = new Location(new ServerLocation(-34.624646f, -58.671073f,0), "INTA");
+		
 		List<Location> allLocations = getLocationsFromDB();
 		List<Location> filteredList = new ArrayList<Location>();
 		filteredList.add(centreLocation);
@@ -98,53 +101,25 @@ public class MapController {
 	 * @return List<Location>
 	 */
 	
-	/*
-	public List<Location> getLocationsFromDB() {
-		List<Location> locationList = new ArrayList<Location>();
-		Location location1 = new Location(new ServerLocation(-34.624646f, -58.671073f,1), "INTA");
-		Location location2 = new Location(new ServerLocation(-34.621437f, -58.637359f,2), "Sodimac Villa Tesei");
-		Location location3 = new Location(new ServerLocation(-34.621754f, -58.687698f,3), "Parroquia Jesús del gran poder");
-		Location location4 = new Location(new ServerLocation(-34.627264f, -58.647787f,4), "Cementerio Parque");
-		Location location5 = new Location(new ServerLocation(-34.613137f, -58.676798f,5), "Club Portugués");
-		Location location6 = new Location(new ServerLocation(-34.619741f, -58.677227f,6), "Comisaria Las cabañas");
-		Location location7 = new Location(new ServerLocation(-34.620144f, -58.654575f,7), "UPA 9");
-		Location location8 = new Location(new ServerLocation(-34.631198f, -58.655991f,8), "Centro Grabados Castelar");
-		locationList.add(location1);
-		locationList.add(location2);
-		locationList.add(location3);
-		locationList.add(location4);
-		locationList.add(location5);
-		locationList.add(location6);
-		locationList.add(location7);
-		locationList.add(location8);
-
-		return locationList;
-	}*/
-
+	@Inject
+	private ServicioDeAnimales servicioDeAnimales;
+	
 	public List<Location> getLocationsFromDB() {
 		List<Location> locationList = new ArrayList<Location>();
 		ServerLocation serverLocation = new ServerLocation(0, 0, 0);
 		
-		serverLocation.setLatitude(serverLocation.setearLatitudAleatorea());
-		serverLocation.setLongitude(serverLocation.setearLongitudAleatorea());
+		List<AnimalDeGranja> animales = servicioDeAnimales.obtenerTodos();
 		
-		Location location1 = new Location(new ServerLocation(-34.624646f, -58.671073f,1), "INTA");
-		Location location2 = new Location(new ServerLocation(-serverLocation.getLatitude(), -serverLocation.getLongitude(),2), "Sodimac Villa Tesei");
-		Location location3 = new Location(new ServerLocation(-34.621754f, -58.687698f,3), "Parroquia Jesús del gran poder");
-		Location location4 = new Location(new ServerLocation(-34.627264f, -58.647787f,4), "Cementerio Parque");
-		Location location5 = new Location(new ServerLocation(-34.613137f, -58.676798f,5), "Club Portugués");
-		Location location6 = new Location(new ServerLocation(-34.619741f, -58.677227f,6), "Comisaria Las cabañas");
-		Location location7 = new Location(new ServerLocation(-34.620144f, -58.654575f,7), "UPA 9");
-		Location location8 = new Location(new ServerLocation(-34.631198f, -58.655991f,8), "Centro Grabados Castelar");
-		locationList.add(location1);
-		locationList.add(location2);
-		locationList.add(location3);
-		locationList.add(location4);
-		locationList.add(location5);
-		locationList.add(location6);
-		locationList.add(location7);
-		locationList.add(location8);
-
+		for(AnimalDeGranja animal : animales){
+			serverLocation.setLatitude(serverLocation.setearLatitudAleatorea());
+			serverLocation.setLongitude(serverLocation.setearLongitudAleatorea());
+			long id = animal.getId();
+			serverLocation.setValue(id);
+			
+			Location location = new Location(new ServerLocation(-serverLocation.getLatitude(), -serverLocation.getLongitude(), serverLocation.getValue()), animal.getTipo().getNombre());
+			locationList.add(location);
+		}
+		
 		return locationList;
 	}
 	

@@ -14,9 +14,9 @@ public class ServerLocation {
 	
 	private float latitude;	
 	private float longitude;
-	private int value;
+	private long value;
 	
-	public ServerLocation(float latitude,float longitude,int value){
+	public ServerLocation(float latitude,float longitude,long value){
 		this.latitude=latitude;
 		this.longitude=longitude;
 		this.value=value;
@@ -38,11 +38,11 @@ public class ServerLocation {
 		this.longitude = longitude;
 	}
 	
-	public int getValue() {
+	public long getValue() {
 		return value;
 	}
 	
-	public void setValue(int value) {
+	public void setValue(long value) {
 		this.value = value;
 	}
 	
