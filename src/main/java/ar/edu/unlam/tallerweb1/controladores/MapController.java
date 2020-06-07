@@ -66,7 +66,7 @@ public class MapController {
 	 */
 	public List<Location> getFilteredLocations() {
 		int rangeKm = 2;
-		Location centreLocation = new Location(new ServerLocation(-34.624646f, -58.671073f,1), "INTA");
+		Location centreLocation = new Location(new ServerLocation(-34.624646f, -58.671073f, 1), "INTA");
 
 		List<Location> allLocations = getLocationsFromDB();
 		List<Location> filteredList = new ArrayList<Location>();
@@ -97,7 +97,8 @@ public class MapController {
 	 * 
 	 * @return List<Location>
 	 */
-
+	
+	/*
 	public List<Location> getLocationsFromDB() {
 		List<Location> locationList = new ArrayList<Location>();
 		Location location1 = new Location(new ServerLocation(-34.624646f, -58.671073f,1), "INTA");
@@ -118,8 +119,35 @@ public class MapController {
 		locationList.add(location8);
 
 		return locationList;
-	}
+	}*/
 
+	public List<Location> getLocationsFromDB() {
+		List<Location> locationList = new ArrayList<Location>();
+		ServerLocation serverLocation = new ServerLocation(0, 0, 0);
+		
+		serverLocation.setLatitude(serverLocation.setearLatitudAleatorea());
+		serverLocation.setLongitude(serverLocation.setearLongitudAleatorea());
+		
+		Location location1 = new Location(new ServerLocation(-34.624646f, -58.671073f,1), "INTA");
+		Location location2 = new Location(new ServerLocation(-serverLocation.getLatitude(), -serverLocation.getLongitude(),2), "Sodimac Villa Tesei");
+		Location location3 = new Location(new ServerLocation(-34.621754f, -58.687698f,3), "Parroquia Jesús del gran poder");
+		Location location4 = new Location(new ServerLocation(-34.627264f, -58.647787f,4), "Cementerio Parque");
+		Location location5 = new Location(new ServerLocation(-34.613137f, -58.676798f,5), "Club Portugués");
+		Location location6 = new Location(new ServerLocation(-34.619741f, -58.677227f,6), "Comisaria Las cabañas");
+		Location location7 = new Location(new ServerLocation(-34.620144f, -58.654575f,7), "UPA 9");
+		Location location8 = new Location(new ServerLocation(-34.631198f, -58.655991f,8), "Centro Grabados Castelar");
+		locationList.add(location1);
+		locationList.add(location2);
+		locationList.add(location3);
+		locationList.add(location4);
+		locationList.add(location5);
+		locationList.add(location6);
+		locationList.add(location7);
+		locationList.add(location8);
+
+		return locationList;
+	}
+	
 	
 	/**
 	 * This method calculates the distance between two locations.
