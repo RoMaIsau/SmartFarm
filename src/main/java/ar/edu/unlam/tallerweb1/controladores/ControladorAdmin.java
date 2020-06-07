@@ -188,17 +188,4 @@ public class ControladorAdmin {
 		servicioGastos.eliminarGastos(gastos);
 		return new ModelAndView("redirect:/estadisticas");
 	}
-	
-	@RequestMapping(path = "/mapa")
-	public ModelAndView irAMapa(HttpServletRequest request) {
-		
-		String rol = (String) request.getSession().getAttribute("ROL");
-
-		if (!rol.equals("Admin") && !rol.equals("Empleado") && !rol.equals("")) {
-			return new ModelAndView("redirect:/login");
-		}
-		
-		return new ModelAndView("mapa");
-	}
-
 }

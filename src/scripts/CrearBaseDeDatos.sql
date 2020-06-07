@@ -4,6 +4,9 @@ GRANT ALL ON SmartFarm.* TO 'SmartFarmApp'@'localhost';
 
 USE SmartFarm;
 
+-- TIPOS DE USUARIOS
+INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado");
+
 -- USUARIOS
 INSERT INTO usuario VALUES 
 (1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin"),
@@ -61,6 +64,3 @@ INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 -- GENEROS
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
-
--- TIPOS DE USUARIOS
-INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado");
