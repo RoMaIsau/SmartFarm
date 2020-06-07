@@ -1,3 +1,4 @@
+
 <nav
 	class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -38,13 +39,13 @@
 			class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
 			role="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts -->
-				<span class="badge badge-danger badge-counter">3+</span>
+				<span class="badge badge-danger badge-counter" id="contador"></span>
 		</a> <!-- Dropdown - Alerts -->
 
 
 			<div
 				class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-				aria-labelledby="alertsDropdown">
+				aria-labelledby="alertsDropdown" id="notificaciones">
 				<h6 class="dropdown-header">Notificaciones</h6>
 				<c:if test="${not empty notificaciones}">
 					<c:forEach items="${notificaciones}" var="noti">
