@@ -32,22 +32,29 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	public void crearNotificacionStock() {
 
 		List<Alimento> alimentos = repositorioAlimento.listarAlimentos();
-		
+
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String fecha = (LocalDate.now().format(dateFormat));
 
 		for (Alimento a : alimentos) {
-			
-			if (a.getCantidad().equals(a.getStockMinimo()) || a.getCantidad() < a.getStockMinimo()) {
-				
-				Notificacion notificacion = new Notificacion();
-				
-				notificacion.setFecha(fecha);
-				notificacion.setTitulo("Stock");
-				notificacion.setDetalles(a.getNombre() + " ha llegado a su stock minimo");
-				notificacion.setEstado(false);
 
-				repositorioNotificacion.crearNotificacionStock(notificacion);
+			if (a.getCantidad().equals(a.getStockMinimo()) || a.getCantidad() < a.getStockMinimo()) {
+
+				String detalles = a.getNombre() + " ha llegado a su stock minimo";
+
+				Notificacion notificacionGuardada = notificacionPorDetalles(detalles);
+
+				if (notificacionGuardada == null) {
+					Notificacion notificacion = new Notificacion();
+
+					notificacion.setFecha(fecha);
+					notificacion.setTitulo("Stock");
+					notificacion.setDetalles(detalles);
+					notificacion.setEstado(false);
+
+					repositorioNotificacion.crearNotificacionStock(notificacion);
+				}
+
 			}
 		}
 	}
@@ -55,6 +62,11 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	@Override
 	public List<Notificacion> listarNotificaciones(Long idUsuario) {
 		return repositorioNotificacion.listarNotificaciones(idUsuario);
+	}
+
+	@Override
+	public Notificacion notificacionPorDetalles(String detalles) {
+		return repositorioNotificacion.notificacionPorDetalles(detalles);
 	}
 
 }

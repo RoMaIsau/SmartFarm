@@ -54,4 +54,12 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 
 	}
 
+	@Override
+	public Notificacion notificacionPorDetalles(String detalles) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Notificacion) session.createCriteria(Notificacion.class)
+				.add(Restrictions.eq("detalles", detalles))
+				.uniqueResult();
+	}
+
 }
