@@ -83,43 +83,63 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 				
+				<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+				<p class="mb-4">
+					En esta sección se muestran los animales y su posición, dentro del rango de 2 kilómetros de la zona de: 
+					<c:forEach items="${lists}" var="lists">
+						<c:if test="${lists.value.value == 0}"> ${lists.key} </c:if>
+					</c:forEach>
+				</p>
 				
-				
-				
-				
-				
-				
-				
-				Cantidad de resultados : ${fn:length(lists)-1}
-				
-				<h3>ID Animal &ensp; Latitude &ensp; Longitude &ensp; Nombre Animal</h3>
-
-<table id='ddReferences'>
-    <c:forEach items="${lists}" var="lists">
-        <tr>
-            <td>${lists.value.value}</td>
-            <td>${lists.value.latitude}</td>
-            <td>${lists.value.longitude}</td>
-            <td>${lists.key}</td>
-        </tr>
-    </c:forEach>
-</table>
-
-	<span>
-		<button id="w-button-show" type="button" onClick="myFunction()">Show on Map</button>
-	</span>
-	  <div id="map" style="height: 400px; width: 500px;">
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 mx-0 row justify-content-between">
+							<h6 class="m-0 font-weight-bold text-primary">Cantidad de animales ${fn:length(lists)-1}</h6>
+						</a>
+					</div>
+							
+							<div>
+							</div>
+							
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table text-center" id="ddReferences" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+												<th>ID Animal</th>
+												<th>Latitud</th>
+												<th>Longitud</th>
+												<th>Animal</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${lists}" var="lists">
+												<c:if test="${lists.value.value == 0}">
+											        <tr>
+											            <td hidden>${lists.value.value}</td>
+											            <td hidden>${lists.value.latitude}</td>
+											            <td hidden>${lists.value.longitude}</td>
+											            <td hidden>${lists.key}</td>
+											        </tr>
+												</c:if>
+												<c:if test="${lists.value.value != 0}">
+											        <tr>
+											            <td>${lists.value.value}</td>
+											            <td>${lists.value.latitude}</td>
+											            <td>${lists.value.longitude}</td>
+											            <td>${lists.key}</td>
+											        </tr>
+												</c:if>
+										    </c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						<span>
+							<button id="w-button-show" type="button" onClick="myFunction()">Mostrar mapa</button>
+						</span>
+						<div id="map" style="height: 500px; width: max;"></div>
 				</div>
 				<!-- /.container-fluid -->
 
