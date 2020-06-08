@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var cantidadNoti = $("#notificaciones > a").length;
-	$('#contador').html(cantidadNoti - 1);
+	var cantidadNoti = $("#notificaciones > .font-weight-bold").length;
+	$('#contador').html(cantidadNoti);
 	
 	if($('#contador').html() == 0){
 		$('#contador').html("");

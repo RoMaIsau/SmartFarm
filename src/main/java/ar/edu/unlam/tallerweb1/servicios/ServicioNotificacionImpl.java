@@ -69,4 +69,15 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		return repositorioNotificacion.notificacionPorDetalles(detalles);
 	}
 
+	@Override
+	public Notificacion notificacionPorId(Long id) {
+		return repositorioNotificacion.notificacionPorId(id);
+	}
+
+	@Override
+	public void actualizarNotificacion(Notificacion notificacion) {
+		repositorioNotificacion.actualizarNotificacion(notificacion);
+		
+	}
+
 }

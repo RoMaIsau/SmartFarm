@@ -166,6 +166,18 @@ public class ControladorEmpleado {
 
 		return new ModelAndView("redirect:/stock");
 	}
+	
+	@RequestMapping(path = "/actualizarNotificacion")
+	public ModelAndView actualizarNotificacion(@RequestParam(name = "id") Long id) {
+		
+		Notificacion notificacion = servicioNotificacion.notificacionPorId(id);
+		
+		notificacion.setEstado(true);
+		
+		servicioNotificacion.actualizarNotificacion(notificacion);
+		
+		return new ModelAndView("redirect:/stock");
+	}
 
 	@RequestMapping(value = "/animales/registrar")
 	public ModelAndView irAFormularioDeRegistroDeAnimales(ModelMap modelo) {

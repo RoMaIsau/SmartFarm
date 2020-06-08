@@ -10,4 +10,6 @@ public interface ServicioNotificacion {
 	void crearNotificacionStock();
 	List<Notificacion> listarNotificaciones(Long idUsuario);
 	Notificacion notificacionPorDetalles(String detalles);
+	Notificacion notificacionPorId(Long id);
+	void actualizarNotificacion(Notificacion notificacion);
 }

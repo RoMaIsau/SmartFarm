@@ -12,4 +12,8 @@ public interface RepositorioNotificacion {
 
 	Notificacion notificacionPorDetalles(String detalles);
 
+	Notificacion notificacionPorId(Long id);
+
+	void actualizarNotificacion(Notificacion notificacion);
+
 }

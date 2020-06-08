@@ -49,19 +49,31 @@
 				<h6 class="dropdown-header">Notificaciones</h6>
 				<c:if test="${not empty notificaciones}">
 					<c:forEach items="${notificaciones}" var="noti">
-						<a class="dropdown-item d-flex align-items-center" href="#">
-							<div class="mr-3">
-								<div class="icon-circle bg-primary">
-									<i class="fas fa-file-alt text-white"></i>
-								</div>
+						<c:choose>
+							<c:when test="${noti.notificacion.estado == true}">
+								<a class="dropdown-item d-flex align-items-center text-gray-500"
+									href="actualizarNotificacion?id=<c:out
+									value="${noti.notificacion.id}" />">
+							</c:when>
+							<c:otherwise>
+								<a class="dropdown-item d-flex align-items-center font-weight-bold" href="actualizarNotificacion?id=<c:out
+									value="${noti.notificacion.id}"/>">
+							</c:otherwise>
+						</c:choose>
+						<div class="mr-3">
+							<div class="icon-circle bg-primary">
+								<i class="fas fa-file-alt text-white"></i>
 							</div>
-							<div>
-								<div class="small text-gray-500"><c:out value="${noti.notificacion.fecha}" /></div>
-								<span class="font-weight-bold"><c:out value="${noti.notificacion.titulo}" /></span> 
-								<br /> 
-								<span><c:out value="${noti.notificacion.detalles}" /></span>
+						</div>
+						<div>
+							<div class="small text-gray-500">
+								<c:out value="${noti.notificacion.fecha}" />
 							</div>
-						</a> 
+							<span class="font-weight-bold"><c:out
+									value="${noti.notificacion.titulo}" /></span> <br /> <span><c:out
+									value="${noti.notificacion.detalles}" /></span>
+						</div>
+						</a>
 					</c:forEach>
 				</c:if>
 				<a class="dropdown-item text-center small text-gray-500" href="#">Mostrar
