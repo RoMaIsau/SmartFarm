@@ -23,9 +23,7 @@ public class AnimalDeGranja {
 	@ManyToOne(optional = false)
 	private Genero genero;
 	
-	@OneToOne
-	private Location localizacion;
-	
+
 	private Double peso;
 	
 	public Long getId() {
