@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +17,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.UsuarioNotificacion;
 
 @Repository("repositorioNotificacion")
+@Transactional
 public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 
 	private SessionFactory sessionFactory;
@@ -55,9 +58,12 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 	}
 
 	@Override
-	public Notificacion notificacionPorDetalles(String detalles) {
+	public Notificacion notificacionPorDetalles(String detalles, String fecha) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Notificacion) session.createCriteria(Notificacion.class).add(Restrictions.eq("detalles", detalles))
+		return (Notificacion) session.createCriteria(Notificacion.class)
+				.add(Restrictions.eq("detalles", detalles))
+//				.add(Restrictions.eq("estado", false))
+				.add(Restrictions.eq("fecha", fecha))
 				.uniqueResult();
 	}
 
@@ -73,6 +79,28 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 		Session session = sessionFactory.getCurrentSession();
 		
 		session.update(notificacion);
+	}
+
+	@Override
+	public void crearNotificacionAnimal(Notificacion notificacion) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(notificacion);
+		List<Usuario> empleados = repositorioUsuario.consultarUsuariosVeterinarios();
+
+		for (Usuario e : empleados) {
+			UsuarioNotificacion usuarioNotificacion = new UsuarioNotificacion();
+			usuarioNotificacion.setNotificacion(notificacion);
+			usuarioNotificacion.setUsuario(e);
+			session.save(usuarioNotificacion);
+		}
+	}
+
+	@Override
+	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Notificacion) session.createCriteria(Notificacion.class)
+				.add(Restrictions.eq("detalles", detalles))
+				.uniqueResult();
 	}
 
 }

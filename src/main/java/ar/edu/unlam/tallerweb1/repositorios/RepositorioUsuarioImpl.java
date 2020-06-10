@@ -81,4 +81,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		Session session = sessionFactory.getCurrentSession();
 		return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "Empleado")).list();
 	}
+	  
+		public List<Usuario> consultarUsuariosVeterinarios() {
+			Session session = sessionFactory.getCurrentSession();
+			return (List<Usuario>) session.createCriteria(Usuario.class).add(Restrictions.eq("rol", "veterinario")).list();
+		}
 }

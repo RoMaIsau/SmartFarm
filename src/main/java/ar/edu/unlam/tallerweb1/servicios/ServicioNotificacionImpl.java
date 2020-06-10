@@ -4,14 +4,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAlimento;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioNotificacion;
 
 @Service("servicioNotificacion")
@@ -20,7 +23,10 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 
 	private RepositorioNotificacion repositorioNotificacion;
 	private RepositorioAlimento repositorioAlimento;
-
+	
+	@Inject
+	private ServicioDeAnimales servicioDeAnimales;
+	
 	@Autowired
 	public ServicioNotificacionImpl(RepositorioNotificacion repositorioNotificacion,
 			RepositorioAlimento repositorioAlimento) {
@@ -41,8 +47,9 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 			if (a.getCantidad().equals(a.getStockMinimo()) || a.getCantidad() < a.getStockMinimo()) {
 
 				String detalles = a.getNombre() + " ha llegado a su stock minimo";
-
-				Notificacion notificacionGuardada = notificacionPorDetalles(detalles);
+				
+				Notificacion notificacionGuardada = notificacionPorDetalles(detalles, fecha);
+				
 
 				if (notificacionGuardada == null) {
 					Notificacion notificacion = new Notificacion();
@@ -51,7 +58,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 					notificacion.setTitulo("Stock");
 					notificacion.setDetalles(detalles);
 					notificacion.setEstado(false);
-
+					
 					repositorioNotificacion.crearNotificacionStock(notificacion);
 				}
 
@@ -65,8 +72,8 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	}
 
 	@Override
-	public Notificacion notificacionPorDetalles(String detalles) {
-		return repositorioNotificacion.notificacionPorDetalles(detalles);
+	public Notificacion notificacionPorDetalles(String detalles, String fecha) {
+		return repositorioNotificacion.notificacionPorDetalles(detalles, fecha);
 	}
 
 	@Override
@@ -78,6 +85,31 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	public void actualizarNotificacion(Notificacion notificacion) {
 		repositorioNotificacion.actualizarNotificacion(notificacion);
 		
+	}
+
+	@Override
+	public void crearNotificacionAnimalFueraDeLugar(Long id) {
+		AnimalDeGranja animal = (AnimalDeGranja) servicioDeAnimales.obtenerPorId(id);
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String fecha = (LocalDate.now().format(dateFormat));
+
+		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicación habitual";
+		Notificacion notificacionGuardada = BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
+		
+		if (notificacionGuardada == null) {
+			Notificacion notificacion = new Notificacion();
+			notificacion.setFecha(fecha);
+			notificacion.setTitulo("Animal fuera de rango");
+			notificacion.setDetalles(detalles);
+			notificacion.setEstado(false);
+			repositorioNotificacion.crearNotificacionStock(notificacion);
+		}
+	}
+
+	@Override
+	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
+		return repositorioNotificacion.BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
 	}
 
 }

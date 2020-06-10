@@ -20,4 +20,6 @@ public interface RepositorioUsuario {
 	Usuario consultarUsuarioPorEmail(String email);
 
 	List<Usuario> consultarUsuariosEmpleados();
+
+	List<Usuario> consultarUsuariosVeterinarios();
 }

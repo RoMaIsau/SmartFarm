@@ -52,35 +52,37 @@
 			</c:when>
 		</c:choose></li>
 
-	<!-- Divider -->
-	<hr class="sidebar-divider">
 
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
 				<a class="nav-link" href="estadisticas"> <i
 					class="fas fa-chart-pie"></i> <span>Estadísticas</span>
 				</a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
 				<a class="nav-link" href="seccion3"> <i class="fas fa-user"></i>
 					<span>Seccion 3</span>
 				</a>
 			</c:when>
-			<c:when test="${ROL == 'Empleado'}">
-				<a class="nav-link" href="seccion3"><i class="fas fa-user"></i>
-					<span>Seccion 3</span> </a>
-			</c:when>
 		</c:choose></li>
 
-	<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
 
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item">
-		<a class="nav-link" href="mapa">
-			<i class="fas fa-map-marked-alt"></i>
-			<span>Mapa</span>
+			<c:choose>
+				<c:when test="${ROL == 'Veterinario' or ROL == 'Empleado'}">
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+					<a class="nav-link" href="mapa">
+					<i class="fas fa-map-marked-alt"></i>
+					<span>Mapa</span>
+				</c:when>
+			</c:choose>
 		</a>
 	</li>
 
