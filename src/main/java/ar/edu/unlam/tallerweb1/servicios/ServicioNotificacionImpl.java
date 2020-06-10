@@ -103,7 +103,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 			notificacion.setTitulo("Animal fuera de rango");
 			notificacion.setDetalles(detalles);
 			notificacion.setEstado(false);
-			repositorioNotificacion.crearNotificacionStock(notificacion);
+			repositorioNotificacion.crearNotificacionAnimal(notificacion);
 		}
 	}
 
