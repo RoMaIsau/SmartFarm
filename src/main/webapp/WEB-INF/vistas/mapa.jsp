@@ -4,8 +4,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="../../parts/meta.jsp"%>
+<%@ include file="../../parts/meta.jsp"%>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
+	rel='stylesheet' />
 </head>
+<style>
+.icon {
+	background-size: cover;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+#vacuno {
+	background-image: url('img/vacuno.png');
+}
+
+#ovino {
+	background-image: url('img/ovino.png');
+}
+
+#caprino {
+	background-image: url('img/caprino.png');
+}
+
+#equino {
+	background-image: url('img/equino.png');
+}
+
+#porcino {
+	background-image: url('img/porcino.png');
+}
+
+.mapboxgl-popup {
+	max-width: 200px;
+}
+</style>
+
 <body id="page-top">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -95,13 +132,8 @@
 	<%@ include file="../../parts/modalCerrarSesion.jsp"%>
 
 	<!-- Bootstrap core JavaScript-->
-	
-	<script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
-	<link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
-		rel='stylesheet' />
-	<script src="<c:url value="/js/mostrarMapa.js"/>"></script>
-	
-	<%@ include file="../../parts/scripts.jsp"%>
 
+	<%@ include file="../../parts/scripts.jsp"%>
+	<script src="<c:url value="/js/mostrarMapa.js"/>"></script>
 </body>
 </html>
