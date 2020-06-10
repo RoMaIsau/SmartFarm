@@ -49,7 +49,13 @@ public class ControladorEmpleado {
 		this.servicioUsuario = servicioUsuario;
 		this.validadorDeAnimales = validadorDeAnimales;
 	}
-
+	
+	public List<Notificacion> listarNotificacionesDelEmpleado(HttpServletRequest request) {
+		Long idUsuario = (Long) request.getSession().getAttribute("ID");
+		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
+		return notificaciones;
+	}
+	
 	@RequestMapping(path = "/indexEmpleado")
 	public ModelAndView irAIndexEmpleado(HttpServletRequest request) {
 
@@ -72,7 +78,6 @@ public class ControladorEmpleado {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 
 		String rol = (String) request.getSession().getAttribute("ROL");
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
 		if (rol.equals("Empleado") || rol.equals("Admin")) {
 
@@ -80,9 +85,8 @@ public class ControladorEmpleado {
 			
 			List<AnimalDeGranja> animales = this.servicioDeAnimales.obtenerTodos();
 			modelo.put("animales", animales);
-
-			List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-			modelo.put("notificaciones", notificaciones);
+			
+			modelo.put("notificaciones", listarNotificacionesDelEmpleado(request));
 			
 			modelAndView = new ModelAndView("animales", modelo);
 		}
@@ -94,7 +98,6 @@ public class ControladorEmpleado {
 	public ModelAndView irAStock(HttpServletRequest request) {
 
 		String rol = (String) request.getSession().getAttribute("ROL");
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
 		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
@@ -109,9 +112,7 @@ public class ControladorEmpleado {
 
 		List<TipoAlimento> tiposAlimentos = servicioAlimento.obtenerTiposDeAlimentos();
 		
-		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-		
-		model.put("notificaciones", notificaciones);
+		model.put("notificaciones", listarNotificacionesDelEmpleado(request));
 		model.put("alimentos", alimentos);
 		model.put("tipos", tiposAlimentos);
 		
@@ -121,7 +122,6 @@ public class ControladorEmpleado {
 	@RequestMapping(path = "registrarAlimento")
 	public ModelAndView irARegistroAlimento(HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
 		if (!rol.equals("Empleado")) {
 			return new ModelAndView("redirect:/login");
@@ -134,9 +134,8 @@ public class ControladorEmpleado {
 
 		model.put("tiposAlimentos", tiposAlimentos);
 		model.put("alimento", alimento);
-
-		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-		model.put("notificaciones", notificaciones);
+		
+		model.put("notificaciones", listarNotificacionesDelEmpleado(request));
 		
 		return new ModelAndView("registroAlimento", model);
 
@@ -144,7 +143,6 @@ public class ControladorEmpleado {
 
 	@RequestMapping(path = "/validar-registro-alimento")
 	public ModelAndView validarRegistroAlimento(HttpServletRequest request, @ModelAttribute("alimento") Alimento alimento) {
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 		ModelMap model = new ModelMap();
 
 		Alimento alimentoBuscado = servicioAlimento.consultarAlimento(alimento);
@@ -161,8 +159,7 @@ public class ControladorEmpleado {
 		List<TipoAlimento> tiposAlimentos = this.servicioAlimento.obtenerTiposDeAlimentos();
 		model.put("tiposAlimentos", tiposAlimentos);
 
-		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-		model.put("notificaciones", notificaciones);
+		model.put("notificaciones", listarNotificacionesDelEmpleado(request));
 		
 		return new ModelAndView("registroAlimento", model);
 	}
@@ -181,21 +178,22 @@ public class ControladorEmpleado {
 	}
 	
 	@RequestMapping(path = "/actualizarNotificacion")
-	public ModelAndView actualizarNotificacion(@RequestParam(name = "id") Long id) {
+	public ModelAndView actualizarNotificacion(@RequestParam(name = "id") Long id, HttpServletRequest request) {
+		String rol = (String) request.getSession().getAttribute("ROL");
 		
 		Notificacion notificacion = servicioNotificacion.notificacionPorId(id);
-		
 		notificacion.setEstado(true);
-		
 		servicioNotificacion.actualizarNotificacion(notificacion);
 		
-		return new ModelAndView("redirect:/stock");
+		switch (rol) {
+		case "Veterinario": return new ModelAndView("redirect:/indexVeterinario");
+		case "Empleado": return new ModelAndView("redirect:/stock");
+		}
+		return new ModelAndView("redirect:/login");
 	}
 
 	@RequestMapping(value = "/animales/registrar")
 	public ModelAndView irAFormularioDeRegistroDeAnimales(HttpServletRequest request, ModelMap modelo) {
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-
 		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
 		List<Genero> generos = this.servicioDeAnimales.obtenerGeneros();
 
@@ -220,8 +218,7 @@ public class ControladorEmpleado {
 		modelo.put("razas", razas);
 		modelo.put("generos", generos);
 
-		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-		modelo.put("notificaciones", notificaciones);
+		modelo.put("notificaciones", listarNotificacionesDelEmpleado(request));
 
 		return new ModelAndView("registrarAnimal", modelo);
 	}
@@ -257,8 +254,6 @@ public class ControladorEmpleado {
 
 	@RequestMapping("/animales/editar")
 	public ModelAndView editarAnimal(HttpServletRequest request, @RequestParam("id") Long idAnimal) {
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-
 		AnimalDeGranja animal = this.servicioDeAnimales.obtenerPorId(idAnimal);
 
 		List<TipoAnimal> tiposDeAnimales = this.servicioDeAnimales.obtenerTiposDeAnimales();
@@ -271,8 +266,7 @@ public class ControladorEmpleado {
 		modelo.put("razas", razas);
 		modelo.put("generos", generos);
 
-		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
-		modelo.put("notificaciones", notificaciones);
+		modelo.put("notificaciones", listarNotificacionesDelEmpleado(request));
 
 		return new ModelAndView("editarAnimal", modelo);
 	}

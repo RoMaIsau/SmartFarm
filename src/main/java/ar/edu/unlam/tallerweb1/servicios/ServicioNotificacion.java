@@ -13,5 +13,5 @@ public interface ServicioNotificacion {
 	Notificacion notificacionPorId(Long id);
 	void actualizarNotificacion(Notificacion notificacion);
 	void crearNotificacionAnimalFueraDeLugar(Long id);
-	Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha);
+//	Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha);
 }

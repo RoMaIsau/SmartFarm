@@ -95,21 +95,18 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		String fecha = (LocalDate.now().format(dateFormat));
 
 		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicación habitual";
-		Notificacion notificacionGuardada = BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
 		
-		if (notificacionGuardada == null) {
-			Notificacion notificacion = new Notificacion();
-			notificacion.setFecha(fecha);
-			notificacion.setTitulo("Animal fuera de rango");
-			notificacion.setDetalles(detalles);
-			notificacion.setEstado(false);
-			repositorioNotificacion.crearNotificacionAnimal(notificacion);
-		}
+		Notificacion notificacion = new Notificacion();
+		notificacion.setFecha(fecha);
+		notificacion.setTitulo("Animal fuera de rango");
+		notificacion.setDetalles(detalles);
+		notificacion.setEstado(false);
+		repositorioNotificacion.crearNotificacionAnimal(notificacion);
 	}
 
-	@Override
-	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
-		return repositorioNotificacion.BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
-	}
+//	@Override
+//	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
+//		return repositorioNotificacion.BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
+//	}
 
 }

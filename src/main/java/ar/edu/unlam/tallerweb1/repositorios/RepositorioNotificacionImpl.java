@@ -62,7 +62,6 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 		Session session = sessionFactory.getCurrentSession();
 		return (Notificacion) session.createCriteria(Notificacion.class)
 				.add(Restrictions.eq("detalles", detalles))
-//				.add(Restrictions.eq("estado", false))
 				.add(Restrictions.eq("fecha", fecha))
 				.uniqueResult();
 	}
@@ -95,12 +94,12 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 		}
 	}
 
-	@Override
-	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
-		Session session = sessionFactory.getCurrentSession();
-		return (Notificacion) session.createCriteria(Notificacion.class)
-				.add(Restrictions.eq("detalles", detalles))
-				.uniqueResult();
-	}
+//	@Override
+//	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
+//		Session session = sessionFactory.getCurrentSession();
+//		return (Notificacion) session.createCriteria(Notificacion.class)
+//				.add(Restrictions.eq("detalles", detalles))
+//				.uniqueResult();
+//	}
 
 }
