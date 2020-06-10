@@ -4,6 +4,8 @@ cantidadAnimales = document.getElementById("tabla").rows.length;
 
 var locations = new Array(cantidadAnimales);
 
+console.log(cantidadAnimales);
+
 for (i = 1; i < cantidadAnimales; i++) {
 
 	locations[i] = new Array(
@@ -19,8 +21,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZXplMjEiLCJhIjoiY2tiODBxcDYzMGIxYTMwcWFtZ2pnc
 map = new mapboxgl.Map({
 	container : "map",
 	style : "mapbox://styles/mapbox/satellite-streets-v11",
-	zoom : 14.57,
-	center : [ -59.2335, -35.2766 ]
+	zoom : 14,
+	center : [ -59.241913, -35.276381 ]
 });
 
 var marker, i;
