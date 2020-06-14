@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +16,8 @@
 
 		<!-- Sidebar -->
 		<%@ include file="../../parts/sidebar.jsp"%>
-		<!-- End of Sidebar -->
 
+		<!-- End of Sidebar -->
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
@@ -46,45 +46,16 @@
 										<th>Peso</th>
 									</tr>
 									<tr>
-										<td>${animal.id}</td>
-										<td>${animal.tipo.nombre}</td>
-										<td>${animal.raza.nombre}</td>
-										<td>${animal.genero.nombre}</td>
-										<td>${animal.peso}</td>
+										<td>${formulario.animal.id}</td>
+										<td>${formulario.animal.tipo.nombre}</td>
+										<td>${formulario.animal.raza.nombre}</td>
+										<td>${formulario.animal.genero.nombre}</td>
+										<td>${formulario.animal.peso}</td>
 								</table>
 						</div>
 					</div>
-					<div class="container-fluid mt-3">
-						<div class="h4 mb-2 text-gray-800">Cronograma</div>
-						<form:form action="crearPlanAlimentario" method="POST" modelAttribute="formulario">
-							<div class="table-responsive">
-								<table class="table table-bordered">
-									<tr>
-										<th>Número</th>
-										<th>Alimento</th>
-										<th>Cantidad</th>
-										<th>Fecha</th>
-										<th>Horario</th>
-									</tr>
-									<c:forEach items="${formulario.cronogramaDeAlimentacion}" var="cronograma" varStatus="status">
-										<tr>
-											<td align="center">${status.count}</td>
-											<td>
-												<select name="cronogramaDeAlimentacion[${status.index}].alimento.id" class="form-control">
-													<c:forEach items="${alimentos}" var="alimento">
-														<option value="${alimento.id}">${alimento.nombre}</option>
-													</c:forEach>
-												</select>
-											</td>
-											<td><input name="cronogramaDeAlimentacion[${status.index}].cantidad" value="${cronograma.cantidad}" class="form-control"/></td>
-											<td><input name="cronogramaDeAlimentacion[${status.index}].fecha" value="${cronograma.fecha}" class="form-control"/></td>
-											<td><input name="cronogramaDeAlimentacion[${status.index}].horario" value="${cronograma.horario}" class="form-control"/></td>
-										</tr>
-									</c:forEach>
-								</table>
-								<input type="submit" value="Crear" class="btn btn-primary btn-user btn-block text-white"/>
-							</div>	
-						</form:form>
+					<div id="detallePlanAlimentario" class="container-fluid mt-3">
+						<%@ include file="detallePlanAlimentario.jsp" %>
 					</div>
 				</div>
 				<!-- /.container-fluid -->
@@ -117,6 +88,7 @@
 	<%@ include file="../../parts/modalCerrarSesion.jsp"%>
 
 	<!-- Bootstrap core JavaScript-->
-	<%@ include file="../../parts/scripts.jsp"%>	
+	<%@ include file="../../parts/scripts.jsp"%>
+	<script src="<c:url value="/js/planAlimentario.js"/>"></script>
 </body>
 </html>
