@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ public class CronogramaDeAlimentacion {
 	private Long id;
 	private Date fecha;
 	private Integer cantidad;
-	private Date horario;
+	private LocalTime horario;
 	@ManyToOne
 	private PlanAlimentario planAlimentario;
 	@ManyToOne
@@ -46,11 +47,11 @@ public class CronogramaDeAlimentacion {
 		return cantidad;
 	}
 
-	public void setHorario(Date horario) {
+	public void setHorario(LocalTime horario) {
 		this.horario = horario;
 	}
 
-	public Date getHorario() {
+	public LocalTime getHorario() {
 		return horario;
 	}
 
