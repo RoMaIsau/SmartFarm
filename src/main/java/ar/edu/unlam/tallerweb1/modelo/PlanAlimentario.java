@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -14,9 +15,10 @@ public class PlanAlimentario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date fecha;
-	private Boolean estado;
+	private Date fechaDeCreacion;
 	private String descripcion;
+	@ManyToOne
+	private AnimalDeGranja animal;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -26,20 +28,12 @@ public class PlanAlimentario {
 		return id;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaDeCreacion(Date fechaDeCreacion) {
+		this.fechaDeCreacion = fechaDeCreacion;
 	}
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
-	}
-
-	public Boolean getEstado() {
-		return estado;
+	public Date getFechaDeCreacion() {
+		return fechaDeCreacion;
 	}
 
 	public void setDescripcion(String descripcion) {
@@ -48,5 +42,13 @@ public class PlanAlimentario {
 
 	public String getDescripcion() {
 		return descripcion;
+	}
+
+	public void setAnimal(AnimalDeGranja animal) {
+		this.animal = animal;
+	}
+
+	public AnimalDeGranja getAnimal() {
+		return animal;
 	}
 }
