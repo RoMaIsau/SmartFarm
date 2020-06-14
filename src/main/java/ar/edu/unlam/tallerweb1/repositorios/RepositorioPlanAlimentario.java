@@ -14,7 +14,7 @@ public interface RepositorioPlanAlimentario {
 
 	PlanAlimentario buscarPlanPorAnimal(AnimalDeGranja animal);
 
-	List<CronogramaDeAlimentacion> listartCronograma(PlanAlimentario plan);
+	List<CronogramaDeAlimentacion> listarCronograma(PlanAlimentario plan);
 
 	void eliminarCronograma(CronogramaDeAlimentacion cronograma);
 

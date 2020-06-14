@@ -42,7 +42,7 @@ public class RepositorioPlanAlimentarioImpl implements RepositorioPlanAlimentari
 	}
 
 	@Override
-	public List<CronogramaDeAlimentacion> listartCronograma(PlanAlimentario plan) {
+	public List<CronogramaDeAlimentacion> listarCronograma(PlanAlimentario plan) {
 		Criteria criteria = this.sessionFactory.getCurrentSession()
 				.createCriteria(CronogramaDeAlimentacion.class);
 		criteria.add(Restrictions.eq("planAlimentario", plan));
