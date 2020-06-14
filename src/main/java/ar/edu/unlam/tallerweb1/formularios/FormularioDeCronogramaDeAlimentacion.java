@@ -1,20 +1,20 @@
 package ar.edu.unlam.tallerweb1.formularios;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
+import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
 
 public class FormularioDeCronogramaDeAlimentacion {
 
 	private AnimalDeGranja animal;
-	private List<CronogramaDeAlimentacion> cronogramaDeAlimentacion;
+	private ItemDeCronograma itemCronograma;
+	private List<Alimento> alimentos;
+	private PlanAlimentario planAlimentario;
 
 	public FormularioDeCronogramaDeAlimentacion() {
-		this.cronogramaDeAlimentacion = new LinkedList<CronogramaDeAlimentacion>();
-		CronogramaDeAlimentacion cronograma = new CronogramaDeAlimentacion();
-		this.cronogramaDeAlimentacion.add(cronograma);
+		this.itemCronograma = new ItemDeCronograma();
 	}
 
 	public void setAnimal(AnimalDeGranja animal) {
@@ -25,11 +25,31 @@ public class FormularioDeCronogramaDeAlimentacion {
 		return animal;
 	}
 
-	public void setCronogramaDeAlimentacion(List<CronogramaDeAlimentacion> cronogramaDeAlimentacion) {
-		this.cronogramaDeAlimentacion = cronogramaDeAlimentacion;
+	public void setItemCronograma(ItemDeCronograma itemCronograma) {
+		this.itemCronograma = itemCronograma;
 	}
 
-	public List<CronogramaDeAlimentacion> getCronogramaDeAlimentacion() {
-		return cronogramaDeAlimentacion;
+	public ItemDeCronograma getItemCronograma() {
+		return itemCronograma;
+	}
+
+	public void setAlimentos(List<Alimento> alimentos) {
+		this.alimentos = alimentos;
+	}
+
+	public List<Alimento> getAlimentos() {
+		return alimentos;
+	}
+
+	public void setPlanAlimentario(PlanAlimentario planAlimentario) {
+		this.planAlimentario = planAlimentario;
+	}
+
+	public PlanAlimentario getPlanAlimentario() {
+		return planAlimentario;
+	}
+
+	public void limpiarItemCronograma() {
+		this.itemCronograma = new ItemDeCronograma();
 	}
 }
