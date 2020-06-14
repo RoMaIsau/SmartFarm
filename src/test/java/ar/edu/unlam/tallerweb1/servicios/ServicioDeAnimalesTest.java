@@ -27,8 +27,8 @@ public class ServicioDeAnimalesTest {
 	private RepositorioDeRazas repositorioDeRazas;
 	private RepositorioDeGeneros repositorioDeGeneros;
 	private RepositorioDeAnimales repositorioDeAnimales;
+	private ServicioPlanAlimentario servicioPlanAlimentario;
 
-	
 	@Before
 	public void inicializar() {
 
@@ -36,8 +36,10 @@ public class ServicioDeAnimalesTest {
 		this.repositorioDeRazas = mock(RepositorioDeRazas.class);
 		this.repositorioDeGeneros = mock(RepositorioDeGeneros.class);
 		this.repositorioDeAnimales = mock(RepositorioDeAnimales.class);
+		this.servicioPlanAlimentario = mock(ServicioPlanAlimentario.class);
 		
-		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas, this.repositorioDeGeneros, this.repositorioDeAnimales);
+		this.servicio = new ServicioDeAnimalesImpl(this.repositorioDeTipos, this.repositorioDeRazas, 
+				this.repositorioDeGeneros, this.repositorioDeAnimales, this.servicioPlanAlimentario);
 	}
 	
 	@Test
@@ -80,13 +82,14 @@ public class ServicioDeAnimalesTest {
 	}
 
 	@Test
-	public void registrarDeberiaGuardarLosAnimales() {
+	public void registrarDeberiaGuardarLosAnimalesYCrearUnPlanAlimentario() {
 
 		AnimalDeGranja animalNuevo = new AnimalDeGranja();
 
 		this.servicio.registrar(animalNuevo);
 
 		verify(this.repositorioDeAnimales).guardar(eq(animalNuevo));
+		verify(this.servicioPlanAlimentario).crearPlan(eq(animalNuevo));
 	}
 
 	@Test
