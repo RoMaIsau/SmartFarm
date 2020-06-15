@@ -46,7 +46,7 @@ public class RepositorioPlanAlimentarioImpl implements RepositorioPlanAlimentari
 		Criteria criteria = this.sessionFactory.getCurrentSession()
 				.createCriteria(CronogramaDeAlimentacion.class);
 		criteria.add(Restrictions.eq("planAlimentario", plan));
-		criteria.addOrder(Order.desc("fecha"));
+		criteria.addOrder(Order.asc("fecha"));
 		criteria.addOrder(Order.asc("horario"));
 		return criteria.list();
 	}
