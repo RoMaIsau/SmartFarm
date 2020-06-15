@@ -28,36 +28,34 @@ map = new mapboxgl.Map({
 var marker, i;
 
 for (i = 1; i < locations.length; i++) {
-	
-	var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-			locations[i][0] + ' - '+ locations[i][3]+' - '+ locations[i][4]
-			);
-	
+
+	var popup = new mapboxgl.Popup({
+		offset : 25
+	}).setHTML(locations[i][0] + ' - ' + locations[i][3] + ' - '
+			+ locations[i][4]);
+
 	var icono = document.createElement('div');
 	icono.classList.add("icon");
-	
-	if(locations[i][3] == 'VACUNO'){
+
+	switch (locations[i][3]) {
+
+	case 'VACUNO':
 		icono.id = 'vacuno';
+		break;
+	case 'OVINO':
+		icono.id = 'ovino';
+		break;
+	case 'CAPRINO':
+		icono.id = 'caprino';
+		break;
+	case 'EQUINO':
+		icono.id = 'equino';
+		break;
+	case 'PORCINO':
+		icono.id = 'porcino';
+		break;
 	}
 
-	if(locations[i][3] == 'OVINO'){
-		icono.id = 'ovino';
-	}
-	
-	if(locations[i][3] == 'CAPRINO'){
-		icono.id = 'caprino';
-	} 
-	
-	if(locations[i][3] == 'EQUINO'){
-		icono.id = 'equino';
-	}
-	
-	if(locations[i][3] == 'PORCINO'){
-		icono.id = 'porcino';
-	}
-	
-	new mapboxgl.Marker(icono)
-		.setLngLat([locations[i][1], locations[i][2] ])
-		.setPopup(popup)
-		.addTo(map);
+	new mapboxgl.Marker(icono).setLngLat([ locations[i][1], locations[i][2] ])
+			.setPopup(popup).addTo(map);
 }
