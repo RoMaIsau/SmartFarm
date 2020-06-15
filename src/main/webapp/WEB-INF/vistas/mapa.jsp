@@ -41,6 +41,10 @@
 .mapboxgl-popup {
 	max-width: 200px;
 }
+
+.mapboxgl-popup-content {
+	border-left: .25rem solid #1cc88a!important;
+}
 </style>
 
 <body id="page-top">

@@ -60,8 +60,9 @@ for (i = 1; i < locations.length; i++) {
 		offset : 25
 	}).setHTML('<div><div class="row no-gutters align-items-center"><div class="col mr-2">'+
 				'<div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 15px;">'+locations[i][0]+'</div>'+
-                 '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+locations[i][3]+' - '+locations[i][4]+'</div></div><div class="col-auto mt-2">'+
-                  '<img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+imagen+'.png"/></div></div> </div>');
+                 '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+locations[i][3]+' - '+locations[i][4]+'</div>'+
+                 '<div class="mt-1"><a href="verAnimal?id='+locations[i][0]+'" style="font-size: 10px;">Ver animal</a></div></div> ' +
+                  '<div class="col-auto mt-2"><img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+imagen+'.png"/></div></div> </div>');
 
 
 	new mapboxgl.Marker(icono).setLngLat([ locations[i][1], locations[i][2] ])
