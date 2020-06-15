@@ -55,4 +55,17 @@ public class RepositorioPlanAlimentarioImpl implements RepositorioPlanAlimentari
 	public void eliminarCronograma(CronogramaDeAlimentacion cronograma) {
 		this.sessionFactory.getCurrentSession().delete(cronograma);
 	}
+
+	@Override
+	public CronogramaDeAlimentacion buscarCronograma(Long idCronograma) {
+		return (CronogramaDeAlimentacion) this.sessionFactory.getCurrentSession()
+				.createCriteria(CronogramaDeAlimentacion.class)
+				.add(Restrictions.eq("id", idCronograma))
+				.uniqueResult();
+	}
+
+	@Override
+	public void actualizarCronograma(CronogramaDeAlimentacion cronograma) {
+		this.sessionFactory.getCurrentSession().update(cronograma);
+	}
 }

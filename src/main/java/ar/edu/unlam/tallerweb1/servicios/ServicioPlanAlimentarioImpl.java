@@ -61,4 +61,15 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 		this.repositorioPlanAlimentario.eliminarCronograma(cronograma);
 	}
 
+	@Override
+	public CronogramaDeAlimentacion buscarCronograma(Long idCronograma) {
+		return this.repositorioPlanAlimentario.buscarCronograma(idCronograma);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void actualizarCronograma(CronogramaDeAlimentacion cronograma) {
+		this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
+	}
+
 }

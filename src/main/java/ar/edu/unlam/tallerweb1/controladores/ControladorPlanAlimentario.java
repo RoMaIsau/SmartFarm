@@ -93,4 +93,28 @@ public class ControladorPlanAlimentario {
 		modelo.put("cronograma", cronograma);
 		return new ModelAndView("cronogramaDeAlimentacion", modelo);
 	}
+
+	@RequestMapping("animales/editarCronograma")
+	public ModelAndView editarCronograma(@RequestParam("idCronograma") Long idCronograma) {
+
+		CronogramaDeAlimentacion cronograma = this.servicioPlanAlimentario.buscarCronograma(idCronograma);
+		List<Alimento> alimentos = this.servicioAlimento.listarAlimentos();
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("cronogramaEditable", cronograma);
+		modelo.put("alimentos", alimentos);
+
+		return new ModelAndView("modalEditarCronograma", modelo);
+	}
+
+	@RequestMapping(value = "animales/editarCronograma", method = RequestMethod.POST)
+	public ModelAndView confirmarEdicionDeCronograma(CronogramaDeAlimentacion cronograma) {
+		this.servicioPlanAlimentario.actualizarCronograma(cronograma);
+		List<CronogramaDeAlimentacion> cronogramDeAlimentacion = this.servicioPlanAlimentario.listarCronograma(cronograma.getPlanAlimentario());
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("cronograma", cronogramDeAlimentacion);
+
+		return new ModelAndView("cronogramaDeAlimentacion", modelo);
+	}
 }

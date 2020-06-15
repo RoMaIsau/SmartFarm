@@ -17,4 +17,8 @@ public interface ServicioPlanAlimentario {
 	void agregarCronograma(CronogramaDeAlimentacion cronograma);
 
 	void eliminarCronograma(Long idCronograma);
+
+	CronogramaDeAlimentacion buscarCronograma(Long idCronograma);
+
+	void actualizarCronograma(CronogramaDeAlimentacion cronograma);
 }

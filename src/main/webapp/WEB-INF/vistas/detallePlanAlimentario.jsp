@@ -33,9 +33,8 @@
 <div id="cronogramaDeAlimentacion" class="table-responsive mt-5">
 	<%@ include file="cronogramaDeAlimentacion.jsp" %>
 </div>
-<!-- Modal eliminar animal -->
-<div class="modal fade" id="modalEliminarCronograma" tabindex="-1" role="dialog"
-	aria-hidden="true">
+<!-- Modal eliminar cronograma -->
+<div class="modal fade" id="modalEliminarCronograma" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -56,4 +55,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<!-- Modal dinámico editar cronograma -->
+<div id="contenedorModalEditarCronograma">
+
 </div>

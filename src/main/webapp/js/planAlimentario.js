@@ -33,5 +33,35 @@
 				}
 			})
 		});
+
+		$(document).on("click", "#botonEditarCronograma", function() {
+			var idCronograma = $(this).data('cronograma');
+			$.ajax({
+				type: "GET",
+				url: 'editarCronograma',
+				data:{
+					"idCronograma":idCronograma
+				},
+				success:function(respuesta) {
+					$('#contenedorModalEditarCronograma').html(respuesta);
+					$('#modalEditarCronograma').modal('toggle');
+				}
+			})
+		});
+
+		$(document).on("click", "#botonAceptarEdicionCronograma", function() {
+			var formulario = $('#formEdicionDeCronograma');
+			var html;
+			$.ajax({
+				type: 'POST',
+				url: 'editarCronograma',
+				data: formulario.serialize(),
+				success:function(respuesta) {
+					$('#modalEditarCronograma').modal('toggle');
+					$('#cronogramaDeAlimentacion').html(respuesta);
+				}
+			})
+		});
+
 	});	
 })(jQuery);

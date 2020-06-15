@@ -18,4 +18,8 @@ public interface RepositorioPlanAlimentario {
 
 	void eliminarCronograma(CronogramaDeAlimentacion cronograma);
 
+	CronogramaDeAlimentacion buscarCronograma(Long idCronograma);
+
+	void actualizarCronograma(CronogramaDeAlimentacion cronograma);
+
 }

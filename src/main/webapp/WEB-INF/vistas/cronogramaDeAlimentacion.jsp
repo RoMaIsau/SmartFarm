@@ -21,6 +21,9 @@
 					role="button" data-toggle="modal" class="open-Modal">
 					<i class="fas fa-trash mx-2 text-danger"></i>
 				</a>
+				<a href="#" id="botonEditarCronograma" data-cronograma="${item.id}">
+					<i class="fas fa-edit mx-2 text-info"></i>
+				</a>
 			</td>
 		</tr>
 	</c:forEach>
