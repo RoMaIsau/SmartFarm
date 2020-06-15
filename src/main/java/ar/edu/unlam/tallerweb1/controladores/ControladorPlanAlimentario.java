@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.excepciones.NoSePudoCompletarCronogramaException;
 import ar.edu.unlam.tallerweb1.formularios.FormularioDeCronogramaDeAlimentacion;
 import ar.edu.unlam.tallerweb1.formularios.FormularioEliminarCronograma;
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
@@ -19,6 +20,7 @@ import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPlanAlimentario;
+import ar.edu.unlam.tallerweb1.vista.Mensaje;
 
 @Controller
 public class ControladorPlanAlimentario {
@@ -120,11 +122,26 @@ public class ControladorPlanAlimentario {
 
 	@RequestMapping(value = "animales/terminarCronograma", method = RequestMethod.POST)
 	public ModelAndView terminarCronograma(CronogramaDeAlimentacion cronograma) {
-		this.servicioPlanAlimentario.terminarCronograma(cronograma);
-		List<CronogramaDeAlimentacion> cronogramDeAlimentacion = this.servicioPlanAlimentario.listarCronograma(cronograma.getPlanAlimentario());
 
 		ModelMap modelo = new ModelMap();
+		Mensaje mensaje;
+
+		try {
+
+			this.servicioPlanAlimentario.terminarCronograma(cronograma);
+			mensaje = Mensaje.crearMensajeDeExito()
+						.conTitulo("Operación realizada con éxito")
+						.conDetalle("El cronograma fue completado correctamente");
+
+		}catch (NoSePudoCompletarCronogramaException e) {
+			mensaje = Mensaje.crearMensajeDeError()
+					.conTitulo("Ocurrió un error completando el cronograma")
+					.conDetalle(e.getMessage());
+		}
+
+		List<CronogramaDeAlimentacion> cronogramDeAlimentacion = this.servicioPlanAlimentario.listarCronograma(cronograma.getPlanAlimentario());
 		modelo.put("cronograma", cronogramDeAlimentacion);
+		modelo.put("mensaje", mensaje);
 		return new ModelAndView("cronogramaDeAlimentacion", modelo);
 	}
 }

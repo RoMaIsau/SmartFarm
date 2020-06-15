@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<c:if test="${not empty mensaje}">
+	<div class="alert ${mensaje.gravedad}" role="alert">
+		<strong>${mensaje.titulo}</strong> ${mensaje.detalle}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
 <table class="table table-bordered">
 	<tr>
 		<th>Estado</th>

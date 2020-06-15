@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.excepciones.NoSePudoCompletarCronogramaException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
 import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
@@ -22,5 +23,5 @@ public interface ServicioPlanAlimentario {
 
 	void actualizarCronograma(CronogramaDeAlimentacion cronograma);
 
-	void terminarCronograma(CronogramaDeAlimentacion cronograma);
+	void terminarCronograma(CronogramaDeAlimentacion cronograma) throws NoSePudoCompletarCronogramaException;
 }

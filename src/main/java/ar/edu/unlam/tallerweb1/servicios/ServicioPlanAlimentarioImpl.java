@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.tallerweb1.excepciones.NoSePudoCompletarCronogramaException;
+import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
 import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
@@ -20,10 +22,12 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 
 	private static final String DESCRIPCION_DEFAULT = "Plan alimentario";
 	private RepositorioPlanAlimentario repositorioPlanAlimentario;
+	private ServicioAlimento servicioAlimento;
 
 	@Autowired
-	public ServicioPlanAlimentarioImpl(RepositorioPlanAlimentario repositorioPlanAlimentario) {
+	public ServicioPlanAlimentarioImpl(RepositorioPlanAlimentario repositorioPlanAlimentario, ServicioAlimento servicioAlimento) {
 		this.repositorioPlanAlimentario = repositorioPlanAlimentario;
+		this.servicioAlimento = servicioAlimento;
 	}
 
 	@Override
@@ -76,10 +80,21 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void terminarCronograma(CronogramaDeAlimentacion cronograma) {
-		cronograma = this.repositorioPlanAlimentario.buscarCronograma(cronograma.getId());
-		cronograma.setEstado(EstadoCronograma.COMPLETO);
-		this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
-	}
+	public void terminarCronograma(CronogramaDeAlimentacion cronograma) throws NoSePudoCompletarCronogramaException {
 
+		cronograma = this.repositorioPlanAlimentario.buscarCronograma(cronograma.getId());
+
+		int cantidad = cronograma.getCantidad();
+		Alimento alimento = cronograma.getAlimento();
+
+		Double stock = this.servicioAlimento.consultarStock(alimento);
+
+		if(stock >= cronograma.getCantidad()) {
+			this.servicioAlimento.decrementarStock(alimento, cantidad);
+			cronograma.setEstado(EstadoCronograma.COMPLETO);
+			this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
+		} else {
+			throw new NoSePudoCompletarCronogramaException("Stock insuficiente");
+		}
+	}
 }
