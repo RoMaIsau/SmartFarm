@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
 import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
+import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion.EstadoCronograma;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPlanAlimentario;
 
 @Service
@@ -50,6 +51,7 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void agregarCronograma(CronogramaDeAlimentacion cronograma) {
+		cronograma.setEstado(EstadoCronograma.PENDIENTE);
 		this.repositorioPlanAlimentario.guardarItemDeCronograma(cronograma);
 	}
 
@@ -69,6 +71,14 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void actualizarCronograma(CronogramaDeAlimentacion cronograma) {
+		this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void terminarCronograma(CronogramaDeAlimentacion cronograma) {
+		cronograma = this.repositorioPlanAlimentario.buscarCronograma(cronograma.getId());
+		cronograma.setEstado(EstadoCronograma.COMPLETO);
 		this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
 	}
 
