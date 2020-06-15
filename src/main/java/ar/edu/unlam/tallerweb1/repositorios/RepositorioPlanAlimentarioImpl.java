@@ -69,4 +69,9 @@ public class RepositorioPlanAlimentarioImpl implements RepositorioPlanAlimentari
 	public void actualizarCronograma(CronogramaDeAlimentacion cronograma) {
 		this.sessionFactory.getCurrentSession().update(cronograma);
 	}
+
+	@Override
+	public void eliminarPlan(PlanAlimentario plan) {
+		this.sessionFactory.getCurrentSession().delete(plan);
+	}
 }

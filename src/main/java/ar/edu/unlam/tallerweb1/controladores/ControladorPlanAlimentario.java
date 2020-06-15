@@ -85,14 +85,16 @@ public class ControladorPlanAlimentario {
 	@RequestMapping(value = "animales/eliminarCronograma", method = RequestMethod.POST)
 	public ModelAndView eliminarCronograma(FormularioEliminarCronograma formulario) {
 
-		this.servicioPlanAlimentario.eliminarCronograma(formulario.getIdCronograma());
+		CronogramaDeAlimentacion cronograma = new CronogramaDeAlimentacion();
+		cronograma.setId(formulario.getIdCronograma());
+		this.servicioPlanAlimentario.eliminarCronograma(cronograma);
 
 		PlanAlimentario plan = new PlanAlimentario();
 		plan.setId(formulario.getIdPlan());
 
-		List<CronogramaDeAlimentacion> cronograma = this.servicioPlanAlimentario.listarCronograma(plan);
+		List<CronogramaDeAlimentacion> cronogramaCompleto = this.servicioPlanAlimentario.listarCronograma(plan);
 		ModelMap modelo = new ModelMap();
-		modelo.put("cronograma", cronograma);
+		modelo.put("cronograma", cronogramaCompleto);
 		return new ModelAndView("cronogramaDeAlimentacion", modelo);
 	}
 

@@ -22,4 +22,6 @@ public interface RepositorioPlanAlimentario {
 
 	void actualizarCronograma(CronogramaDeAlimentacion cronograma);
 
+	void eliminarPlan(PlanAlimentario plan);
+
 }

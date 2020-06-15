@@ -127,6 +127,9 @@ public class ServicioDeAnimalesTest {
 	public void deberiaEliminarAUnAnimal() {
 
 		Long idAnimal = 2L;
+		AnimalDeGranja animalConIdDos = new AnimalDeGranja();
+		animalConIdDos.setId(idAnimal);
+		when(this.repositorioDeAnimales.buscarPorId(idAnimal)).thenReturn(animalConIdDos);
 
 		this.servicio.eliminarPorId(idAnimal);
 

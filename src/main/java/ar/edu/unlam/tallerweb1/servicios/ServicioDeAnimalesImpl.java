@@ -81,9 +81,9 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarPorId(Long idAnimal) {
-		AnimalDeGranja animal = new AnimalDeGranja();
-		animal.setId(idAnimal);
-		this.repositorioDeAnimales.eliminar(animal);
+		AnimalDeGranja animal = obtenerPorId(idAnimal);
+		servicioPlanAlimentario.eliminarPlan(animal);
+		repositorioDeAnimales.eliminar(animal);
 	}
 
 }

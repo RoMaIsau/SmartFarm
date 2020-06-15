@@ -17,11 +17,13 @@ public interface ServicioPlanAlimentario {
 
 	void agregarCronograma(CronogramaDeAlimentacion cronograma);
 
-	void eliminarCronograma(Long idCronograma);
+	void eliminarCronograma(CronogramaDeAlimentacion cronograma);
 
 	CronogramaDeAlimentacion buscarCronograma(Long idCronograma);
 
 	void actualizarCronograma(CronogramaDeAlimentacion cronograma);
 
 	void terminarCronograma(CronogramaDeAlimentacion cronograma) throws NoSePudoCompletarCronogramaException;
+
+	void eliminarPlan(AnimalDeGranja animal);
 }

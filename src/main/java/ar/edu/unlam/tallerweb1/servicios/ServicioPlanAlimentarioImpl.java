@@ -61,9 +61,7 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void eliminarCronograma(Long idCronograma) {
-		CronogramaDeAlimentacion cronograma = new CronogramaDeAlimentacion();
-		cronograma.setId(idCronograma);
+	public void eliminarCronograma(CronogramaDeAlimentacion cronograma) {
 		this.repositorioPlanAlimentario.eliminarCronograma(cronograma);
 	}
 
@@ -95,6 +93,21 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 			this.repositorioPlanAlimentario.actualizarCronograma(cronograma);
 		} else {
 			throw new NoSePudoCompletarCronogramaException("Stock insuficiente");
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void eliminarPlan(AnimalDeGranja animal) {
+
+		PlanAlimentario plan = buscarPlanPorAnimal(animal);
+		if (plan != null) {
+			List<CronogramaDeAlimentacion> cronogramaDeAlimentacion = listarCronograma(plan);
+			for(CronogramaDeAlimentacion cronograma :cronogramaDeAlimentacion) {
+				eliminarCronograma(cronograma);
+			}
+
+			this.repositorioPlanAlimentario.eliminarPlan(plan);
 		}
 	}
 }
