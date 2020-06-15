@@ -52,24 +52,22 @@
 			</c:when>
 		</c:choose></li>
 
-	<!-- Divider -->
-	<hr class="sidebar-divider">
+	
+	
 
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item"><c:choose>
 			<c:when test="${ROL == 'Admin'}">
+				<hr class="sidebar-divider">
 				<a class="nav-link" href="estadisticas"> <i
 					class="fas fa-chart-pie"></i> <span>Estadísticas</span>
 				</a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
+				<hr class="sidebar-divider">
 				<a class="nav-link" href="seccion3"> <i class="fas fa-user"></i>
 					<span>Seccion 3</span>
 				</a>
-			</c:when>
-			<c:when test="${ROL == 'Empleado'}">
-				<a class="nav-link" href="seccion3"><i class="fas fa-user"></i>
-					<span>Seccion 3</span> </a>
 			</c:when>
 		</c:choose></li>
 
