@@ -117,4 +117,14 @@ public class ControladorPlanAlimentario {
 
 		return new ModelAndView("cronogramaDeAlimentacion", modelo);
 	}
+
+	@RequestMapping(value = "animales/terminarCronograma", method = RequestMethod.POST)
+	public ModelAndView terminarCronograma(CronogramaDeAlimentacion cronograma) {
+		this.servicioPlanAlimentario.terminarCronograma(cronograma);
+		List<CronogramaDeAlimentacion> cronogramDeAlimentacion = this.servicioPlanAlimentario.listarCronograma(cronograma.getPlanAlimentario());
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("cronograma", cronogramDeAlimentacion);
+		return new ModelAndView("cronogramaDeAlimentacion", modelo);
+	}
 }
