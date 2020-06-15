@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <table class="table table-bordered">
 	<tr>
+		<th>Estado</th>
 		<th>Alimento</th>
 		<th>Cantidad</th>
 		<th>Fecha</th>
@@ -11,6 +12,17 @@
 	</tr>
 	<c:forEach items="${cronograma}" var="item" varStatus="status">
 		<tr>
+			<td>
+				<c:if test="${item.estado eq 'PENDIENTE'}">
+					<span class="badge badge-pill badge-warning">PENDIENTE</span>
+					<a id="botonModalEliminarCronograma">
+						<i class="fas fa-thumbs-up mx-2 text-success" onclick="completarCronograma(${item.id}, ${item.planAlimentario.id});"></i>
+					</a>
+				</c:if>
+				<c:if test="${item.estado eq 'COMPLETO'}">
+					<span class="badge badge-pill badge-success">COMPLETO</span>
+				</c:if>
+			</td>
 			<td>${item.alimento.nombre}</td>
 			<td>${item.cantidad}</td>
 			<td><spring:eval expression="item.fecha" /></td>
@@ -21,9 +33,11 @@
 					role="button" data-toggle="modal" class="open-Modal">
 					<i class="fas fa-trash mx-2 text-danger"></i>
 				</a>
-				<a href="#" id="botonEditarCronograma" data-cronograma="${item.id}">
-					<i class="fas fa-edit mx-2 text-info"></i>
-				</a>
+				<c:if test="${item.estado eq 'PENDIENTE'}">
+					<a class="linkModalDinamico" id="botonEditarCronograma" data-cronograma="${item.id}">
+						<i class="fas fa-edit mx-2 text-info"></i>
+					</a>
+				</c:if>
 			</td>
 		</tr>
 	</c:forEach>

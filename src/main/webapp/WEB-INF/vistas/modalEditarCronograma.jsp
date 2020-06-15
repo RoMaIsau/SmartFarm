@@ -15,6 +15,7 @@
 					<form:form id="formEdicionDeCronograma" modelAttribute="cronogramaEditable">
 						<form:input type="hidden" path="id"/>
 						<form:input type="hidden" path="planAlimentario.id"/>
+						<form:input type="hidden" path="estado"/>
 						<div class="row">
 							<div class="col">
 								<form:select path="alimento.id" class="form-control">

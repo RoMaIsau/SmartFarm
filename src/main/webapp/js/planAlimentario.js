@@ -62,6 +62,16 @@
 				}
 			})
 		});
-
 	});	
 })(jQuery);
+
+function completarCronograma(idCronograma, idPlan) {
+	$.ajax({
+		type: 'POST',
+		url: 'terminarCronograma',
+		data: 'id=' + idCronograma + '&planAlimentario.id=' + idPlan,
+		success:function(respuesta){
+			$('#cronogramaDeAlimentacion').html(respuesta);
+		}
+	})
+}
