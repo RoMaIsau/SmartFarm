@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacion;
 
@@ -27,9 +28,9 @@ public class ControladorMapa {
 			return new ModelAndView("redirect:/login");
 		}
 
-		List<Ubicacion> ubicaciones = servicioUbicacion.obtenerUbicaciones();
+		List<AnimalUbicacion> animalesUbicaciones = servicioUbicacion.obtenerUbicaciones();
 
-		model.put("lists", ubicaciones);
+		model.put("lista", animalesUbicaciones);
 
 		return new ModelAndView("mapa", model);
 	}

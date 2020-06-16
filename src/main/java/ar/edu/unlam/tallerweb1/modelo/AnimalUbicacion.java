@@ -10,20 +10,19 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class AnimalUbicacion {
-	
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ManyToOne (optional = false)
+
+	@ManyToOne(optional = false)
 	private AnimalDeGranja animal;
-	
-	@ManyToOne (optional = false)
+
+	@ManyToOne(optional = false)
 	private Ubicacion ubicacion;
-	
+
 	private LocalDateTime fecha;
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -55,7 +54,5 @@ public class AnimalUbicacion {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
-	
-	
-	
+
 }

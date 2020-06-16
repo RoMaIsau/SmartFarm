@@ -1,14 +1,20 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
 
 @Service("servicioUbicacion")
 @Transactional
@@ -16,22 +22,41 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	@Inject
 	ServicioDeAnimales servicioAnimales;
+	
+	private RepositorioUbicacion repositorioUbicacion;
+	private RepositorioAnimalUbicacion repositorioAnimalUbicacion;
+	
+	@Autowired
+	public ServicioUbicacionImpl(RepositorioUbicacion repositorioUbicacion,
+			RepositorioAnimalUbicacion repositorioAnimalUbicacion) {
+		this.repositorioUbicacion = repositorioUbicacion;
+		this.repositorioAnimalUbicacion = repositorioAnimalUbicacion;
+	}
 
 	@Override
-	public List<Ubicacion> obtenerUbicaciones() {
+	public List<AnimalUbicacion> obtenerUbicaciones() {
 
-		List<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
+		List<AnimalUbicacion> animalesUbicaciones = new ArrayList<AnimalUbicacion>();
 		List<AnimalDeGranja> animales = servicioAnimales.obtenerTodos();
 
 		for (AnimalDeGranja animal : animales) {
 			Ubicacion ubicacion = new Ubicacion(0, 0);
+			AnimalUbicacion animalUbicacion = new AnimalUbicacion();
+			
 			ubicacion.setLatitud(setearLatitudAleatorea(animal));
 			ubicacion.setLongitud(setearLongitudAleatorea(animal));
 			
-			ubicaciones.add(ubicacion);
+			animalUbicacion.setAnimal(animal);
+			animalUbicacion.setUbicacion(ubicacion);
+			animalUbicacion.setFecha(LocalDateTime.now());
+			
+			repositorioUbicacion.guardarUbicacion(ubicacion);
+			repositorioAnimalUbicacion.guardar(animalUbicacion);
+			
+			animalesUbicaciones.add(animalUbicacion);
 		}
 
-		return ubicaciones;
+		return animalesUbicaciones;
 	}
 
 	public float setearLatitudAleatorea(AnimalDeGranja a) {

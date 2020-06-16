@@ -92,12 +92,12 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${lists}" var="ubicacion">
-											<td>${ubicacion.animal.id}</td>
-											<td hidden>${ubicacion.longitud}</td>
-											<td hidden>${ubicacion.latitud}</td>
-											<td>${ubicacion.animal.tipo.nombre}</td>
-											<td>${ubicacion.animal.raza.nombre}</td>
+										<c:forEach items="${lista}" var="lista">
+											<td>${lista.animal.id}</td>
+											<td hidden>${lista.ubicacion.longitud}</td>
+											<td hidden>${lista.ubicacion.latitud}</td>
+											<td>${lista.animal.tipo.nombre}</td>
+											<td>${lista.animal.raza.nombre}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
