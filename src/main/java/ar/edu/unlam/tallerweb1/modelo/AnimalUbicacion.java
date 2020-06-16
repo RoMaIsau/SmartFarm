@@ -19,9 +19,11 @@ public class AnimalUbicacion {
 	private AnimalDeGranja animal;
 
 	@ManyToOne(optional = false)
-	private Ubicacion ubicacion;
+	private Ubicacion ultimaUbicacion;
 
 	private LocalDateTime fecha;
+	
+	private Integer metrosRecorridos;
 
 	public Long getId() {
 		return id;
@@ -39,12 +41,12 @@ public class AnimalUbicacion {
 		this.animal = animal;
 	}
 
-	public Ubicacion getUbicacion() {
-		return ubicacion;
+	public Ubicacion getUltimaUbicacion() {
+		return ultimaUbicacion;
 	}
 
-	public void setUbicacion(Ubicacion ubicacion) {
-		this.ubicacion = ubicacion;
+	public void setUltimaUbicacion(Ubicacion ultimaUbicacion) {
+		this.ultimaUbicacion = ultimaUbicacion;
 	}
 
 	public LocalDateTime getFecha() {
@@ -54,5 +56,15 @@ public class AnimalUbicacion {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
+
+	public Integer getMetrosRecorridos() {
+		return metrosRecorridos;
+	}
+
+	public void setMetrosRecorridos(Integer metrosRecorridos) {
+		this.metrosRecorridos = metrosRecorridos;
+	}
+	
+	
 
 }
