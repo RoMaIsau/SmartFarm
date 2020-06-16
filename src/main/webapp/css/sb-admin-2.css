@@ -11001,3 +11001,6 @@ body.sidebar-toggled footer.sticky-footer {
   display: block !important;
 }
 
+.linkModalDinamico {
+	cursor: pointer;
+}

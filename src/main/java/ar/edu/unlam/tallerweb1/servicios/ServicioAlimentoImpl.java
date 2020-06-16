@@ -55,4 +55,18 @@ public class ServicioAlimentoImpl implements ServicioAlimento {
 		repositorioAlimento.actualizarAlimento(alimento);
 	}
 
+	@Override
+	public Double consultarStock(Alimento alimento) {
+		alimento = this.repositorioAlimento.consultarAlimento(alimento);
+		return alimento.getCantidad() - alimento.getStockMinimo();
+	}
+
+	@Override
+	public void decrementarStock(Alimento alimento, int cantidad) {
+		alimento = this.repositorioAlimento.consultarAlimento(alimento);
+		Double nuevoStock = alimento.getCantidad() - cantidad;
+		alimento.setCantidad(nuevoStock);
+		this.repositorioAlimento.actualizarAlimento(alimento);
+	}
+
 }
