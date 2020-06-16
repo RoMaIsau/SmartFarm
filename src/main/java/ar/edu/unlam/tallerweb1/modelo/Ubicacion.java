@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,9 +18,6 @@ public class Ubicacion {
 	private float latitud;
 	private float longitud;
 	
-	@OneToOne
-	private AnimalDeGranja animal;
-
 	public Ubicacion(float latitud, float longitud) {
 		this.latitud = latitud;
 		this.longitud = longitud;
@@ -47,12 +46,5 @@ public class Ubicacion {
 	public void setLongitud(float longitud) {
 		this.longitud = longitud;
 	}
-	
-	public AnimalDeGranja getAnimal() {
-		return animal;
-	}
 
-	public void setAnimal(AnimalDeGranja animal) {
-		this.animal = animal;
-	}
 }

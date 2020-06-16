@@ -27,9 +27,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			Ubicacion ubicacion = new Ubicacion(0, 0);
 			ubicacion.setLatitud(setearLatitudAleatorea(animal));
 			ubicacion.setLongitud(setearLongitudAleatorea(animal));
-
-			ubicacion.setAnimal(animal);
-
+			
 			ubicaciones.add(ubicacion);
 		}
 
@@ -67,8 +65,6 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	public float setearLongitudAleatorea(AnimalDeGranja a) {
 		float n = 0;
-		float x = 0;
-		x = (float) ((float) (Math.random() * (100.0 - 1.0)) + 1.0);
 		
 		switch (a.getTipo().getNombre()) {
 
