@@ -1,14 +1,14 @@
 package ar.edu.unlam.tallerweb1.formularios;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 
 public class ItemDeCronograma {
 	
 	private int cantidad;
-	private Date fecha;
+	private LocalDate fecha;
 	private Alimento alimento;
 	private LocalTime horario;
 	
@@ -20,11 +20,11 @@ public class ItemDeCronograma {
 		return cantidad;
 	}
 	
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 	

@@ -21,15 +21,22 @@
 	<c:forEach items="${cronograma}" var="item" varStatus="status">
 		<tr>
 			<td>
-				<c:if test="${item.estado eq 'PENDIENTE'}">
-					<span class="badge badge-pill badge-warning">PENDIENTE</span>
-					<a id="botonModalEliminarCronograma">
-						<i class="fas fa-thumbs-up mx-2 text-success" onclick="completarCronograma(${item.id}, ${item.planAlimentario.id});"></i>
-					</a>
-				</c:if>
-				<c:if test="${item.estado eq 'COMPLETO'}">
-					<span class="badge badge-pill badge-success">COMPLETO</span>
-				</c:if>
+				<c:choose>
+					<c:when test="${item.estado eq 'COMPLETO'}">
+						<span class="badge badge-pill badge-success">COMPLETO</span>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${item.estado eq 'PENDIENTE'}">
+							<span class="badge badge-pill badge-warning">PENDIENTE</span>
+						</c:if>
+						<c:if test="${item.estado eq 'VENCIDO'}">
+							<span class="badge badge-pill badge-danger">VENCIDO</span>
+						</c:if>
+						<a id="botonModalEliminarCronograma">
+							<i class="fas fa-thumbs-up mx-2 text-success" onclick="completarCronograma(${item.id}, ${item.planAlimentario.id});"></i>
+						</a>
+					</c:otherwise>
+				</c:choose>
 			</td>
 			<td>${item.alimento.nombre}</td>
 			<td>${item.cantidad}</td>

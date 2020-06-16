@@ -26,4 +26,6 @@ public interface ServicioPlanAlimentario {
 	void terminarCronograma(CronogramaDeAlimentacion cronograma) throws NoSePudoCompletarCronogramaException;
 
 	void eliminarPlan(AnimalDeGranja animal);
+
+	void vencerCronogramasSinCompletar(PlanAlimentario plan);
 }

@@ -42,6 +42,8 @@ public class ControladorPlanAlimentario {
 
 		AnimalDeGranja animal = this.servicioDeAnimales.obtenerPorId(idAnimal);
 		PlanAlimentario plan = this.servicioPlanAlimentario.buscarPlanPorAnimal(animal);
+		this.servicioPlanAlimentario.vencerCronogramasSinCompletar(plan);
+
 		List<CronogramaDeAlimentacion> cronogramDeAlimentacion = this.servicioPlanAlimentario.listarCronograma(plan);
 
 		FormularioDeCronogramaDeAlimentacion formulario = new FormularioDeCronogramaDeAlimentacion();

@@ -1,23 +1,23 @@
 package ar.edu.unlam.tallerweb1.formateadores;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import org.springframework.format.Formatter;
 
-public class FormateadorDeFechas implements Formatter<Date> {
+public class FormateadorDeFechas implements Formatter<LocalDate> {
 
-	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	@Override
-	public String print(Date fecha, Locale locale) {		
-		return simpleDateFormat.format(fecha);
+	public String print(LocalDate fecha, Locale locale) {
+		return fecha.format(this.formatter);
 	}
 
 	@Override
-	public Date parse(String fecha, Locale locale) throws ParseException {
-		return simpleDateFormat.parse(fecha);
+	public LocalDate parse(String fecha, Locale locale) throws ParseException {
+		return LocalDate.parse(fecha, this.formatter);
 	}
 }

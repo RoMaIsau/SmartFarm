@@ -24,4 +24,6 @@ public interface RepositorioPlanAlimentario {
 
 	void eliminarPlan(PlanAlimentario plan);
 
+	List<CronogramaDeAlimentacion> buscarCronogramasSinCompletar(PlanAlimentario plan);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
+import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion.EstadoCronograma;
 import ar.edu.unlam.tallerweb1.modelo.PlanAlimentario;
 
 @Repository
@@ -73,5 +74,15 @@ public class RepositorioPlanAlimentarioImpl implements RepositorioPlanAlimentari
 	@Override
 	public void eliminarPlan(PlanAlimentario plan) {
 		this.sessionFactory.getCurrentSession().delete(plan);
+	}
+
+	@Override
+	public List<CronogramaDeAlimentacion> buscarCronogramasSinCompletar(PlanAlimentario plan) {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("SELECT c FROM CronogramaDeAlimentacion c "
+						+ "WHERE c.estado = :estado AND c.planAlimentario = :plan", CronogramaDeAlimentacion.class)
+				.setParameter("estado", EstadoCronograma.PENDIENTE)
+				.setParameter("plan", plan)
+				.getResultList();
 	}
 }

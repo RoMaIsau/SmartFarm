@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -108,6 +109,21 @@ public class ServicioPlanAlimentarioImpl implements ServicioPlanAlimentario {
 			}
 
 			this.repositorioPlanAlimentario.eliminarPlan(plan);
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void vencerCronogramasSinCompletar(PlanAlimentario plan) {
+		LocalDateTime ahora = LocalDateTime.now();
+		List<CronogramaDeAlimentacion> cronogramasSinCompletar = this.repositorioPlanAlimentario.buscarCronogramasSinCompletar(plan);
+
+		for(CronogramaDeAlimentacion cronograma :cronogramasSinCompletar) {
+			LocalDateTime fechaHoraCronograma = cronograma.getFechaHora();
+			if(fechaHoraCronograma.isBefore(ahora)) {
+				cronograma.setEstado(EstadoCronograma.VENCIDO);
+				actualizarCronograma(cronograma);
+			}
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -18,13 +21,14 @@ public class CronogramaDeAlimentacion {
 
 	public enum EstadoCronograma {
 		PENDIENTE,
-		COMPLETO
+		COMPLETO,
+		VENCIDO
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date fecha;
+	private LocalDate fecha;
 	private Integer cantidad;
 	private LocalTime horario;
 	@ManyToOne
@@ -43,11 +47,11 @@ public class CronogramaDeAlimentacion {
 		return id;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
@@ -89,5 +93,10 @@ public class CronogramaDeAlimentacion {
 
 	public void setEstado(EstadoCronograma estado) {
 		this.estado = estado;
+	}
+
+	@Transient //Se anota como transient para que Hibernate lo ignore a la hora de mapear
+	public LocalDateTime getFechaHora() {
+		return LocalDateTime.of(this.fecha, this.horario);
 	}
 }
