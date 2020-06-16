@@ -50,11 +50,6 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 
 	@Override
 	public void eliminar(AnimalDeGranja animal) {
-
-		Session session = this.sessionFactory.getCurrentSession();
-		session.createQuery("DELETE FROM AnimalDeGranja a WHERE id = :idAnimalDeGranja")
-				.setParameter("idAnimalDeGranja", animal.getId())
-				.executeUpdate();
+		this.sessionFactory.getCurrentSession().delete(animal);
 	}
-
 }

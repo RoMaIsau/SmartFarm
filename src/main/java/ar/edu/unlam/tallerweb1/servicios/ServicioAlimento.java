@@ -18,4 +18,8 @@ public interface ServicioAlimento {
 	Alimento consultarAlimentoPorId(Long id);
 
 	void actualizarAlimento(Alimento alimento);
+
+	Double consultarStock(Alimento alimento);
+
+	void decrementarStock(Alimento alimento, int cantidad);
 }
