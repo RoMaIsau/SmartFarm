@@ -94,8 +94,8 @@
 									<tbody>
 										<c:forEach items="${lista}" var="lista">
 											<td>${lista.animal.id}</td>
-											<td hidden>${lista.ubicacion.longitud}</td>
-											<td hidden>${lista.ubicacion.latitud}</td>
+											<td hidden>${lista.ultimaUbicacion.longitud}</td>
+											<td hidden>${lista.ultimaUbicacion.latitud}</td>
 											<td>${lista.animal.tipo.nombre}</td>
 											<td>${lista.animal.raza.nombre}</td>
 											</tr>
