@@ -57,11 +57,8 @@
 										<tr>
 											<th>Nº registro</th>
 											<th>Fecha</th>
-											<th>Gastos alimenticios</th>
-											<th>Gastos empresariales</th>
-											<th>Gastos médicos</th>
-											<th>Gastos tecnológicos</th>
-											<th>Gastos total</th>
+											<th>Tipo de gasto</th>
+											<th>Monto</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -70,11 +67,8 @@
 											<tr>
 												<td><c:out value="${gastos.id}"/></td>
 												<td><c:out value="${gastos.fecha}"/></td>
-												<td>$ <c:out value="${gastos.gastosAlimenticios}" /></td>
-												<td>$ <c:out value="${gastos.gastosEmpresariales}" /></td>
-												<td>$ <c:out value="${gastos.gastosMedicos}" /></td>
-												<td>$ <c:out value="${gastos.gastosTecnologicos}" /></td>
-												<td>$ <c:out value="${gastos.gastosTotal}" /></td>
+												<td><c:out value="${gastos.tipoDeGasto}" /></td>
+												<td>$ <c:out value="${gastos.gasto}" /></td>
 												<td class="text-center">
 													<a href="estadisticasamodificar?id=${gastos.id}">
 														<i class="fas fa-edit mx-2 text-info"></i>

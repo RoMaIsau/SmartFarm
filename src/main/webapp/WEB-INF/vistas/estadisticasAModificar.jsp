@@ -51,18 +51,14 @@
 									<table class="table text-center" id="" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-												<th>Gastos alimenticios</th>
-												<th>Gastos empresariales</th>
-												<th>Gastos médicos</th>
-												<th>Gastos tecnológicos</th>
+												<th>Tipo de gasto</th>
+												<th>Monto</th>
 											</tr>
 										</thead>
 										<tbody>
 												<tr>
-													<td>$ <c:out value="${gastosAntiguos.gastosAlimenticios}" /></td>
-													<td>$ <c:out value="${gastosAntiguos.gastosEmpresariales}" /></td>
-													<td>$ <c:out value="${gastosAntiguos.gastosMedicos}" /></td>
-													<td>$ <c:out value="${gastosAntiguos.gastosTecnologicos}" /></td>
+													<td><c:out value="${gastosAntiguos.tipoDeGasto}" /></td>
+													<td>$ <c:out value="${gastosAntiguos.gasto}" /></td>
 												</tr>
 										</tbody>
 									</table>
@@ -85,18 +81,14 @@
 								<table class="table text-center" id="" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Gastos alimenticios</th>
-											<th>Gastos empresariales</th>
-											<th>Gastos médicos</th>
-											<th>Gastos tecnológicos</th>
+											<th>Tipo de gasto</th>
+											<th>Monto</th>
 										</tr>
 									</thead>
 									<tbody>
 											<tr>
-												<td>$ <c:out value="${gastos.gastosAlimenticios}" /></td>
-												<td>$ <c:out value="${gastos.gastosEmpresariales}" /></td>
-												<td>$ <c:out value="${gastos.gastosMedicos}" /></td>
-												<td>$ <c:out value="${gastos.gastosTecnologicos}" /></td>
+												<td><c:out value="${gastos.tipoDeGasto}" /></td>
+												<td>$ <c:out value="${gastos.gasto}" /></td>
 											</tr>
 									</tbody>
 								</table>
@@ -112,7 +104,7 @@
 									<div class="col-lg-12">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Datos a cambiar</h1>
+												<h1 class="h4 text-gray-900 mb-4">Datos a modificar</h1>
 											</div>
 											
 											<c:if test="${not empty error}">
@@ -125,30 +117,28 @@
 											</c:if>
 											
 											<form:form method="POST" modelAttribute="gastosNuevos" action="validarcambiosenestadistica?id=${gastos.id}" class="user">
-												<div class="form-group row"><label class="mt-2">$</label>
+												<div class="form-group row">
+													<div class="col-sm-1">
+														<label class="pt-2">$</label>
+													</div>
 													<div class="col-sm-11">
-														<form:input path="gastosAlimenticios" type="number" id="gastosAlimenticios" name="gastosAlimenticios"
-														class="form-control form-control-user" placeholder="Gastos alimenticios" />
+														<form:input path="gasto" type="number" id="gasto" name="gasto"
+														class="form-control form-control-user" placeholder="Monto a modificar" />
 													</div>
 												</div>
-												<div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosEmpresariales" type="number" id="gastosEmpresariales" name="gastosEmpresariales"
-														class="form-control form-control-user" placeholder="Gastos empresariales" />
-													</div>
-												</div><div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosMedicos" type="number" id="gastosMedicos" name="gastosMedicos"
-														class="form-control form-control-user" placeholder="Gastos médicos" />
-													</div>
-												</div><div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosTecnologicos" type="number" id="gastosTecnologicos" name="gastosTecnologicos"
-														class="form-control form-control-user" placeholder="Gastos tecnológicos" />
+												<div class="form-group row">
+													<div class="col-sm-12">
+													    <form:select path="tipoDeGasto" id="tipoDeGasto" name="tipoDeGasto" class="form-control">
+													    	<option value=""></option>
+													    	<c:forEach items="${tipoDeGastos}" var="tipoGastos">
+													    		<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
+													    	</c:forEach>
+													    </form:select>
 													</div>
 												</div>
 												<button class="btn btn-primary btn-user btn-block text-white" type="submit">Modificar</button>
 											</form:form>
+											
 										</div>
 									</div>
 								</div>

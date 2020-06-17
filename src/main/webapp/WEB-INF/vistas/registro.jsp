@@ -86,9 +86,12 @@
 													</div>
 												</div>
 												<div class="form-group">
-													<form:input path="rol" type="text" id="rol" name="rol"
-														required="true" class="form-control form-control-user"
-														placeholder="Rol" />
+													<form:select path="rol" id="tipoDeGasto" name="rol" required="true" class="form-control">
+													   	<option value=""></option>
+													   	<c:forEach items="${roles}" var="rols">
+													   		<option value="${rols.nombre}">${rols.nombre}</option>
+													   	</c:forEach>
+													</form:select>
 												</div>
 												<button
 													class="btn btn-primary btn-user btn-block text-white"

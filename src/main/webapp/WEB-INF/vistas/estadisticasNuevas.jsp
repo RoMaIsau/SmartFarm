@@ -53,30 +53,28 @@
 											</c:if>
 											
 											<form:form method="POST" modelAttribute="gastos" action="validarnuevaestadistica" class="user">
-												<div class="form-group row"><label class="mt-2">$</label>
+												<div class="form-group row">
+													<div class="col-sm-1">
+														<label class="mt-2">$</label>
+													</div>
 													<div class="col-sm-11">
-														<form:input path="gastosAlimenticios" type="number" id="gastosAlimenticios" name="gastosAlimenticios"
-														class="form-control form-control-user" placeholder="Gastos alimenticios" />
+														<form:input path="gasto" type="number" id="gasto" name="gasto"
+														class="form-control form-control-user" placeholder="Monto" />
 													</div>
 												</div>
-												<div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosEmpresariales" type="number" id="gastosEmpresariales" name="gastosEmpresariales"
-														class="form-control form-control-user" placeholder="Gastos empresariales" />
-													</div>
-												</div><div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosMedicos" type="number" id="gastosMedicos" name="gastosMedicos"
-														class="form-control form-control-user" placeholder="Gastos médicos" />
-													</div>
-												</div><div class="form-group row"><label class="mt-2">$</label>
-													<div class="col-sm-11">
-														<form:input path="gastosTecnologicos" type="number" id="gastosTecnologicos" name="gastosTecnologicos"
-														class="form-control form-control-user" placeholder="Gastos tecnológicos" />
+												<div class="form-group row"><label class="mt-2"></label>
+													<div class="col-sm-12">
+													    <form:select path="tipoDeGasto" id="tipoDeGasto" name="tipoDeGasto" class="form-control">
+													    	<option value=""></option>
+													    	<c:forEach items="${tipoDeGastos}" var="tipoGastos">
+													    		<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
+													    	</c:forEach>
+													    </form:select>
 													</div>
 												</div>
 												<button class="btn btn-primary btn-user btn-block text-white" type="submit">Añadir registro</button>
 											</form:form>
+											
 										</div>
 									</div>
 								</div>

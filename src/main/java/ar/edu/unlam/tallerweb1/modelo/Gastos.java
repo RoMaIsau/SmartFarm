@@ -18,11 +18,8 @@ public class Gastos {
 	@ManyToOne
 	private Usuario usuario;
 	
-	private Double gastosAlimenticios;
-	private Double gastosTecnologicos;
-	private Double gastosEmpresariales;
-	private Double gastosMedicos;
-	private Double gastosTotal;
+	private String tipoDeGasto;
+	private Double gasto;
 	private String fecha;
 	
 	
@@ -39,42 +36,22 @@ public class Gastos {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Double getGastosAlimenticios() {
-		return gastosAlimenticios;
+	public String getTipoDeGasto() {
+		return tipoDeGasto;
 	}
-	public void setGastosAlimenticios(Double gastosAlimenticios) {
-		this.gastosAlimenticios = gastosAlimenticios;
+	public void setTipoDeGasto(String tipoDeGasto) {
+		this.tipoDeGasto = tipoDeGasto;
 	}
-	public Double getGastosTecnologicos() {
-		return gastosTecnologicos;
+	public Double getGasto() {
+		return gasto;
 	}
-	public void setGastosTecnologicos(Double gastosTecnologicos) {
-		this.gastosTecnologicos = gastosTecnologicos;
-	}
-	public Double getGastosEmpresariales() {
-		return gastosEmpresariales;
-	}
-	public void setGastosEmpresariales(Double gastosEmpresariales) {
-		this.gastosEmpresariales = gastosEmpresariales;
-	}
-	public Double getGastosMedicos() {
-		return gastosMedicos;
-	}
-	public void setGastosMedicos(Double gastosMedicos) {
-		this.gastosMedicos = gastosMedicos;
-	}
-	public Double getGastosTotal() {
-		return gastosTotal;
-	}
-	public void setGastosTotal(Double gastosTotal) {
-		this.gastosTotal = gastosTotal;
+	public void setGasto(Double gasto) {
+		this.gasto = gasto;
 	}
 	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fechaNac) {
-		this.fecha = fechaNac;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
-	
-	
 }

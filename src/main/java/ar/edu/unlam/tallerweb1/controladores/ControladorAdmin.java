@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Gastos;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeGasto;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeUsuario;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGastos;
+import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeGasto;
+import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
@@ -26,7 +30,13 @@ public class ControladorAdmin {
 	
 	@Inject
 	private ServicioGastos servicioGastos;
+	
+	@Inject
+	private ServicioTipoDeGasto servicioTipoDeGasto;
 
+	@Inject
+	private ServicioTipoDeUsuario servicioTipoDeUsuario;
+	
 	/*
 	 * El path de indexAdmin redirecciona a la primera seccion del sidebar, Usuarios
 	 */
@@ -94,6 +104,8 @@ public class ControladorAdmin {
 		ModelMap modelo = new ModelMap();
 		Gastos gastos = new Gastos();
 		modelo.put("gastos", gastos);
+		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
+		modelo.put("tipoDeGastos", tiposDeGastos);
 		return new ModelAndView("estadisticasNuevas", modelo);
 	}
 	
@@ -101,23 +113,22 @@ public class ControladorAdmin {
 	public ModelAndView validarNuevaEstadistica(@ModelAttribute("gastos") Gastos gastos, HttpServletRequest request) {
 		Long id = (Long) request.getSession().getAttribute("ID");
 		ModelMap modelo = new ModelMap();
+		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
+		modelo.put("tipoDeGastos", tiposDeGastos);
 		
-		if(gastos.getGastosAlimenticios() == null) {
-			gastos.setGastosAlimenticios(0.0);
-		}
-		if(gastos.getGastosEmpresariales() == null) {
-			gastos.setGastosEmpresariales(0.0);
-		}
-		if(gastos.getGastosMedicos() == null) {
-			gastos.setGastosMedicos(0.0);
-		}
-		if(gastos.getGastosTecnologicos() == null) {
-			gastos.setGastosTecnologicos(0.0);
+		if(gastos.getGasto() == null || gastos.getGasto() == 0) {
+			modelo.put("error", "El monto del gasto debe ser mayor a 0.");
+			return new ModelAndView("estadisticasNuevas", modelo);
 		}
 		
-		if(gastos.getGastosAlimenticios() == 0 && gastos.getGastosEmpresariales() == 0
-			  && gastos.getGastosMedicos() == 0 && gastos.getGastosTecnologicos() == 0) {
-			modelo.put("error", "Debe contabilizar al menos un gasto.");
+		Boolean validarTipo = false;
+		for(TipoDeGasto g : tiposDeGastos) {
+			if(gastos.getTipoDeGasto().equals(g.getNombre())) {
+				validarTipo = true;
+			}
+		}
+		if(!validarTipo) {
+			modelo.put("error", "No ha elegido un tipo de gasto v�lido.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		}
 		
@@ -142,6 +153,9 @@ public class ControladorAdmin {
 		Gastos gastosNuevos = new Gastos();
 		modelo.put("gastosNuevos", gastosNuevos);
 		
+		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
+		modelo.put("tipoDeGastos", tiposDeGastos);
+		
 		return new ModelAndView("estadisticasAModificar", modelo);
 	}
 	
@@ -151,33 +165,38 @@ public class ControladorAdmin {
 		ModelMap modelo = new ModelMap();
 		Gastos gastosAntiguos = (Gastos) servicioGastos.consultaGastosPorID(id);
 		Gastos gastosActuales = (Gastos) servicioGastos.consultaGastosPorID(id);
+		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
+		modelo.put("tipoDeGastos", tiposDeGastos);
 		
-		if(gastosAModificar.getGastosAlimenticios() == null &&
-		   gastosAModificar.getGastosEmpresariales() == null &&
-		   gastosAModificar.getGastosMedicos() == null &&
-		   gastosAModificar.getGastosTecnologicos() == null) {
-		   modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
-		   modelo.put("gastos", gastosActuales);
-		   return new ModelAndView("estadisticasAModificar", modelo);
+		if(gastosAModificar.getGasto() == null && (gastosAModificar.getTipoDeGasto() == null || gastosAModificar.getTipoDeGasto() == "")) {
+			modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
+			modelo.put("gastos", gastosActuales);
+			return new ModelAndView("estadisticasAModificar", modelo);
 		}
 		
-		modelo.put("gastosAntiguos", gastosAntiguos);
+		modelo.put("gastos", gastosActuales);
 		
-		if(gastosAModificar.getGastosAlimenticios() != null) {
-			gastosActuales.setGastosAlimenticios(gastosAModificar.getGastosAlimenticios());
+		if(gastosAModificar.getGasto() != null && gastosAModificar.getGasto() >= 0) {
+			gastosActuales.setGasto(gastosAModificar.getGasto());
 		}
-		if(gastosAModificar.getGastosEmpresariales() != null) {
-			gastosActuales.setGastosEmpresariales(gastosAModificar.getGastosEmpresariales());
-		}
-		if(gastosAModificar.getGastosMedicos() != null) {
-			gastosActuales.setGastosMedicos(gastosAModificar.getGastosMedicos());
-		}
-		if(gastosAModificar.getGastosTecnologicos() != null) {
-			gastosActuales.setGastosTecnologicos(gastosAModificar.getGastosTecnologicos());
+		
+		if(gastosAModificar.getTipoDeGasto() != null && gastosAModificar.getTipoDeGasto() != "") {
+			Boolean validarTipo = false;
+			for(TipoDeGasto g : tiposDeGastos) {
+				if(gastosAModificar.getTipoDeGasto().equals(g.getNombre())) {
+					validarTipo = true;
+				}
+			}
+			if(!validarTipo) {
+				modelo.put("error", "No ha elegido un tipo de gasto v�lido.");
+				return new ModelAndView("estadisticasAModificar", modelo);
+			}
+			gastosActuales.setTipoDeGasto(gastosAModificar.getTipoDeGasto());
 		}
 		
 		servicioGastos.modificarGasto(gastosActuales);
 		modelo.put("gastos", gastosActuales);
+		modelo.put("gastosAntiguos", gastosAntiguos);
 		
 		return new ModelAndView("estadisticasAModificar", modelo);
 	}
@@ -187,5 +206,71 @@ public class ControladorAdmin {
 		Gastos gastos = (Gastos) servicioGastos.consultaGastosPorID(id);
 		servicioGastos.eliminarGastos(gastos);
 		return new ModelAndView("redirect:/estadisticas");
+	}
+	
+	/* =================================================================================================== */
+	
+	@RequestMapping(path = "/registro")
+	public ModelAndView irARegistro() {
+		ModelMap modelo = new ModelMap();
+		Usuario usuario = new Usuario();
+		modelo.put("usuario", usuario);
+		
+		List<TipoDeUsuario> roles = servicioTipoDeUsuario.ObtenerTodosLosRoles();
+		modelo.put("roles", roles);
+
+		return new ModelAndView("registro", modelo);
+	}
+	
+	/*
+	 * Se comprueba que el usuario no exista, que las contraseÃ±as coincidan y se
+	 * registra el usuario
+	 */
+	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÃ‘A AL ADMINISTRADOR */
+	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
+	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
+										@RequestParam(name = "password2") String password2) {
+		ModelMap model = new ModelMap();
+		List<TipoDeUsuario> roles = servicioTipoDeUsuario.ObtenerTodosLosRoles();
+		model.put("roles", roles);
+		
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
+
+		if (usuario.getPassword().equals(password2)) {
+			if (usuarioBuscado != null) {
+				model.put("error", "Usuario ya registrado.");
+			} else {
+				TipoDeUsuario tipoDeUsuarioBuscado = servicioTipoDeUsuario.consultarRol(usuario.getRol());
+				if(tipoDeUsuarioBuscado != null) {
+					if (servicioUsuario.registrarUsuario(usuario) != null) {
+						model.put("mensaje", "Usuario creado correctamente");
+					} else {
+						model.put("mensaje", "No se pudo crear el usuario");
+					}
+				} else {
+					model.put("error", "El tipo de usuario elegido no es válido");
+				}
+			}
+		} else {
+			model.put("error", "La contraseÃ±as no coinciden");
+		}
+		
+		return new ModelAndView("registro", model);
+	}
+	
+	/*
+	 * Se manda al modal el id del Usuario que seleccionÃ³ para borrar, y al aceptar
+	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
+	 * ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA
+	 */
+	@RequestMapping(path = "/eliminarUsuario")
+	public ModelAndView eliminarUsuario(@RequestParam(value = "id", required = true) Long id) {
+
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
+
+		servicioUsuario.eliminarUsuario(usuario);
+
+		return new ModelAndView("redirect:/indexAdmin");
+
 	}
 }

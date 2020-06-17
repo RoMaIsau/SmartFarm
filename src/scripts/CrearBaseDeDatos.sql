@@ -12,6 +12,9 @@ INSERT INTO usuario VALUES
 (1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin"),
 (2, "Prueba", "empleado@gmail.com", "2020/05/12", "Usuario", "123", "Empleado");
 
+-- TIPOS DE GASTOS
+INSERT INTO TipoDeGasto (nombre) VALUES ("Gastos alimenticios"), ("Gastos empresariales"), ("Gastos médicos"), ("Gastos tecnologicos");
+
 -- TIPO ALIMENTO
 INSERT INTO TipoAlimento VALUES 
 (1, "Granos"),

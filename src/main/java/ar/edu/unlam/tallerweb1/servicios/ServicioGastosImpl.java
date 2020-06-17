@@ -35,12 +35,6 @@ public class ServicioGastosImpl implements ServicioGastos {
 
 	@Override
 	public Long guardarNuevoRegistro(Gastos gastos) {
-		Double gastoTotal = gastos.getGastosAlimenticios();
-		gastoTotal += gastos.getGastosEmpresariales();
-		gastoTotal += gastos.getGastosMedicos();
-		gastoTotal += gastos.getGastosTecnologicos();
-		gastos.setGastosTotal(gastoTotal);
-		
 		Date myDate = new Date();
         gastos.setFecha(new java.text.SimpleDateFormat("dd-MM-yyyy").format(myDate));
 		
@@ -59,11 +53,6 @@ public class ServicioGastosImpl implements ServicioGastos {
 
 	@Override
 	public void modificarGasto(Gastos gastosActuales) {
-		Double gastoTotal = gastosActuales.getGastosAlimenticios();
-		gastoTotal += gastosActuales.getGastosEmpresariales();
-		gastoTotal += gastosActuales.getGastosMedicos();
-		gastoTotal += gastosActuales.getGastosTecnologicos();
-		gastosActuales.setGastosTotal(gastoTotal);
 		repositorioGastos.modificarGasto(gastosActuales);
 	}
 

@@ -111,67 +111,6 @@ public class ControladorUsuario {
 		return new ModelAndView("login", model);
 	}
 
-	@RequestMapping(path = "/registro")
-	public ModelAndView irARegistro() {
-		ModelMap modelo = new ModelMap();
-
-		Usuario usuario = new Usuario();
-
-		modelo.put("usuario", usuario);
-
-		return new ModelAndView("registro", modelo);
-	}
-	
-	/*
-	 * Se comprueba que el usuario no exista, que las contraseÃ±as coincidan y se
-	 * registra el usuario
-	 */
-	/* HAY QUE MODIFICAR ESTO, NO SE PIDE LA CONTRASEÃ‘A AL ADMINISTRADOR */
-	@RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
-	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario usuario,
-										@RequestParam(name = "password2") String password2) {
-		ModelMap model = new ModelMap();
-		
-		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
-
-		if (usuario.getPassword().equals(password2)) {
-			if (usuarioBuscado != null) {
-				model.put("error", "Usuario ya registrado.");
-			} else {
-				TipoDeUsuario tipoDeUsuarioBuscado = servicioTipoDeUsuario.consultarRol(usuario.getRol());
-				if(tipoDeUsuarioBuscado != null) {
-					if (servicioUsuario.registrarUsuario(usuario) != null) {
-						model.put("mensaje", "Usuario creado correctamente");
-					} else {
-						model.put("mensaje", "No se pudo crear el usuario");
-					}
-				} else {
-					model.put("error", "El tipo de usuario elegido no es válido");
-				}
-			}
-		} else {
-			model.put("error", "La contraseÃ±as no coinciden");
-		}
-		
-		return new ModelAndView("registro", model);
-	}
-	
-	/*
-	 * Se manda al modal el id del Usuario que seleccionÃ³ para borrar, y al aceptar
-	 * se se elimina el usuario y se redirige al index HAY QUE MODIFICAR, CUANDO SE
-	 * ELIMINA UN USUARIO NO SE NOTIFICA EN LA VISTA
-	 */
-	@RequestMapping(path = "/eliminarUsuario")
-	public ModelAndView eliminarUsuario(@RequestParam(value = "id", required = true) Long id) {
-
-		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
-
-		servicioUsuario.eliminarUsuario(usuario);
-
-		return new ModelAndView("redirect:/indexAdmin");
-
-	}
-
 	/*
 	 * Se elimina el atributo rol de la session y se redirecciona a la vista del
 	 * login

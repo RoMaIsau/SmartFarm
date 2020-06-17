@@ -53,7 +53,6 @@ public class RepositorioGastosImpl implements RepositorioGastos {
 	@Override
 	public void modificarGasto(Gastos gastosActuales) {
 		sessionFactory.getCurrentSession().saveOrUpdate(gastosActuales);
-		;
 	}
 	
 	
