@@ -75,7 +75,7 @@
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
-								animales ${fn:length(lists)}</h6>
+								animales ${fn:length(lista)}</h6>
 						</div>
 
 						<div class="card-body">
