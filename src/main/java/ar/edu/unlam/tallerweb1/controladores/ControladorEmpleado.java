@@ -274,9 +274,4 @@ public class ControladorEmpleado {
 		return modelAndView;
 	}
 	
-	@RequestMapping (path = "/verAnimal")
-	public ModelAndView verAnimal(@RequestParam ("id") Long idAnimal) {
-		
-		return new ModelAndView("verAnimal");
-	}
 }
