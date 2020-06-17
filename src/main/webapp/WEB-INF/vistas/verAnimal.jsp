@@ -31,10 +31,52 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					
-
-
-				</div>
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Animal</h1>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<div class="col-xl-6 col-md-6 mb-4 ">
+							<div class="card border-left-warning shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="font-weight-bold text-primary text-uppercase mb-1">
+												<c:out value="${animal.id}" />
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												<c:out value="${animal.tipo.nombre}" />
+											</div>
+											<div class="text-xs text-muted mt-2">
+												<c:out value="${animal.raza.nombre}" />
+											</div>
+											<div class="text-xs text-muted mt-2">
+												<c:out value="${animal.peso}" /> Kg.
+											</div>
+										</div>
+										<div class="col-auto">
+											<c:choose>
+												<c:when test="${animal.tipo.id == 1}">
+													<img style="width: 70px; height:70px;" src="<c:url value="/img/caprino.png"/>">
+												</c:when>
+												<c:when test="${animal.tipo.id == 2}">
+													<img style="width: 50px; height:50px;" src="<c:url value="/img/equino.png"/>">
+												</c:when>
+												<c:when test="${animal.tipo.id == 3}">
+													<img style="width: 50px; height:50px;" src="<c:url value="/img/ovino.png"/>">
+												</c:when>
+												<c:when test="${animal.tipo.id == 4}">
+													<img style="width: 50px; height:50px;" src="<c:url value="/img/porcino.png"/>">
+												</c:when>
+												<c:when test="${animal.tipo.id == 5}">
+													<img style="width: 50px; height:50px;" src="<c:url value="/img/vacuno.png"/>">
+												</c:when>
+											</c:choose>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				<!-- /.container-fluid -->
 
 			</div>
