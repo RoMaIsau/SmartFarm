@@ -8,7 +8,7 @@
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
-		href="indexAdmin">
+		href="${contextPath}/indexAdmin">
 		<div class="sidebar-brand-icon">
 			<i class="fas fa-warehouse"></i>
 		</div>
