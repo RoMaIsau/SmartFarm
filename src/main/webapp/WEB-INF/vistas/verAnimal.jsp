@@ -35,7 +35,7 @@
 						<h1 class="h3 mb-0 text-gray-800">Animal</h1>
 					</div>
 					<div class="row d-flex justify-content-center">
-						<div class="col-xl-6 col-md-6 mb-4 ">
+						<div class="col-xl-5 col-md-6 mb-4 ">
 							<div class="card border-left-warning shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -214,7 +214,7 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 1000,
+          max: 1500,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
