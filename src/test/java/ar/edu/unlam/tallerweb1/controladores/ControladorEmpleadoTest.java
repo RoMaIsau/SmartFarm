@@ -33,9 +33,6 @@ import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
 
 public class ControladorEmpleadoTest {
 	
-	@Inject
-	private ControladorUsuario controladorUsuario;
-	
 	private ControladorEmpleado controlador;
 	
 	private ServicioDeAnimales servicioDeAnimales;
@@ -135,7 +132,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
 		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
@@ -151,7 +147,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
 		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
@@ -172,7 +167,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
 		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
@@ -192,7 +186,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
 		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
@@ -210,7 +203,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
 		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
@@ -229,7 +221,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
 		TipoAnimal tipoSeleccionado = new TipoAnimal();
@@ -336,7 +327,6 @@ public class ControladorEmpleadoTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession mockSesion = mock(HttpSession.class);
 		when(mockRequest.getSession()).thenReturn(mockSesion);
-		ServicioNotificacion mockServicioNotificacion = mock(ServicioNotificacion.class);
 		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
 		Long idAnimal = 1L;
