@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -11,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioVacunas;
-import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 
@@ -33,8 +36,9 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 	}
 
 	@Override
-	public void vacunar(GanadoVacuno ganado, Vacuna vacuna) {
+	public void vacunar(AnimalDeGranja animal, Vacuna vacuna) {
 		// TODO Auto-generated method stub
+		this.serviciovacunasDao.vacunar(animal, vacuna);
 		
 	}
 
@@ -45,27 +49,39 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 	}
 
 	@Override
-	public Vacuna alarmaVacuna(GanadoVacuno gv) {
+	public List<Vacuna> alarmaVacuna(AnimalDeGranja animal) {
 	
 			
 			Calendar actual= Calendar.getInstance();
 			actual.getTime();
 			Calendar fechaNacimiento= Calendar.getInstance();
-			 fechaNacimiento=gv.getFechaNacimiento();
+			 fechaNacimiento=animal.getFechaNacimiento();
 			 int edadVacaMeses=0;
 			 
 			if (fechaNacimiento != null) {
-			int anios= actual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
-			edadVacaMeses= (anios*12)+actual.get(Calendar.MONTH)-fechaNacimiento.get(Calendar.MONTH);
+			int años= actual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
+			edadVacaMeses= (años*12)+actual.get(Calendar.MONTH)-fechaNacimiento.get(Calendar.MONTH);
 			}
-			Vacuna vencida= null;
-			for(Vacuna v : gv.getVacunasParaAplicar()){
-			if(edadVacaMeses >= v.getEdadAplicacionMeses()){
-			         vencida= v;
-				}}
+			
+			List<Vacuna> vencidas= new ArrayList<Vacuna>();
+			
+			for(Vacuna v : animal.getVacunasParaAplicar()){
+				Vacunar av= this.getAnimalVacuna(v, animal);
+				if(av != null) {
+			if(edadVacaMeses >= v.getEdadAplicacionMeses() && (av.getVacuna().getId() != v.getId()) ){
+			         vencidas.add(v);
+				}}else if(av == null){
+					if(edadVacaMeses >= v.getEdadAplicacionMeses() ){
+				         vencidas.add(v);}
+				}else {
+					vencidas = null;
+				}
+			}
+				
+			
 		
 			
-		return vencida ;
+		return vencidas ;
 	}
 	
 
@@ -75,9 +91,14 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 		return serviciovacunasDao.getVacuna(nombre);
 	}
 
+	@Override
+	public Vacunar getAnimalVacuna(Vacuna v, AnimalDeGranja a) {
+		// TODO Auto-generated method stub
+		return serviciovacunasDao.getAnimalVacuna(v,a);
+	}
+
 	
 
 	
 
 }
-

@@ -1,31 +1,84 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class AnimalDeGranja {
 	
+
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private TipoAnimal tipo;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private Raza raza;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private Genero genero;
 	
+	
+	
+	public Calendar getFechaNacimiento() {
+		return fechaNacimiento;
+	}
 
+	public void setFechaNacimiento(Calendar fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	
+
+	private Calendar fechaNacimiento;
 	private Double peso;
 	
+	
+	@OneToOne(cascade= {CascadeType.ALL})
+	private SignosVitales signos;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Vacuna> vacunasParaAplicar=new ArrayList<Vacuna>();
+	
+	
+	
+	
+	
+	public SignosVitales getSignos() {
+		return signos;
+	}
+
+	public void setSignos(SignosVitales signos) {
+		this.signos = signos;
+	}
+
+
+
+	
+
+	public List<Vacuna> getVacunasParaAplicar() {
+		return vacunasParaAplicar;
+	}
+
+	public void setVacunasParaAplicar(List<Vacuna> vacunasParaAplicar) {
+		this.vacunasParaAplicar = vacunasParaAplicar;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -65,31 +118,7 @@ public class AnimalDeGranja {
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
+	
+	
 
-	@Override
-    public boolean equals(Object objeto) {
-
-        boolean iguales = (this == objeto);
-
-        if (! iguales && (objeto != null) && this.getClass().isAssignableFrom(objeto.getClass())) {
-
-            AnimalDeGranja otroAnimal = AnimalDeGranja.class.cast(objeto);
-
-            iguales = (this.id != null) && (otroAnimal.id != null) &&
-                      this.id.equals(otroAnimal.id);
-        }
-        return iguales;
-    }
-
-	@Override
-    public int hashCode() {
-
-        return this.id != null ? this.id.hashCode() : super.hashCode();
-    }
-
-	@Override
-    public String toString() {
-
-        return this.getClass().getSimpleName() + "[id: " + this.id + "]";
-    }
 }

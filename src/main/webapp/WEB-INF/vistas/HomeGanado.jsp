@@ -10,25 +10,67 @@
 	</head>
 	<body>
 	
-	<h1>vacas:</h1>
+	<h1>Lista de ganado vacuno:</h1>
 
 
 <h1>${idGanado}</h1>
 <h1>${vacuna.nombre}</h1>
 <h1>${gv}</h1>
+<h1> ${id}</h1>
 
 
 
-  <c:forEach items="${vacunas}" var="v">
+
+
+
+  <c:forEach items="${vencidos}" var="v">
   
 				    	 
-				  <h3 class="text-danger">"La vaca  ${v.key.id}  tiene su vacuna
-							${v.value.nombre} vencida"
-							
+				  <h3 class="text-danger">"La vaca  ${v.id} tiene vacunas vencidas"
+						<a href="detalle?id=${v.id}">Ver</a><br>	
+					</h3>
+					 </br>		
+					
+							 
+</c:forEach>
+
+
+
+  <c:forEach items="${dietas}" var="d">
+  
+				    	 
+				  <h3 class="text-danger">"La vaca  ${d.id}  tiene dietas pendientes"
+							<a href="detalleDieta?id=${d.id}">Ver</a><br>
 					</h3> </br>		
 							
 							 
 </c:forEach>
+
+ <c:forEach items="${vencidas}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
+							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
+					</h3> </br>		
+							
+							 
+</c:forEach>
+
+ <c:forEach items="${detalleDieta}" var="d">
+  
+				    	 
+				  <h3 class="text-danger">Dietas pendientes: ${d.nombre}<br>
+				   ${d.fechaYhora}<br>
+							<a href="alimentar?id=${vacaId}&nombre=${d.nombre}">Alimentar</a><br>
+					</h3> </br>		
+							
+							 
+</c:forEach>
+
+  	
+							
+							 
+
 
 
 							
@@ -40,6 +82,3 @@
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	</body>
 </html>
-
-
-

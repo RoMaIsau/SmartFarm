@@ -1,6 +1,10 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
-import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Dieta;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
+import ar.edu.unlam.tallerweb1.modelo.Sintomas;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,8 +22,8 @@ import javax.inject.Inject;
 @Repository("repositorioGanado")
 public class RepositorioGanadoImpl implements RepositorioGanado {
 
-	// Como todo repositorio maneja acciones de persistencia, normalmente estar√° inyectado el session factory de hibernate
-	// el mismo est√° difinido en el archivo hibernateContext.xml
+	// Como todo repositorio maneja acciones de persistencia, normalmente estar· inyectado el session factory de hibernate
+	// el mismo est· difinido en el archivo hibernateContext.xml
 	private SessionFactory sessionFactory;
 
     @Autowired
@@ -28,46 +32,91 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 	}
 
 	@Override
-	public GanadoVacuno ver(Long id) {
+	public AnimalDeGranja ver(Long id) {
 
 		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
 		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran m√°s de un resultado en la busqueda.
+		// uniqueResult da error si se encuentran m·s de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
-		return (GanadoVacuno) session.createCriteria(GanadoVacuno.class)
+		return (AnimalDeGranja) session.createCriteria(AnimalDeGranja.class)
 				.add(Restrictions.eq("id", id))
 				
 				.uniqueResult();
 	}
 	
 	@Override
-	public List<GanadoVacuno> listar() {
+	public HistoriaClinica verHC(Long id) {
+
+		
+		final Session session = sessionFactory.getCurrentSession();
+		return (HistoriaClinica) session.createCriteria(HistoriaClinica.class)
+				.add(Restrictions.eq("idAnimal", id))
+				
+				.uniqueResult();
+	}
+	
+
+	@Override
+	public List<AnimalDeGranja> listar() {
 
 		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
 		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran m√°s de un resultado en la busqueda.
+		// uniqueResult da error si se encuentran m·s de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
-		return (List<GanadoVacuno>) session.createCriteria(GanadoVacuno.class)
+		return (List<AnimalDeGranja>) session.createCriteria(AnimalDeGranja.class)
 				.list();
 				
 				
 	}
 
 	@Override
-	public void guardar(GanadoVacuno ganado) {
+	public void guardar(AnimalDeGranja animal) {
 		// TODO Auto-generated method stub
 		final Session session = sessionFactory.getCurrentSession();
-		session.save(ganado);
+		session.save(animal);
 		
 	}
 	
 	@Override
-	public void obtener(GanadoVacuno ganado) {
+	public void obtener(AnimalDeGranja animal) {
 		// TODO Auto-generated method stub
 		final Session session = sessionFactory.getCurrentSession();
-		session.get(GanadoVacuno.class, ganado.getId());
+		session.get(AnimalDeGranja.class, animal.getId());
 		
 	}
 
-}
 
+	@Override
+	public void modificarSignos(SignosVitales signos) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(signos);
+		
+	}
+
+	@Override
+	public void guardarHC(HistoriaClinica hc) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(hc);
+	}
+
+	@Override
+	public void guardarSV(SignosVitales sv) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(sv);
+		
+	}
+
+	@Override
+	public void guardar(Sintomas sintomas) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(sintomas);
+		
+	}
+
+
+
+}
