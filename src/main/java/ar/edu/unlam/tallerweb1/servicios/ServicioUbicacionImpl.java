@@ -104,8 +104,8 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		return (int) distanciaEnMetros;
 	}
 
-	public float setearLatitudAleatorea(AnimalDeGranja a) {
-		float n = 0;
+	public Double crearLatitudAleatorea(AnimalDeGranja a) {
+		Double n = 0.0;
 		int x = 0;
 		x = (int) ( (Math.random() * (1000 - 1)) + 1);
 		
@@ -118,42 +118,42 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "VACUNO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
 			} else {
-				n = (float) ((float) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
 			}
 
 			break;
 
 		case "CAPRINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
 			} else {
-				n = (float) ((float) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
 			}
 			break;
 
 		case "EQUINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
 			} else {
-				n = (float) ((float) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
 			}
 			break;
 
 		case "OVINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
 			} else {
-				n = (float) ((float) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
 			}
 			break;
 
 		case "PORCINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
 			} else {
-				n = (float) ((float) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
 			}
 			break;
 		}
@@ -161,8 +161,8 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		return -n;
 	}
 
-	public float setearLongitudAleatorea(AnimalDeGranja a) {
-		float n = 0;
+	public Double crearLongitudAleatorea(AnimalDeGranja a) {
+		Double n = 0.0;
 		int x = 0;
 		x = (int) ( (Math.random() * (1000 - 1)) + 1);
 
@@ -175,41 +175,41 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "VACUNO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
 			} else {
-				n = (float) ((float) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
 			}
 			break;
 
 		case "CAPRINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
 			} else {
-				n = (float) ((float) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
 			}
 			break;
 
 		case "EQUINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
 			} else {
-				n = (float) ((float) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
 			}
 			break;
 
 		case "OVINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
 			} else {
-				n = (float) ((float) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
 			}
 			break;
 
 		case "PORCINO":
 			if(x <= 997) {
-				n = (float) ((float) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
 			} else {
-				n = (float) ((float) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
 			}
 			break;
 		}
