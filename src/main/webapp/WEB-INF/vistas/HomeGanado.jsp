@@ -13,10 +13,7 @@
 	<h1>Lista de ganado vacuno:</h1>
 
 
-<h1>${idGanado}</h1>
-<h1>${vacuna.nombre}</h1>
-<h1>${gv}</h1>
-<h1> ${id}</h1>
+
 
 
 
