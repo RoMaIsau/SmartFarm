@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
@@ -24,14 +24,17 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	private RepositorioDeRazas repositorioDeRazas;
 	private RepositorioDeGeneros repositorioDeGeneros;
 	private RepositorioDeAnimales repositorioDeAnimales;
+	private ServicioPlanAlimentario servicioPlanAlimentario;
 	
 	@Autowired
 	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas, 
-			RepositorioDeGeneros repositorioDeGeneros, RepositorioDeAnimales repositorioDeAnimales) {
+			RepositorioDeGeneros repositorioDeGeneros, RepositorioDeAnimales repositorioDeAnimales,
+			ServicioPlanAlimentario servicioPlanAlimentario) {
 		this.repositorioDeTipos = repositorioDeTipos;
 		this.repositorioDeRazas = repositorioDeRazas;
 		this.repositorioDeGeneros = repositorioDeGeneros;
 		this.repositorioDeAnimales = repositorioDeAnimales;
+		this.servicioPlanAlimentario = servicioPlanAlimentario;
 	}
 
 	@Override
@@ -54,6 +57,7 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	public void registrar(AnimalDeGranja animal) {
 
 		this.repositorioDeAnimales.guardar(animal);
+		this.servicioPlanAlimentario.crearPlan(animal);
 	}
 
 	@Override
@@ -77,9 +81,9 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarPorId(Long idAnimal) {
-		AnimalDeGranja animal = new AnimalDeGranja();
-		animal.setId(idAnimal);
-		this.repositorioDeAnimales.eliminar(animal);
+		AnimalDeGranja animal = obtenerPorId(idAnimal);
+		servicioPlanAlimentario.eliminarPlan(animal);
+		repositorioDeAnimales.eliminar(animal);
 	}
 
 }

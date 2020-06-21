@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.UsuarioNotificacion;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -67,10 +69,17 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public void eliminarUsuario(Usuario usuario) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		session.delete(usuario);
+		List<UsuarioNotificacion> usuarioNotificacion = (List<UsuarioNotificacion>) session
+				.createCriteria(UsuarioNotificacion.class).add(Restrictions.eq("usuario.id", usuario.getId())).list();
+		for (UsuarioNotificacion un : usuarioNotificacion) {
+			session.delete(un);
+		}
 
+		Usuario usuarioABorrar = (Usuario) session.createCriteria(Usuario.class).add(Restrictions.eq("id", usuario.getId()))
+				.uniqueResult();
+		session.delete(usuarioABorrar);
 	}
-
+	
 	@Override
 	public Usuario consultarUsuarioPorEmail(String email) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)

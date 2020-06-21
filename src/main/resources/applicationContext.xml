@@ -16,9 +16,6 @@
 
 	<import resource="classpath:hibernateContext.xml" />
 
-	<!--Se indica que la configuracion del MVC se hará utilizanbdo anotaciones-->
-	<mvc:annotation-driven />
-
 	<!--Se indica que el transaction manager a utilizar en la capa de servicios es el bean declarado en hibernateContext.xml-->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
@@ -32,6 +29,20 @@
 	<bean id="messageSource"
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
         p:basename="/WEB-INF/mensajes" />
+
+    <bean id="formateadorDeFechas" class="ar.edu.unlam.tallerweb1.formateadores.FormateadorDeFechas"/>
+
+	<bean id="springConversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<set>
+				<ref bean="formateadorDeFechas"/>
+			</set>
+		</property>
+	</bean>
+
+	<!--Se indica que la configuracion del MVC se hará utilizanbdo anotaciones-->
+	<mvc:annotation-driven conversion-service="springConversionService" />
 
 </beans>
 

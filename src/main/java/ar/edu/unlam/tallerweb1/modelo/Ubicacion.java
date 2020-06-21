@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,17 +15,17 @@ public class Ubicacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private float latitud;
-	private float longitud;
+	private Double latitud;
+	private Double longitud;
 	
-	@OneToOne
-	private AnimalDeGranja animal;
-
-	public Ubicacion(float latitud, float longitud) {
+	public Ubicacion(Double latitud, Double longitud) {
 		this.latitud = latitud;
 		this.longitud = longitud;
 	}
-
+	
+	public Ubicacion() {
+		
+	}
 	public Long getId() {
 		return id;
 	}
@@ -32,27 +34,20 @@ public class Ubicacion {
 		this.id = id;
 	}
 
-	public float getLatitud() {
+	public Double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(float latitud) {
+	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
 	}
 
-	public float getLongitud() {
+	public Double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(float longitud) {
+	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
-	
-	public AnimalDeGranja getAnimal() {
-		return animal;
-	}
 
-	public void setAnimal(AnimalDeGranja animal) {
-		this.animal = animal;
-	}
 }

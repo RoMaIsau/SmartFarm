@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 
-public interface ServicioUbicacion {
+public interface ServicioAnimalUbicacion {
 
-	List<AnimalUbicacion> obtenerUbicaciones();
+	List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal);
 
 }

@@ -1,14 +1,20 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
 
 @Service("servicioUbicacion")
 @Transactional
@@ -16,27 +22,86 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	@Inject
 	private ServicioDeAnimales servicioAnimales;
-	
-	@Inject
 	private ServicioNotificacion servicioNotificacion;
-	
-	@Override
-	public List<Ubicacion> obtenerUbicaciones() {
 
-		List<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
+	private RepositorioUbicacion repositorioUbicacion;
+	private RepositorioAnimalUbicacion repositorioAnimalUbicacion;
+
+	@Autowired
+	public ServicioUbicacionImpl(RepositorioUbicacion repositorioUbicacion,
+			RepositorioAnimalUbicacion repositorioAnimalUbicacion) {
+		this.repositorioUbicacion = repositorioUbicacion;
+		this.repositorioAnimalUbicacion = repositorioAnimalUbicacion;
+	}
+    
+	@Override
+	public List<AnimalUbicacion> obtenerUbicaciones() {
+
+		List<AnimalUbicacion> animalesUbicaciones = new ArrayList<AnimalUbicacion>();
 		List<AnimalDeGranja> animales = servicioAnimales.obtenerTodos();
 
 		for (AnimalDeGranja animal : animales) {
-			Ubicacion ubicacion = new Ubicacion(0, 0);
-			ubicacion.setLatitud(setearLatitudAleatorea(animal));
-			ubicacion.setLongitud(setearLongitudAleatorea(animal));
+			Ubicacion ubicacion = new Ubicacion(0.0, 0.0);
+			
+			ubicacion.setLatitud(crearLatitudAleatorea(animal));
+			ubicacion.setLongitud(crearLongitudAleatorea(animal));
+			repositorioUbicacion.guardarUbicacion(ubicacion);
+			
+			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now())) == null) {
+				AnimalUbicacion animalUbicacion = new AnimalUbicacion();
+				
+				animalUbicacion.setAnimal(animal);
+				animalUbicacion.setUltimaUbicacion(ubicacion);
+				animalUbicacion.setMetrosRecorridos(0);
+				animalUbicacion.setFecha(LocalDate.now());
+				
+				repositorioAnimalUbicacion.guardar(animalUbicacion);
+				animalesUbicaciones.add(animalUbicacion);
+			}else {
+				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now());
+				
+				Ubicacion ultimaUbicacion = animalUbicacionObtenido.getUltimaUbicacion();
 
-			ubicacion.setAnimal(animal);
+				Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
+						ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
+			
+				Integer metrosEnTotal = distancia + animalUbicacionObtenido.getMetrosRecorridos();
 
-			ubicaciones.add(ubicacion);
+				animalUbicacionObtenido.setAnimal(animal);
+				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
+				animalUbicacionObtenido.setMetrosRecorridos(metrosEnTotal);
+				animalUbicacionObtenido.setFecha(LocalDate.now());
+				
+				repositorioAnimalUbicacion.guardar(animalUbicacionObtenido);
+				animalesUbicaciones.add(animalUbicacionObtenido);
+			}
 		}
 
-		return ubicaciones;
+		return animalesUbicaciones;
+	}
+
+	private Integer calcularDistancia(Double ubicacionLat, Double ubicacionLon, Double ultimaUbicacionLat,
+			Double ultimaUbicacionLon) {
+
+		int radioTierra = 6371;
+
+		ubicacionLat = Math.toRadians(ubicacionLat);
+		ubicacionLon = Math.toRadians(ubicacionLon);
+		ultimaUbicacionLat = Math.toRadians(ultimaUbicacionLat);
+		ultimaUbicacionLon = Math.toRadians(ultimaUbicacionLon);
+
+		double dlon = (ultimaUbicacionLon - ubicacionLon);
+		double dlat = (ultimaUbicacionLat - ubicacionLat);
+
+		double sinlat = Math.sin(dlat / 2);
+		double sinlon = Math.sin(dlon / 2);
+
+		double a = (sinlat * sinlat) + Math.cos(ubicacionLat) * Math.cos(ultimaUbicacionLat) * (sinlon * sinlon);
+		double c = 2 * Math.asin(Math.min(1.0, Math.sqrt(a)));
+
+		double distanciaEnMetros = radioTierra * c * 1000;
+
+		return (int) distanciaEnMetros;
 	}
 
 	public float setearLatitudAleatorea(AnimalDeGranja a) {
@@ -57,8 +122,9 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			} else {
 				n = (float) ((float) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
 			}
+
 			break;
-			
+
 		case "CAPRINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
@@ -66,7 +132,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
 			}
 			break;
-			
+
 		case "EQUINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
@@ -74,7 +140,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
 			}
 			break;
-			
+
 		case "OVINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
@@ -82,7 +148,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
 			}
 			break;
-			
+
 		case "PORCINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
@@ -91,7 +157,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			}
 			break;
 		}
-		
+
 		return -n;
 	}
 
@@ -114,7 +180,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
 			}
 			break;
-			
+
 		case "CAPRINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
@@ -122,7 +188,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
 			}
 			break;
-			
+
 		case "EQUINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
@@ -130,7 +196,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
 			}
 			break;
-			
+
 		case "OVINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
@@ -138,7 +204,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				n = (float) ((float) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
 			}
 			break;
-			
+
 		case "PORCINO":
 			if(x <= 997) {
 				n = (float) ((float) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
@@ -154,29 +220,22 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 }
 
 /*
-VACUNO: Está mal cuando está en PORCINO
-PORCINO: Está mal cuando está en VACUNO
-CAPRINO: Está mal cuando está en OVINO
-OVINO: Está mal cuando está en EQUINO
-EQUINO: Está mal cuando está en CAPRINO
-
-VACUNO
-(35.271174 - 35.268174)) + 35.268174)
-(59.246042 - 59.243042)) + 59.243042)
-
-CAPRINO
-(35.277380 - 35.274380)) + 35.274380)
-(59.233771 - 59.230771)) + 59.230771)
-
-EQUINO
-(35.275471 - 35.272471)) + 35.272471)
-(59.257975 - 59.254975)) + 59.254975)
-
-OVINO
-(35.282443 - 35.279443)) + 35.279443)
-(59.243749 - 59.240749)) + 59.240749)
-
-PORCINO
-(35.277499 - 35.274499)) + 35.274499)
-(59.245634 - 59.242634)) + 59.242634)
-*/
+ * VACUNO: Estï¿½ mal cuando estï¿½ en PORCINO PORCINO: Estï¿½ mal cuando estï¿½ en
+ * VACUNO CAPRINO: Estï¿½ mal cuando estï¿½ en OVINO OVINO: Estï¿½ mal cuando estï¿½ en
+ * EQUINO EQUINO: Estï¿½ mal cuando estï¿½ en CAPRINO
+ * 
+ * VACUNO (35.271174 - 35.268174)) + 35.268174) (59.246042 - 59.243042)) +
+ * 59.243042)
+ * 
+ * CAPRINO (35.277380 - 35.274380)) + 35.274380) (59.233771 - 59.230771)) +
+ * 59.230771)
+ * 
+ * EQUINO (35.275471 - 35.272471)) + 35.272471) (59.257975 - 59.254975)) +
+ * 59.254975)
+ * 
+ * OVINO (35.282443 - 35.279443)) + 35.279443) (59.243749 - 59.240749)) +
+ * 59.240749)
+ * 
+ * PORCINO (35.277499 - 35.274499)) + 35.274499) (59.245634 - 59.242634)) +
+ * 59.242634)
+ */

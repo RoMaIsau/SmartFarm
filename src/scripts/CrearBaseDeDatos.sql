@@ -10,7 +10,8 @@ INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado
 -- USUARIOS
 INSERT INTO usuario VALUES 
 (1, "Prueba", "admin@gmail.com", "2020/05/12", "Usuario", "123", "Admin"),
-(2, "Prueba", "empleado@gmail.com", "2020/05/12", "Usuario", "123", "Empleado");
+(2, "Prueba", "empleado@gmail.com", "2020/05/12", "Usuario", "123", "Empleado"),
+(3, "Prueba", "veterinario@gmail.com", "2020/05/12", "Usuario", "123", "Veterinario");
 
 -- TIPOS DE GASTOS
 INSERT INTO TipoDeGasto (nombre) VALUES ("Gastos alimenticios"), ("Gastos empresariales"), ("Gastos médicos"), ("Gastos tecnologicos");
@@ -67,3 +68,5 @@ INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 -- GENEROS
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
+
+SELECT * FROM ubicacion 

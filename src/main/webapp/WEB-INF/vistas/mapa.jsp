@@ -41,6 +41,10 @@
 .mapboxgl-popup {
 	max-width: 200px;
 }
+
+.mapboxgl-popup-content {
+	border-left: .25rem solid #1cc88a!important;
+}
 </style>
 
 <body id="page-top">
@@ -71,7 +75,7 @@
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
-								animales ${fn:length(lists)}</h6>
+								animales ${fn:length(lista)}</h6>
 						</div>
 
 						<div class="card-body">
@@ -88,12 +92,12 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${lists}" var="ubicacion">
-											<td>${ubicacion.animal.id}</td>
-											<td hidden>${ubicacion.longitud}</td>
-											<td hidden>${ubicacion.latitud}</td>
-											<td>${ubicacion.animal.tipo.nombre}</td>
-											<td>${ubicacion.animal.raza.nombre}</td>
+										<c:forEach items="${lista}" var="lista">
+											<td>${lista.animal.id}</td>
+											<td hidden>${lista.ultimaUbicacion.longitud}</td>
+											<td hidden>${lista.ultimaUbicacion.latitud}</td>
+											<td>${lista.animal.tipo.nombre}</td>
+											<td>${lista.animal.raza.nombre}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
