@@ -100,6 +100,28 @@
 				                </div>
 		              		</div>
 		              	</div>
+		              	<div class="col-xl-6 col-md-6 mb-4 ">
+							<div class="card shadow mb-4">
+				                <div class="card-header py-3">
+				                	<h6 class="m-0 font-weight-bold text-primary">Metros recorridos</h6>
+				                </div>
+				                <div class="card-body">
+				                	<div class="chart-bar">
+				                		<div class="chartjs-size-monitor">
+				                			<div class="chartjs-size-monitor-expand">
+				                				<div class="">
+				                				</div>
+				                			</div>
+				                			<div class="chartjs-size-monitor-shrink">
+				                				<div class="">
+				                				</div>
+				                			</div>
+				                		</div>
+				                    	<canvas id="chartAlimento" width="606" height="320" class="chartjs-render-monitor" style="display: block; width: 303px; height: 160px;"></canvas>
+				                	</div>
+				                </div>
+		              		</div>
+		              	</div>
 	              	</div>
 				<!-- /.container-fluid -->
 
