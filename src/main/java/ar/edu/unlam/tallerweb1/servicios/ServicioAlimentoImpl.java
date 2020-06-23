@@ -69,4 +69,9 @@ public class ServicioAlimentoImpl implements ServicioAlimento {
 		this.repositorioAlimento.actualizarAlimento(alimento);
 	}
 
+	@Override
+	public List<Alimento> listarAlimentosConsumidosPorAnimal(Long idAnimal) {
+		return repositorioAlimento.listarAlimentosConsumidosPorAnimal(idAnimal);
+	}
+
 }

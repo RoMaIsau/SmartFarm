@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.hibernate.criterion.Restrictions;
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
+import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
 
 @Repository("repositorioalimento")
 public class RepositorioAlimentoImpl implements RepositorioAlimento {
@@ -50,6 +51,16 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 	public void actualizarAlimento(Alimento alimento) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(alimento);
+	}
+
+	@Override
+	public List<Alimento> listarAlimentosConsumidosPorAnimal(Long idAnimal) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		return (List<Alimento>) session.createCriteria(CronogramaDeAlimentacion.class)
+				.createAlias("planAlimentario", "p")
+				.createAlias("alimento", "a")
+				.add(Restrictions.eq("p.animal.id", idAnimal)).list();
 	}
 
 }
