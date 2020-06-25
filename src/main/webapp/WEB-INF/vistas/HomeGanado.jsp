@@ -14,12 +14,6 @@
 
 
 
-
-
-
-
-
-
   <c:forEach items="${vencidos}" var="v">
   
 				    	 
@@ -33,16 +27,6 @@
 
 
 
-  <c:forEach items="${dietas}" var="d">
-  
-				    	 
-				  <h3 class="text-danger">"La vaca  ${d.id}  tiene dietas pendientes"
-							<a href="detalleDieta?id=${d.id}">Ver</a><br>
-					</h3> </br>		
-							
-							 
-</c:forEach>
-
  <c:forEach items="${vencidas}" var="v">
   
 				    	 
@@ -51,18 +35,15 @@
 					</h3> </br>		
 							
 							 
-</c:forEach>
+</c:forEach><BR>
 
- <c:forEach items="${detalleDieta}" var="d">
-  
-				    	 
-				  <h3 class="text-danger">Dietas pendientes: ${d.nombre}<br>
-				   ${d.fechaYhora}<br>
-							<a href="alimentar?id=${vacaId}&nombre=${d.nombre}">Alimentar</a><br>
-					</h3> </br>		
-							
-							 
-</c:forEach>
+
+<h3>${mensaje}</h3><br>
+<h3><a href="/SmartFarm/homeGanado" >VOLVER</a></h3><br>
+<h3><a href="/SmartFarm/listaGanado" >MONITOREO DE SIGNOS VITALES</a></h3><BR>
+<h3><a href="/SmartFarm/historiaClinica" >HISTORIAS CLINICAS</a></h3><BR>
+
+ 	
 
   	
 							

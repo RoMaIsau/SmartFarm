@@ -87,6 +87,12 @@ public class AnimalDeGranja {
 		this.id = id;
 	}
 	
+	
+	
+	
+
+	
+
 	public TipoAnimal getTipo() {
 		return tipo;
 	}

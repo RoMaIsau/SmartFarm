@@ -20,17 +20,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-import ar.edu.unlam.tallerweb1.modelo.Dieta;
+
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Persona;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
 import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.modelo.Vacuna;
-import ar.edu.unlam.tallerweb1.servicios.ServicioDieta;
+
+
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOperacion;
+
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
 @Controller
@@ -44,8 +45,6 @@ public class ControladorGanado {
 	@Inject
 	ServicioVacunas servicioVacuna;
 	
-	@Inject
-	ServicioDieta servicioDieta;
 	
 	
 	
@@ -68,361 +67,21 @@ public class ControladorGanado {
 	public void setServicioGanado(ServicioGanado servicioGanado) {
 		this.servicioGanado = servicioGanado;
 	}
-
-	@RequestMapping("/FarmHome")
-	public ModelAndView farmhome() {
-		   ModelMap modelo= new ModelMap();
-           
-          
-           
-         
-           return new ModelAndView("FarmHome", modelo);
-		
-	}
 	
-	@RequestMapping("/detalle")
-	public ModelAndView vacunar(@RequestParam(value="id", required=true) Long id)  {
-		   ModelMap modelo= new ModelMap();
-           
-		   AnimalDeGranja gv =servicioGanado.ver(id);
-		   
-        List<Vacuna>v = servicioVacuna.alarmaVacuna(gv);
-       
-        
-         modelo.put("vencidas",v);
-         modelo.put("vacaId",id);
-       
-         
-         
-           return new ModelAndView("HomeGanado", modelo);
-		
-	}
 	
-	@RequestMapping("/detalleDieta")
-	public ModelAndView detalleDieta(@RequestParam(value="id", required=true) Long id)  {
-		   ModelMap modelo= new ModelMap();
-           
-		   AnimalDeGranja gv =servicioGanado.ver(id);
-		   
-       
-        List<Dieta> d= servicioDieta.alarmaDieta(gv); 
-        
-       
-         modelo.put("vacaId",id);
-         modelo.put("detalleDieta", d);
-         
-         
-           return new ModelAndView("HomeGanado", modelo);
-		
-	}
+	@RequestMapping("/buscarGanado")
+	public ModelAndView buscarGanado(@RequestParam(value="id", required=true) Long id) {
 	
-	@RequestMapping("/vacunar")
-	public ModelAndView vacunar(@RequestParam(value="id", required=true) Long id,@RequestParam(value="nombre", required=true)String nombre)  {
-		   ModelMap modelo= new ModelMap();
-           
-		   AnimalDeGranja gv =servicioGanado.ver(id);
-        Vacuna v = servicioVacuna.getVacuna(nombre);
-           
-         servicioVacuna.vacunar(gv, v);
-         AnimalDeGranja g= servicioGanado.ver(id);
-         g.getVacunasParaAplicar();
-         Vacuna v1 = servicioVacuna.getVacuna(nombre);  
-         modelo.put("aplicadas",g.getVacunasParaAplicar());
-         
-         
-           return new ModelAndView("HomeGanado", modelo);
-		
-	}
-	
-	@RequestMapping("/alimentar")
-	public ModelAndView alimentar(@RequestParam(value="id", required=true) Long id,@RequestParam(value="nombre", required=true)String dieta)  {
-		   ModelMap modelo= new ModelMap();
-           
-		   AnimalDeGranja gv =servicioGanado.ver(id);
-           Dieta d= servicioDieta.getDieta(dieta);
-           
-           servicioDieta.alimentar(gv, d);
-      
-        
-         
-         
-         
-         
-           return new ModelAndView("HomeGanado", modelo);
-		
-	}
-	
-	@RequestMapping("/homeGanado")
-	public ModelAndView home() {
-	     
-	       List<AnimalDeGranja> animales= servicioGanado.listar();
-	      
-	       HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
-	       for(AnimalDeGranja v: animales) {
-	      
-            List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
-            
-            if(!vencidas.isEmpty()){
-           
-            animalesVencidos.add(v);}}
-	       
-	      HashSet <AnimalDeGranja> pendientes= new HashSet<AnimalDeGranja>();
-	       for(AnimalDeGranja v: animales) {
-	      
-            List<Dieta> dietas = servicioDieta.alarmaDieta(v);
-            if(!dietas.isEmpty()){
-           
-           pendientes.add(v);}
-            
-            }
+             
+		AnimalDeGranja gv= servicioGanado.ver(id);
              
              ModelMap modelo= new ModelMap();
-             modelo.put("vencidos",animalesVencidos);
-             modelo.put("dietas",pendientes);
+             modelo.put("gv", gv);
             
-             
-           
              return new ModelAndView("HomeGanado", modelo);
              
 	}
 	
-	@RequestMapping("/listaGanado")
-	public ModelAndView listaGanado() {
-	     
-	       
-             
-             
-             List<AnimalDeGranja> animales= servicioGanado.listar();
-  	      
-  	     List< SignosVitales> signosAnormales= new ArrayList<SignosVitales>();
-  	   HashSet< AnimalDeGranja> vacasAnormales= new HashSet<AnimalDeGranja>();
-  	     
-  	   for(AnimalDeGranja v: animales) {
-  	      
-             signosAnormales= servicioGanado.alarmaSignos(v);
-             if(signosAnormales!= null) {
-            	 vacasAnormales.add(v);
-  	       }
-  	   }
-  	   
-	
-  	    ModelMap modelo= new ModelMap();
-        
-        modelo.put("anormales",vacasAnormales);
-        modelo.put("animales",animales);
-      
-      
-     
-      
-    
-      return new ModelAndView("HomeAnimal", modelo);}
-	
-  	   
-  	 @RequestMapping("/historiaClinica")
- 	public ModelAndView verHistoria() {
- 	     
- 	       
-              
-              
-              List<AnimalDeGranja> animales= servicioGanado.listar();
-   	      
-   	     List<HistoriaClinica> historias= new ArrayList<HistoriaClinica>();
-   	   Long id = null;
-   	   
-   	  HistoriaClinica hc= new HistoriaClinica();
-   	   for(AnimalDeGranja v: animales) {
-   	      
-              id= v.getId();
-              hc = servicioGanado.verHC(id);
-             	historias.add(hc);}
-   	   
-   	   
-   	ModelMap modelo= new ModelMap();
-    
-    modelo.put("historias",historias);
-  
- 
-  
-
-  return new ModelAndView("historiaClinica", modelo);
-             	
-   	      
-   	   
-   	   
-   	   
-   	   
-   	   }
-   	   
-   	@RequestMapping("/verhistoria")
-	public ModelAndView hc(@RequestParam(value="id", required=true) Long id){
-	     
-	       
-        
-     
-	  
-	   
-	  HistoriaClinica hc= new HistoriaClinica();
-	
-	      
-     
-        hc = servicioGanado.verHC(id);
-       
-       	
-	       
-   	   
-  	   
-         
-  	       
-  	   
-               
-               ModelMap modelo= new ModelMap();
-             
-               modelo.put("hc",hc);
-             
-            
-             
-           
-             return new ModelAndView("historiaClinica", modelo);
-             
-	}
-   	
-	@RequestMapping("/diagnosticar")
-	public ModelAndView diagnosticar(@RequestParam(value="id", required=true) Long id){
-	     
-	       
-	   Long idAnimal = id;
-       Sintomas sintomas= new Sintomas();
-	//servicioGanado.guardarSintomas(sintomas);
-            ModelMap modelo= new ModelMap();
-          
-            modelo.put("sintomas",sintomas);
-          modelo.put("idAnimal", idAnimal);
-         
-          
-        
-          return new ModelAndView("consultaVeterinario", modelo);
-          
-	}
-	   
-	@RequestMapping("/diagnosticarPost")
-	public ModelAndView diagnostico(@ModelAttribute("sintomas") Sintomas sintomas){
-	     
-	      
-	  HistoriaClinica hc= new HistoriaClinica();
-	
-	      
-  
-     hc = servicioGanado.verHC(sintomas.getIdAnimal());
-    
-    
-    	
-	   String enfermedad= servicioGanado.diagnosticar(hc,sintomas);    
-	   
-	   
-      
-	       
-	   
-            
-            ModelMap modelo= new ModelMap();
-          
-            modelo.put("enfermedad",enfermedad);
-          
-         
-          
-        
-          return new ModelAndView("historiaClinica", modelo);
-          
-	}
-	
-	@RequestMapping("/verEstadoSalud")
-	public ModelAndView verSalud(@RequestParam(value="id", required=true) Long id) {
-	
-             
-		AnimalDeGranja gv= servicioGanado.ver(id);
-	     
-	      SignosVitales signos=gv.getSignos();
-             
-             ModelMap modelo= new ModelMap();
-             
-             if(signos != null) {
-             
-             modelo.put("signos",signos);
-             
-            
-             
-           
-             return new ModelAndView("HomeAnimal", modelo);}
-	else {
-		 return new ModelAndView("Error"); 
-	}}
-	
-	@RequestMapping("/modificarSignos")
-	public ModelAndView modsignos(@RequestParam(value="id", required=true) Long id) {
-	
-             
-		
-	     
-	      
-             
-             ModelMap modelo= new ModelMap();
-             
-           modelo.put("idSigno",id);
-             
-            
-             
-           
-             return new ModelAndView("modificarSignos", modelo);
-             
-	}
-	
-	@RequestMapping("/modificarSignosPost")
-	public ModelAndView modsignos(@ModelAttribute("signosAttribute") SignosVitales signos) {
-	
-		Date actual= new Date();
-		
-		
-		
-             
-		signos.setFecha(actual);
-	     
-		servicioGanado.modificarSignos(signos);
-             
-             ModelMap modelo= new ModelMap();
- List<AnimalDeGranja> animales= servicioGanado.listar();
-	       
-             
-            
-             modelo.put("animales",animales);
-             
-            
-             
-            
-             
-           
-             return new ModelAndView("HomeAnimal", modelo);
-             
-	}
-	
-	@RequestMapping("/alarmaSignos")
-	public ModelAndView alarmaSignos() {
-	
-             
-	
-             ModelMap modelo= new ModelMap();
- List<AnimalDeGranja> animales= servicioGanado.listar();
-	       
-             
-            
-             modelo.put("animales",animales);
-             
-            
-             
-            
-             
-           
-             return new ModelAndView("HomeAnimal", modelo);
-             
-	}
 	
 	
 
@@ -758,83 +417,7 @@ public class ControladorGanado {
 	}
 	
 
-	@RequestMapping("/guardarDietas")
-	public ModelAndView dieta() {
-		Dieta uno = new Dieta();
-		uno.setNombre("lechal");
-		
-		String forraje= "forraje";
-		String suplementos= "suplementos";
-		String granos="Granos";
-		String heno="Heno";
-		Calendar fecha1 = Calendar.getInstance();
-		 fecha1.set(2020, 03, 13, 8, 05, 16);
-		 
-		 Calendar fecha2 = Calendar.getInstance();
-		 fecha2.set(2020, 03, 13, 13, 00, 16);
-		 
-		 Calendar fecha3 = Calendar.getInstance();
-		 fecha3.set(2020, 03, 13, 19, 00, 16);
-		 TipoAlimento alimento= new TipoAlimento();
-		 alimento.setNombre("ganado");
-		 
-		 Alimento alimentoUno= new Alimento();
-		 alimentoUno.setNombre(heno);
-		 alimentoUno.setCantidad(120.0);
-		 alimentoUno.setTipo(alimento);
-		 uno.setAlimento(alimentoUno);
 	
-	uno.setFechaYhora(fecha1);
-	AnimalDeGranja gv=servicioGanado.ver(1L);
 	
-	uno.setAnimal(gv);
-	servicioDieta.guardarDieta(uno);
-		 
-		 Dieta dos = new Dieta();
-			dos.setNombre("ternera");
-			
-			dos.setFechaYhora(fecha3);
-			
-			 TipoAlimento alimento2= new TipoAlimento();
-			 alimento2.setNombre("varios");
-			 
-			 Alimento alimentoDos= new Alimento();
-			 alimentoDos.setNombre(suplementos);
-			 alimentoDos.setCantidad(120.0);
-			 alimentoDos.setTipo(alimento2);
-			 dos.setAlimento(alimentoDos);
-			
-			Calendar fecha4 = Calendar.getInstance();
-			 fecha4.set(2020, 03, 15, 8, 05, 16);
-			 
-			 Calendar fecha5 = Calendar.getInstance();
-			 fecha5.set(2019, 06, 13, 13, 00, 16);
-			 
-			 Calendar fecha6 = Calendar.getInstance();
-			 fecha6.set(2020, 06, 13, 19, 00, 16);
-			 AnimalDeGranja gv2=servicioGanado.ver(2L);
-			dos.setAnimal(gv2);
-			dos.setFechaYhora(fecha4);
-			 servicioDieta.guardarDieta(dos);
-		 
-		  ModelMap modelo= new ModelMap();
-          modelo.put("dietaDos", dos);
-          modelo.put("dietaUno", uno);
-             
-             return new ModelAndView("Dieta", modelo);
-             
-	}
-	
-	@RequestMapping("/buscarGanado")
-	public ModelAndView buscarGanado(@RequestParam(value="id", required=true) Long id) {
-	
-             
-		AnimalDeGranja gv= servicioGanado.ver(id);
-             
-             ModelMap modelo= new ModelMap();
-             modelo.put("gv", gv);
-            
-             return new ModelAndView("HomeGanado", modelo);
-             
-	}
+
 }

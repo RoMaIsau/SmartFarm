@@ -18,6 +18,7 @@ import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 
+
 // Implelemtacion del Servicio de usuarios, la anotacion @Service indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.servicios
 // para encontrar esta clase.
@@ -47,7 +48,6 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 		serviciovacunasDao.guardar(vacuna);
 		
 	}
-
 	@Override
 	public List<Vacuna> alarmaVacuna(AnimalDeGranja animal) {
 	

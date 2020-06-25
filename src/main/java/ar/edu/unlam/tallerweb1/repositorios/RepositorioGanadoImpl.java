@@ -1,7 +1,8 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-import ar.edu.unlam.tallerweb1.modelo.Dieta;
+
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
@@ -22,8 +23,8 @@ import javax.inject.Inject;
 @Repository("repositorioGanado")
 public class RepositorioGanadoImpl implements RepositorioGanado {
 
-	// Como todo repositorio maneja acciones de persistencia, normalmente estar· inyectado el session factory de hibernate
-	// el mismo est· difinido en el archivo hibernateContext.xml
+	// Como todo repositorio maneja acciones de persistencia, normalmente estar√° inyectado el session factory de hibernate
+	// el mismo est√° difinido en el archivo hibernateContext.xml
 	private SessionFactory sessionFactory;
 
     @Autowired
@@ -36,7 +37,7 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 
 		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
 		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran m·s de un resultado en la busqueda.
+		// uniqueResult da error si se encuentran m√°s de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
 		return (AnimalDeGranja) session.createCriteria(AnimalDeGranja.class)
 				.add(Restrictions.eq("id", id))
@@ -59,9 +60,7 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 	@Override
 	public List<AnimalDeGranja> listar() {
 
-		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
-		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran m·s de un resultado en la busqueda.
+		
 		final Session session = sessionFactory.getCurrentSession();
 		return (List<AnimalDeGranja>) session.createCriteria(AnimalDeGranja.class)
 				.list();
@@ -120,3 +119,5 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 
 
 }
+
+
