@@ -70,8 +70,9 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 				Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
 						ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
-			
-				Integer metrosEnTotal = distancia + animalUbicacionObtenido.getMetrosRecorridos();
+
+				Integer metrosRecorridos = animalUbicacionObtenido.getMetrosRecorridos() == null? 0 : animalUbicacionObtenido.getMetrosRecorridos();
+				Integer metrosEnTotal = distancia + metrosRecorridos;
 
 				animalUbicacionObtenido.setAnimal(animal);
 				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
