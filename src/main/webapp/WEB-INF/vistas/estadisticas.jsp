@@ -56,8 +56,8 @@
 									<thead>
 										<tr>
 											<th>Nº registro</th>
-											<th>Fecha</th>
 											<th>Tipo de gasto</th>
+											<th>Fecha</th>
 											<th>Monto</th>
 											<th>Acciones</th>
 										</tr>
@@ -66,8 +66,8 @@
 										<c:forEach items="${gastos}" var="gastos">
 											<tr>
 												<td><c:out value="${gastos.id}"/></td>
-												<td><c:out value="${gastos.fecha}"/></td>
 												<td><c:out value="${gastos.tipoDeGasto}" /></td>
+												<td><c:out value="${gastos.fecha}"/></td>
 												<td>$ <c:out value="${gastos.monto}" /></td>
 												<td class="text-center">
 													<a href="estadisticasamodificar?id=${gastos.id}">

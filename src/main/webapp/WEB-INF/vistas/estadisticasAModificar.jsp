@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -9,22 +10,22 @@
 
 </head>
 <body id="page-top">
-	
-	
-	
+
+
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
 		<!-- Sidebar -->
 		<%@ include file="../../parts/sidebar.jsp"%>
 		<!-- End of Sidebar -->
-		
+
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-			
+
 			<!-- Main Content -->
 			<div id="content">
-				
+
 				<!-- Topbar -->
 
 				<%@ include file="../../parts/topbar.jsp"%>
@@ -33,22 +34,23 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-				
+
 					<h1 class="h3 mb-2 text-gray-800">Estadística Nº ${gastos.id}</h1>
-					 
+
 					<c:if test="${not empty gastosAntiguos}">
 						<div class="card shadow mb-4">
 							<div class="card-header py-3 mx-0 row justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">Datos antiguos</h6>
+								<h6 class="m-0 font-weight-bold text-primary">Datos
+									antiguos</h6>
 								</a>
 							</div>
-							
-							<div>
-							</div>
-							
+
+							<div></div>
+
 							<div class="card-body">
 								<div class="table-responsive">
-									<table class="table text-center" id="" width="100%" cellspacing="0">
+									<table class="table text-center" id="" width="100%"
+										cellspacing="0">
 										<thead>
 											<tr>
 												<th>Tipo de gasto</th>
@@ -56,29 +58,29 @@
 											</tr>
 										</thead>
 										<tbody>
-												<tr>
-													<td><c:out value="${gastosAntiguos.tipoDeGasto}" /></td>
-													<td>$ <c:out value="${gastosAntiguos.monto}" /></td>
-												</tr>
+											<tr>
+												<td><c:out value="${gastosAntiguos.tipoDeGasto}" /></td>
+												<td>$ <c:out value="${gastosAntiguos.monto}" /></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 					</c:if>
-					
+
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 mx-0 row justify-content-between">
-								<h6 class="m-0 font-weight-bold text-primary">Datos actuales</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Datos actuales</h6>
 							</a>
 						</div>
-						
-						<div>
-						</div>
-						
+
+						<div></div>
+
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table text-center" id="" width="100%" cellspacing="0">
+								<table class="table text-center" id="" width="100%"
+									cellspacing="0">
 									<thead>
 										<tr>
 											<th>Tipo de gasto</th>
@@ -86,16 +88,16 @@
 										</tr>
 									</thead>
 									<tbody>
-											<tr>
-												<td><c:out value="${gastos.tipoDeGasto}" /></td>
-												<td>$ <c:out value="${gastos.monto}" /></td>
-											</tr>
+										<tr>
+											<td><c:out value="${gastos.tipoDeGasto}" /></td>
+											<td>$ <c:out value="${gastos.monto}" /></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="container" style="max-width: 720px !important;">
 						<div class="card o-hidden border-0 shadow-lg my-5">
 							<div class="card-body p-0">
@@ -106,7 +108,7 @@
 											<div class="text-center">
 												<h1 class="h4 text-gray-900 mb-4">Datos a modificar</h1>
 											</div>
-											
+
 											<c:if test="${not empty error}">
 												<span class="text-danger" style="float: left;">${error}</span>
 												<br>
@@ -115,43 +117,50 @@
 												<span class="text-success" style="float: left;">${mensaje}</span>
 												<br>
 											</c:if>
-											
-											<form:form method="POST" modelAttribute="gastosNuevos" action="validarcambiosenestadistica?id=${gastos.id}" class="user">
-												<div class="form-group row">
-													<div class="col-sm-1">
-														<label class="pt-2">$</label>
+
+											<form:form method="POST" modelAttribute="gastosNuevos"
+												action="validarcambiosenestadistica?id=${gastos.id}"
+												class="user">
+												<div class="form-group row justify-content-md-center mt-1">
+													<div class="col-sm-12 col-md-4">
+														<div class="input-group mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="basic-addon1">$</span>
+															</div>
+															<form:input path="monto" type="number" id="monto"
+																name="monto" class="form-control" placeholder="Monto"
+																step="0.01" />
+														</div>
 													</div>
-													<div class="col-sm-11">
-														<form:input path="monto" type="number" id="monto" name="monto"
-														class="form-control form-control-user" placeholder="Monto a modificar" />
+													<div class="col-sm-12 col-md-7">
+														<form:select path="tipoDeGasto" id="tipoDeGasto"
+															name="tipoDeGasto" class="form-control">
+															<option value="">Tipo de gasto</option>
+															<c:forEach items="${tipoDeGastos}" var="tipoGastos">
+																<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
+															</c:forEach>
+														</form:select>
 													</div>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-12">
-													    <form:select path="tipoDeGasto" id="tipoDeGasto" name="tipoDeGasto" class="form-control">
-													    	<option value=""></option>
-													    	<c:forEach items="${tipoDeGastos}" var="tipoGastos">
-													    		<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
-													    	</c:forEach>
-													    </form:select>
-													</div>
+												<div class="text-center m-auto" style="width: 70%;">
+													<button class="btn btn-primary btn-block text-white"
+														type="submit">Modificar</button>
 												</div>
-												<button class="btn btn-primary btn-user btn-block text-white" type="submit">Modificar</button>
 											</form:form>
-											
+
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 				<!-- /.container-fluid -->
-				
+
 			</div>
 			<!-- End of Main Content -->
-			
+
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">

@@ -128,7 +128,7 @@ public class ControladorAdmin {
 			}
 		}
 		if(!validarTipo) {
-			modelo.put("error", "No ha elegido un tipo de gasto v�lido.");
+			modelo.put("error", "No ha elegido un tipo de gasto válido.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		}
 		
