@@ -35,7 +35,7 @@
 						<h1 class="h3 mb-0 text-gray-800">Animal</h1>
 					</div>
 					<div class="row d-flex justify-content-center">
-						<div class="col-xl-6 col-md-6 mb-4 ">
+						<div class="col-xl-5 col-md-6 mb-4 ">
 							<div class="card border-left-warning shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -78,7 +78,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xl-6 col-md-6 mb-4 ">
+						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 				                <div class="card-header py-3">
 				                	<h6 class="m-0 font-weight-bold text-primary">Metros recorridos</h6>
@@ -96,6 +96,28 @@
 				                			</div>
 				                		</div>
 				                    	<canvas id="myBarChart" width="606" height="320" class="chartjs-render-monitor" style="display: block; width: 303px; height: 160px;"></canvas>
+				                	</div>
+				                </div>
+		              		</div>
+		              	</div>
+		              	<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+				                <div class="card-header py-3">
+				                	<h6 class="m-0 font-weight-bold text-primary">Alimentación</h6>
+				                </div>
+				                <div class="card-body">
+				                	<div class="chart-pie pt-4">
+				                		<div class="chartjs-size-monitor">
+				                			<div class="chartjs-size-monitor-expand">
+				                				<div class="">
+				                				</div>
+				                			</div>
+				                			<div class="chartjs-size-monitor-shrink">
+				                				<div class="">
+				                				</div>
+				                			</div>
+				                		</div>
+				                    	<canvas id="chartAlimento" width="1008" height="506" class="chartjs-render-monitor" style="display: block; width: 504px; height: 253px;"></canvas>
 				                	</div>
 				                </div>
 		              		</div>
@@ -214,7 +236,7 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 1000,
+          max: 1500,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
@@ -255,6 +277,63 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+
+var ctx = document.getElementById("chartAlimento");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: [<c:forEach items="${alimentos}" var="alimento">
+    <c:choose>
+	    <c:when test="${alimento.id == 1}">'Maiz',</c:when>
+	    <c:when test="${alimento.id == 2}">'Trigo',</c:when>
+	    <c:when test="${alimento.id == 3}">'Centeno',</c:when>
+	    <c:when test="${alimento.id == 4}">'Heno',</c:when>
+	    <c:when test="${alimento.id == 5}">'Pasto',</c:when>
+	    <c:when test="${alimento.id == 6}">'Avena',</c:when>
+	    <c:when test="${alimento.id == 7}">'Cebada',</c:when>
+    </c:choose>	
+	</c:forEach>],
+    datasets: [{
+      data: [<c:forEach items="${alimentos}" var="alimento">
+		${alimento.cantidad},
+		</c:forEach>],
+      backgroundColor: [
+    	  <c:forEach items="${alimentos}" var="alimento">
+    	    <c:choose>
+    		    <c:when test="${alimento.id == 1}">'#EFE081',</c:when>
+    		    <c:when test="${alimento.id == 2}">'#F0B66B',</c:when>
+    		    <c:when test="${alimento.id == 3}">'#0B7072',</c:when>
+    		    <c:when test="${alimento.id == 4}">'#89C7B6',</c:when>
+    		    <c:when test="${alimento.id == 5}">'#87C19B',</c:when>
+    		    <c:when test="${alimento.id == 6}">'#F1713F',</c:when>
+    		    <c:when test="${alimento.id == 7}">'#7998C9',</c:when>
+    	    </c:choose>	
+    		</c:forEach>
+      ],
+      
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#000000",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
+
+
 </script>
 </body>
 </html>

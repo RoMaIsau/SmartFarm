@@ -43,7 +43,7 @@
 }
 
 .mapboxgl-popup-content {
-	border-left: .25rem solid #1cc88a!important;
+	border-left: .25rem solid #1cc88a !important;
 }
 </style>
 
@@ -138,6 +138,43 @@
 	<!-- Bootstrap core JavaScript-->
 
 	<%@ include file="../../parts/scripts.jsp"%>
-	<script src="<c:url value="/js/mostrarMapa.js"/>"></script>
+	<script>
+		var map;
+		
+		mapboxgl.accessToken = 'pk.eyJ1IjoiZXplMjEiLCJhIjoiY2tiODBxcDYzMGIxYTMwcWFtZ2pncmNjdCJ9.XzKHl3aCknUpCwDcMSMlJg';
+		map = new mapboxgl.Map({
+			container : "map",
+			style : "mapbox://styles/mapbox/satellite-streets-v11",
+			zoom : 14,
+			center : [ -59.241913, -35.276381 ]
+		});
+		
+		var marker, i;
+		
+		<c:forEach items="${lista}" var="lista">
+			var imagen = '${lista.animal.tipo.nombre}'.toLowerCase();
+			var tipo = imagen.toUpperCase();
+			var raza = '${lista.animal.raza.nombre}';
+			
+		
+			var icono = document.createElement('div');
+			icono.classList.add("icon");
+			icono.id = imagen;
+			
+	    	var popup = new mapboxgl.Popup({
+	    		offset : 25
+	    	}).setHTML('<div><div class="row no-gutters align-items-center"><div class="col mr-2">'+
+					'<div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 15px;">'+${lista.animal.id}+'</div>'+
+	                 '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+ tipo +' - '+ raza +'</div> ' +
+	                 '<div class="mt-2 text-center"><a href="verAnimal?id='+${lista.animal.id}+'" style="font-size: 11px;" class="badge badge-success p-1">Ver animal</a></div></div> ' +
+	                  '<div class="col-auto mt-2"><img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+imagen+'.png"/></div></div> </div>');
+		
+	    	new mapboxgl.Marker(icono).setLngLat([ ${lista.ultimaUbicacion.longitud}, ${lista.ultimaUbicacion.latitud} ])
+			.setPopup(popup).addTo(map);
+	    	
+		</c:forEach>
+	
+	
+	</script>
 </body>
 </html>

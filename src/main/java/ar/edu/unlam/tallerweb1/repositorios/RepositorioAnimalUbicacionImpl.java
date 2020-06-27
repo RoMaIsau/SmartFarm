@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,4 +35,11 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 				.add(Restrictions.eq("fecha", fecha)).uniqueResult();
 	}
 
+	@Override
+	public List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		return session.createCriteria(AnimalUbicacion.class).add(Restrictions.eq("animal.id", idAnimal)).list();
+	}
 }

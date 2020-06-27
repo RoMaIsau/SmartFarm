@@ -15,6 +15,8 @@ import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.modelo.Alimento;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacion;
@@ -32,6 +34,8 @@ public class ControladorMapa {
 	private ServicioDeAnimales servicioDeAnimales;
 	@Inject
 	private ServicioAnimalUbicacion servicioAnimalUbicacion;
+	@Inject 
+	private ServicioAlimento servicioAlimento;
 
 	@RequestMapping("/mapa")
 	public ModelAndView irAMapa(HttpServletRequest request, ModelMap model) {
@@ -60,9 +64,11 @@ public class ControladorMapa {
 		
 		AnimalDeGranja animal = servicioDeAnimales.obtenerPorId(idAnimal);
 		List<AnimalUbicacion> animalUbicacion = servicioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
+		List<Alimento> alimentos = servicioAlimento.listarAlimentosConsumidosPorAnimal(idAnimal);
 		
 		model.put("animal", animal);
 		model.put("animalUbicacion", animalUbicacion);
+		model.put("alimentos", alimentos);
 		
 		return new ModelAndView("verAnimal", model);
 	}

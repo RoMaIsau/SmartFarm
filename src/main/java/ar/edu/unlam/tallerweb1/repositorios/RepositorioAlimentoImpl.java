@@ -6,8 +6,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
+
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
+import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
+import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion.EstadoCronograma;
 
 @Repository("repositorioalimento")
 public class RepositorioAlimentoImpl implements RepositorioAlimento {
@@ -50,6 +57,28 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 	public void actualizarAlimento(Alimento alimento) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(alimento);
+	}
+
+	@Override
+	public List<Alimento> listarAlimentosConsumidosPorAnimal(Long idAnimal) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		
+		return (List<Alimento>) session.createCriteria(CronogramaDeAlimentacion.class, "c")
+				.createAlias("planAlimentario", "p")
+				.add(Restrictions.eq("p.animal.id", idAnimal))
+				.add(Restrictions.eq("estado", EstadoCronograma.COMPLETO))
+				.setProjection(Projections.sum("cantidad"))
+				.setProjection(Projections.projectionList()
+						.add(Projections.property("alimento.id"), "id")
+			            .add(Projections.sqlProjection("sum(cantidad) as cantidad", new String[] {"cantidad"}, new Type[] {StandardBasicTypes.DOUBLE}))
+			            .add(Projections.groupProperty("alimento.id")))
+				.setResultTransformer(Transformers.aliasToBean(Alimento.class))
+				.list();
+				
+//				.setProjection(Projections.sum("cantidad"))
+//				.setProjection(Projections.groupProperty("alimento.id"))
+				
 	}
 
 }

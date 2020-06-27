@@ -22,4 +22,6 @@ public interface ServicioAlimento {
 	Double consultarStock(Alimento alimento);
 
 	void decrementarStock(Alimento alimento, int cantidad);
+
+	List<Alimento> listarAlimentosConsumidosPorAnimal(Long idAnimal);
 }
