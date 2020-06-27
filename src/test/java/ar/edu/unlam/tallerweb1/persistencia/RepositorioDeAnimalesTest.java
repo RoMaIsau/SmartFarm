@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.assertj.core.api.Assertions;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -104,6 +105,16 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 
 			assertThat(animalEncontrado).isNull();
 		}
+	}
+
+	@Test(expected = ConstraintViolationException.class)
+	public void noDeberianInsertarseAnimalesConMismoIdentificadorGPS() {
+
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS);
+
+		this.repositorioDeAnimales.guardar(vaca);
+		this.repositorioDeAnimales.guardar(caballo);
 	}
 
 	private AnimalDeGranja crearAnimal(String nombreTipo, String nombreRaza, String nombreGenero, double peso, String identificadorGps) {
