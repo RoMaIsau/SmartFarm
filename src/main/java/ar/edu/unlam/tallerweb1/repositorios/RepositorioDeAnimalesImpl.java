@@ -52,4 +52,12 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	public void eliminar(AnimalDeGranja animal) {
 		this.sessionFactory.getCurrentSession().delete(animal);
 	}
+
+	@Override
+	public AnimalDeGranja obtenerPorIdentificadorGps(String identificador) {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("SELECT a FROM AnimalDeGranja a WHERE identificadorGps = :identificador", AnimalDeGranja.class)
+				.setParameter("identificador", identificador)
+				.getSingleResult();
+	}
 }
