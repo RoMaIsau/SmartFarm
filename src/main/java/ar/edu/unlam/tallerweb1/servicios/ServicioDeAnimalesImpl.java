@@ -2,11 +2,14 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
@@ -86,4 +89,18 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 		repositorioDeAnimales.eliminar(animal);
 	}
 
+	@Override
+	public AnimalDeGranja obtenerPorIdentificadorGps(String identificador) throws AnimalSinIdentificadorGpsException {
+
+		AnimalDeGranja animal = null;
+		try {
+
+			animal = this.repositorioDeAnimales.obtenerPorIdentificadorGps(identificador);
+
+		}catch(NoResultException e) {
+			throw new AnimalSinIdentificadorGpsException(identificador);
+		}
+
+		return animal;
+	}
 }
