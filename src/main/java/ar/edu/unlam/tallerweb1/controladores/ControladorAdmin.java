@@ -89,9 +89,7 @@ public class ControladorAdmin {
 
 		ModelMap modelo = new ModelMap();
 
-		Long id = (Long) request.getSession().getAttribute("ID");
-		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
-		List<Gastos> gastos = servicioGastos.consultarGastosPorUsuario(usuario);
+		List<Gastos> gastos = servicioGastos.consultarGastos();
 
 		modelo.put("gastos", gastos);
 
