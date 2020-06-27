@@ -125,6 +125,26 @@ public class AnimalDeGranja {
 		this.peso = peso;
 	}
 	
+	@Override
+    public boolean equals(Object objeto) {
+
+        boolean iguales = (this == objeto);
+
+        if (! iguales && (objeto != null) && this.getClass().isAssignableFrom(objeto.getClass())) {
+
+            AnimalDeGranja otroAnimal = AnimalDeGranja.class.cast(objeto);
+
+            iguales = (this.id != null) && (otroAnimal.id != null) &&
+                      this.id.equals(otroAnimal.id);
+        }
+        return iguales;
+    }
+
+	@Override
+    public int hashCode() {
+
+        return this.id != null ? this.id.hashCode() : super.hashCode();
+    }
 	
 
 }
