@@ -105,21 +105,21 @@ public class ServicioDeAnimalesTest {
 	public void deberiaObtenerAnimalPorId() {
 		Long idAnimal = 2L; 
 		when(this.repositorioDeAnimales.buscarPorId(idAnimal)).thenReturn(new AnimalDeGranja());
-		
+
 		AnimalDeGranja animal = this.servicio.obtenerPorId(idAnimal);
 		
 		verify(this.repositorioDeAnimales).buscarPorId(eq(idAnimal));
 		assertThat(animal).isNotNull();
 	}
-	
+
 	@Test
 	public void deberiaActualizarElAnimal() {
-		
+
 		AnimalDeGranja animalParaActualizar = new AnimalDeGranja();
 		animalParaActualizar.setId(1L);
-		
+
 		this.servicio.actualizarAnimal(animalParaActualizar); 
-		
+
 		verify(this.repositorioDeAnimales).actualizar(eq(animalParaActualizar));
 	}
 
@@ -135,6 +135,7 @@ public class ServicioDeAnimalesTest {
 
 		AnimalDeGranja animalParaBorrar = new AnimalDeGranja();
 		animalParaBorrar.setId(idAnimal);
+		verify(this.servicioPlanAlimentario).eliminarPlan(eq(animalParaBorrar));
 		verify(this.repositorioDeAnimales).eliminar(eq(animalParaBorrar));
 	}
 }
