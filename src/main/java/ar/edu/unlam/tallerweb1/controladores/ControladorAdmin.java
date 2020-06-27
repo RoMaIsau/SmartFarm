@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -120,7 +121,7 @@ public class ControladorAdmin {
 
 		Boolean validarTipo = false;
 		for (TipoDeGasto g : tiposDeGastos) {
-			if (gastos.getTipoDeGasto().equals(g.getNombre())) {
+			if (gastos.getTipoDeGasto().getId().equals(g.getId())) {
 				validarTipo = true;
 			}
 		}
@@ -166,7 +167,7 @@ public class ControladorAdmin {
 		modelo.put("tipoDeGastos", tiposDeGastos);
 
 		if (gastosAModificar.getMonto() == null
-				&& (gastosAModificar.getTipoDeGasto() == null || gastosAModificar.getTipoDeGasto() == "")) {
+				&& (gastosAModificar.getTipoDeGasto() == null)) {
 			modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
 			modelo.put("gastos", gastosActuales);
 			return new ModelAndView("estadisticasAModificar", modelo);
@@ -178,15 +179,15 @@ public class ControladorAdmin {
 			gastosActuales.setMonto(gastosAModificar.getMonto());
 		}
 
-		if (gastosAModificar.getTipoDeGasto() != null && gastosAModificar.getTipoDeGasto() != "") {
+		if (gastosAModificar.getTipoDeGasto() != null && gastosAModificar.getTipoDeGasto().getNombre() != "") {
 			Boolean validarTipo = false;
 			for (TipoDeGasto g : tiposDeGastos) {
-				if (gastosAModificar.getTipoDeGasto().equals(g.getNombre())) {
+				if (gastosAModificar.getTipoDeGasto().getId().equals(g.getId())) {
 					validarTipo = true;
 				}
 			}
 			if (!validarTipo) {
-				modelo.put("error", "No ha elegido un tipo de gasto v�lido.");
+				modelo.put("error", "No ha elegido un tipo de gasto valido.");
 				return new ModelAndView("estadisticasAModificar", modelo);
 			}
 			gastosActuales.setTipoDeGasto(gastosAModificar.getTipoDeGasto());

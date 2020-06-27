@@ -17,8 +17,10 @@ public class Gastos {
 
 	@ManyToOne
 	private Usuario usuario;
-
-	private String tipoDeGasto;
+	
+	@ManyToOne
+	private TipoDeGasto tipoDeGasto;
+	
 	private Double monto;
 	private String fecha;
 
@@ -38,11 +40,11 @@ public class Gastos {
 		this.usuario = usuario;
 	}
 
-	public String getTipoDeGasto() {
+	public TipoDeGasto getTipoDeGasto() {
 		return tipoDeGasto;
 	}
 
-	public void setTipoDeGasto(String tipoDeGasto) {
+	public void setTipoDeGasto(TipoDeGasto tipoDeGasto) {
 		this.tipoDeGasto = tipoDeGasto;
 	}
 

@@ -59,7 +59,7 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><c:out value="${gastosAntiguos.tipoDeGasto}" /></td>
+												<td><c:out value="${gastosAntiguos.tipoDeGasto.nombre}" /></td>
 												<td>$ <c:out value="${gastosAntiguos.monto}" /></td>
 											</tr>
 										</tbody>
@@ -89,7 +89,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><c:out value="${gastos.tipoDeGasto}" /></td>
+											<td><c:out value="${gastos.tipoDeGasto.nombre}" /></td>
 											<td>$ <c:out value="${gastos.monto}" /></td>
 										</tr>
 									</tbody>
@@ -133,11 +133,11 @@
 														</div>
 													</div>
 													<div class="col-sm-12 col-md-7">
-														<form:select path="tipoDeGasto" id="tipoDeGasto"
+														<form:select path="tipoDeGasto.id" id="tipoDeGasto"
 															name="tipoDeGasto" class="form-control">
 															<option value="">Tipo de gasto</option>
 															<c:forEach items="${tipoDeGastos}" var="tipoGastos">
-																<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
+																<option value="${tipoGastos.id}">${tipoGastos.nombre}</option>
 															</c:forEach>
 														</form:select>
 													</div>
