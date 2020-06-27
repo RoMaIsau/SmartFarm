@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Gastos {
 	private TipoDeGasto tipoDeGasto;
 	
 	private Double monto;
-	private String fecha;
+	private LocalDate fecha;
 
 	public Long getId() {
 		return id;
@@ -56,11 +56,11 @@ public class Gastos {
 		this.monto = monto;
 	}
 
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 }
