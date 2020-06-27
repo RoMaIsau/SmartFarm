@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -40,9 +41,9 @@
 									<div class="col-lg-12">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Ingresar nuevo registro</h1>
+												<h1 class="h4 text-gray-900 mb-3">Nuevo gasto</h1>
 											</div>
-											
+
 											<c:if test="${not empty error}">
 												<span class="text-danger" style="float: left;">${error}</span>
 												<br>
@@ -51,30 +52,36 @@
 												<span class="text-success" style="float: left;">${mensaje}</span>
 												<br>
 											</c:if>
-											
-											<form:form method="POST" modelAttribute="gastos" action="validarnuevaestadistica" class="user">
-												<div class="form-group row">
-													<div class="col-sm-1">
-														<label class="mt-2">$</label>
+
+											<form:form method="POST" modelAttribute="gastos"
+												action="validarnuevaestadistica" class="user">
+												<div class="form-group row justify-content-md-center mt-1">
+													<div class="col-sm-12 col-md-4">
+														<div class="input-group mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="basic-addon1">$</span>
+															</div>
+															<form:input path="gasto" type="number" id="gasto"
+																name="gasto" class="form-control" placeholder="Monto" step="0.01"/>
+														</div>
 													</div>
-													<div class="col-sm-11">
-														<form:input path="gasto" type="number" id="gasto" name="gasto"
-														class="form-control form-control-user" placeholder="Monto" />
+													<div class="col-sm-12 col-md-7">
+														<form:select path="tipoDeGasto" id="tipoDeGasto"
+															name="tipoDeGasto" class="form-control">
+															<option value="">Tipo de gasto</option>
+															<c:forEach items="${tipoDeGastos}" var="tipoGastos">
+																<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
+															</c:forEach>
+														</form:select>
 													</div>
 												</div>
-												<div class="form-group row"><label class="mt-2"></label>
-													<div class="col-sm-12">
-													    <form:select path="tipoDeGasto" id="tipoDeGasto" name="tipoDeGasto" class="form-control">
-													    	<option value=""></option>
-													    	<c:forEach items="${tipoDeGastos}" var="tipoGastos">
-													    		<option value="${tipoGastos.nombre}">${tipoGastos.nombre}</option>
-													    	</c:forEach>
-													    </form:select>
-													</div>
+												<div class="text-center m-auto" style="width:70%;">
+													<button
+														class="btn btn-primary btn-block text-white"
+														type="submit">Añadir registro</button>
 												</div>
-												<button class="btn btn-primary btn-user btn-block text-white" type="submit">Añadir registro</button>
 											</form:form>
-											
+
 										</div>
 									</div>
 								</div>
@@ -110,28 +117,6 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
-	<!-- Modal eliminar usuario -->
-	<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Borrar usuario</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">¿Quiere borrar el usuario?</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cancelar</button>
-					<a type="button" class="btn btn-danger text-white botonEliminar">Aceptar</a>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Logout Modal-->
 	<%@ include file="../../parts/modalCerrarSesion.jsp"%>
