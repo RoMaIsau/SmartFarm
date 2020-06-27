@@ -101,9 +101,8 @@
 												<div class=""></div>
 											</div>
 										</div>
-										<canvas id="gastosPorMes" width="606" height="320"
-											class="chartjs-render-monitor"
-											style="display: block; width: 303px; height: 160px;"></canvas>
+										<canvas id="gastosPorMes" class="chartjs-render-monitor"
+											style="display: block; width: 100%; height: 100%;"></canvas>
 									</div>
 								</div>
 							</div>
