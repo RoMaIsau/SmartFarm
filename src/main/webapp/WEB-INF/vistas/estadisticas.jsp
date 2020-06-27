@@ -67,7 +67,7 @@
 										<c:forEach items="${gastos}" var="gastos">
 											<tr>
 												<td><c:out value="${gastos.id}" /></td>
-												<td><c:out value="${gastos.tipoDeGasto}" /></td>
+												<td><c:out value="${gastos.tipoDeGasto.nombre}" /></td>
 												<td><c:out value="${gastos.fecha}" /></td>
 												<td>$ <c:out value="${gastos.monto}" /></td>
 												<td class="text-center"><a
@@ -88,8 +88,8 @@
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Metros
-										recorridos</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Gastos
+										realizados por mes</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -167,28 +167,51 @@
 	<script type="text/javascript" src="<c:url value="/js/Chart.min.js"/>"></script>
 
 	<script>
-		var MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June',
-				'July', 'August', 'September', 'October', 'November',
-				'December' ];
-		var color = Chart.helpers.color;
+	<c:forEach items="${alimenticio}" var="alimenticio">
+	${alimenticio.key}
+</c:forEach>
+	
 		var barChartData = {
-			labels : [ 'January', 'February', 'March', 'April', 'May', 'June',
-					'July' ],
+			labels : [ 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
+					'Diciembre' ],
 			datasets : [
 					{
-						label : 'Dataset 1',
-						backgroundColor : '#e36387',
-						borderColor : '#e36387',
+						label : 'Alimenticio',
+						backgroundColor : '#cbe2b0',
+						borderColor : '#cbe2b0',
 						borderWidth : 1,
-						data : [ 1, 2, 3, 4, 5, 6, 7 ]
+						data : [ <c:forEach items="${alimenticio}" var="gastos">
+						${gastos.value},
+						</c:forEach> ]
 					},
 					{
-						label : 'Dataset 2',
+						label : 'Empresarial',
 						backgroundColor : '#709fb0',
 						borderColor : '#709fb0',
 						borderWidth : 1,
-						data : [ 1, 2, 3, 4, 5, 6, 7 ]
-					} ]
+						data : [ <c:forEach items="${empresarial}" var="gastos">
+						${gastos.value},
+						</c:forEach> ]
+					},
+					{
+						label : 'Médico',
+						backgroundColor : '#f1d1d1',
+						borderColor : '#f1d1d1',
+						borderWidth : 1,
+						data : [ <c:forEach items="${medico}" var="gastos">
+						${gastos.value},
+						</c:forEach> ]
+					},
+					{
+						label : 'Tecnológico',
+						backgroundColor : '#abc2e8',
+						borderColor : '#abc2e8',
+						borderWidth : 1,
+						data : [ <c:forEach items="${tecnologico}" var="gastos">
+						${gastos.value},
+						</c:forEach> ]
+					},
+					]
 
 		};
 
@@ -204,7 +227,7 @@
 					},
 					title : {
 						display : true,
-						text : 'Chart.js Bar Chart'
+						text : 'Gastos por mes'
 					}
 				}
 			});

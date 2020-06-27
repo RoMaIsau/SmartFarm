@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +93,16 @@ public class ControladorAdmin {
 
 		List<Gastos> gastos = servicioGastos.consultarGastos();
 
+		TreeMap<Integer, Double> alimenticio = servicioGastos.consultarGastosPorMes("Alimenticio");
+		TreeMap<Integer, Double> tecnologico = servicioGastos.consultarGastosPorMes("Tecnológico");
+		TreeMap<Integer, Double> medico = servicioGastos.consultarGastosPorMes("Médico");
+		TreeMap<Integer, Double> empresarial = servicioGastos.consultarGastosPorMes("Empresarial");
+
 		modelo.put("gastos", gastos);
+		modelo.put("alimenticio", alimenticio);
+		modelo.put("tecnologico", tecnologico);
+		modelo.put("medico", medico);
+		modelo.put("empresarial", empresarial);
 
 		return new ModelAndView("estadisticas", modelo);
 	}
@@ -166,8 +176,7 @@ public class ControladorAdmin {
 		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
 		modelo.put("tipoDeGastos", tiposDeGastos);
 
-		if (gastosAModificar.getMonto() == null
-				&& (gastosAModificar.getTipoDeGasto() == null)) {
+		if (gastosAModificar.getMonto() == null && (gastosAModificar.getTipoDeGasto() == null)) {
 			modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
 			modelo.put("gastos", gastosActuales);
 			return new ModelAndView("estadisticasAModificar", modelo);
