@@ -43,7 +43,7 @@ public class ControladorMapa {
 		String rol = (String) request.getSession().getAttribute("ROL");
 		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
-		if (!rol.equals("Empleado") && !rol.equals("Veterinario") && !rol.equals("")) {
+		if (rol.equals(null)) {
 			return new ModelAndView("redirect:/login");
 		}
 
