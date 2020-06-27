@@ -58,7 +58,7 @@
 										<tbody>
 												<tr>
 													<td><c:out value="${gastosAntiguos.tipoDeGasto}" /></td>
-													<td>$ <c:out value="${gastosAntiguos.gasto}" /></td>
+													<td>$ <c:out value="${gastosAntiguos.monto}" /></td>
 												</tr>
 										</tbody>
 									</table>
@@ -88,7 +88,7 @@
 									<tbody>
 											<tr>
 												<td><c:out value="${gastos.tipoDeGasto}" /></td>
-												<td>$ <c:out value="${gastos.gasto}" /></td>
+												<td>$ <c:out value="${gastos.monto}" /></td>
 											</tr>
 									</tbody>
 								</table>
@@ -122,7 +122,7 @@
 														<label class="pt-2">$</label>
 													</div>
 													<div class="col-sm-11">
-														<form:input path="gasto" type="number" id="gasto" name="gasto"
+														<form:input path="monto" type="number" id="monto" name="monto"
 														class="form-control form-control-user" placeholder="Monto a modificar" />
 													</div>
 												</div>

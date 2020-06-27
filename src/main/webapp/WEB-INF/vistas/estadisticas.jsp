@@ -68,7 +68,7 @@
 												<td><c:out value="${gastos.id}"/></td>
 												<td><c:out value="${gastos.fecha}"/></td>
 												<td><c:out value="${gastos.tipoDeGasto}" /></td>
-												<td>$ <c:out value="${gastos.gasto}" /></td>
+												<td>$ <c:out value="${gastos.monto}" /></td>
 												<td class="text-center">
 													<a href="estadisticasamodificar?id=${gastos.id}">
 														<i class="fas fa-edit mx-2 text-info"></i>

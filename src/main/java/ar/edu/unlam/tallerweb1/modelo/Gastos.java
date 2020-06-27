@@ -19,7 +19,7 @@ public class Gastos {
 	private Usuario usuario;
 	
 	private String tipoDeGasto;
-	private Double gasto;
+	private Double monto;
 	private String fecha;
 	
 	
@@ -42,11 +42,11 @@ public class Gastos {
 	public void setTipoDeGasto(String tipoDeGasto) {
 		this.tipoDeGasto = tipoDeGasto;
 	}
-	public Double getGasto() {
-		return gasto;
+	public Double getMonto() {
+		return monto;
 	}
-	public void setGasto(Double gasto) {
-		this.gasto = gasto;
+	public void setMonto(Double monto) {
+		this.monto = monto;
 	}
 	public String getFecha() {
 		return fecha;

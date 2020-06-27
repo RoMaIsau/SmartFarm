@@ -61,8 +61,8 @@
 															<div class="input-group-prepend">
 																<span class="input-group-text" id="basic-addon1">$</span>
 															</div>
-															<form:input path="gasto" type="number" id="gasto"
-																name="gasto" class="form-control" placeholder="Monto" step="0.01"/>
+															<form:input path="monto" type="number" id="monto"
+																name="monto" class="form-control" placeholder="Monto" step="0.01"/>
 														</div>
 													</div>
 													<div class="col-sm-12 col-md-7">

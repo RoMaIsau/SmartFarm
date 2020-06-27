@@ -116,7 +116,7 @@ public class ControladorAdmin {
 		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
 		modelo.put("tipoDeGastos", tiposDeGastos);
 		
-		if(gastos.getGasto() == null || gastos.getGasto() == 0) {
+		if(gastos.getMonto() == null || gastos.getMonto() == 0) {
 			modelo.put("error", "El monto del gasto debe ser mayor a 0.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		}
@@ -128,7 +128,7 @@ public class ControladorAdmin {
 			}
 		}
 		if(!validarTipo) {
-			modelo.put("error", "No ha elegido un tipo de gasto válido.");
+			modelo.put("error", "No ha elegido un tipo de gasto vï¿½lido.");
 			return new ModelAndView("estadisticasNuevas", modelo);
 		}
 		
@@ -168,7 +168,7 @@ public class ControladorAdmin {
 		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
 		modelo.put("tipoDeGastos", tiposDeGastos);
 		
-		if(gastosAModificar.getGasto() == null && (gastosAModificar.getTipoDeGasto() == null || gastosAModificar.getTipoDeGasto() == "")) {
+		if(gastosAModificar.getMonto() == null && (gastosAModificar.getTipoDeGasto() == null || gastosAModificar.getTipoDeGasto() == "")) {
 			modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
 			modelo.put("gastos", gastosActuales);
 			return new ModelAndView("estadisticasAModificar", modelo);
@@ -176,8 +176,8 @@ public class ControladorAdmin {
 		
 		modelo.put("gastos", gastosActuales);
 		
-		if(gastosAModificar.getGasto() != null && gastosAModificar.getGasto() >= 0) {
-			gastosActuales.setGasto(gastosAModificar.getGasto());
+		if(gastosAModificar.getMonto() != null && gastosAModificar.getMonto() >= 0) {
+			gastosActuales.setMonto(gastosAModificar.getMonto());
 		}
 		
 		if(gastosAModificar.getTipoDeGasto() != null && gastosAModificar.getTipoDeGasto() != "") {
@@ -188,7 +188,7 @@ public class ControladorAdmin {
 				}
 			}
 			if(!validarTipo) {
-				modelo.put("error", "No ha elegido un tipo de gasto válido.");
+				modelo.put("error", "No ha elegido un tipo de gasto vï¿½lido.");
 				return new ModelAndView("estadisticasAModificar", modelo);
 			}
 			gastosActuales.setTipoDeGasto(gastosAModificar.getTipoDeGasto());
