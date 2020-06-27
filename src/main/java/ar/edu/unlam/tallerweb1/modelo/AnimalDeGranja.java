@@ -23,7 +23,9 @@ public class AnimalDeGranja {
 	private Genero genero;
 
 	private Double peso;
-	
+
+	private String identificadorGps;
+
 	public Long getId() {
 		return id;
 	}
@@ -62,6 +64,14 @@ public class AnimalDeGranja {
 
 	public void setPeso(Double peso) {
 		this.peso = peso;
+	}
+
+	public void setIdentificadorGps(String identificadorGps) {
+		this.identificadorGps = identificadorGps;
+	}
+
+	public String getIdentificadorGps() {
+		return identificadorGps;
 	}
 
 	@Override
