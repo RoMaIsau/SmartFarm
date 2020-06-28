@@ -24,7 +24,8 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimalesImpl;
 @Transactional
 public class RepositorioDeAnimalesTest extends SpringTest {
 
-	private final String IDENTIFICADOR_GPS = "GPS0001";
+	private final String IDENTIFICADOR_GPS_VACA = "GPS0001";
+	private final String IDENTIFICADOR_GPS_CABALLO = "GPS0002";
 	private RepositorioDeAnimales repositorioDeAnimales;
 	
 	@Before
@@ -36,7 +37,7 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test
 	public void deberiaPersitirUnAnimalDeTipoVacunoDeRazaAberdeenAngus() {
 		
-		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
 		
 		this.repositorioDeAnimales.guardar(vaca);
 		
@@ -48,8 +49,8 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test
 	public void deberiaListarTodosLosAnimalesAlmacenados() {
 
-		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
-		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
+		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS_CABALLO);
 		this.repositorioDeAnimales.guardar(vaca);
 		this.repositorioDeAnimales.guardar(caballo);
 
@@ -61,8 +62,8 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test
 	public void deberiaObtenerUnAnimalPorId() {
 
-		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
-		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
+		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS_CABALLO);
 
 		this.repositorioDeAnimales.guardar(vaca);
 		this.repositorioDeAnimales.guardar(caballo);
@@ -74,7 +75,7 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 
 	@Test
 	public void deberiaActualizarElPesoDelAnimal() {
-		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
 
 		this.repositorioDeAnimales.guardar(vaca);
 		
@@ -89,7 +90,7 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test
 	public void deberiaEliminarAnimal() {
 
-		AnimalDeGranja animalParaBorrar = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja animalParaBorrar = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
 		this.repositorioDeAnimales.guardar(animalParaBorrar);
 
 		this.repositorioDeAnimales.eliminar(animalParaBorrar);
@@ -110,8 +111,8 @@ public class RepositorioDeAnimalesTest extends SpringTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void noDeberianInsertarseAnimalesConMismoIdentificadorGPS() {
 
-		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS);
-		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS);
+		AnimalDeGranja vaca = this.crearAnimal("VACUNO", "ABERDEEN ANGUS", "FEMENINO", 720.0, IDENTIFICADOR_GPS_VACA);
+		AnimalDeGranja caballo = this.crearAnimal("EQUINO", "CABALLO ARABE", "FEMENINO", 900.0, IDENTIFICADOR_GPS_VACA);
 
 		this.repositorioDeAnimales.guardar(vaca);
 		this.repositorioDeAnimales.guardar(caballo);
