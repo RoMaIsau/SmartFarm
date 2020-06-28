@@ -26,4 +26,9 @@ public class Point {
 	public double[] toArray() {
 		return new double[]{this.latitud, this.longitud};
 	}
+
+	@Override
+	public String toString() {
+		return String.format("(Latitud:%.7f , Longitud:%.7f)", this.latitud, this.longitud);
+	}
 }

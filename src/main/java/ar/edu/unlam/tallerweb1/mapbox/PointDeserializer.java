@@ -15,7 +15,7 @@ public class PointDeserializer extends JsonDeserializer<Point> {
 
 		double latitud = this.extraerValor(parser);
 		double longitud = this.extraerValor(parser);		
-		
+		parser.nextToken();
 		return new Point(latitud, longitud);
 	}
 
@@ -24,6 +24,9 @@ public class PointDeserializer extends JsonDeserializer<Point> {
 		if (token == null) {
 			throw new IllegalStateException("Ocurrió un error parseando las coordenadas. Token nulo");
 		}
-		return parser.getDoubleValue();
+		if (JsonToken.VALUE_NUMBER_FLOAT.equals(token)) {
+			return parser.getDoubleValue();
+		}
+		return 0d;
 	}
 }
