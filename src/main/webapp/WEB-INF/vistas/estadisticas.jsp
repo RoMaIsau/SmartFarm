@@ -85,6 +85,28 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Gastos en
+										total</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-bar">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+										<canvas id="gastosEnTotal" class="chartjs-render-monitor"
+											style="display: block; width: 100%; height: 100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
@@ -167,10 +189,7 @@
 	<script type="text/javascript" src="<c:url value="/js/Chart.min.js"/>"></script>
 
 	<script>
-	<c:forEach items="${alimenticio}" var="alimenticio">
-	${alimenticio.key}
-</c:forEach>
-	
+		/* Grafico gastos por mes */ 		
 		var barChartData = {
 			labels : [ 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
 					'Diciembre' ],
@@ -215,9 +234,39 @@
 
 		};
 
+		/* Fin grafico gastos por mes */ 
+		
+		
+		/* Grafico pie gastos en total */ 
+		
+		var config2 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [1,2,3,4,5],
+					backgroundColor: [],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					'Red',
+					'Orange',
+					'Yellow',
+					'Green',
+					'Blue'
+				]
+			},
+			options: {
+				responsive: true
+			}
+		};
+		/* Fin grafico pie gastos en total */ 
+		
 		window.onload = function() {
-			var ctx = document.getElementById('gastosPorMes').getContext('2d');
-			window.myBar = new Chart(ctx, {
+			var chartTotal = document.getElementById('gastosEnTotal').getContext('2d');
+			window.myPie = new Chart(chartTotal, config2);
+			
+			var chartPorMes = document.getElementById('gastosPorMes').getContext('2d');
+			window.myBar = new Chart(chartPorMes, {
 				type : 'bar',
 				data : barChartData,
 				options : {
@@ -231,8 +280,8 @@
 					}
 				}
 			});
-
 		};
+		
 	</script>
 
 </body>
