@@ -44,4 +44,7 @@ public class Corral {
 	public List<Vertice> getVertices() {
 		return vertices;
 	}
+	public void setVertices(List<Vertice> vertices) {
+		this.vertices = vertices;
+	}
 }
