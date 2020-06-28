@@ -82,6 +82,24 @@ public class ControladorAdmin {
 		return new ModelAndView("usuarios", model);
 	}
 
+	@RequestMapping(path = "/gastos")
+	public ModelAndView irAGastos(HttpServletRequest request) {
+		String rol = (String) request.getSession().getAttribute("ROL");
+
+		if (!rol.equals("Admin")) {
+			return new ModelAndView("redirect:/login");
+		}
+
+		ModelMap modelo = new ModelMap();
+
+		List<Gastos> gastos = servicioGastos.consultarGastos();
+
+		modelo.put("gastos", gastos);
+
+		return new ModelAndView("gastos", modelo);
+
+	}
+
 	@RequestMapping(path = "/estadisticas")
 	public ModelAndView irAEstadisticas(HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -91,21 +109,18 @@ public class ControladorAdmin {
 
 		ModelMap modelo = new ModelMap();
 
-		List<Gastos> gastos = servicioGastos.consultarGastos();
-
 		TreeMap<Integer, Double> alimenticio = servicioGastos.consultarGastosPorMes("Alimenticio");
 		TreeMap<Integer, Double> tecnologico = servicioGastos.consultarGastosPorMes("Tecnológico");
 		TreeMap<Integer, Double> medico = servicioGastos.consultarGastosPorMes("Médico");
 		TreeMap<Integer, Double> empresarial = servicioGastos.consultarGastosPorMes("Empresarial");
-		
+
 		List<Gastos> gastosEnTotal = servicioGastos.consultarGastosEnTotal();
-		
-		modelo.put("gastos", gastos);
+
 		modelo.put("alimenticio", alimenticio);
 		modelo.put("tecnologico", tecnologico);
 		modelo.put("medico", medico);
 		modelo.put("empresarial", empresarial);
-		
+
 		modelo.put("gastosEnTotal", gastosEnTotal);
 
 		return new ModelAndView("estadisticas", modelo);
