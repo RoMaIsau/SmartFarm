@@ -6,4 +6,6 @@ import ar.edu.unlam.tallerweb1.modelo.Corral;
 
 public interface ServicioCorral {
 	List<Corral> obtenerTodosLosCorrales();
+
+	void guardar(Corral corral);
 }

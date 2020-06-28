@@ -13,7 +13,7 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioCorral;
 @Service
 @Transactional
 public class ServicioCorralImpl implements ServicioCorral {
-	
+
 	private RepositorioCorral repositorioCorral;
 
 	@Autowired
@@ -24,5 +24,15 @@ public class ServicioCorralImpl implements ServicioCorral {
 	@Override
 	public List<Corral> obtenerTodosLosCorrales() {
 		return repositorioCorral.obtenerTodosLosCorrales();
+	}
+
+	@Override
+	public void guardar(Corral corral) {
+		if (corral.getId() == null) {
+			this.repositorioCorral.crear(corral);
+		} else {
+			this.repositorioCorral.actualizar(corral);
+		}
+
 	}
 }
