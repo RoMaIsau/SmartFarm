@@ -68,17 +68,12 @@ public class RepositorioAlimentoImpl implements RepositorioAlimento {
 				.createAlias("planAlimentario", "p")
 				.add(Restrictions.eq("p.animal.id", idAnimal))
 				.add(Restrictions.eq("estado", EstadoCronograma.COMPLETO))
-				.setProjection(Projections.sum("cantidad"))
 				.setProjection(Projections.projectionList()
 						.add(Projections.property("alimento.id"), "id")
 			            .add(Projections.sqlProjection("sum(cantidad) as cantidad", new String[] {"cantidad"}, new Type[] {StandardBasicTypes.DOUBLE}))
 			            .add(Projections.groupProperty("alimento.id")))
 				.setResultTransformer(Transformers.aliasToBean(Alimento.class))
-				.list();
-				
-//				.setProjection(Projections.sum("cantidad"))
-//				.setProjection(Projections.groupProperty("alimento.id"))
-				
+				.list();			
 	}
 
 }
