@@ -35,7 +35,7 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<h1 class="h3 mb-2 text-gray-800">Estadística Nº ${gastos.id}</h1>
+					<h1 class="h3 mb-2 text-gray-800">Gasto Nº ${gastos.id}</h1>
 
 					<c:if test="${not empty gastosAntiguos}">
 						<div class="card shadow mb-4">
@@ -119,7 +119,7 @@
 											</c:if>
 
 											<form:form method="POST" modelAttribute="gastosNuevos"
-												action="validarcambiosenestadistica?id=${gastos.id}"
+												action="validarGastoModificado?id=${gastos.id}"
 												class="user">
 												<div class="form-group row justify-content-md-center mt-1">
 													<div class="col-sm-12 col-md-4">

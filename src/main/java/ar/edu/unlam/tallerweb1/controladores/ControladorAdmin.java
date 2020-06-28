@@ -171,7 +171,7 @@ public class ControladorAdmin {
 		}
 	}
 
-	@RequestMapping(path = "/estadisticasamodificar")
+	@RequestMapping(path = "/modificarGasto")
 	public ModelAndView irAModificarEstadistica(@RequestParam(value = "id", required = true) Long id) {
 		ModelMap modelo = new ModelMap();
 		Gastos gastos = (Gastos) servicioGastos.consultaGastosPorID(id);
@@ -183,10 +183,10 @@ public class ControladorAdmin {
 		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
 		modelo.put("tipoDeGastos", tiposDeGastos);
 
-		return new ModelAndView("estadisticasAModificar", modelo);
+		return new ModelAndView("modificarGasto", modelo);
 	}
 
-	@RequestMapping(path = "/validarcambiosenestadistica")
+	@RequestMapping(path = "/validarGastoModificado")
 	public ModelAndView validarCambiosEnGastos(@RequestParam(value = "id", required = true) Long id,
 			@ModelAttribute("gastosNuevos") Gastos gastosAModificar) {
 		ModelMap modelo = new ModelMap();
@@ -198,7 +198,7 @@ public class ControladorAdmin {
 		if (gastosAModificar.getMonto() == null && (gastosAModificar.getTipoDeGasto() == null)) {
 			modelo.put("error", "Debe elegir al menos un campo para modificar el registro.");
 			modelo.put("gastos", gastosActuales);
-			return new ModelAndView("estadisticasAModificar", modelo);
+			return new ModelAndView("modificarGasto", modelo);
 		}
 
 		modelo.put("gastos", gastosActuales);
@@ -216,7 +216,7 @@ public class ControladorAdmin {
 			}
 			if (!validarTipo) {
 				modelo.put("error", "No ha elegido un tipo de gasto valido.");
-				return new ModelAndView("estadisticasAModificar", modelo);
+				return new ModelAndView("modificarGasto", modelo);
 			}
 			gastosActuales.setTipoDeGasto(gastosAModificar.getTipoDeGasto());
 		}
@@ -225,14 +225,14 @@ public class ControladorAdmin {
 		modelo.put("gastos", gastosActuales);
 		modelo.put("gastosAntiguos", gastosAntiguos);
 
-		return new ModelAndView("estadisticasAModificar", modelo);
+		return new ModelAndView("modificarGasto", modelo);
 	}
 
-	@RequestMapping(path = "/estadisticasaeliminar", method = RequestMethod.GET)
+	@RequestMapping(path = "/eliminarGasto", method = RequestMethod.GET)
 	public ModelAndView irAEliminarEstadistica(@RequestParam(value = "id", required = true) Long id) {
 		Gastos gastos = (Gastos) servicioGastos.consultaGastosPorID(id);
 		servicioGastos.eliminarGastos(gastos);
-		return new ModelAndView("redirect:/estadisticas");
+		return new ModelAndView("redirect:/gastos");
 	}
 
 	/*

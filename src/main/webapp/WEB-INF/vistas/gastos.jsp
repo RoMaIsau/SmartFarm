@@ -71,7 +71,7 @@
 												<td><c:out value="${gastos.fecha}" /></td>
 												<td>$ <c:out value="${gastos.monto}" /></td>
 												<td class="text-center"><a
-													href="estadisticasamodificar?id=${gastos.id}"> <i
+													href="modificarGasto?id=${gastos.id}"> <i
 														class="fas fa-edit mx-2 text-info"></i>
 												</a> <a href="#modalEliminar" data-id="${gastos.id}"
 													role="button" data-toggle="modal" class="open-Modal"> <i
