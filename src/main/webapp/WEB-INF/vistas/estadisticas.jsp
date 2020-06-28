@@ -196,8 +196,8 @@
 			datasets : [
 					{
 						label : 'Alimenticio',
-						backgroundColor : '#cbe2b0',
-						borderColor : '#cbe2b0',
+						backgroundColor : '#FFD57E',
+						borderColor : '#FFD57E',
 						borderWidth : 1,
 						data : [ <c:forEach items="${alimenticio}" var="gastos">
 						${gastos.value},
@@ -205,8 +205,8 @@
 					},
 					{
 						label : 'Empresarial',
-						backgroundColor : '#709fb0',
-						borderColor : '#709fb0',
+						backgroundColor : '#AD84C7',
+						borderColor : '#AD84C7',
 						borderWidth : 1,
 						data : [ <c:forEach items="${empresarial}" var="gastos">
 						${gastos.value},
@@ -214,8 +214,8 @@
 					},
 					{
 						label : 'Médico',
-						backgroundColor : '#f1d1d1',
-						borderColor : '#f1d1d1',
+						backgroundColor : '#89C7B6',
+						borderColor : '#89C7B6',
 						borderWidth : 1,
 						data : [ <c:forEach items="${medico}" var="gastos">
 						${gastos.value},
@@ -223,8 +223,8 @@
 					},
 					{
 						label : 'Tecnológico',
-						backgroundColor : '#abc2e8',
-						borderColor : '#abc2e8',
+						backgroundColor : '#7998C9',
+						borderColor : '#7998C9',
 						borderWidth : 1,
 						data : [ <c:forEach items="${tecnologico}" var="gastos">
 						${gastos.value},
@@ -246,7 +246,7 @@
 					data: [<c:forEach items="${gastosEnTotal}" var="total">
 						   		${total.monto},
 						   </c:forEach>],
-					backgroundColor: ['#cbe2b0', '#709fb0', '#f1d1d1', '#abc2e8'],
+					backgroundColor: ['#FFD57E', '#AD84C7', '#89C7B6', '#7998C9'],
 					label: 'Dataset 1'
 				}],
 				labels: [
