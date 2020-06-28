@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,10 +37,32 @@ public class ControladorCorral {
 			for(Vertice vertice : corral.getVertices()) {
 				points.add(new Point(vertice.getLatitud(), vertice.getLongitud()));
 			}
-			Feature feature = new Feature(corral.getNombre(), points);
+			Feature feature = new Feature(corral.getId(), corral.getNombre(), points);
 			mapa.agregarFeature(feature);
 		}
 
 		return mapa;
+	}
+
+	@RequestMapping(value = "corrales/guardar", consumes = "application/json")
+	public void guardarCorral(@RequestBody Feature feature) {
+
+		Corral corral = new Corral();
+		corral.setNombre(feature.getProperties().getNombre());
+		if (feature.getProperties().getIdCorral() != null) {
+			corral.setId(feature.getProperties().getIdCorral());
+		}
+		List<Point> puntos = feature.getGeometry().getCoordinates().get(0);
+		List<Vertice> vertices = new LinkedList<Vertice>();
+		for (int i = 0; i < puntos.size(); i++) {
+			Vertice vertice = new Vertice();
+			vertice.setNumero(i+1);
+			vertice.setLatitud(puntos.get(i).getLatitud());
+			vertice.setLongitud(puntos.get(i).getLongitud());
+			vertices.add(vertice);
+		}
+
+		corral.setVertices(vertices);
+		this.servicioCorral.guardar(corral);
 	}
 }
