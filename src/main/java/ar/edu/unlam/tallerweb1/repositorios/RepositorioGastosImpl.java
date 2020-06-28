@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -71,6 +72,7 @@ public class RepositorioGastosImpl implements RepositorioGastos {
 						.add(Projections.property("tipoDeGasto.id"), "id")
 			            .add(Projections.sqlProjection("sum(monto) as monto", new String[] {"monto"}, new Type[] {StandardBasicTypes.DOUBLE}))
 			            .add(Projections.groupProperty("tipoDeGasto.id")))
+				.addOrder(Order.asc("tipoDeGasto.id"))
 				.setResultTransformer(Transformers.aliasToBean(Gastos.class))
 				.list();
 		
