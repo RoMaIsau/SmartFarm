@@ -8,6 +8,9 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
 	rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
+ <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
+    type="text/css" />
 </head>
 <style>
 .icon {
@@ -45,6 +48,18 @@
 .mapboxgl-popup-content {
 	border-left: .25rem solid #1cc88a !important;
 }
+
+#corral-seleccionado {
+  height: 75px;
+  width: 150px;
+  position: relative;  
+  z-index: 1;  
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  text-align: center;
+  margin-left: 25px;
+  margin-top: 25px;
+}
 </style>
 
 <body id="page-top">
@@ -71,7 +86,11 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
-					<div id="map" style="height: 500px; width: 100%;"></div>
+					
+					<div id="map" style="height: 500px; width: 100%;">
+						<div id="corral-seleccionado"></div>
+					</div>
+						
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
@@ -148,7 +167,23 @@
 			zoom : 14,
 			center : [ -59.241913, -35.276381 ]
 		});
+		var draw = new MapboxDraw({
+		      displayControlsDefault : false,
+		      controls : {
+		        polygon : true,
+		        trash: true
+		      }
+		    });
+
+		map.on('load', function(){
+			map.addControl(draw);
+			$.getJSON('corrales', function(respuesta) {	
+				dibujarCorrales(respuesta);
+			});
+		});
 		
+		map.on('draw.selectionchange', corralSeleccionado);
+
 		var marker, i;
 		
 		<c:forEach items="${lista}" var="lista">
@@ -173,6 +208,22 @@
 			.setPopup(popup).addTo(map);
 	    	
 		</c:forEach>
+		
+	function dibujarCorrales(featuresCollection) {
+		var corrales = featuresCollection.features;
+		for(i = 0; i < corrales.length; i++) {
+			draw.add(corrales[i]);
+		}
+	}
+
+	function corralSeleccionado(seleccion) {
+		 if (seleccion.features.length > 0) {
+			 $('#corral-seleccionado').html("Corral: nombre. <button class='btn'>guardar</button>");
+			 
+		 } else {
+			 $('#corral-seleccionado').html("");
+		 }
+	}
 	
 	
 	</script>
