@@ -35,7 +35,7 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
-					<p class="mb-4"></p>
+					<p class="mb-4">A continuación se muestran gráficos sobre datos de los gastos contabilizados</p>
 
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
