@@ -48,17 +48,12 @@
 .mapboxgl-popup-content {
 	border-left: .25rem solid #1cc88a !important;
 }
-
 #corral-seleccionado {
-  height: 75px;
-  width: 150px;
-  position: relative;  
+  position: absolute;
   z-index: 1;  
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 15px;
-  text-align: center;
-  margin-left: 25px;
-  margin-top: 25px;
+  padding: 5px;
+  text-align: left;
 }
 </style>
 
@@ -87,9 +82,8 @@
 
 					<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
 					
-					<div id="map" style="height: 500px; width: 100%;">
-						<div id="corral-seleccionado"></div>
-					</div>
+					<div id="corral-seleccionado"></div>
+					<div id="map" style="height: 500px; width: 100%;"></div>
 						
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
@@ -181,8 +175,6 @@
 				dibujarCorrales(respuesta);
 			});
 		});
-		
-		map.on('draw.selectionchange', corralSeleccionado);
 
 		var marker, i;
 		
@@ -190,7 +182,6 @@
 			var imagen = '${lista.animal.tipo.nombre}'.toLowerCase();
 			var tipo = imagen.toUpperCase();
 			var raza = '${lista.animal.raza.nombre}';
-			
 		
 			var icono = document.createElement('div');
 			icono.classList.add("icon");
@@ -208,24 +199,7 @@
 			.setPopup(popup).addTo(map);
 	    	
 		</c:forEach>
-		
-	function dibujarCorrales(featuresCollection) {
-		var corrales = featuresCollection.features;
-		for(i = 0; i < corrales.length; i++) {
-			draw.add(corrales[i]);
-		}
-	}
-
-	function corralSeleccionado(seleccion) {
-		 if (seleccion.features.length > 0) {
-			 $('#corral-seleccionado').html("Corral: nombre. <button class='btn'>guardar</button>");
-			 
-		 } else {
-			 $('#corral-seleccionado').html("");
-		 }
-	}
-	
-	
 	</script>
+	<script src="<c:url value="/js/corrales.js"/>"></script>
 </body>
 </html>
