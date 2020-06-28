@@ -89,4 +89,9 @@ public class ServicioGastosImpl implements ServicioGastos {
 		return gastosPorMes;
 	}
 
+	@Override
+	public List<Gastos> consultarGastosEnTotal() {
+		return repositorioGastos.consultarGastosEnTotal();
+	}
+
 }
