@@ -44,8 +44,9 @@ public class ControladorCorral {
 		return mapa;
 	}
 
-	@RequestMapping(value = "corrales/guardar", consumes = "application/json")
-	public void guardarCorral(@RequestBody Feature feature) {
+	@RequestMapping(value = "corrales/guardar", consumes = "application/json", produces = "text/plain")
+	@ResponseBody
+	public String guardarCorral(@RequestBody Feature feature) {
 
 		Corral corral = new Corral();
 		corral.setNombre(feature.getProperties().getNombre());
@@ -64,5 +65,6 @@ public class ControladorCorral {
 
 		corral.setVertices(vertices);
 		this.servicioCorral.guardar(corral);
+		return "ok";
 	}
 }

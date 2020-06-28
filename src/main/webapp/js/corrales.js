@@ -2,11 +2,14 @@ map.on('draw.selectionchange', corralSeleccionado);
 
 var corralSeleccionado;
 
-function dibujarCorrales(featuresCollection) {
-	var corrales = featuresCollection.features;
-	for (i = 0; i < corrales.length; i++) {
-		draw.add(corrales[i]);
-	}
+function dibujarCorrales() {
+	draw.deleteAll();
+	$.getJSON('corrales', function(featuresCollection) {
+		var corrales = featuresCollection.features;
+		for (i = 0; i < corrales.length; i++) {
+			draw.add(corrales[i]);
+		}
+	});
 }
 
 function corralSeleccionado(seleccion) {
@@ -46,9 +49,10 @@ function generarFormulario(idCorral, nombreCorral) {
 				type:'post',
 				url: 'corrales/guardar',
 				contentType : 'application/json',
+				dataType: 'text',
 				data: JSON.stringify(corralSeleccionado),
 				success: function(respuesta) {
-					alert("Guardado");
+					dibujarCorrales();
 				}
 			});
 		});

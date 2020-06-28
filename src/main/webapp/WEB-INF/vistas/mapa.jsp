@@ -171,9 +171,7 @@
 
 		map.on('load', function(){
 			map.addControl(draw);
-			$.getJSON('corrales', function(respuesta) {	
-				dibujarCorrales(respuesta);
-			});
+			dibujarCorrales();
 		});
 
 		var marker, i;
