@@ -26,4 +26,17 @@ public class RepositorioCorralImpl implements RepositorioCorral {
 
 		return session.createQuery("SELECT c FROM Corral c", Corral.class).getResultList();
 	}
+
+	@Override
+	public void crear(Corral corralNuevo) {
+		this.sessionFactory.getCurrentSession().save(corralNuevo);
+	}
+
+	@Override
+	public void actualizar(Corral corral) {
+		Corral corralParaActualizar = this.sessionFactory.getCurrentSession().load(Corral.class, corral.getId());
+		corralParaActualizar.setNombre(corral.getNombre());
+		corralParaActualizar.setVertices(corral.getVertices());
+		this.sessionFactory.getCurrentSession().update(corralParaActualizar);
+	}
 }

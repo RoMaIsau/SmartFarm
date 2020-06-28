@@ -7,4 +7,8 @@ import ar.edu.unlam.tallerweb1.modelo.Corral;
 public interface RepositorioCorral {
 
 	List<Corral> obtenerTodosLosCorrales();
+
+	void crear(Corral corralNuevo);
+
+	void actualizar(Corral corral);
 }
