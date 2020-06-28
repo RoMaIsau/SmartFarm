@@ -243,22 +243,24 @@
 			type: 'pie',
 			data: {
 				datasets: [{
-					data: [1,2,3,4,5],
-					backgroundColor: [],
+					data: [<c:forEach items="${gastosEnTotal}" var="total">
+						   		${total.monto},
+						   </c:forEach>],
+					backgroundColor: ['#cbe2b0', '#709fb0', '#f1d1d1', '#abc2e8'],
 					label: 'Dataset 1'
 				}],
 				labels: [
-					'Red',
-					'Orange',
-					'Yellow',
-					'Green',
-					'Blue'
+					'Alimenticio',
+					'Empresarial',
+					'Médico',
+					'Tecnológico'
 				]
 			},
 			options: {
 				responsive: true
 			}
 		};
+		
 		/* Fin grafico pie gastos en total */ 
 		
 		window.onload = function() {
