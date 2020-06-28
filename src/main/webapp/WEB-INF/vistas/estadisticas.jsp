@@ -54,7 +54,7 @@
 												<div class=""></div>
 											</div>
 										</div>
-										<canvas id="gastosEnTotal" class="chartjs-render-monitor"
+										<canvas id="gastosEnTotalPorTipo" class="chartjs-render-monitor"
 											style="display: block; width: 100%; height: 100%;"></canvas>
 									</div>
 								</div>
@@ -167,7 +167,7 @@
 		/* Fin grafico gastos por mes */ 
 		
 		
-		/* Grafico pie gastos en total */ 
+		/* Grafico pie gastos en total por tipo */ 
 		
 		var config2 = {
 			type: 'pie',
@@ -191,10 +191,26 @@
 			}
 		};
 		
-		/* Fin grafico pie gastos en total */ 
+		/* Fin grafico pie gastos en total por tipo */ 
 		
+		/* Grafico line gastos en total */ 
+		
+		var lineChartData = {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				label: 'My First dataset',
+				borderColor: '#FFD57E',
+				backgroundColor: '#FFD57E',
+				fill: false,
+				data: [],
+				yAxisID: 'y-axis-1',
+			}]
+		};
+		
+		/* Fin grafico line gastos en total */ 
+
 		window.onload = function() {
-			var chartTotal = document.getElementById('gastosEnTotal').getContext('2d');
+			var chartTotal = document.getElementById('gastosEnTotalPorTipo').getContext('2d');
 			window.myPie = new Chart(chartTotal, config2);
 			
 			var chartPorMes = document.getElementById('gastosPorMes').getContext('2d');
@@ -209,6 +225,28 @@
 					title : {
 						display : true,
 						text : 'Gastos por mes'
+					}
+				}
+			});
+			
+			var ctx = document.getElementById('gastosEnTotal').getContext('2d');
+			window.myLine = Chart.Line(ctx, {
+				data: lineChartData,
+				options: {
+					responsive: true,
+					hoverMode: 'index',
+					stacked: false,
+					title: {
+						display: true,
+						text: 'Chart.js Line Chart - Multi Axis'
+					},
+					scales: {
+						yAxes: [{
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'left',
+							id: 'y-axis-1',
+						}],
 					}
 				}
 			});
