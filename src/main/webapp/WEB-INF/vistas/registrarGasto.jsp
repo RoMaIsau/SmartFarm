@@ -54,7 +54,7 @@
 											</c:if>
 
 											<form:form method="POST" modelAttribute="gastos"
-												action="validarnuevaestadistica" class="user">
+												action="validarGastoNuevo" class="user">
 												<div class="form-group row justify-content-md-center mt-1">
 													<div class="col-sm-12 col-md-4">
 														<div class="input-group mb-3">

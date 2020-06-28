@@ -111,17 +111,17 @@ public class ControladorAdmin {
 		return new ModelAndView("estadisticas", modelo);
 	}
 
-	@RequestMapping(path = "/estadisticasnuevas")
+	@RequestMapping(path = "/registrarGasto")
 	public ModelAndView irANuevaEstadistica() {
 		ModelMap modelo = new ModelMap();
 		Gastos gastos = new Gastos();
 		modelo.put("gastos", gastos);
 		List<TipoDeGasto> tiposDeGastos = servicioTipoDeGasto.obtenerTiposDeGastos();
 		modelo.put("tipoDeGastos", tiposDeGastos);
-		return new ModelAndView("estadisticasNuevas", modelo);
+		return new ModelAndView("registrarGasto", modelo);
 	}
 
-	@RequestMapping(path = "/validarnuevaestadistica", method = RequestMethod.POST)
+	@RequestMapping(path = "/validarGastoNuevo", method = RequestMethod.POST)
 	public ModelAndView validarNuevaEstadistica(@ModelAttribute("gastos") Gastos gastos, HttpServletRequest request) {
 		Long id = (Long) request.getSession().getAttribute("ID");
 		ModelMap modelo = new ModelMap();
@@ -130,7 +130,7 @@ public class ControladorAdmin {
 
 		if (gastos.getMonto() == null || gastos.getMonto() == 0) {
 			modelo.put("error", "El monto del gasto debe ser mayor a 0.");
-			return new ModelAndView("estadisticasNuevas", modelo);
+			return new ModelAndView("registrarGasto", modelo);
 		}
 
 		Boolean validarTipo = false;
@@ -141,7 +141,7 @@ public class ControladorAdmin {
 		}
 		if (!validarTipo) {
 			modelo.put("error", "No ha elegido un tipo de gasto válido.");
-			return new ModelAndView("estadisticasNuevas", modelo);
+			return new ModelAndView("registrarGasto", modelo);
 		}
 
 		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
@@ -149,10 +149,10 @@ public class ControladorAdmin {
 
 		if (servicioGastos.guardarNuevoRegistro(gastos) != null) {
 			modelo.put("mensaje", "Registro guardado exitosamente.");
-			return new ModelAndView("estadisticasNuevas", modelo);
+			return new ModelAndView("registrarGasto", modelo);
 		} else {
 			modelo.put("error", "No se pudo guardar el registro.");
-			return new ModelAndView("estadisticasNuevas", modelo);
+			return new ModelAndView("registrarGasto", modelo);
 		}
 	}
 
