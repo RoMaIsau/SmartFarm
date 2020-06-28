@@ -41,7 +41,7 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Gastos</h6>
-							<a href="estadisticasnuevas"
+							<a href="registrarGasto"
 								class="btn btn-success btn-icon-split"> <span
 								class="icon text-white-50"> <i class="fas fa-plus"></i>
 							</span> <span class="text">Agregar gasto</span>
