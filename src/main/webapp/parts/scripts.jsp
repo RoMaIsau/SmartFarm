@@ -4,7 +4,6 @@
 <!-- Custom scripts for all pages-->
 <script src="<c:url value="/js/mostrarNumeroNotificaciones.js"/>"></script>
 <script src="<c:url value="/js/sb-admin-2.js"/>"></script>
-<script src="<c:url value="/js/gastos_java.js"/>"></script>
 
 <!-- Page level plugins -->
 <script src="<c:url value="/css/datatables/jquery.dataTables.min.js"/>"></script>

@@ -139,7 +139,7 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<%@ include file="../../parts/scripts.jsp"%>
+	<script src="<c:url value="/js/eliminarGasto.js"/>"></script>
 
-	<script type="text/javascript" src="<c:url value="/js/Chart.min.js"/>"></script>
 </body>
 </html>
