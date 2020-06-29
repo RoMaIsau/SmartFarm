@@ -50,7 +50,7 @@ public class AnimalDeGranja {
 	
 	
 	@OneToOne(cascade= {CascadeType.ALL})
-	private SignosVitales signos;
+	private HistoriaClinica historia;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Vacuna> vacunasParaAplicar=new ArrayList<Vacuna>();
@@ -59,17 +59,19 @@ public class AnimalDeGranja {
 	
 	
 	
-	public SignosVitales getSignos() {
-		return signos;
-	}
 
-	public void setSignos(SignosVitales signos) {
-		this.signos = signos;
-	}
 
 
 
 	
+
+	public HistoriaClinica getHistoria() {
+		return historia;
+	}
+
+	public void setHistoria(HistoriaClinica historia) {
+		this.historia = historia;
+	}
 
 	public List<Vacuna> getVacunasParaAplicar() {
 		return vacunasParaAplicar;
@@ -124,6 +126,27 @@ public class AnimalDeGranja {
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
+	
+	@Override
+    public boolean equals(Object objeto) {
+
+        boolean iguales = (this == objeto);
+
+        if (! iguales && (objeto != null) && this.getClass().isAssignableFrom(objeto.getClass())) {
+
+            AnimalDeGranja otroAnimal = AnimalDeGranja.class.cast(objeto);
+
+            iguales = (this.id != null) && (otroAnimal.id != null) &&
+                      this.id.equals(otroAnimal.id);
+        }
+        return iguales;
+    }
+
+	@Override
+    public int hashCode() {
+
+        return this.id != null ? this.id.hashCode() : super.hashCode();
+    }
 	
 	
 

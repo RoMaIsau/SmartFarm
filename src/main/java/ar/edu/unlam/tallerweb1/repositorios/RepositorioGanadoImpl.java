@@ -2,7 +2,7 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
-
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,12 +47,12 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 	}
 	
 	@Override
-	public HistoriaClinica verHC(Long id) {
+	public HistoriaClinica verHC(AnimalDeGranja animal) {
 
 		
 		final Session session = sessionFactory.getCurrentSession();
-		return (HistoriaClinica) session.createCriteria(HistoriaClinica.class)
-				.add(Restrictions.eq("idAnimal", id))
+		return (HistoriaClinica) session.createCriteria(HistoriaClinica.class).createAlias("animal", "animalAlias")
+				.add(Restrictions.eq("animalAlias.id", animal.getId()))
 				
 				.uniqueResult();
 	}
@@ -68,6 +69,17 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 				
 	}
 
+	@Override
+	public List<SignosVitales> signos(HistoriaClinica hc) {
+
+		
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<SignosVitales>) session.createCriteria(SignosVitales.class).
+				createAlias("historia", "hcAlias").add(Restrictions.eq("hcAlias.id", hc.getId()))
+				.list();
+				
+				
+	}
 	@Override
 	public void guardar(AnimalDeGranja animal) {
 		// TODO Auto-generated method stub
@@ -114,6 +126,45 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 		final Session session = sessionFactory.getCurrentSession();
 		session.save(sintomas);
 		
+	}
+
+	@Override
+	public SignosVitales signosFecha(HistoriaClinica hc) {
+		// TODO Auto-generated method stub
+		// deberia ser la actual, pero voy a usar 10-01-2020
+		//Date actual=new Date();
+		 Date actual = new Date(2020,01,10);
+		final Session session = sessionFactory.getCurrentSession();
+		return (SignosVitales) session.createCriteria(SignosVitales.class).
+				createAlias("historia", "hcAlias").add(Restrictions.eq("hcAlias.id", hc.getId()))
+				.add(Restrictions.eq("fecha",actual)).uniqueResult();
+				
+				
+	}
+
+	@Override
+	public void guardarEnfermedad(Enfermedad enfermedad) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(enfermedad);
+		
+	}
+
+	@Override
+	public List<Enfermedad> enfermedadesComunes(HistoriaClinica hc) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Enfermedad>) session.createCriteria(Enfermedad.class).
+				createAlias("historia", "hcAlias").add(Restrictions.eq("hcAlias.id", hc.getId()))
+				.list();
+	}
+	
+	@Override
+	public List<Enfermedad> todasEnfermedades() {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Enfermedad>) session.createCriteria(Enfermedad.class)
+				
+				.list();
 	}
 
 

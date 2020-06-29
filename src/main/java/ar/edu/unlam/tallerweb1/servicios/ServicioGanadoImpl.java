@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
@@ -54,40 +57,7 @@ public class ServicioGanadoImpl implements ServicioGanado {
 		 servicioGanadoDao.modificarSignos(signos);
 	}
 
-	@Override
-	public List<SignosVitales> alarmaSignos(AnimalDeGranja v) {
-		
-		SignosVitales signos= v.getSignos();
-		SignosVitales temperatura= null;
-		SignosVitales fc= null;
-		SignosVitales fr= null;
-		SignosVitales pulso= null;
-		if(signos.getTemperatura()> 40.0 || signos.getTemperatura()< 37.0) {
-		
-			temperatura=signos;
-		}if(signos.getFrecuenciaCardiaca()> 70.0 || signos.getFrecuenciaCardiaca()< 60.0) {
-		
-			fc=signos;
-	} if(signos.getFrecuenciaRespiratoria()> 40.0 || signos.getFrecuenciaRespiratoria()< 20.0) {
-		
-		fr=signos;
-		
 	
-   } if(signos.getPulso()> 130.0 || signos.getPulso()< 70.0) {
-		
-		pulso=signos;
-
-
-}
-   List<SignosVitales> anormales= new ArrayList<SignosVitales>();
-   
-	anormales.add(temperatura);
-	anormales.add(fc);
-	anormales.add(fr);
-	anormales.add(pulso);
-	
-return anormales;
-	}
 
 		@Override
 	public void guardarHC(HistoriaClinica hc) {
@@ -97,15 +67,15 @@ return anormales;
 	}
 
 	@Override
-	public HistoriaClinica verHC(Long id) {
+	public HistoriaClinica verHC(AnimalDeGranja animal) {
 		// TODO Auto-generated method stub
-		return servicioGanadoDao.verHC(id);
+		return servicioGanadoDao.verHC(animal);
 	}
 
 	@Override
-	public String diagnosticar(HistoriaClinica hc,Sintomas sintomas) {
+	public String diagnosticar(List<SignosVitales>signos,Sintomas sintomas) {
 		// TODO Auto-generated method stub
-		List<SignosVitales>signos= hc.getSignos();
+		
 		List<SignosVitales>signosFiebreAftosa = new ArrayList<SignosVitales>();
 		List<SignosVitales>signosLeptospirosis = new ArrayList<SignosVitales>();
 		List<SignosVitales>signosMiocardiopatia = new ArrayList<SignosVitales>();
@@ -163,7 +133,13 @@ return anormales;
 		enfermedad="Rinotraqueitis infecciosa";
 	}
 	
-	
+	Enfermedad e= new Enfermedad();
+	Date actual= new Date();
+	e.setNombre(enfermedad);
+	e.setFecha(actual);
+	HistoriaClinica h=signos.get(0).getHistoria();
+	e.setHistoria(h);
+	this.guardarEnfermedad(e);
 	
 		
 		return enfermedad;}
@@ -179,4 +155,65 @@ return anormales;
 		// TODO Auto-generated method stub
 		servicioGanadoDao.guardar(sintomas);
 		
-	}}
+	}
+
+	@Override
+	public List<SignosVitales> signos(HistoriaClinica h) {
+		// TODO Auto-generated method stub
+		return servicioGanadoDao.signos(h);
+	}
+
+	@Override
+	public void guardarEnfermedad(Enfermedad enfermedad) {
+		// TODO Auto-generated method stub
+		servicioGanadoDao.guardarEnfermedad(enfermedad);
+		
+	}
+
+	@Override
+	public SignosVitales signosFecha(HistoriaClinica hc) {
+		// TODO Auto-generated method stub
+		return servicioGanadoDao.signosFecha(hc);
+	}
+
+	
+
+@Override
+public Boolean alarmaSV(SignosVitales signos) {
+	
+	
+	if(signos.getTemperatura()> 40.0 || signos.getTemperatura()< 37.0 || 
+	signos.getFrecuenciaCardiaca()> 70.0 || signos.getFrecuenciaCardiaca()< 60.0 
+	|| signos.getFrecuenciaRespiratoria()> 40.0 || signos.getFrecuenciaRespiratoria()< 20.0 
+	||signos.getPulso()> 130.0 || signos.getPulso()< 70.0) {
+	
+  return true;
+
+
+}else {
+
+
+
+
+return false;
+}}
+
+@Override
+public List<Enfermedad> enfermedadesComunes(HistoriaClinica hc) {
+	// TODO Auto-generated method stub
+	return servicioGanadoDao.enfermedadesComunes(hc);
+}
+
+@Override
+public List<Enfermedad> enfermedadesComunesRanking(List<Enfermedad> enfermedades) {
+	// TODO Auto-generated method stub
+	Collections.sort(enfermedades);
+	
+	return enfermedades;
+}
+
+@Override
+public List<Enfermedad> todasEnfermedades() {
+	// TODO Auto-generated method stub
+	return servicioGanadoDao.todasEnfermedades();
+}}

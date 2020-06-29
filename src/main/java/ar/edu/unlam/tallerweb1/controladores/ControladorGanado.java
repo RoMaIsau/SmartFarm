@@ -119,16 +119,12 @@ public class ControladorGanado {
              
          
            gv1.setVacunasParaAplicar(vacunas1);
+           HistoriaClinica hc = new HistoriaClinica();
+          hc.setAnimal(gv1);
+           gv1.setHistoria(hc);
            
-        SignosVitales signos1= new SignosVitales();
-        signos1.setTemperatura(38.0);
-        signos1.setPulso(48.1);
-        signos1.setFrecuenciaRespiratoria(25.2);
-        signos1.setFrecuenciaCardiaca(70.4);
-        Date fechaSignos1 = new Date(2020,01,10);
-        
-        signos1.setFecha(fechaSignos1);
-       gv1.setSignos(signos1);
+       
+       
       
        
        Calendar fechaNac1 = Calendar.getInstance();
@@ -137,16 +133,32 @@ public class ControladorGanado {
        
             servicioGanado.guardar(gv1);
             
-            List<SignosVitales>signos= new ArrayList<SignosVitales>();
+            SignosVitales signos1= new SignosVitales();
+            signos1.setTemperatura(42.0);
+            signos1.setPulso(48.1);
+            signos1.setFrecuenciaRespiratoria(25.2);
+            signos1.setFrecuenciaCardiaca(70.4);
+            Date fechaSignos1 = new Date(2020,01,10);
+            
+            signos1.setFecha(fechaSignos1);
+            signos1.setHistoria(hc);
+            servicioGanado.guardarSV(signos1);
+            
+          
+           
+            
+           
             
             SignosVitales signos11= new SignosVitales();
             signos11.setFrecuenciaCardiaca(40.0);
             signos11.setTemperatura(37.6);
             signos11.setPulso(80.1);
             signos11.setFrecuenciaRespiratoria(25.2);
+            
             Date fechasignos11 = new Date(2020,04,10);
             
             signos11.setFecha(fechasignos11);
+            signos11.setHistoria(hc);
             servicioGanado.guardarSV(signos11);
             
             SignosVitales signos12= new SignosVitales();
@@ -155,8 +167,9 @@ public class ControladorGanado {
             signos12.setPulso(80.1);
             signos12.setFrecuenciaRespiratoria(25.2);
             
-            Date fechasignos12= new Date(2020,06,10);
+            Date fechasignos12= new Date(2020,05,10);
             signos12.setFecha(fechasignos12);
+            signos12.setHistoria(hc);
             servicioGanado.guardarSV(signos12);
             
             SignosVitales signos13= new SignosVitales();
@@ -165,8 +178,9 @@ public class ControladorGanado {
             signos13.setPulso(80.1);
             signos13.setFrecuenciaRespiratoria(25.2);
             
-            Date fechasignos13 = new Date(2020,04,16);
+            Date fechasignos13 = new Date(2020,02,10);
             signos13.setFecha(fechasignos13);
+            signos13.setHistoria(hc);
             servicioGanado.guardarSV(signos13);
             
             SignosVitales signos14= new SignosVitales();
@@ -175,8 +189,9 @@ public class ControladorGanado {
             signos14.setPulso(80.1);
             signos14.setFrecuenciaRespiratoria(25.2);
             
-            Date fechasignos14 = new Date(2020,04,10);
+            Date fechasignos14 = new Date(2020,01,13);
             signos14.setFecha(fechasignos14);
+            signos14.setHistoria(hc);
             servicioGanado.guardarSV(signos14);
             
             SignosVitales signos15= new SignosVitales();
@@ -185,24 +200,22 @@ public class ControladorGanado {
             signos15.setPulso(80.1);
             signos15.setFrecuenciaRespiratoria(25.2);
             
-            Date fechasignos15 = new Date(2020,07,10);
+            Date fechasignos15 = new Date(2020,01,11);
             signos15.setFecha(fechasignos15);
+            signos15.setHistoria(hc);
             servicioGanado.guardarSV(signos15);
             
-            signos.add(signos11);
-            signos.add(signos12);
-            signos.add(signos13);
-            signos.add(signos14);
-            signos.add(signos15);
-            signos.add(signos1);
+          
             
-            HistoriaClinica hc = new HistoriaClinica();
-            hc.setIdAnimal(1L);
-            hc.setSignos(signos);
-            servicioGanado.guardarHC(hc);
+           
             
             AnimalDeGranja gv2= new AnimalDeGranja();
      		gv2.setPeso(120.0);
+     		  HistoriaClinica hc1 = new HistoriaClinica();
+            hc1.setAnimal(gv2);
+              gv2.setHistoria(hc1);
+             
+              
                   
                  
                   ArrayList<Vacuna> vacunas2= new ArrayList<Vacuna>(); 
@@ -220,26 +233,30 @@ public class ControladorGanado {
               
                  gv2.setVacunasParaAplicar(vacunas2);
                  
-                 SignosVitales signos2= new SignosVitales();
-                 signos2.setTemperatura(38.4);
-                 signos2.setPulso(90.4);
-                 signos2.setFrecuenciaRespiratoria(27.2);
-                 signos2.setFrecuenciaCardiaca(52.4);
-                 
-                 Date fechaSignos2= new Date(2020,01,10);
-                 signos2.setFecha(fechaSignos2);
-                gv2.setSignos(signos2);
+            
+               
             
                  
-                 gv2.setSignos(signos2);
+                 
                  
                  Calendar fechaNac2 = Calendar.getInstance();
                  fechaNac2.set(2020,02,10);
                  gv2.setFechaNacimiento(fechaNac2);
                   servicioGanado.guardar(gv2);
                   
-                  List<SignosVitales>signos2list= new ArrayList<SignosVitales>();
-                  signos2list.add(signos2);
+                  SignosVitales signos2= new SignosVitales();
+                  signos2.setTemperatura(38.4);
+                  signos2.setPulso(90.4);
+                  signos2.setFrecuenciaRespiratoria(27.2);
+                  signos2.setFrecuenciaCardiaca(52.4);
+                  
+                  Date fechaSignos2= new Date(2019,01,10);
+                  signos2.setFecha(fechaSignos2);
+                  signos2.setHistoria(hc1);
+                  
+                  servicioGanado.guardarSV(signos2);
+                  
+                  
                   
                 
                   SignosVitales signos16= new SignosVitales();
@@ -248,8 +265,9 @@ public class ControladorGanado {
                   signos16.setPulso(80.1);
                   signos16.setFrecuenciaRespiratoria(25.2);
                   
-                  Date fechasignos16= new Date(2020,04,10);
+                  Date fechasignos16= new Date(2020,03,13);
                   signos16.setFecha(fechasignos16);
+                  signos16.setHistoria(hc1);
                   servicioGanado.guardarSV(signos16);
                   
                   SignosVitales signos17= new SignosVitales();
@@ -258,8 +276,9 @@ public class ControladorGanado {
                   signos17.setPulso(80.1);
                   signos17.setFrecuenciaRespiratoria(25.2);
                   
-                  Date fechasignos17= new Date(2020,06,10);
+                  Date fechasignos17= new Date(2020,03,10);
                   signos17.setFecha(fechasignos17);
+                  signos17.setHistoria(hc1);
                   servicioGanado.guardarSV(signos17);
                   
                   SignosVitales signos18= new SignosVitales();
@@ -268,8 +287,9 @@ public class ControladorGanado {
                   signos18.setPulso(80.1);
                   signos18.setFrecuenciaRespiratoria(25.2);
                   
-                  Date fechasignos18= new Date(2020,04,16);
+                  Date fechasignos18= new Date(2020,03,18);
                   signos18.setFecha(fechasignos18);
+                  signos18.setHistoria(hc1);
                   servicioGanado.guardarSV(signos18);
                   
                   SignosVitales signos19= new SignosVitales();
@@ -278,8 +298,9 @@ public class ControladorGanado {
                   signos19.setPulso(80.1);
                   signos19.setFrecuenciaRespiratoria(25.2);
                   
-                 Date fechasignos19= new Date(2020,04,10);
+                 Date fechasignos19= new Date(2020,11,10);
                   signos19.setFecha(fechasignos19);
+                  signos19.setHistoria(hc1);
                   servicioGanado.guardarSV(signos19);
                   
                   SignosVitales signos20= new SignosVitales();
@@ -288,25 +309,25 @@ public class ControladorGanado {
                   signos20.setPulso(80.1);
                   signos20.setFrecuenciaRespiratoria(25.2);
                   
-                  Date fechasignos20 = new Date(2020,07,10);
+                  Date fechasignos20 = new Date(2020,12,10);
                   signos20.setFecha(fechasignos20);
+                  signos20.setHistoria(hc1);
                   servicioGanado.guardarSV(signos20);
                   
-                  signos2list.add(signos20);
-                  signos2list.add(signos19);
-                  signos2list.add(signos18);
-                  signos2list.add(signos17);
-                  signos2list.add(signos16);
+                 
                   
+                 
+                 
+                 
                   
                 
-                  HistoriaClinica hc1 = new HistoriaClinica();
-                  hc1.setIdAnimal(2L);
-                  hc1.setSignos(signos2list);
-                  servicioGanado.guardarHC(hc1);
+                
                   
                   AnimalDeGranja gv3= new AnimalDeGranja();
-		gv3.setPeso(280.0);
+		     gv3.setPeso(280.0);
+		     HistoriaClinica hc2 = new HistoriaClinica();
+             hc2.setAnimal(gv3);
+             gv3.setHistoria(hc2);
              
         
              ArrayList<Vacuna> vacunas3= new ArrayList<Vacuna>();
@@ -327,17 +348,22 @@ public class ControladorGanado {
             fechaNac.set(2019,02,10);
             gv3.setFechaNacimiento(fechaNac);
             
-            SignosVitales signos3= new SignosVitales();
-            signos3.setTemperatura(36.4);
-            signos3.setPulso(43.4);
-            signos3.setFrecuenciaRespiratoria(29.2);
-            signos3.setFrecuenciaCardiaca(57.4);
+           
             
-            gv3.setSignos(signos3);
+          
             
            
           
              servicioGanado.guardar(gv3);
+             
+             SignosVitales signos3= new SignosVitales();
+             signos3.setTemperatura(36.4);
+             signos3.setPulso(43.4);
+             signos3.setFrecuenciaRespiratoria(29.2);
+             signos3.setFrecuenciaCardiaca(57.4);
+             signos3.setHistoria(hc2);
+             
+             servicioGanado.guardarSV(signos3);
              
          
              

@@ -33,31 +33,32 @@
 <body>
 
 	  <h3>HISTORIAS:</h3><br>	       
-  <c:forEach items="${historias}" var="historia">
+  <c:forEach items="${animales}" var="a">
   
 				    	 
-		<a href="verhistoria?id=${historia.idAnimal}">
-		<h3 class="text-success">Ver historia de animal  ${historia.idAnimal}</h3></a><br>
+		<a href="verhistoria?id=${a.id}">
+		<h3 class="text-success">Ver historia de animal  ${a.id}</h3></a><br>
 				   
-			<a href="diagnosticar?id=${historia.idAnimal}">
-		<h3 class="text-success">Diagnosticar animal  ${historia.idAnimal}</h3></a>			
+			<a href="diagnosticar?id=${a.id}">
+		<h3 class="text-success">Diagnosticar animal  ${a.id}</h3></a>			
 							
 					 </br>	<br>	
 							
 							 
 </c:forEach> 
 
+
 <c:if test="${not empty hc}">
 	 <h3>Historia Clinica:</h3>	       
-  <c:forEach items="${hc.signos}" var="signos">
+  <c:forEach items="${signos}" var="s">
   
 				    	 
 		
-		Temperatura:<h3 class="text-danger">  ${signos.temperatura}</h3>
-		Pulso: <h3 class="text-danger">  ${signos.pulso}</h3>
-		Frecuencia cardiaca: <h3 class="text-danger">  ${signos.frecuenciaCardiaca}</h3>
-		Frecuencia respiratoria: <h3 class="text-danger">  ${signos.frecuenciaRespiratoria}</h3>	
-		Fecha: <h3 class="text-danger">  ${signos.fecha}</h3>		   
+		Temperatura:<h3 class="text-danger">  ${s.temperatura}</h3>
+		Pulso: <h3 class="text-danger">  ${s.pulso}</h3>
+		Frecuencia cardiaca: <h3 class="text-danger">  ${s.frecuenciaCardiaca}</h3>
+		Frecuencia respiratoria: <h3 class="text-danger">  ${s.frecuenciaRespiratoria}</h3>	
+		Fecha: <h3 class="text-danger">  ${s.fecha}</h3>		   
 						
 							
 					 </br>		
@@ -67,10 +68,27 @@
 	</c:if>	<br>
 <h3>
 
-${enfermedad}
+
 
 </h3><br>
+<c:if test="${not empty ranking}">
+TODAS LAS ENFERMEDADES:
 
+  <c:forEach items="${ranking}" var="r">
+  <h4>"La enfermedad ${r.key} se registro ${r.value} veces este año"</h4>
+				  	 
+		
+		
+				  			
+							
+					 </br>	
+					 </c:forEach>
+					 <br>	
+</c:if>							
+							 
+
+
+<h3><a href="/SmartFarm/enfermedades" >Historial de enfermedades</a></h3><br>
  <h3><a href="/SmartFarm/indexVeterinario" >Home Veterinario</a></h3>	 
 
 </body>

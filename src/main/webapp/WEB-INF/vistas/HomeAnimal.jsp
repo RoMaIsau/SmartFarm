@@ -4,6 +4,9 @@
 <html>
 <head>
 
+
+	
+
 <%@ include file="../../parts/meta.jsp"%>
 
 </head>
@@ -50,6 +53,21 @@
 							
 							 
 </c:forEach>
+
+${signos3.temperatura}<br>
+${signos3.frecuenciaCardiaca}<br>
+${signos3.frecuenciaRespiratoria}<br>
+${signos3.pulso}
+
+  <c:forEach items="${signos2}" var="a">
+  TEMPERATURA:
+				    <h3 class="text-danger"> ${a.temperatura}!!!!</h3><BR>
+				    frecuencia cardiaca:
+					  <h3 class="text-danger"> ${a.frecuenciaCardiaca}!!!!</h3><br>	
+													 
+</c:forEach>
+
+
 </div>
 </div>	
 
@@ -82,7 +100,7 @@
     <h3> ${signos.pulso} </h3>
     <br>
     <a href="modificarSignos?id=${signos.id}"> MODIFICAR </a>
-    
+   
   	</c:if>	<br>
   	<h4 class="text-success"><a href="/SmartFarm/indexVeterinario" >Home Veterinario</a></h4>
 							

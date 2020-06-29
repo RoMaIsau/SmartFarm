@@ -3,10 +3,12 @@ package ar.edu.unlam.tallerweb1.modelo;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class SignosVitales {
@@ -27,7 +29,19 @@ public class SignosVitales {
 		
 		private Date fecha;
 		
+		@ManyToOne
+		HistoriaClinica historia;
 		
+		
+		
+
+		public HistoriaClinica getHistoria() {
+			return historia;
+		}
+
+		public void setHistoria(HistoriaClinica historia) {
+			this.historia = historia;
+		}
 
 		public Date getFecha() {
 			return fecha;

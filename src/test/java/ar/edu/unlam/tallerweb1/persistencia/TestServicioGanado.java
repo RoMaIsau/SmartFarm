@@ -55,47 +55,20 @@ public class TestServicioGanado{
 	       when(signos.getFrecuenciaRespiratoria()).thenReturn(10.0);
 	       when(signos.getPulso()).thenReturn(150.0);
 	       
-	       when(animal.getSignos()).thenReturn(signos);
+	      
 	       
 	    
 	       
 	    //Ejecucion   
-		List<SignosVitales> anormales= servicio.alarmaSignos(animal);
+	Boolean resultado= servicio.alarmaSV(signos);
 	    
 	       
 	       //verificacion 
-	       assertTrue(anormales.size()==4);
+	       assertTrue(resultado==true);
 	        
 	    }
 		
 
-		@Test
-	 @Transactional @Rollback
-	    public void testVerAnimal(){
-	       
-			
-	     //Preparacion  
-	    AnimalDeGranja animalMock=  mock(AnimalDeGranja.class);
-	    when(animalMock.getId()).thenReturn(1L);
-	       
-	      
-	     
-	       RepositorioGanado servicioGanadoDaoMock=mock(RepositorioGanado.class);
-	        Long id=1L;
-	       
-	       when(servicioGanadoDaoMock.ver(id)).thenReturn(animalMock);
-	       
-
-	       ServicioGanadoImpl servicio= new ServicioGanadoImpl(servicioGanadoDaoMock);
-	    
-	       
-	    //Ejecucion   
-		AnimalDeGranja animal= servicio.ver(id);
-	    
-	       
-	       //verificacion 
-	       assertTrue(animal.getId()==1L);
-	        
-	    }
+	
 
 }

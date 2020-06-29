@@ -17,19 +17,34 @@ public class HistoriaClinica {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-    private Long idAnimal;
+	@OneToOne
+    AnimalDeGranja animal;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	List<SignosVitales>signos;
+	@OneToOne
+    Enfermedad enfermedad;
+	
+	
+	
+	
 	
 	
 
-	public Long getIdAnimal() {
-		return idAnimal;
+
+
+	public Enfermedad getEnfermedad() {
+		return enfermedad;
 	}
 
-	public void setIdAnimal(Long idAnimal) {
-		this.idAnimal = idAnimal;
+	public void setEnfermedad(Enfermedad enfermedad) {
+		this.enfermedad = enfermedad;
+	}
+
+	public AnimalDeGranja getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(AnimalDeGranja animal) {
+		this.animal = animal;
 	}
 
 	public Long getId() {
@@ -42,13 +57,7 @@ public class HistoriaClinica {
 
 	
 
-	public List<SignosVitales> getSignos() {
-		return signos;
-	}
 
-	public void setSignos(List<SignosVitales> signos) {
-		this.signos = signos;
-	}
 	
 	
 	

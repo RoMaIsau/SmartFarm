@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
@@ -21,15 +22,26 @@ public interface RepositorioGanado {
 
 	List<AnimalDeGranja> listar();
 
-	
+	void guardarEnfermedad(Enfermedad enfermedad);
 
 	void modificarSignos(SignosVitales signos);
 
-	HistoriaClinica verHC(Long id);
+	
 
 	void guardarSV(SignosVitales sv);
 
 	void guardar(Sintomas sintomas);
+
+	List<SignosVitales> signos(HistoriaClinica hc);
+	
+	SignosVitales signosFecha(HistoriaClinica hc);
+
+	HistoriaClinica verHC(AnimalDeGranja animal);
+
+	List<Enfermedad> enfermedadesComunes(HistoriaClinica hc);
+
+	List<Enfermedad> todasEnfermedades();
+	
 
 	
 }
