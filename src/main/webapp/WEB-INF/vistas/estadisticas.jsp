@@ -225,10 +225,13 @@
 			labels: [ 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
 				'Diciembre' ],
 			datasets: [{
+				label: 'Gastos finales por mes',
 				borderColor: '#FFD57E',
 				backgroundColor: '#FFD57E',
 				fill: false,
-				data: [],
+				data: [<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
+						${gastos.value},
+					   </c:forEach>],
 				yAxisID: 'y-axis-1',
 			}]
 		};
