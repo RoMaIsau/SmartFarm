@@ -8,6 +8,9 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
 	rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
+ <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
+    type="text/css" />
 </head>
 <style>
 .icon {
@@ -45,6 +48,13 @@
 .mapboxgl-popup-content {
 	border-left: .25rem solid #1cc88a !important;
 }
+#corral-seleccionado {
+  position: absolute;
+  z-index: 1;  
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  text-align: left;
+}
 </style>
 
 <body id="page-top">
@@ -71,7 +81,10 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+					
+					<div id="corral-seleccionado"></div>
 					<div id="map" style="height: 500px; width: 100%;"></div>
+						
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
@@ -148,14 +161,25 @@
 			zoom : 14,
 			center : [ -59.241913, -35.276381 ]
 		});
-		
+		var draw = new MapboxDraw({
+		      displayControlsDefault : false,
+		      controls : {
+		        polygon : true,
+		        trash: true
+		      }
+		    });
+
+		map.on('load', function(){
+			map.addControl(draw);
+			dibujarCorrales();
+		});
+
 		var marker, i;
 		
 		<c:forEach items="${lista}" var="lista">
 			var imagen = '${lista.animal.tipo.nombre}'.toLowerCase();
 			var tipo = imagen.toUpperCase();
 			var raza = '${lista.animal.raza.nombre}';
-			
 		
 			var icono = document.createElement('div');
 			icono.classList.add("icon");
@@ -173,8 +197,7 @@
 			.setPopup(popup).addTo(map);
 	    	
 		</c:forEach>
-	
-	
 	</script>
+	<script src="<c:url value="/js/corrales.js"/>"></script>
 </body>
 </html>
