@@ -220,21 +220,97 @@
 		/* Fin grafico pie gastos en total por tipo */ 
 		
 		/* Grafico line gastos en total */ 
-		
-		var lineChartData = {
-			labels: [ 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
-				'Diciembre' ],
-			datasets: [{
-				label: 'Gastos finales por mes',
-				borderColor: '#FFD57E',
-				backgroundColor: '#FFD57E',
-				fill: false,
-				data: [<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
-						${gastos.value},
-					   </c:forEach>],
-				yAxisID: 'y-axis-1',
-			}]
-		};
+
+		var ctx = document.getElementById("gastosEnTotal");
+		var myLineChart = new Chart(ctx, {
+		  type: 'line',
+		  data: {
+		    labels: ["Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+		    datasets: [{
+		      label: "Total",
+		      lineTension: 0.3,
+		      backgroundColor: "rgba(137, 137, 255, 0.05)",
+		      borderColor: "rgba(137, 137, 255, 1)",
+		      pointRadius: 3,
+		      pointBackgroundColor: "rgba(137, 137, 255, 1)",
+		      pointBorderColor: "rgba(137, 137, 255, 1)",
+		      pointHoverRadius: 3,
+		      pointHoverBackgroundColor: "rgba(137, 137, 255, 1)",
+		      pointHoverBorderColor: "rgba(137, 137, 255, 1)",
+		      pointHitRadius: 10,
+		      pointBorderWidth: 2,
+		      data: [<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
+				${gastos.value},
+				   </c:forEach>],
+		    }],
+		  },
+		  options: {
+		    maintainAspectRatio: false,
+		    layout: {
+		      padding: {
+		        left: 10,
+		        right: 25,
+		        top: 25,
+		        bottom: 0
+		      }
+		    },
+		    scales: {
+		      xAxes: [{
+		        time: {
+		          unit: 'date'
+		        },
+		        gridLines: {
+		          display: false,
+		          drawBorder: false
+		        },
+		        ticks: {
+		          maxTicksLimit: 7
+		        }
+		      }],
+		      yAxes: [{
+		        ticks: {
+		          maxTicksLimit: 5,
+		          padding: 10,
+		          // Include a dollar sign in the ticks
+		          callback: function(value, index, values) {
+		            return '$' + value;
+		          }
+		        },
+		        gridLines: {
+		          color: "rgb(234, 236, 244)",
+		          zeroLineColor: "rgb(234, 236, 244)",
+		          drawBorder: false,
+		          borderDash: [2],
+		          zeroLineBorderDash: [2]
+		        }
+		      }],
+		    },
+		    legend: {
+		      display: false
+		    },
+		    tooltips: {
+		      backgroundColor: "rgb(255,255,255)",
+		      bodyFontColor: "#858796",
+		      titleMarginBottom: 10,
+		      titleFontColor: '#6e707e',
+		      titleFontSize: 14,
+		      borderColor: '#dddfeb',
+		      borderWidth: 1,
+		      xPadding: 15,
+		      yPadding: 15,
+		      displayColors: false,
+		      intersect: false,
+		      mode: 'index',
+		      caretPadding: 10,
+		      callbacks: {
+		        label: function(tooltipItem, chart) {
+		          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+		          return datasetLabel + ': $' + tooltipItem.yLabel;
+		        }
+		      }
+		    }
+		  }
+		});
 		
 		/* Fin grafico line gastos en total */ 
 
@@ -254,28 +330,6 @@
 					title : {
 						display : true,
 						text : 'Gastos por mes en pesos'
-					}
-				}
-			});
-			
-			var ctx = document.getElementById('gastosEnTotal').getContext('2d');
-			window.myLine = Chart.Line(ctx, {
-				data: lineChartData,
-				options: {
-					responsive: true,
-					hoverMode: 'index',
-					stacked: false,
-					title: {
-						display: true,
-						text: 'Gastos en total en pesos'
-					},
-					scales: {
-						yAxes: [{
-							type: 'linear', 
-							display: true,
-							position: 'left',
-							id: 'y-axis-1',
-						}],
 					}
 				}
 			});
