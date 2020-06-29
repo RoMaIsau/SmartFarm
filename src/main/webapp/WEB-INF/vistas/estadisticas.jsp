@@ -109,9 +109,6 @@
 							</div>
 						</div>
 					</div>
-					<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
-						${gastos.value},
-					   </c:forEach>]
 				</div>
 				<!-- /.container-fluid -->
 
