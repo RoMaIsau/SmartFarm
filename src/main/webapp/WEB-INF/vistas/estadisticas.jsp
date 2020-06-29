@@ -37,12 +37,11 @@
 					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
 					<p class="mb-4">A continuación se muestran gráficos sobre datos
 						de los gastos contabilizados</p>
-
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos por
+									<h6 class="m-0 font-weight-bold text-primary">Gastos en total por
 										tipo</h6>
 								</div>
 								<div class="card-body">
@@ -65,32 +64,8 @@
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos
-										realizados por mes</h6>
-								</div>
-								<div class="card-body">
-									<div class="chart-bar">
-										<div class="chartjs-size-monitor">
-											<div class="chartjs-size-monitor-expand">
-												<div class=""></div>
-											</div>
-											<div class="chartjs-size-monitor-shrink">
-												<div class=""></div>
-											</div>
-										</div>
-										<canvas id="gastosPorMes" class="chartjs-render-monitor"
-											style="display: block; width: 100%; height: 100%;"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xl-7 col-lg-8">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">Gastos en
-										total</h6>
+										total por mes</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -103,6 +78,29 @@
 											</div>
 										</div>
 										<canvas id="gastosEnTotal" class="chartjs-render-monitor"
+											style="display: block; width: 100%; height: 100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-xl-10 col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Tipos de gastos por mes</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-bar">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+										<canvas id="gastosPorMes" class="chartjs-render-monitor"
 											style="display: block; width: 100%; height: 100%;"></canvas>
 									</div>
 								</div>
