@@ -8,4 +8,6 @@ public interface ServicioCorral {
 	List<Corral> obtenerTodosLosCorrales();
 
 	void guardar(Corral corral);
+
+	void eliminar(Corral corral);
 }

@@ -11,4 +11,6 @@ public interface RepositorioCorral {
 	void crear(Corral corralNuevo);
 
 	void actualizar(Corral corral);
+
+	void eliminar(Corral corral);
 }

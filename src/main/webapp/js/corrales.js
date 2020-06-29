@@ -1,4 +1,5 @@
 map.on('draw.selectionchange', corralSeleccionado);
+map.on('draw.delete', eliminarCorral);
 
 var corralSeleccionado;
 
@@ -38,6 +39,26 @@ function generarFormulario(idCorral, nombreCorral) {
 				</form>
 			</div>`;
 }
+
+function eliminarCorral(evento) {
+	var corral = evento.features[0]
+	var id = corral.properties.idCorral;
+	$('#corral-seleccionado').html("");
+	if (id !== undefined) {
+		var corralParaEliminar = { "id" : id };
+		$.ajax({
+			type: 'post',
+			url: 'corrales/eliminar',
+			contentType : 'application/json',
+			dataType: 'text',
+			data: JSON.stringify(corralParaEliminar),
+			success: function(respuesta) {
+				dibujarCorrales();
+			}
+		});
+	}
+}
+
 (function($) {
 	"use strict";
 	jQuery(window).on("load", function() {

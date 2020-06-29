@@ -39,4 +39,9 @@ public class RepositorioCorralImpl implements RepositorioCorral {
 		corralParaActualizar.setVertices(corral.getVertices());
 		this.sessionFactory.getCurrentSession().update(corralParaActualizar);
 	}
+
+	@Override
+	public void eliminar(Corral corral) {
+		this.sessionFactory.getCurrentSession().remove(corral);
+	}
 }

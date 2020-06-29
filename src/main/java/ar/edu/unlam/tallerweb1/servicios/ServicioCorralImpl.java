@@ -35,4 +35,9 @@ public class ServicioCorralImpl implements ServicioCorral {
 		}
 
 	}
+
+	@Override
+	public void eliminar(Corral corral) {
+		this.repositorioCorral.eliminar(corral);
+	}
 }

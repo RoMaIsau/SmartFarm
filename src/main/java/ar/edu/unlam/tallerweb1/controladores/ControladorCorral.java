@@ -67,4 +67,11 @@ public class ControladorCorral {
 		this.servicioCorral.guardar(corral);
 		return "ok";
 	}
+
+	@RequestMapping(value = "corrales/eliminar", consumes = "application/json", produces = "text/plain")
+	@ResponseBody
+	public String eliminarCorral(@RequestBody Corral corral) {
+		this.servicioCorral.eliminar(corral);
+		return "ok";
+	}
 }
