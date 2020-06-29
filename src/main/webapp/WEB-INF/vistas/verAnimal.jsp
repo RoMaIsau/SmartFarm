@@ -106,7 +106,7 @@
 				                	<h6 class="m-0 font-weight-bold text-primary">Alimentación por tipo</h6>
 				                </div>
 				                <div class="card-body">
-				                	<div class="chart-pie pt-4">
+				                	<div class="chart-pie">
 				                		<div class="chartjs-size-monitor">
 				                			<div class="chartjs-size-monitor-expand">
 				                				<div class="">
@@ -302,7 +302,7 @@ var myPieChart = new Chart(ctx, {
       caretPadding: 10,
     },
     legend: {
-      display: false
+      display: true
     },
     cutoutPercentage: 80,
   },
