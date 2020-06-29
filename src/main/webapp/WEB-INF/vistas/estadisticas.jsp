@@ -35,14 +35,15 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
-					<p class="mb-4">A continuación se muestran gráficos sobre datos de los gastos contabilizados</p>
+					<p class="mb-4">A continuación se muestran gráficos sobre datos
+						de los gastos contabilizados</p>
 
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos en
-										total</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Gastos por
+										tipo</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -54,7 +55,8 @@
 												<div class=""></div>
 											</div>
 										</div>
-										<canvas id="gastosEnTotalPorTipo" class="chartjs-render-monitor"
+										<canvas id="gastosEnTotalPorTipo"
+											class="chartjs-render-monitor"
 											style="display: block; width: 100%; height: 100%;"></canvas>
 									</div>
 								</div>
@@ -248,7 +250,7 @@
 					},
 					title : {
 						display : true,
-						text : 'Gastos por mes'
+						text : 'Gastos por mes en pesos'
 					}
 				}
 			});
@@ -262,7 +264,7 @@
 					stacked: false,
 					title: {
 						display: true,
-						text: 'Chart.js Line Chart - Multi Axis'
+						text: 'Gastos en total en pesos'
 					},
 					scales: {
 						yAxes: [{
