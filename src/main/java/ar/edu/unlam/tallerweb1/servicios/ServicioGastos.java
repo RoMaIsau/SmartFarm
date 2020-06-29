@@ -24,4 +24,6 @@ public interface ServicioGastos {
 
 	List<Gastos> consultarGastosEnTotalPorTipo();
 
+	TreeMap<Integer, Double> consultarGastosEnTotal();
+
 }
