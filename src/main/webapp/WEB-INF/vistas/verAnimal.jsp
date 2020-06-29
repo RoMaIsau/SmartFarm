@@ -6,10 +6,52 @@
 <head>
 
 <%@ include file="../../parts/meta.jsp"%>
-
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
+	rel='stylesheet' />
+<script
+	src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
+<link rel="stylesheet"
+	href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
+	type="text/css" />
 </head>
 <body id="page-top">
+	<style>
+.icon {
+	background-size: cover;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
+}
 
+#vacuno {
+	background-image: url('img/vacuno.png');
+}
+
+#ovino {
+	background-image: url('img/ovino.png');
+}
+
+#caprino {
+	background-image: url('img/caprino.png');
+}
+
+#equino {
+	background-image: url('img/equino.png');
+}
+
+#porcino {
+	background-image: url('img/porcino.png');
+}
+.mapboxgl-popup {
+	max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+	border-left: .25rem solid #1cc88a !important;
+}
+</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -109,6 +151,16 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Última ubicación</h6>
+								</div>
+							</div>
+							<div id="map" class="mb-3" style="height: 52vh; width: 100%;"></div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
@@ -321,6 +373,34 @@
 	});
 	
 	// Fin grafico alimentos 
+	
+	// Mapa animal
+	
+	var map;
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZXplMjEiLCJhIjoiY2tiODBxcDYzMGIxYTMwcWFtZ2pncmNjdCJ9.XzKHl3aCknUpCwDcMSMlJg';
+	map = new mapboxgl.Map({
+		container : "map",
+		style : "mapbox://styles/mapbox/satellite-streets-v11",
+		zoom : 14,
+		center : [ ${ubicacion.ultimaUbicacion.longitud}, ${ubicacion.ultimaUbicacion.latitud} ]
+	});
+	
+	var tipo = '${ubicacion.animal.tipo.nombre}'.toLowerCase();
+
+	var icono = document.createElement('div');
+	icono.classList.add("icon");
+	icono.id = tipo;
+	
+	var popup = new mapboxgl.Popup({
+		offset : 25
+	}).setHTML('<div><div class="row no-gutters align-items-center"><div class="col mr-2">'+
+			'<div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 15px;">'+${ubicacion.animal.id}+'</div>'+
+             '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+ tipo.toUpperCase() +'</div> ' +
+              '<div class="col-auto mt-2"><img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+tipo+'.png"/></div></div> </div>');
+
+   	new mapboxgl.Marker(icono).setLngLat([ ${ubicacion.ultimaUbicacion.longitud}, ${ubicacion.ultimaUbicacion.latitud} ]).setPopup(popup).addTo(map);
+   	
+	//Fin mapa animal
 	
 </script>
 </body>
