@@ -7,11 +7,15 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.modelo.Posicion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
@@ -19,6 +23,8 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
 @Service("servicioUbicacion")
 @Transactional
 public class ServicioUbicacionImpl implements ServicioUbicacion {
+
+	private Logger logger = LoggerFactory.getLogger(ServicioAnimalUbicacionImpl.class);
 
 	@Inject
 	private ServicioDeAnimales servicioAnimales;
@@ -64,8 +70,9 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 				Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
 						ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
-			
-				Integer metrosEnTotal = distancia + animalUbicacionObtenido.getMetrosRecorridos();
+
+				Integer metrosRecorridos = animalUbicacionObtenido.getMetrosRecorridos() == null? 0 : animalUbicacionObtenido.getMetrosRecorridos();
+				Integer metrosEnTotal = distancia + metrosRecorridos;
 
 				animalUbicacionObtenido.setAnimal(animal);
 				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
@@ -215,6 +222,27 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		}
 
 		return -n;
+	}
+
+	@Override
+	public void registrar(Posicion posicion) {
+
+		try {
+
+			AnimalDeGranja animal = this.servicioAnimales.obtenerPorIdentificadorGps(posicion.getIdentificador());
+			Ubicacion ubicacion = new Ubicacion(posicion.getLatitud(), posicion.getLongitud());
+
+			this.repositorioUbicacion.guardarUbicacion(ubicacion);
+
+			AnimalUbicacion animalUbicacion = new AnimalUbicacion();
+			animalUbicacion.setAnimal(animal);
+			animalUbicacion.setFecha(LocalDate.now());
+			animalUbicacion.setUltimaUbicacion(ubicacion);
+			this.repositorioAnimalUbicacion.guardar(animalUbicacion);
+
+		} catch(AnimalSinIdentificadorGpsException e) {
+			logger.error("No se puede registrar la posición. Causa: {}", e.getMessage());
+		}
 	}
 
 }

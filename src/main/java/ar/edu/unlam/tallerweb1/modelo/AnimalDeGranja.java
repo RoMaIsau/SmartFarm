@@ -1,11 +1,11 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class AnimalDeGranja {
@@ -22,10 +22,12 @@ public class AnimalDeGranja {
 	
 	@ManyToOne(optional = false)
 	private Genero genero;
-	
 
 	private Double peso;
-	
+
+	@Column(unique = true)
+	private String identificadorGps;
+
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +66,14 @@ public class AnimalDeGranja {
 
 	public void setPeso(Double peso) {
 		this.peso = peso;
+	}
+
+	public void setIdentificadorGps(String identificadorGps) {
+		this.identificadorGps = identificadorGps;
+	}
+
+	public String getIdentificadorGps() {
+		return identificadorGps;
 	}
 
 	@Override
