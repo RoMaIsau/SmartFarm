@@ -64,7 +64,7 @@ public class RepositorioGastosImpl implements RepositorioGastos {
 	}
 
 	@Override
-	public List<Gastos> consultarGastosEnTotal() {
+	public List<Gastos> consultarGastosEnTotalPorTipo() {
 		
 		return (List<Gastos>) sessionFactory.getCurrentSession().createCriteria(Gastos.class)
 				.createAlias("tipoDeGasto", "tipo")

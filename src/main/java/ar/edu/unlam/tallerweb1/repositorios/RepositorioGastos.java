@@ -19,6 +19,6 @@ public interface RepositorioGastos {
 
 	void modificarGasto(Gastos gastosActuales);
 
-	List<Gastos> consultarGastosEnTotal();
+	List<Gastos> consultarGastosEnTotalPorTipo();
 
 }

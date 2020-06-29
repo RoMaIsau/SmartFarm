@@ -199,8 +199,8 @@
 			type: 'pie',
 			data: {
 				datasets: [{
-					data: [<c:forEach items="${gastosEnTotal}" var="total">
-						   		${total.monto},
+					data: [<c:forEach items="${gastosEnTotalPorTipo}" var="gastoPorTipo">
+						   		${gastoPorTipo.monto},
 						   </c:forEach>],
 					backgroundColor: ['#FFD57E', '#AD84C7', '#89C7B6', '#7998C9'],
 					label: 'Dataset 1'
@@ -222,9 +222,9 @@
 		/* Grafico line gastos en total */ 
 		
 		var lineChartData = {
-			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			labels: [ 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
+				'Diciembre' ],
 			datasets: [{
-				label: 'My First dataset',
 				borderColor: '#FFD57E',
 				backgroundColor: '#FFD57E',
 				fill: false,
@@ -268,7 +268,7 @@
 					},
 					scales: {
 						yAxes: [{
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							type: 'linear', 
 							display: true,
 							position: 'left',
 							id: 'y-axis-1',
