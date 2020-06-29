@@ -67,10 +67,12 @@ public class ControladorMapa {
 		ModelMap model = new ModelMap();
 		
 		AnimalDeGranja animal = servicioDeAnimales.obtenerPorId(idAnimal);
+		AnimalUbicacion ubicacion = servicioAnimalUbicacion.obtenerUbicacionAnimal(idAnimal);
 		List<AnimalUbicacion> animalUbicacion = servicioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
 		List<Alimento> alimentos = servicioAlimento.listarAlimentosConsumidosPorAnimal(idAnimal);
 		
 		model.put("animal", animal);
+		model.put("ubicacion", ubicacion);
 		model.put("animalUbicacion", animalUbicacion);
 		model.put("alimentos", alimentos);
 		

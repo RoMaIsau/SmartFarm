@@ -8,4 +8,6 @@ public interface ServicioAnimalUbicacion {
 
 	List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal);
 
+	AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal);
+
 }

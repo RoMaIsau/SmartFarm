@@ -42,4 +42,11 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 
 		return session.createCriteria(AnimalUbicacion.class).add(Restrictions.eq("animal.id", idAnimal)).list();
 	}
+
+	@Override
+	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
+		return (AnimalUbicacion) sessionFactory.getCurrentSession().createCriteria(AnimalUbicacion.class)
+				.add(Restrictions.eq("animal.id", idAnimal))
+				.add(Restrictions.eq("fecha", LocalDate.now())).uniqueResult();
+	}
 }
