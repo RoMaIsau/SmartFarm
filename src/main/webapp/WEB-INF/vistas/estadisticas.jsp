@@ -86,7 +86,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xl-6 col-lg-7">
+						<div class="col-xl-7 col-lg-8">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">Gastos en
@@ -109,6 +109,9 @@
 							</div>
 						</div>
 					</div>
+					<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
+						${gastos.value},
+					   </c:forEach>]
 				</div>
 				<!-- /.container-fluid -->
 
