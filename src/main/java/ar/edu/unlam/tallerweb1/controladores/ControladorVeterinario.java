@@ -274,6 +274,8 @@ public class ControladorVeterinario{
              
 	}
    	
+   
+   	
    	
 	@RequestMapping("/diagnosticar")
 	public ModelAndView diagnosticar(@RequestParam(value="id", required=true) Long id){

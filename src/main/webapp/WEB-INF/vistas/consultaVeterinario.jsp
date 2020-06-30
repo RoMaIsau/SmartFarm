@@ -3,20 +3,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<%@ include file="../../parts/meta.jsp"%>
 	<!-- Bootstrap core CSS -->
-	    <link href="css/bootstrap.min.css" rel="stylesheet" >
+	    <link href="css/bootstrap/js/bootstrap.min.css" rel="stylesheet" >
 	    <!-- Bootstrap theme -->
-	    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	    <link href="css/bootstrap/js/bootstrap-theme.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class = "container">
-			<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div id="loginbox" style="margin-top:50px;" >
 				<h3 class="form-signin-heading"> INGRESE LOS SINTOMAS OBSERVADOS</h3>
 				<form:form action="diagnosticarPost" method="POST" modelAttribute="sintomas">
 			    	
 					<hr class="colorgraph"><br>
+					<div class="text-primary">
                 <form:input path="idAnimal" id="idA" type="hidden" class="form-control" value="${idAnimal}" />
-			 	 	ULCERAS EN UBRES Y BOCA <form:radiobutton path="Ulceras" id="ulceras"  value="true"  class="form-control" /><br><br>
+			 	 ULCERAS EN UBRES Y BOCA<form:radiobutton path="Ulceras" id="ulceras"  value="true"  class="form-control" /><br><br>
 	
 				    FALTA DE APETITO<form:radiobutton path="anorexia" id="anorexia"   value="true" class="form-control" /><br><br>
 					DEBILIDAD<form:radiobutton path="debilidad" id="debilidad" value="true" class="form-control" /><br><br>
@@ -26,11 +28,11 @@
 					TOS<form:radiobutton path="tos" id="tos"  value="true"  class="form-control" /><br><br>
 					SALIVACION ESPUMOSA<form:radiobutton path="salivacionEspumosa" id="saliva"  value="true" class="form-control" /><br><br>
 					SECRECION NASAL<form:radiobutton path="secrecionNasal" id="secrecion"  value="true" class="form-control" /><br><br>
-					
+					</div>
 					<h4>¿A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
 					<form:input path="fechaSignosVitales" id="fecha" type="date"  class="form-control" /> <br><br>
 	
-					<button class="btn btn-lg btn-success btn-block" Type="Submit"/>Consultar</button>
+					<button class="btn btn-success  btn-block" Type="Submit"/>Consultar</button>
 				</form:form>
 
 				
