@@ -32,7 +32,7 @@ function generarFormulario(idCorral, nombreCorral) {
 	return `<div class="container-fluid">
 				<form id="formGuardarCorral" class="form-inline">
 					<div class="form-group mx-sm-1">
-						<label for="corral" class="sr-only">Nobre corral</label>
+						<label for="corral" class="sr-only">Nombre corral</label>
 						<input type="text" class="form-control" id="corral" value="${nombreCorral}" placeholder="Ingresar nombre del corral...">
 					</div>
 					<button id="botonGuardarCorral" type="submit" class="btn btn-primary">Guardar</button>
