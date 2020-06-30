@@ -46,7 +46,7 @@
 							
 							 
 </c:forEach> 
-
+<h3 class="text-info">${enfermedad}</h3>
 
 <c:if test="${not empty hc}">
 	 <h3>Historia Clinica:</h3>	       
@@ -72,7 +72,7 @@
 
 </h3><br>
 <c:if test="${not empty ranking}">
-TODAS LAS ENFERMEDADES:
+<h4 class="text-success">TODAS LAS ENFERMEDADES:</h4><br>
 
   <c:forEach items="${ranking}" var="r">
   <h4>"La enfermedad ${r.key} se registro ${r.value} veces este año"</h4>

@@ -10,10 +10,14 @@ public interface RepositorioNotificacion {
 
 	List<Notificacion> listarNotificaciones(Long idUsuario);
 
-	Notificacion notificacionPorDetalles(String detalles);
+	Notificacion notificacionPorDetalles(String detalles, String fecha);
 
 	Notificacion notificacionPorId(Long id);
 
 	void actualizarNotificacion(Notificacion notificacion);
+
+	void crearNotificacionAnimal(Notificacion notificacion);
+
+//	Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha);
 
 }

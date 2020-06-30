@@ -8,14 +8,14 @@
 	    <!-- Bootstrap theme -->
 	    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 	</head>
-	<body class="">
-		<div class = "container text-success">
+	<body>
+		<div class = "container">
 			<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-				<h3 class="form-signin-heading text-success"> INGRESE LOS SINTOMAS OBSERVADOS</h3>
-			<center>	<form:form action="diagnosticarPost" method="POST" modelAttribute="sintomas">
+				<h3 class="form-signin-heading"> INGRESE LOS SINTOMAS OBSERVADOS</h3>
+				<form:form action="diagnosticarPost" method="POST" modelAttribute="sintomas">
 			    	
 					<hr class="colorgraph"><br>
-                <form:input path="idAnimal" id="idA" type="hidden" class="form-control " value="${idAnimal}" />
+                <form:input path="idAnimal" id="idA" type="hidden" class="form-control" value="${idAnimal}" />
 			 	 	ULCERAS EN UBRES Y BOCA <form:radiobutton path="Ulceras" id="ulceras"  value="true"  class="form-control" /><br><br>
 	
 				    FALTA DE APETITO<form:radiobutton path="anorexia" id="anorexia"   value="true" class="form-control" /><br><br>
@@ -27,13 +27,13 @@
 					SALIVACION ESPUMOSA<form:radiobutton path="salivacionEspumosa" id="saliva"  value="true" class="form-control" /><br><br>
 					SECRECION NASAL<form:radiobutton path="secrecionNasal" id="secrecion"  value="true" class="form-control" /><br><br>
 					
-					<h4 class="text-info">¿A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
+					<h4>¿A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
 					<form:input path="fechaSignosVitales" id="fecha" type="date"  class="form-control" /> <br><br>
 	
 					<button class="btn btn-lg btn-success btn-block" Type="Submit"/>Consultar</button>
 				</form:form>
 
-				</center>
+				
 			</div>
 		</div>
 		
@@ -43,3 +43,4 @@
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	</body>
 </html>
+

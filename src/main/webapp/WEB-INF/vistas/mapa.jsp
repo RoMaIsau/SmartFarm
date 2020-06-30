@@ -8,6 +8,9 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css'
 	rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
+ <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
+    type="text/css" />
 </head>
 <style>
 .icon {
@@ -43,7 +46,14 @@
 }
 
 .mapboxgl-popup-content {
-	border-left: .25rem solid #1cc88a!important;
+	border-left: .25rem solid #1cc88a !important;
+}
+#corral-seleccionado {
+  position: absolute;
+  z-index: 1;  
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  text-align: left;
 }
 </style>
 
@@ -71,7 +81,10 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+					
+					<div id="corral-seleccionado"></div>
 					<div id="map" style="height: 500px; width: 100%;"></div>
+						
 					<div class="card shadow mb-4 mt-2">
 						<div class="card-header py-3 mx-0 row justify-content-between">
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
@@ -138,6 +151,53 @@
 	<!-- Bootstrap core JavaScript-->
 
 	<%@ include file="../../parts/scripts.jsp"%>
-	<script src="<c:url value="/js/mostrarMapa.js"/>"></script>
+	<script>
+		var map;
+		
+		mapboxgl.accessToken = 'pk.eyJ1IjoiZXplMjEiLCJhIjoiY2tiODBxcDYzMGIxYTMwcWFtZ2pncmNjdCJ9.XzKHl3aCknUpCwDcMSMlJg';
+		map = new mapboxgl.Map({
+			container : "map",
+			style : "mapbox://styles/mapbox/satellite-streets-v11",
+			zoom : 14,
+			center : [ -59.241913, -35.276381 ]
+		});
+		var draw = new MapboxDraw({
+		      displayControlsDefault : false,
+		      controls : {
+		        polygon : true,
+		        trash: true
+		      }
+		    });
+
+		map.on('load', function(){
+			map.addControl(draw);
+			dibujarCorrales();
+		});
+
+		var marker, i;
+		
+		<c:forEach items="${lista}" var="lista">
+			var imagen = '${lista.animal.tipo.nombre}'.toLowerCase();
+			var tipo = imagen.toUpperCase();
+			var raza = '${lista.animal.raza.nombre}';
+		
+			var icono = document.createElement('div');
+			icono.classList.add("icon");
+			icono.id = imagen;
+			
+	    	var popup = new mapboxgl.Popup({
+	    		offset : 25
+	    	}).setHTML('<div><div class="row no-gutters align-items-center"><div class="col mr-2">'+
+					'<div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 15px;">'+${lista.animal.id}+'</div>'+
+	                 '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+ tipo +' - '+ raza +'</div> ' +
+	                 '<div class="mt-2 text-center"><a href="verAnimal?id='+${lista.animal.id}+'" style="font-size: 11px;" class="badge badge-success p-1">Ver animal</a></div></div> ' +
+	                  '<div class="col-auto mt-2"><img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+imagen+'.png"/></div></div> </div>');
+		
+	    	new mapboxgl.Marker(icono).setLngLat([ ${lista.ultimaUbicacion.longitud}, ${lista.ultimaUbicacion.latitud} ])
+			.setPopup(popup).addTo(map);
+	    	
+		</c:forEach>
+	</script>
+	<script src="<c:url value="/js/corrales.js"/>"></script>
 </body>
 </html>

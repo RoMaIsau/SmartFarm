@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -18,6 +20,11 @@ public class ServicioTipoDeUsuarioImpl implements ServicioTipoDeUsuario {
 	@Override
 	public TipoDeUsuario consultarRol(String rol) {
 		return repositorioTipoDeUsuario.consultarRol(rol);
+	}
+
+	@Override
+	public List<TipoDeUsuario> ObtenerTodosLosRoles() {
+		return repositorioTipoDeUsuario.ObtenerTodosLosRoles();
 	}
 	
 }

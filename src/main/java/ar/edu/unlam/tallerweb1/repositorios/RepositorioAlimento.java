@@ -15,4 +15,6 @@ public interface RepositorioAlimento {
 	Alimento consultarAlimentoPorId(Long id);
 
 	void actualizarAlimento(Alimento alimento);
+
+	List<Alimento> listarAlimentosConsumidosPorAnimal(Long idAnimal);
 }

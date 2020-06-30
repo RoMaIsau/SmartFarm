@@ -7,11 +7,15 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.modelo.Posicion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
@@ -20,8 +24,11 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
 @Transactional
 public class ServicioUbicacionImpl implements ServicioUbicacion {
 
+	private Logger logger = LoggerFactory.getLogger(ServicioAnimalUbicacionImpl.class);
+
 	@Inject
-	ServicioDeAnimales servicioAnimales;
+	private ServicioDeAnimales servicioAnimales;
+	private ServicioNotificacion servicioNotificacion;
 
 	private RepositorioUbicacion repositorioUbicacion;
 	private RepositorioAnimalUbicacion repositorioAnimalUbicacion;
@@ -32,7 +39,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		this.repositorioUbicacion = repositorioUbicacion;
 		this.repositorioAnimalUbicacion = repositorioAnimalUbicacion;
 	}
-
+    
 	@Override
 	public List<AnimalUbicacion> obtenerUbicaciones() {
 
@@ -63,8 +70,9 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 				Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
 						ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
-			
-				Integer metrosEnTotal = distancia + animalUbicacionObtenido.getMetrosRecorridos();
+
+				Integer metrosRecorridos = animalUbicacionObtenido.getMetrosRecorridos() == null? 0 : animalUbicacionObtenido.getMetrosRecorridos();
+				Integer metrosEnTotal = distancia + metrosRecorridos;
 
 				animalUbicacionObtenido.setAnimal(animal);
 				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
@@ -105,27 +113,55 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	public Double crearLatitudAleatorea(AnimalDeGranja a) {
 		Double n = 0.0;
-
+		int x = 0;
+		x = (int) ( (Math.random() * (1000 - 1)) + 1);
+		
+		if(x > 997) {
+			servicioNotificacion.crearNotificacionAnimalFueraDeLugar(a.getId());
+		}
+		
+		
 		switch (a.getTipo().getNombre()) {
 
 		case "VACUNO":
-			n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+			} else {
+				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+			}
+
 			break;
 
 		case "CAPRINO":
-			n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+			} else {
+				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+			}
 			break;
 
 		case "EQUINO":
-			n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+			} else {
+				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+			}
 			break;
 
 		case "OVINO":
-			n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+			} else {
+				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+			}
 			break;
 
 		case "PORCINO":
-			n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+			} else {
+				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+			}
 			break;
 		}
 
@@ -134,31 +170,79 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	public Double crearLongitudAleatorea(AnimalDeGranja a) {
 		Double n = 0.0;
+		int x = 0;
+		x = (int) ( (Math.random() * (1000 - 1)) + 1);
 
+		if(x > 997) {
+			servicioNotificacion.crearNotificacionAnimalFueraDeLugar(a.getId());
+		}
+		
+		
 		switch (a.getTipo().getNombre()) {
 
 		case "VACUNO":
-			n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+			} else {
+				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+			}
 			break;
 
 		case "CAPRINO":
-			n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+			} else {
+				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+			}
 			break;
 
 		case "EQUINO":
-			n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+			} else {
+				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+			}
 			break;
 
 		case "OVINO":
-			n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+			} else {
+				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+			}
 			break;
 
 		case "PORCINO":
-			n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+			if(x <= 997) {
+				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+			} else {
+				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+			}
 			break;
 		}
 
 		return -n;
+	}
+
+	@Override
+	public void registrar(Posicion posicion) {
+
+		try {
+
+			AnimalDeGranja animal = this.servicioAnimales.obtenerPorIdentificadorGps(posicion.getIdentificador());
+			Ubicacion ubicacion = new Ubicacion(posicion.getLatitud(), posicion.getLongitud());
+
+			this.repositorioUbicacion.guardarUbicacion(ubicacion);
+
+			AnimalUbicacion animalUbicacion = new AnimalUbicacion();
+			animalUbicacion.setAnimal(animal);
+			animalUbicacion.setFecha(LocalDate.now());
+			animalUbicacion.setUltimaUbicacion(ubicacion);
+			this.repositorioAnimalUbicacion.guardar(animalUbicacion);
+
+		} catch(AnimalSinIdentificadorGpsException e) {
+			logger.error("No se puede registrar la posición. Causa: {}", e.getMessage());
+		}
 	}
 
 }

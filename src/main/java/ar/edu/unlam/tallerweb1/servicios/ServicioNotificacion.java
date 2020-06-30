@@ -9,7 +9,9 @@ public interface ServicioNotificacion {
 	
 	void crearNotificacionStock();
 	List<Notificacion> listarNotificaciones(Long idUsuario);
-	Notificacion notificacionPorDetalles(String detalles);
+	Notificacion notificacionPorDetalles(String detalles, String fecha);
 	Notificacion notificacionPorId(Long id);
 	void actualizarNotificacion(Notificacion notificacion);
+	void crearNotificacionAnimalFueraDeLugar(Long id);
+//	Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha);
 }

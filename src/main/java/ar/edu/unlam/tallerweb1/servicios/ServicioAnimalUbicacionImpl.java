@@ -2,35 +2,33 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
 
 @Service
 @Transactional
 public class ServicioAnimalUbicacionImpl implements ServicioAnimalUbicacion {
-	
-	private SessionFactory sessionFactory;
-	
+
+	private RepositorioAnimalUbicacion repositorioAnimalUbicacion;
+
 	@Autowired
-	public ServicioAnimalUbicacionImpl(SessionFactory sessionFactory) {
+	public ServicioAnimalUbicacionImpl(RepositorioAnimalUbicacion repositorioAnimalUbicacion) {
 		super();
-		this.sessionFactory = sessionFactory;
+		this.repositorioAnimalUbicacion = repositorioAnimalUbicacion;
 	}
 
 	@Override
 	public List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal) {
-		
-		Session session = sessionFactory.getCurrentSession();
-		
-		return session.createCriteria(AnimalUbicacion.class)
-				.add(Restrictions.eq("animal.id", idAnimal))
-				.list();
+		return repositorioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
+	}
+
+	@Override
+	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
+		return repositorioAnimalUbicacion.obtenerUbicacionAnimal(idAnimal);
 	}
 
 }

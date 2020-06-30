@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
@@ -38,7 +41,7 @@ public class ControladorEmpleadoTest {
 	private ServicioUsuario servicioUsuario;
 	private ServicioNotificacion servicioNotificacion;
 	
-	@Before
+	@Before	
 	public void inicializar() {
 		
 		this.servicioDeAnimales = crearMockServicioDeAnimales();
@@ -52,6 +55,21 @@ public class ControladorEmpleadoTest {
 				this.validadorDeAnimales);
 	}
 
+	/*@Test
+	public void inicioDeSesionTest() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSession = mock(HttpSession.class);
+		Usuario mockUsuario = mock(Usuario.class);
+		
+		when(servicioUsuario.consultarUsuario(mockUsuario)).thenReturn(mockUsuario);
+		when(mockRequest.getSession()).thenReturn(mockSession);
+		
+		ModelAndView resultado = controladorUsuario.validarLogin(mockUsuario, mockRequest);
+		String esperado = "redirect:/indexAdmin";
+		
+		assertThat(resultado.getViewName()).isEqualTo(esperado);
+	}*/
+	
 	private ServicioDeAnimales crearMockServicioDeAnimales() {
 
 		List<TipoAnimal> tiposDeAnimales = this.crearTiposDeAnimales();
@@ -111,8 +129,12 @@ public class ControladorEmpleadoTest {
 
 	@Test
 	public void registrarAnimalRedirigeALaVistaDeRegistrarAnimal() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
 		
 		String vista = modelAndView.getViewName();
 		
@@ -122,8 +144,12 @@ public class ControladorEmpleadoTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeTiposDeAnimalesDisponibles() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
 		
 		Map<String, Object> modelo = modelAndView.getModel();
 		
@@ -138,8 +164,12 @@ public class ControladorEmpleadoTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void laVistaRegistrarAnimalMuestraUnaListaDeRazasDisponibles() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(any(TipoAnimal.class));
@@ -153,8 +183,12 @@ public class ControladorEmpleadoTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void laVistaRegistrarAnimalMuestaUnaListaDeGeneros() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 		
 		verify(this.servicioDeAnimales).obtenerGeneros();
@@ -166,8 +200,12 @@ public class ControladorEmpleadoTest {
 
 	@Test
 	public void seSeleccionaPorDefaultElPrimerElementoDeLosCombosDeSeleccion() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(new ModelMap());
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, new ModelMap());
 		Map<String, Object> modelo = modelAndView.getModel();
 
 		assertThat(modelo).containsKey("animal");
@@ -180,6 +218,10 @@ public class ControladorEmpleadoTest {
 	
 	@Test
 	public void cuandoSeRedirigeALaPantallaDeRegistroDeAnimalDebidoAUnErrorEntoncesSeMantienenLosDatosCargados() {
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 
 		TipoAnimal tipoSeleccionado = new TipoAnimal();
 		tipoSeleccionado.setId(1L);
@@ -191,7 +233,7 @@ public class ControladorEmpleadoTest {
 		ModelMap modelo = new ModelMap();
 		modelo.put("animal", animalInvalido);
 
-		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(modelo);
+		ModelAndView modelAndView = this.controlador.irAFormularioDeRegistroDeAnimales(mockRequest, modelo);
 
 		verify(this.servicioDeAnimales).obtenerRazasPorTipoAnimal(eq(tipoSeleccionado));
 
@@ -282,11 +324,15 @@ public class ControladorEmpleadoTest {
 	
 	@Test
 	public void cuandoSeEditaElAnimalSeDebeMostrarLaPantallaDeEdicion(){
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession mockSesion = mock(HttpSession.class);
+		when(mockRequest.getSession()).thenReturn(mockSesion);
+		controlador.listarNotificacionesDelEmpleado(mockRequest);
 		
 		Long idAnimal = 1L;
 		when(servicioDeAnimales.obtenerPorId(eq(idAnimal))).thenReturn(new AnimalDeGranja());		
 		
-		ModelAndView modelAndView = this.controlador.editarAnimal(idAnimal);
+		ModelAndView modelAndView = this.controlador.editarAnimal(mockRequest, idAnimal);
 		
 		ModelMap modelo = modelAndView.getModelMap();
 		

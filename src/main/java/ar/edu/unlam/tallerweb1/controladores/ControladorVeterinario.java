@@ -1,9 +1,11 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,10 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
@@ -25,8 +30,21 @@ import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+
+
 @Controller
-public class ControladorVeterinario {
+public class ControladorVeterinario{
+
+	public List<Notificacion> listarNotificacionesDelVeterinario(HttpServletRequest request) {
+		Long idUsuario = (Long) request.getSession().getAttribute("ID");
+		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
+		return notificaciones;
+	}
+	
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Inject
 	ServicioGanado servicioGanado;
@@ -55,11 +73,14 @@ public class ControladorVeterinario {
 	
 	@RequestMapping(path = "/indexVeterinario")
 	public ModelAndView irAIndexVeterinario(HttpServletRequest request) {
-		
 		// Verifica que sea un usuario de tipo Veterinario, si no lo es, lo redirige al login
 		String rol = (String) request.getSession().getAttribute("ROL");
 		
+		ModelMap model = new ModelMap();
+		model.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		
 		if(rol.equals("Veterinario")) {
+
 			
 		
 		 List<AnimalDeGranja> animales= servicioGanado.listar();
@@ -80,12 +101,15 @@ public class ControladorVeterinario {
           
           
 		return new ModelAndView("indexVeterinario",modelo);}
-		else {
+		else if(!rol.equals("Veterinario")) {
+            return new ModelAndView("indexVeterinario", model);
+		} else {
+
 			return new ModelAndView("redirect:/login");
 		}
-		
 	}
 	
+
 	@RequestMapping("/detalle")
 	public ModelAndView vacunar(@RequestParam(value="id", required=true) Long id)  {
 		   ModelMap modelo= new ModelMap();
@@ -327,15 +351,15 @@ public class ControladorVeterinario {
         enfermedades=servicioGanado.todasEnfermedades(); 
         
         for(Enfermedad e: enfermedades) {
-        	if(e.getNombre()== "Fiebre Aftosa") {
+        	if(e.getNombre().equals("Fiebre Aftosa")) {
         		cantFiebre=cantFiebre+1;
-        	} if(e.getNombre()=="Leptospirosis") {
+        	} if(e.getNombre().equals("Leptospirosis")) {
         	  cantLeptos=cantLeptos+1;
-        	} if(e.getNombre()=="Miocardiopatia congenita") {
+        	} if(e.getNombre().equals("Miocardiopatia congenita")) {
         		cantMio= cantMio+1;
-        	}if(e.getNombre()=="Intoxicacion por consumo de plantas toxicas") {
+        	}if(e.getNombre().equals("Intoxicacion por consumo de plantas toxicas")) {
         		cantInto= cantInto+1;
-        	}if(e.getNombre()=="Rinotraqueitis infecciosa") {
+        	}if(e.getNombre().equals("Rinotraqueitis infecciosa")) {
         		cantRino = cantRino+1;
         	}
         }
@@ -401,10 +425,15 @@ public class ControladorVeterinario {
              
              ModelMap modelo= new ModelMap();
  List<AnimalDeGranja> animales= servicioGanado.listar();
+ 
+ HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
+ for(AnimalDeGranja animal : animales) {
+	 animalesNoRepetidos.add(animal);
+ }
 	       
              
             
-             modelo.put("animales",animales);
+             modelo.put("animales",animalesNoRepetidos);
              
             
              
@@ -414,4 +443,5 @@ public class ControladorVeterinario {
              return new ModelAndView("HomeAnimal", modelo);
              
 	}
+
 }

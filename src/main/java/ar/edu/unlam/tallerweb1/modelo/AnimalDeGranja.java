@@ -1,11 +1,14 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,12 +35,14 @@ public class AnimalDeGranja {
 	
 	@ManyToOne
 	private Genero genero;
+
 	
 	
 	
 	public Calendar getFechaNacimiento() {
 		return fechaNacimiento;
 	}
+
 
 	public void setFechaNacimiento(Calendar fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
@@ -47,6 +52,7 @@ public class AnimalDeGranja {
 
 	private Calendar fechaNacimiento;
 	private Double peso;
+
 	
 	
 	@OneToOne(cascade= {CascadeType.ALL})
@@ -80,6 +86,11 @@ public class AnimalDeGranja {
 	public void setVacunasParaAplicar(List<Vacuna> vacunasParaAplicar) {
 		this.vacunasParaAplicar = vacunasParaAplicar;
 	}
+
+
+	@Column(unique = true)
+	private String identificadorGps;
+
 
 	public Long getId() {
 		return id;
@@ -126,7 +137,17 @@ public class AnimalDeGranja {
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
-	
+
+
+	public void setIdentificadorGps(String identificadorGps) {
+		this.identificadorGps = identificadorGps;
+	}
+
+	public String getIdentificadorGps() {
+		return identificadorGps;
+	}
+
+
 	@Override
     public boolean equals(Object objeto) {
 

@@ -54,10 +54,7 @@
 							 
 </c:forEach>
 
-${signos3.temperatura}<br>
-${signos3.frecuenciaCardiaca}<br>
-${signos3.frecuenciaRespiratoria}<br>
-${signos3.pulso}
+
 
   <c:forEach items="${signos2}" var="a">
   TEMPERATURA:
