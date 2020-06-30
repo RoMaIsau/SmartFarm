@@ -35,14 +35,37 @@
 				<div class="container-fluid">
 
 					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
-					<p class="mb-4">A continuación se muestran gráficos sobre datos de los gastos contabilizados</p>
-
+					<p class="mb-4">A continuación se muestran gráficos sobre datos
+						de los gastos contabilizados</p>
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Gastos en total por
+										tipo</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-bar">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+										<canvas id="gastosEnTotalPorTipo"
+											class="chartjs-render-monitor"
+											style="display: block; width: 100%; height: 100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">Gastos en
-										total</h6>
+										total por mes</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -60,11 +83,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-8 col-lg-7">
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-xl-10 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos
-										realizados por mes</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Tipos de gastos por mes</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -167,14 +191,14 @@
 		/* Fin grafico gastos por mes */ 
 		
 		
-		/* Grafico pie gastos en total */ 
+		/* Grafico pie gastos en total por tipo */ 
 		
 		var config2 = {
 			type: 'pie',
 			data: {
 				datasets: [{
-					data: [<c:forEach items="${gastosEnTotal}" var="total">
-						   		${total.monto},
+					data: [<c:forEach items="${gastosEnTotalPorTipo}" var="gastoPorTipo">
+						   		${gastoPorTipo.monto},
 						   </c:forEach>],
 					backgroundColor: ['#FFD57E', '#AD84C7', '#89C7B6', '#7998C9'],
 					label: 'Dataset 1'
@@ -191,10 +215,105 @@
 			}
 		};
 		
-		/* Fin grafico pie gastos en total */ 
+		/* Fin grafico pie gastos en total por tipo */ 
 		
+		/* Grafico line gastos en total */ 
+
+		var ctx = document.getElementById("gastosEnTotal");
+		var myLineChart = new Chart(ctx, {
+		  type: 'line',
+		  data: {
+		    labels: ["Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+		    datasets: [{
+		      label: "Total",
+		      lineTension: 0.3,
+		      backgroundColor: "rgba(137, 137, 255, 0.05)",
+		      borderColor: "rgba(137, 137, 255, 1)",
+		      pointRadius: 3,
+		      pointBackgroundColor: "rgba(137, 137, 255, 1)",
+		      pointBorderColor: "rgba(137, 137, 255, 1)",
+		      pointHoverRadius: 3,
+		      pointHoverBackgroundColor: "rgba(137, 137, 255, 1)",
+		      pointHoverBorderColor: "rgba(137, 137, 255, 1)",
+		      pointHitRadius: 10,
+		      pointBorderWidth: 2,
+		      data: [<c:forEach items="${gastosEnTotalPorMes}" var="gastos">
+				${gastos.value},
+				   </c:forEach>],
+		    }],
+		  },
+		  options: {
+		    maintainAspectRatio: false,
+		    layout: {
+		      padding: {
+		        left: 10,
+		        right: 25,
+		        top: 25,
+		        bottom: 0
+		      }
+		    },
+		    scales: {
+		      xAxes: [{
+		        time: {
+		          unit: 'date'
+		        },
+		        gridLines: {
+		          display: false,
+		          drawBorder: false
+		        },
+		        ticks: {
+		          maxTicksLimit: 7
+		        }
+		      }],
+		      yAxes: [{
+		        ticks: {
+		          maxTicksLimit: 5,
+		          padding: 10,
+		          // Include a dollar sign in the ticks
+		          callback: function(value, index, values) {
+		            return '$' + value;
+		          }
+		        },
+		        gridLines: {
+		          color: "rgb(234, 236, 244)",
+		          zeroLineColor: "rgb(234, 236, 244)",
+		          drawBorder: false,
+		          borderDash: [2],
+		          zeroLineBorderDash: [2]
+		        }
+		      }],
+		    },
+		    legend: {
+		      display: false
+		    },
+		    tooltips: {
+		      backgroundColor: "rgb(255,255,255)",
+		      bodyFontColor: "#858796",
+		      titleMarginBottom: 10,
+		      titleFontColor: '#6e707e',
+		      titleFontSize: 14,
+		      borderColor: '#dddfeb',
+		      borderWidth: 1,
+		      xPadding: 15,
+		      yPadding: 15,
+		      displayColors: false,
+		      intersect: false,
+		      mode: 'index',
+		      caretPadding: 10,
+		      callbacks: {
+		        label: function(tooltipItem, chart) {
+		          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+		          return datasetLabel + ': $' + tooltipItem.yLabel;
+		        }
+		      }
+		    }
+		  }
+		});
+		
+		/* Fin grafico line gastos en total */ 
+
 		window.onload = function() {
-			var chartTotal = document.getElementById('gastosEnTotal').getContext('2d');
+			var chartTotal = document.getElementById('gastosEnTotalPorTipo').getContext('2d');
 			window.myPie = new Chart(chartTotal, config2);
 			
 			var chartPorMes = document.getElementById('gastosPorMes').getContext('2d');
@@ -208,7 +327,7 @@
 					},
 					title : {
 						display : true,
-						text : 'Gastos por mes'
+						text : 'Gastos por mes en pesos'
 					}
 				}
 			});

@@ -22,6 +22,8 @@ public interface ServicioGastos {
 
 	TreeMap<Integer, Double> consultarGastosPorMes(String gasto);
 
-	List<Gastos> consultarGastosEnTotal();
+	List<Gastos> consultarGastosEnTotalPorTipo();
+
+	TreeMap<Integer, Double> consultarGastosEnTotal();
 
 }

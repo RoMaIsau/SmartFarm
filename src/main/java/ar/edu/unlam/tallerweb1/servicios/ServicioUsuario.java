@@ -16,8 +16,4 @@ public interface ServicioUsuario {
 	Usuario consultarUsuarioPorId(Long id);
 
 	void eliminarUsuario(Usuario usuario);
-
-	Usuario consultarUsuarioPorEmail(String email);
-  
-  List<Usuario> consultarUsuariosEmpleados();
 }

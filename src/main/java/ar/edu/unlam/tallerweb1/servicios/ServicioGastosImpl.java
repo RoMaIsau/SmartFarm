@@ -90,8 +90,32 @@ public class ServicioGastosImpl implements ServicioGastos {
 	}
 
 	@Override
-	public List<Gastos> consultarGastosEnTotal() {
-		return repositorioGastos.consultarGastosEnTotal();
+	public List<Gastos> consultarGastosEnTotalPorTipo() {
+		return repositorioGastos.consultarGastosEnTotalPorTipo();
+	}
+
+	@Override
+	public TreeMap<Integer, Double> consultarGastosEnTotal() {
+		List<Gastos> gastos = repositorioGastos.consultarGastos();
+		TreeMap<Integer, Double> gastosEnTotalPorMes = new TreeMap<Integer, Double>();
+
+		for (Gastos g : gastos) {
+			Boolean existeMes = false;
+
+			for (Map.Entry<Integer, Double> gMes : gastosEnTotalPorMes.entrySet()) {
+				if (gMes.getKey().equals(g.getFecha().getMonthValue())) {
+					Double nuevoMonto = g.getMonto() + gMes.getValue();
+					gMes.setValue(nuevoMonto);
+					existeMes = true;
+				}
+			}
+
+			if (!existeMes) {
+				int mes = g.getFecha().getMonthValue();
+				gastosEnTotalPorMes.put(mes, g.getMonto());
+			}
+		}
+		return gastosEnTotalPorMes;
 	}
 
 }

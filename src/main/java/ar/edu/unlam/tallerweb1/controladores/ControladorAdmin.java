@@ -114,14 +114,17 @@ public class ControladorAdmin {
 		TreeMap<Integer, Double> medico = servicioGastos.consultarGastosPorMes("Médico");
 		TreeMap<Integer, Double> empresarial = servicioGastos.consultarGastosPorMes("Empresarial");
 
-		List<Gastos> gastosEnTotal = servicioGastos.consultarGastosEnTotal();
+		List<Gastos> gastosEnTotalPorTipo = servicioGastos.consultarGastosEnTotalPorTipo();
+		
+		TreeMap<Integer, Double> gastosEnTotalPorMes = servicioGastos.consultarGastosEnTotal();
 
 		modelo.put("alimenticio", alimenticio);
 		modelo.put("tecnologico", tecnologico);
 		modelo.put("medico", medico);
 		modelo.put("empresarial", empresarial);
 
-		modelo.put("gastosEnTotal", gastosEnTotal);
+		modelo.put("gastosEnTotalPorTipo", gastosEnTotalPorTipo);
+		modelo.put("gastosEnTotalPorMes", gastosEnTotalPorMes);
 
 		return new ModelAndView("estadisticas", modelo);
 	}
