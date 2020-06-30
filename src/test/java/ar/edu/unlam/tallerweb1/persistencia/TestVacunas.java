@@ -77,7 +77,7 @@ public class TestVacunas {
 	  
 	    ModelAndView mv= new ModelAndView();   
 	       
-	    //  mv= cg.vacunar(1L);
+	      mv= cg.vacunar(1L);
 	      
 	     List<Vacuna>vencidas= (List<Vacuna>) mv.getModelMap().get("vencidas");
 	       
