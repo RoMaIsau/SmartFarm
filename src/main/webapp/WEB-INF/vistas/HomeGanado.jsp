@@ -10,25 +10,45 @@
 	</head>
 	<body>
 	
-	<h1>vacas:</h1>
-
-
-<h1>${idGanado}</h1>
-<h1>${vacuna.nombre}</h1>
-<h1>${gv}</h1>
+	<h1>Lista de ganado vacuno:</h1>
 
 
 
-  <c:forEach items="${vacunas}" var="v">
+  <c:forEach items="${vencidos}" var="v">
   
 				    	 
-				  <h3 class="text-danger">"La vaca  ${v.key.id}  tiene su vacuna
-							${v.value.nombre} vencida"
-							
+				  <h3 class="text-danger">"La vaca  ${v.id} tiene vacunas vencidas"
+						<a href="detalle?id=${v.id}">Ver</a><br>	
+					</h3>
+					 </br>		
+					
+							 
+</c:forEach>
+
+
+
+ <c:forEach items="${vencidas}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
+							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
 					</h3> </br>		
 							
 							 
-</c:forEach>
+</c:forEach><BR>
+
+
+<h3>${mensaje}</h3><br>
+<h3><a href="/SmartFarm/homeGanado" >VOLVER</a></h3><br>
+<h3><a href="/SmartFarm/listaGanado" >MONITOREO DE SIGNOS VITALES</a></h3><BR>
+<h3><a href="/SmartFarm/historiaClinica" >HISTORIAS CLINICAS</a></h3><BR>
+
+ 	
+
+  	
+							
+							 
+
 
 
 							
@@ -40,6 +60,3 @@
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	</body>
 </html>
-
-
-

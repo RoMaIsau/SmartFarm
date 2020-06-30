@@ -1,16 +1,23 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import ar.edu.unlam.tallerweb1.modelo.GanadoVacuno;
+
+import java.util.List;
+
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.modelo.Vacuna;
+
 
 public interface ServicioVacunas {
 	
-	void vacunar(GanadoVacuno ganado, Vacuna vacuna);
+	void vacunar(AnimalDeGranja animal, Vacuna vacuna);
 	
 	void guardar(Vacuna vacuna);
 	
 	Vacuna getVacuna(String nombre);
+	
+	Vacunar getAnimalVacuna(Vacuna v, AnimalDeGranja a);
 
-	Vacuna alarmaVacuna(GanadoVacuno gv);
+	List<Vacuna> alarmaVacuna(AnimalDeGranja animal);
 
 }

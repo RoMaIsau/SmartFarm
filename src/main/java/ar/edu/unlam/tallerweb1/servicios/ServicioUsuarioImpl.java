@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -52,16 +54,8 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public void eliminarUsuario(Usuario usuario) {
 		servicioUsuarioDao.eliminarUsuario(usuario);
-	}
-	
-	@Override
-	public List<Usuario> consultarUsuariosEmpleados() {
-		return (List<Usuario>) servicioUsuarioDao.consultarUsuariosEmpleados();
+		
 	}
 
-	@Override
-	public Usuario consultarUsuarioPorEmail(String email) {
-		return servicioUsuarioDao.consultarUsuarioPorEmail(email);
-	}
 
 }

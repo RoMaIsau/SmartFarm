@@ -30,7 +30,39 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+					<h1>Lista de animales:</h1><br>
+
+
+
+  <c:forEach items="${vencidos}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"El animal  ${v.id} tiene vacunas vencidas"
+						<a class="text-primary" href="detalle?id=${v.id}">Ver</a><br>	
+					</h3>
+					 </br>		
 					
+							 
+</c:forEach>
+
+
+
+ <c:forEach items="${vencidas}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
+							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
+					</h3> </br>		
+							
+							 
+</c:forEach><BR>
+
+
+<h3>${mensaje}</h3><br>
+
+<h3><a href="/SmartFarm/listaGanado" >MONITOREO DE SIGNOS VITALES</a></h3><BR>
+<h3><a href="/SmartFarm/historiaClinica" >HISTORIAS CLINICAS</a></h3><BR>
+<a href="/SmartFarm/indexVeterinario" ><h3>${volver}</h3></a><br>					
 
 
 				</div>
