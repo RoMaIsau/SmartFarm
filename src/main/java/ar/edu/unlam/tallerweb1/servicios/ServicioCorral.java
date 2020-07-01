@@ -18,5 +18,7 @@ public interface ServicioCorral {
 
 	List<AnimalDeGranja> obtenerAnimalesSinCorral();
 
+	void quitarAnimales(Corral corral);
+
 	void asignarAnimales(Long idCorral, Long[] idAnimales);
 }

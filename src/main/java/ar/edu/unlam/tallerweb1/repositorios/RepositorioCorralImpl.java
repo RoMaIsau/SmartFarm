@@ -80,4 +80,12 @@ public class RepositorioCorralImpl implements RepositorioCorral {
 			.setParameterList("idAnimales", idAnimales)
 			.executeUpdate();
 	}
+
+	@Override
+	public void quitarAnimales(Corral corral) {
+		this.sessionFactory.getCurrentSession()
+			.createQuery("update AnimalDeGranja a set a.corral = null where a.corral = :corral")
+			.setParameter("corral", corral)
+			.executeUpdate();
+	}
 }

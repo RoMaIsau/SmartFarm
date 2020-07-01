@@ -39,6 +39,7 @@ public class ServicioCorralImpl implements ServicioCorral {
 
 	@Override
 	public void eliminar(Corral corral) {
+		quitarAnimales(corral);
 		this.repositorioCorral.eliminar(corral);
 	}
 
@@ -60,5 +61,10 @@ public class ServicioCorralImpl implements ServicioCorral {
 	@Override
 	public void asignarAnimales(Long idCorral, Long[] idAnimales) {
 		this.repositorioCorral.asignarAnimales(idCorral, idAnimales);
+	}
+
+	@Override
+	public void quitarAnimales(Corral corral) {
+		this.repositorioCorral.quitarAnimales(corral);
 	}
 }
