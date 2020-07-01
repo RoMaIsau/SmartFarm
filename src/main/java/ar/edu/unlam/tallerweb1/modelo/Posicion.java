@@ -1,10 +1,23 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 public class Posicion {
 
 	private double longitud;
 	private double latitud;
 	private String identificador;
+	private DecimalFormat decimalFormat;
+	
+	public Posicion() {
+		
+		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+		simbolos.setDecimalSeparator('.');
+		simbolos.setGroupingSeparator(',');
+		
+		this.decimalFormat = new DecimalFormat("##.#######", simbolos);
+	}
 
 	public String getIdentificador() {
 		return identificador;
@@ -32,7 +45,7 @@ public class Posicion {
 
 	@Override
 	public String toString() {
-		return String.format("Identificador:%s - Latitud:%.7f - Longitud:%.7f",
-				this.identificador, this.latitud, this.longitud);
+		return String.format("Identificador:%s - Latitud:%s - Longitud:%s",
+				this.identificador, this.decimalFormat.format(this.latitud), this.decimalFormat.format(this.longitud));
 	}
 }

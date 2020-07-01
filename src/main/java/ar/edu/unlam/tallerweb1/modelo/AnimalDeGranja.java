@@ -20,56 +20,43 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class AnimalDeGranja {
-	
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private TipoAnimal tipo;
-	
+
 	@ManyToOne
 	private Raza raza;
-	
+
 	@ManyToOne
 	private Genero genero;
 
-	
-	
-	
+	private Calendar fechaNacimiento;
+
+	private Double peso;
+
+	@OneToOne(cascade= {CascadeType.ALL})
+	private HistoriaClinica historia;
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Vacuna> vacunasParaAplicar=new ArrayList<Vacuna>();
+
+	@Column(unique = true)
+	private String identificadorGps;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Corral corral;
+
 	public Calendar getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-
 	public void setFechaNacimiento(Calendar fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
-	
-
-	private Calendar fechaNacimiento;
-	private Double peso;
-
-	
-	
-	@OneToOne(cascade= {CascadeType.ALL})
-	private HistoriaClinica historia;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Vacuna> vacunasParaAplicar=new ArrayList<Vacuna>();
-	
-	
-	
-	
-	
-
-
-
-
-	
 
 	public HistoriaClinica getHistoria() {
 		return historia;
@@ -87,11 +74,6 @@ public class AnimalDeGranja {
 		this.vacunasParaAplicar = vacunasParaAplicar;
 	}
 
-
-	@Column(unique = true)
-	private String identificadorGps;
-
-
 	public Long getId() {
 		return id;
 	}
@@ -99,12 +81,6 @@ public class AnimalDeGranja {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
-	
-	
-
-	
 
 	public TipoAnimal getTipo() {
 		return tipo;
@@ -138,7 +114,6 @@ public class AnimalDeGranja {
 		this.peso = peso;
 	}
 
-
 	public void setIdentificadorGps(String identificadorGps) {
 		this.identificadorGps = identificadorGps;
 	}
@@ -147,6 +122,13 @@ public class AnimalDeGranja {
 		return identificadorGps;
 	}
 
+	public void setCorral(Corral corral) {
+		this.corral = corral;
+	}
+
+	public Corral getCorral() {
+		return corral;
+	}
 
 	@Override
     public boolean equals(Object objeto) {
@@ -168,7 +150,4 @@ public class AnimalDeGranja {
 
         return this.id != null ? this.id.hashCode() : super.hashCode();
     }
-
-	
-
 }

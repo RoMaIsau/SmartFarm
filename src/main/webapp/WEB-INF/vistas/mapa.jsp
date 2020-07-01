@@ -129,7 +129,8 @@
 					</div>
 				</div>
 				<!-- /.container-fluid -->
-
+				<div id="contenedorAsignacionCorral">
+				</div>
 			</div>
 			<!-- End of Main Content -->
 
