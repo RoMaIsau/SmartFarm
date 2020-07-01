@@ -20,4 +20,6 @@ public interface ServicioVacunas {
 
 	List<Vacuna> alarmaVacuna(AnimalDeGranja animal);
 
+	List<Vacunar> obtenerVacunasAplicadas(Long idAnimal);
+
 }
