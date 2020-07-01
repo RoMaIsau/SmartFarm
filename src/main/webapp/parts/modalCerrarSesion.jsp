@@ -13,7 +13,7 @@
 			<div class="modal-body">Si desea cerrar sesión, seleccione 'Salir'</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-				<a class="btn btn-danger" href="cerrarSesion">Salir</a>
+				<a class="btn btn-danger" href="${contextPath}/cerrarSesion">Salir</a>
 			</div>
 		</div>
 	</div>
