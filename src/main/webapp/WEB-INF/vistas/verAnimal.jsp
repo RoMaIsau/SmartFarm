@@ -184,6 +184,34 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3 mx-0 row justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-bordered" width="100%"
+											cellspacing="0">
+											<thead>
+												<tr>
+													<th>Vacuna</th>
+													<th>Fecha</th>
+												</tr>
+											</thead>
+											<tbody>
+		<%-- 										<c:forEach items="${usuarios}" var="usuario"> --%>
+													<tr>
+														<td>Leptodisasdsaf</td>
+														<td>27/10/2020</td>
+													</tr>
+		<%-- 										</c:forEach> --%>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<!-- /.container-fluid -->
 
