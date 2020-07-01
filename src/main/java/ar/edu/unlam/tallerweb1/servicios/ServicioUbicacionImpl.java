@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Posicion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
+import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUbicacion;
 
@@ -32,7 +33,21 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	private RepositorioUbicacion repositorioUbicacion;
 	private RepositorioAnimalUbicacion repositorioAnimalUbicacion;
-
+	
+	@Inject
+	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
+	/*
+	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(35.280943, 59.242249, 35.275880, 59.232271, 35.273971, 59.256475, 35.269674, 59.244542, 35.275999, 59.244134);
+	*/
+	/*
+	private UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();*/
+	/*
+	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(ubicacionesCentralesDeLaBA.getLatitudCaprinoCentral(), ubicacionesCentralesDeLaBA.getLongitudCaprinoCentral(),
+																			ubicacionesCentralesDeLaBA.getLatitudEquinoCentral(), ubicacionesCentralesDeLaBA.getLongitudEquinoCentral(),
+																			ubicacionesCentralesDeLaBA.getLatitudOvinoCentral(), ubicacionesCentralesDeLaBA.getLongitudOvinoCentral(),
+																			ubicacionesCentralesDeLaBA.getLatitudPorcinoCentral(), ubicacionesCentralesDeLaBA.getLongitudPorcinoCentral(),
+																			ubicacionesCentralesDeLaBA.getLatitudVacunoCentral(), ubicacionesCentralesDeLaBA.getLongitudVacunoCentral());*/
+	
 	@Autowired
 	public ServicioUbicacionImpl(RepositorioUbicacion repositorioUbicacion,
 			RepositorioAnimalUbicacion repositorioAnimalUbicacion) {
@@ -110,8 +125,10 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		return (int) distanciaEnMetros;
 	}
-
+	
 	public Double crearLatitudAleatorea(AnimalDeGranja a) {
+		UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
+		
 		Double n = 0.0;
 		int x = 0;
 		x = (int) ( (Math.random() * (1000 - 1)) + 1);
@@ -120,12 +137,11 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			servicioNotificacion.crearNotificacionAnimalFueraDeLugar(a.getId());
 		}
 		
-		
 		switch (a.getTipo().getNombre()) {
-
+		
 		case "VACUNO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLatitudVacunoCentral() + 0.0015) - (ubicacionesCentrales.getLatitudVacunoCentral() - 0.0015))) + (ubicacionesCentrales.getLatitudVacunoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
 			}
@@ -134,7 +150,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "CAPRINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLatitudCaprinoCentral() + 0.0015) - (ubicacionesCentrales.getLatitudCaprinoCentral() - 0.0015))) + (ubicacionesCentrales.getLatitudCaprinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
 			}
@@ -142,7 +158,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "EQUINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (35.277380 - 35.274380)) + 35.274380);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLatitudEquinoCentral() + 0.0015) - (ubicacionesCentrales.getLatitudEquinoCentral() - 0.0015))) + (ubicacionesCentrales.getLatitudEquinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
 			}
@@ -150,7 +166,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "OVINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (35.275471 - 35.272471)) + 35.272471);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLatitudOvinoCentral() + 0.0015) - (ubicacionesCentrales.getLatitudOvinoCentral() - 0.0015))) + (ubicacionesCentrales.getLatitudOvinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (35.282443 - 35.279443)) + 35.279443);
 			}
@@ -158,7 +174,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "PORCINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (35.271174 - 35.268174)) + 35.268174);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLatitudPorcinoCentral() + 0.0015) - (ubicacionesCentrales.getLatitudPorcinoCentral() - 0.0015))) + (ubicacionesCentrales.getLatitudPorcinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (35.277499 - 35.274499)) + 35.274499);
 			}
@@ -169,6 +185,8 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 	}
 
 	public Double crearLongitudAleatorea(AnimalDeGranja a) {
+		UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
+		
 		Double n = 0.0;
 		int x = 0;
 		x = (int) ( (Math.random() * (1000 - 1)) + 1);
@@ -182,7 +200,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "VACUNO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLongitudVacunoCentral() + 0.0015) - (ubicacionesCentrales.getLongitudVacunoCentral() - 0.0015))) + (ubicacionesCentrales.getLongitudVacunoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
 			}
@@ -190,7 +208,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "CAPRINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLongitudCaprinoCentral() + 0.0015) - (ubicacionesCentrales.getLongitudCaprinoCentral() - 0.0015))) + (ubicacionesCentrales.getLongitudCaprinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
 			}
@@ -198,7 +216,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "EQUINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (59.233771 - 59.230771)) + 59.230771);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLongitudEquinoCentral() + 0.0015) - (ubicacionesCentrales.getLongitudEquinoCentral() - 0.0015))) + (ubicacionesCentrales.getLongitudEquinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
 			}
@@ -206,7 +224,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "OVINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (59.257975 - 59.254975)) + 59.254975);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLongitudOvinoCentral() + 0.0015) - (ubicacionesCentrales.getLongitudOvinoCentral() - 0.0015))) + (ubicacionesCentrales.getLongitudOvinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (59.243749 - 59.240749)) + 59.240749);
 			}
@@ -214,7 +232,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 		case "PORCINO":
 			if(x <= 997) {
-				n = (Double) ((Double) (Math.random() * (59.246042 - 59.243042)) + 59.243042);
+				n = (Double) ((Double) (Math.random() * ((ubicacionesCentrales.getLongitudPorcinoCentral() + 0.0015) - (ubicacionesCentrales.getLongitudPorcinoCentral() - 0.0015))) + (ubicacionesCentrales.getLongitudPorcinoCentral() - 0.0015));
 			} else {
 				n = (Double) ((Double) (Math.random() * (59.245634 - 59.242634)) + 59.242634);
 			}

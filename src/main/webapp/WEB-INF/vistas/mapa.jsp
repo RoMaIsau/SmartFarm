@@ -79,8 +79,18 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
-					<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+					
+					<div class="row">
+						<div class="col-md-2 col-xs-6 col-sm-6 mb-4">
+							<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+						</div>
+						<div class="col-md-2 col-xs-6 col-sm-6 offset-md-8 mb-4">
+							<a href="cambiarcoordenadas" class="btn btn-success">
+								<span class="icon text-white-50"></span>
+								<span class="text">Cambiar coordenadas</span>
+							</a>
+						</div>
+					</div>
 					
 					<div id="corral-seleccionado"></div>
 					<div id="map" style="height: 500px; width: 100%;"></div>

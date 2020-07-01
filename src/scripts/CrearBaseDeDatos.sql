@@ -84,6 +84,59 @@ INSERT INTO Raza VALUES(20, "VACA CANARIA", 5);
 INSERT INTO Genero VALUES(1, "HEMBRA");
 INSERT INTO Genero VALUES(2, "MACHO");
 
+-- ANIMALES PARA PRUEBAS DEL MAPA
+INSERT INTO animalDeGranja (tipo_id, raza_id, genero_id, peso) VALUES
+/* Se agregan CAPRINO */
+(1, 1, 1, 80),
+(1, 2, 1, 80),
+(1, 3, 1, 75),
+(1, 4, 1, 75),
+(1, 1, 2, 80),
+(1, 2, 2, 80),
+(1, 3, 2, 75),
+(1, 4, 2, 75),
+/* Se agregan EQUINO */
+(2, 5, 1, 90),
+(2, 6, 1, 90),
+(2, 7, 1, 85),
+(2, 8, 1, 85),
+(2, 5, 2, 90),
+(2, 6, 2, 90),
+(2, 7, 2, 85),
+(2, 8, 2, 85),
+/* Se agregan OVINO */
+(3, 9, 1, 60),
+(3, 10, 1, 60),
+(3, 11, 1, 65),
+(3, 12, 1, 65),
+(3, 9, 2, 60),
+(3, 10, 2, 60),
+(3, 11, 2, 65),
+(3, 12, 2, 65),
+/* Se agregan PORCINO */
+(4, 13, 1, 100),
+(4, 14, 1, 100),
+(4, 15, 1, 95),
+(4, 16, 1, 95),
+(4, 13, 2, 100),
+(4, 14, 2, 100),
+(4, 15, 2, 95),
+(4, 16, 2, 95),
+/* Se agregan VACUNO */
+(5, 17, 1, 110),
+(5, 18, 1, 110),
+(5, 19, 1, 100),
+(5, 20, 1, 100),
+(5, 17, 2, 110),
+(5, 18, 2, 110),
+(5, 19, 2, 100),
+(5, 20, 2, 100);
+
+-- COORDENADAS POR DEFECTO
+INSERT INTO ubicacionesCentrales (latitudCaprinoCentral, longitudCaprinoCentral, latitudEquinoCentral, longitudEquinoCentral, latitudOvinoCentral,
+longitudOvinoCentral, latitudPorcinoCentral, longitudPorcinoCentral, latitudVacunoCentral, longitudVacunoCentral)
+VALUES
+(35.280943, 59.242249, 35.275880, 59.232271, 35.273971, 59.256475, 35.269674, 59.244542, 35.275999, 59.244134);
 -- ANIMALES PARA PRUEBA DE MAPA Y VACUNAS
 INSERT INTO animalDeGranja (peso, genero_id, raza_id, tipo_id, fechaNacimiento) VALUES
 (50, 1,	1, 1, "2020.01.10"),
