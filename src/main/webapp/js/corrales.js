@@ -4,6 +4,7 @@ map.on('draw.delete', eliminarCorral);
 var corralSeleccionado;
 
 function dibujarCorrales() {
+	$('#corral-seleccionado').html("");
 	draw.deleteAll();
 	$.getJSON('corrales', function(featuresCollection) {
 		var corrales = featuresCollection.features;
@@ -29,6 +30,7 @@ function corralSeleccionado(seleccion) {
 
 function generarFormulario(idCorral, nombreCorral) {
 	nombreCorral = nombreCorral === undefined ? "" : nombreCorral;
+	var mostrarLink = idCorral === undefined ? "none" : "block";
 	return `<div class="container-fluid">
 				<form id="formGuardarCorral" class="form-inline">
 					<div class="form-group mx-sm-1">
@@ -36,6 +38,9 @@ function generarFormulario(idCorral, nombreCorral) {
 						<input type="text" class="form-control" id="corral" value="${nombreCorral}" placeholder="Ingresar nombre del corral...">
 					</div>
 					<button id="botonGuardarCorral" type="submit" class="btn btn-primary">Guardar</button>
+					<a style="display:${mostrarLink}" class="linkModalDinamico" id="botonAsignarCorral" data-corral="${idCorral}">
+						<i class="fas fa-edit mx-2 text-info"></i>
+					</a>
 				</form>
 			</div>`;
 }
@@ -69,13 +74,40 @@ function eliminarCorral(evento) {
 			$.ajax({
 				type:'post',
 				url: 'corrales/guardar',
-				contentType : 'application/json',
+				contentType: 'application/json',
 				dataType: 'text',
 				data: JSON.stringify(corralSeleccionado),
 				success: function(respuesta) {
 					dibujarCorrales();
 				}
 			});
+		});
+
+		$(document).on("click", "#botonAsignarCorral", function() {
+			var idCorral = $(this).data('corral');
+			$.ajax({
+				type:'get',
+				url:'corrales/detalle',
+				data:{
+					"idCorral":idCorral
+				},
+				success: function(respuesta) {
+					$('#contenedorAsignacionCorral').html(respuesta);
+					$('#modalDetalleCorral').modal('toggle');
+				}
+			});
+		});
+
+		$(document).on("click", "#botonConfifmarAsignacionCorral", function() {
+			var formulario = $('#formAsignacionDeCorral');
+			$.ajax({
+				type: 'POST',
+				url: 'corrales/asignar',
+				data: formulario.serialize(),
+				success:function(respuesta) {
+					$('#modalDetalleCorral').modal('toggle');
+				}
+			})
 		});
 	});
 })(jQuery);

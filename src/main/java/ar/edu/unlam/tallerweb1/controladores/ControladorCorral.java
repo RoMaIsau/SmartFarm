@@ -5,13 +5,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.formularios.FormularioDeAsignacionDeAnimales;
 import ar.edu.unlam.tallerweb1.mapbox.Feature;
 import ar.edu.unlam.tallerweb1.mapbox.FeatureCollection;
 import ar.edu.unlam.tallerweb1.mapbox.Point;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Corral;
 import ar.edu.unlam.tallerweb1.modelo.Vertice;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCorral;
@@ -74,4 +81,28 @@ public class ControladorCorral {
 		this.servicioCorral.eliminar(corral);
 		return "ok";
 	}
+
+	@RequestMapping("corrales/detalle")
+	public ModelAndView mostrarDetalle(@RequestParam("idCorral")Long idCorral) {
+		String nombreCorral = this.servicioCorral.obtenerNombre(idCorral);
+		List<AnimalDeGranja> animalesEnCorral = this.servicioCorral.obtenerAnimalesPorCorral(idCorral);
+		List<AnimalDeGranja> animalesSinCorral = this.servicioCorral.obtenerAnimalesSinCorral();
+		FormularioDeAsignacionDeAnimales asignacion = new FormularioDeAsignacionDeAnimales();
+		asignacion.setIdCorral(idCorral);
+
+		ModelMap modelo = new ModelMap();
+		modelo.put("nombre", nombreCorral);
+		modelo.put("animalesDelCorral", animalesEnCorral);
+		modelo.put("animalesSueltos", animalesSinCorral);
+		modelo.put("asignacion", asignacion);
+		return new ModelAndView("modalDetalleCorral", modelo);
+	}
+
+	@RequestMapping(value = "corrales/asignar", method = RequestMethod.POST, produces = "text/plain")
+	@ResponseBody
+	public String asignarAnimales(@ModelAttribute FormularioDeAsignacionDeAnimales asignacion) {
+		this.servicioCorral.asignarAnimales(asignacion.getIdCorral(), asignacion.getAnimalesSeleccionados());
+		return "ok";
+	}
+
 }

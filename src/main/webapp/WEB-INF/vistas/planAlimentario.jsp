@@ -51,6 +51,7 @@
 										<td>${formulario.animal.raza.nombre}</td>
 										<td>${formulario.animal.genero.nombre}</td>
 										<td>${formulario.animal.peso}</td>
+									</tr>
 								</table>
 						</div>
 					</div>
