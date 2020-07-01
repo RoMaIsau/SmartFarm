@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Corral;
 
 @Repository
@@ -43,5 +44,40 @@ public class RepositorioCorralImpl implements RepositorioCorral {
 	@Override
 	public void eliminar(Corral corral) {
 		this.sessionFactory.getCurrentSession().remove(corral);
+	}
+
+	@Override
+	public String obtenerNombre(Long idCorral) {
+
+	return this.sessionFactory.getCurrentSession()
+			.createQuery("select c.nombre from Corral c where c.id = :id", String.class)
+			.setParameter("id", idCorral)
+			.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnimalDeGranja> obtenerAnimalesPorCorral(Long idCorral) {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("select a from AnimalDeGranja a where a.corral.id = :idCorral")
+				.setParameter("idCorral", idCorral)
+				.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnimalDeGranja> obtenerAnimalesSinCorral() {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("select a from AnimalDeGranja a where a.corral is null")
+				.list();
+	}
+
+	@Override
+	public void asignarAnimales(Long idCorral, Long[] idAnimales) {
+		this.sessionFactory.getCurrentSession()
+			.createQuery("update AnimalDeGranja a set a.corral.id = :idCorral where a.id in :idAnimales")
+			.setParameter("idCorral", idCorral)
+			.setParameterList("idAnimales", idAnimales)
+			.executeUpdate();
 	}
 }
