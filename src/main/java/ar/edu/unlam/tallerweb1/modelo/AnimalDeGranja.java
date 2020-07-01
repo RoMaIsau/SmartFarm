@@ -47,6 +47,9 @@ public class AnimalDeGranja {
 	@Column(unique = true)
 	private String identificadorGps;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Corral corral;
+
 	public Calendar getFechaNacimiento() {
 		return fechaNacimiento;
 	}
@@ -117,6 +120,14 @@ public class AnimalDeGranja {
 
 	public String getIdentificadorGps() {
 		return identificadorGps;
+	}
+
+	public void setCorral(Corral corral) {
+		this.corral = corral;
+	}
+
+	public Corral getCorral() {
+		return corral;
 	}
 
 	@Override
