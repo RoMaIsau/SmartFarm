@@ -100,11 +100,11 @@
 							<h6 class="m-0 font-weight-bold text-primary">Cantidad de
 								animales ${fn:length(lista)}</h6>
 						</div>
-
+						
+						
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table text-center" id="tabla" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th>ID Animal</th>
@@ -114,8 +114,7 @@
 											<th>Raza</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${lista}" var="lista">
+									<tbody><c:forEach items="${lista}" var="lista">
 											<td>${lista.animal.id}</td>
 											<td hidden>${lista.ultimaUbicacion.longitud}</td>
 											<td hidden>${lista.ultimaUbicacion.latitud}</td>
