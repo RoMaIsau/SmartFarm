@@ -181,7 +181,7 @@
 										</div>
 										<canvas id="chartAlimento" width="1008" height="506"
 											class="chartjs-render-monitor"
-											style="display: block; width: 504px; height: 253px;"></canvas>
+											style="display: block; width: 100%; height: 100%;"></canvas>
 									</div>
 								</div>
 							</div>
