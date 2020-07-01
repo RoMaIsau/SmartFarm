@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,10 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 
 		Session session = sessionFactory.getCurrentSession();
 
-		return session.createCriteria(AnimalUbicacion.class).add(Restrictions.eq("animal.id", idAnimal)).list();
+		return (List<AnimalUbicacion>) session.createCriteria(AnimalUbicacion.class)
+				.add(Restrictions.eq("animal.id", idAnimal))
+				.addOrder(Order.asc("fecha"))
+				.list();
 	}
 
 	@Override
