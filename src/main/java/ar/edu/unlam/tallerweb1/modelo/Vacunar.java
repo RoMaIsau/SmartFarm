@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Vacunar {
 	private AnimalDeGranja animal;
 	
 	
-	private Calendar fechaAplicacion;
+	private LocalDate fechaAplicacion;
 
 	
 	
@@ -49,11 +50,11 @@ public class Vacunar {
 		this.vacuna = vacuna;
 	}
 
-	public Calendar getFechaAplicacion() {
+	public LocalDate getFechaAplicacion() {
 		return fechaAplicacion;
 	}
 
-	public void setFechaAplicacion(Calendar fechaAplicacion) {
+	public void setFechaAplicacion(LocalDate fechaAplicacion) {
 		this.fechaAplicacion = fechaAplicacion;
 	}
 
