@@ -33,16 +33,19 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
-					<h1 class="h3 mb-2 text-gray-800">Estadísticas</h1>
-					<p class="mb-4">A continuación se muestran gráficos sobre datos
-						de los gastos contabilizados</p>
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Estadísticas</h1>
+						<a href="#"
+							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+							class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
+					</div>
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos en total por
-										tipo</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Gastos en
+										total por tipo</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
@@ -88,7 +91,8 @@
 						<div class="col-xl-10 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Tipos de gastos por mes</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Tipos de
+										gastos por mes</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-bar">
