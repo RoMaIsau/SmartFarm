@@ -44,6 +44,7 @@
 #porcino {
 	background-image: url('img/porcino.png');
 }
+
 .mapboxgl-popup {
 	max-width: 200px;
 }
@@ -154,7 +155,8 @@
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Última ubicación</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Última
+										ubicación</h6>
 								</div>
 							</div>
 							<div id="map" class="mb-3" style="height: 52vh; width: 100%;"></div>
@@ -187,7 +189,8 @@
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3 mx-0 row justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Vacunas
+										aplicadas</h6>
 								</div>
 								<div class="card-body">
 									<div class="table-responsive">
@@ -200,12 +203,13 @@
 												</tr>
 											</thead>
 											<tbody>
-		<%-- 										<c:forEach items="${usuarios}" var="usuario"> --%>
+												<c:forEach items="${vacunasAplicadas}"
+													var="vacunasAplicadas">
 													<tr>
-														<td>Leptodisasdsaf</td>
-														<td>27/10/2020</td>
+														<td>${vacunasAplicadas.vacuna.nombre}</td>
+														<td>${vacunasAplicadas.fechaAplicacion}</td>
 													</tr>
-		<%-- 										</c:forEach> --%>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
