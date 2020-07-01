@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -164,6 +165,7 @@ public class ControladorAdmin {
 
 		Usuario usuario = servicioUsuario.consultarUsuarioPorId(id);
 		gastos.setUsuario(usuario);
+		gastos.setFecha(LocalDate.now());
 
 		if (servicioGastos.guardarNuevoRegistro(gastos) != null) {
 			modelo.put("mensaje", "Registro guardado exitosamente.");
