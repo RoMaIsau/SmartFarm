@@ -98,6 +98,9 @@
 												<c:out value="${animal.peso}" />
 												Kg.
 											</div>
+											<div class="text-xs text-muted mt-2">
+												<c:out value="${animal.identificadorGps}" />
+											</div>
 										</div>
 										<div class="col-auto">
 											<c:choose>
