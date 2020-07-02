@@ -139,13 +139,13 @@
 					</form>
 					
 					
-					
+					<div id="corral-seleccionado"></div>
 					<div id="map" style="height: 500px; width: 100%;"></div>
 					<pre id="coordinates" class="coordinates" style="display: block;"></pre>
 					
 				</div>
 				<!-- /.container-fluid -->
-
+				<div id="contenedorAsignacionCorral"></div>
 			</div>
 			<!-- End of Main Content -->
 
@@ -193,7 +193,12 @@
 		        trash: true
 		      }
 		    });
-		
+
+		map.on('load', function(){
+			map.addControl(draw);
+			dibujarCorrales();
+		});
+
 		var marker, i;
 		
 		
@@ -238,41 +243,6 @@
 	
 	
 	
-	<!-- BORRAR -->
-	<script>
-		var x = document.getElementById("demo");
-		
-		function getLocation() {
-		  if (navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(showPosition, showError);
-		  } else { 
-		    x.innerHTML = "Geolocation is not supported by this browser.";
-		  }
-		}
-		
-		function showPosition(position) {
-		  x.innerHTML = "Latitude: " + position.coords.latitude + 
-		  "<br>Longitude: " + position.coords.longitude;
-		}
-		
-		function showError(error) {
-		  switch(error.code) {
-		    case error.PERMISSION_DENIED:
-		      x.innerHTML = "User denied the request for Geolocation."
-		      break;
-		    case error.POSITION_UNAVAILABLE:
-		      x.innerHTML = "Location information is unavailable."
-		      break;
-		    case error.TIMEOUT:
-		      x.innerHTML = "The request to get user location timed out."
-		      break;
-		    case error.UNKNOWN_ERROR:
-		      x.innerHTML = "An unknown error occurred."
-		      break;
-		  }
-		}
-	</script>
-	
 	<script>
 		var coordinates = document.getElementById('coordinates');
 		
@@ -296,90 +266,8 @@
 			if(confirm('¿Desea guardar coordenadas?')==false) {return false} else {form1.Latitud.value = coords.lat; form1.Longitud.value = coords.lng;}
 				
 		});
-		
-		map.on('load', function() {
-		    map.loadImage('img/map_location.png', function(error, image) {
-		        if (error) throw error;
-		        map.addImage('cat', image);
-		        map.addLayer({
-		            "id": "points",
-		            "type": "symbol",
-		            "source": {
-		                "type": "geojson",
-		                "data": {
-		                    "type": "FeatureCollection",
-		                    "features": [{
-		                        "type": "Feature",
-		                        "geometry": {
-		                            "type": "Point",
-		                            "coordinates": [-70.56, -33.4]
-		                        }
-		                    }]
-		                }
-		            },
-		            "layout": {
-		                "icon-image": "cat",
-		                "icon-size": 0.5
-		            }
-		        });
-		    });amplia()
-		});
-		
-		function amplia() {
-			 map.resize();
-		}
-		
-		map.on('load', function() {
-		        map.resize();
-		});
-		
-		//cambio estilo
-		var layerList = document.getElementById('menuMap');
-		var inputs = layerList.getElementsByTagName('input');
-		
-		function switchLayer(layer) {
-		    var layerId = layer.target.id;
-		    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
-		
-		
-		map.on('render', function() {
-		    map.loadImage('img/map_location.png', function(error, image) {
-		        if (error) throw error;
-		        map.addImage('cat', image);
-		        map.addLayer({
-		            "id": "points",
-		            "type": "symbol",
-		            "source": {
-		                "type": "geojson",
-		                "data": {
-		                    "type": "FeatureCollection",
-		                    "features": [{
-		                        "type": "Feature",
-		                        "geometry": {
-		                            "type": "Point",
-		                            "coordinates": [-70.56, -33.4]
-		                        }
-		                    }]
-		                }
-		            },
-		            "layout": {
-		                "icon-image": "cat",
-		                "icon-size": 0.5
-		            }
-		        });
-		    });
-		});
-		}
-		
-		for (var i = 0; i < inputs.length; i++) {
-		    inputs[i].onclick = switchLayer;
-		}
-		//fin cambio estilo
-		
-		map.addControl(new MapboxGeocoder({
-		    accessToken: mapboxgl.accessToken
-		}));
 	</script>
+	<script src="<c:url value="/js/corrales.js"/>"></script>
 	
 </body>
 </html>

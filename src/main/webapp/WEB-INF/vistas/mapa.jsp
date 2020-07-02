@@ -92,7 +92,6 @@
 						</div>
 					</div>
 					
-					<div id="corral-seleccionado"></div>
 					<div id="map" style="height: 500px; width: 100%;"></div>
 						
 					<div class="card shadow mb-4 mt-2">
@@ -114,12 +113,14 @@
 											<th>Raza</th>
 										</tr>
 									</thead>
-									<tbody><c:forEach items="${lista}" var="lista">
-											<td>${lista.animal.id}</td>
-											<td hidden>${lista.ultimaUbicacion.longitud}</td>
-											<td hidden>${lista.ultimaUbicacion.latitud}</td>
-											<td>${lista.animal.tipo.nombre}</td>
-											<td>${lista.animal.raza.nombre}</td>
+									<tbody>
+										<c:forEach items="${lista}" var="lista">
+											<tr>
+												<td>${lista.animal.id}</td>
+												<td hidden>${lista.ultimaUbicacion.longitud}</td>
+												<td hidden>${lista.ultimaUbicacion.latitud}</td>
+												<td>${lista.animal.tipo.nombre}</td>
+												<td>${lista.animal.raza.nombre}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -129,8 +130,6 @@
 					</div>
 				</div>
 				<!-- /.container-fluid -->
-				<div id="contenedorAsignacionCorral">
-				</div>
 			</div>
 			<!-- End of Main Content -->
 
@@ -174,8 +173,8 @@
 		var draw = new MapboxDraw({
 		      displayControlsDefault : false,
 		      controls : {
-		        polygon : true,
-		        trash: true
+		        polygon : false,
+		        trash: false
 		      }
 		    });
 
