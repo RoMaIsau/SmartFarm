@@ -75,7 +75,7 @@
 												<div class="font-weight-bold text-primary text-uppercase mb-1">
 													<a href="/SmartFarm/enfermedades">Ir al historial de enfermedades.</a>
 													<div class="text-xs text-muted mt-2">
-														Se mostrará el registro de las enfermedades a lo largo del tiempo.
+														Se mostrará el registro de las enfermedades a lo largo del año.
 													</div>
 												</div>
 											</div>
@@ -88,6 +88,8 @@
 					
 					<h3 class="text-info">${enfermedad}</h3>
 					
+					
+					
 					<c:if test="${not empty hc}">
 	 					<h3>Historia Clinica:</h3>	       
   						<c:forEach items="${signos}" var="s">
@@ -99,14 +101,33 @@
 					 	<br>
 						</c:forEach>
 					</c:if>	<br>
-
+					
+					
+					
 					<c:if test="${not empty ranking}">
-						<h4 class="text-success">TODAS LAS ENFERMEDADES:</h4><br>
+						<h4 class="text-success">Registro de enfermedades:</h4><br><br>
+						
 						<c:forEach items="${ranking}" var="r">
-							<h4>"La enfermedad ${r.key} se registro ${r.value} veces este año"</h4>
-				  	 	<br>
+							<h4>La enfermedad <span class="font-weight-bold text-uppercase">${r.key}</span> se registro ${r.value} veces este año.</h4>
+						<hr class="sidebar-divider my-0">
+				  	 	<br><br>
 				  	 	</c:forEach>
-						<br>	
+						
+						<div class="row">
+							<div class="col-xl-12 col-md-12 mb-4">
+								<div class="card border-left-primary shadow h-100 py-2">
+									<div class="card-body">
+										<div class="row no-gutters align-items-center">
+											<div class="col mr-2">
+												<div class="font-weight-bold text-primary text-uppercase mb-1">
+													<a href="/SmartFarm/historiaClinica">Volver a los historiales clínicos</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</c:if>							
 				
 				</div>
