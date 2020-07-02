@@ -96,7 +96,7 @@
 
 	<!-- Nav Item - Dashboard -->
 	<c:choose>
-		<c:when test="${ROL == 'Veterinario' || ROL == 'Empleado'}">
+		<c:when test="${ROL == 'Admin' || ROL == 'Empleado'}">
 			<li class="nav-item">
 				<hr class="sidebar-divider d-none d-md-block">
 				<a class="nav-link" href="${contextPath}/mapa">

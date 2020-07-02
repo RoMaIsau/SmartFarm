@@ -96,7 +96,7 @@ public class ControladorMapa {
 	public ModelAndView irAModificarCoordenadas(HttpServletRequest request, ModelMap model) {
 		String rol = (String) request.getSession().getAttribute("ROL");
 		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-		if (!rol.equals("Veterinario") || rol == null) {
+		if (rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
 
@@ -119,7 +119,7 @@ public class ControladorMapa {
 		ModelMap model = new ModelMap();
 		String rol = (String) request.getSession().getAttribute("ROL");
 		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-		if (!rol.equals("Veterinario") || rol == null) {
+		if (rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
 
@@ -166,7 +166,7 @@ public class ControladorMapa {
 		ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
 		model.put("ubicacionesCentrales", ubicacionesCentrales);
 
-		model.put("mensaje", "Ubicaciï¿½n modificada exitosamente.");
+		model.put("mensaje", "Ubicación modificada exitosamente.");
 		return new ModelAndView("mapaCoordenadaAModificar", model);
 	}
 
