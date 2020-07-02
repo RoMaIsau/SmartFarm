@@ -220,8 +220,8 @@ public class ControladorVeterinario{
 	
   	   
   	 @RequestMapping("/historiaClinica")
- 	public ModelAndView verHistoria() {
- 	     
+ 	public ModelAndView verHistoria(HttpServletRequest request) {
+  		String rol = (String) request.getSession().getAttribute("ROL");
  	       
               
               
@@ -237,7 +237,8 @@ public class ControladorVeterinario{
    	ModelMap modelo= new ModelMap();
     
     modelo.put("animales",animalesNoRepetidos);
-  
+    modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+    modelo.put("mostrarTabla", "si");
  
   
 
