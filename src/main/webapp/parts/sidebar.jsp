@@ -39,54 +39,73 @@
 	</li>
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item"><c:choose>
-			<c:when test="${ROL == 'Admin'}">
-				<!-- Divider -->
+	<c:choose>
+		<c:when test="${ROL == 'Admin'}">
+			<!-- Divider -->
+			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/gastos"> <i
-					class="fas fa-dollar-sign"></i> <span>Gastos</span>
+				<a class="nav-link" href="${contextPath}/gastos">
+					<i class="fas fa-dollar-sign"></i>
+					<span>Gastos</span>
 				</a>
-			</c:when>
-			<c:when test="${ROL == 'Veterinario'}">
-				<!-- Divider -->
+			</li>
+		</c:when>
+		<c:when test="${ROL == 'Veterinario'}">
+			<!-- Divider -->
+			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="seccion2"> <i class="fas fa-user"></i>
+				<a class="nav-link" href="seccion2">
+					<i class="fas fa-user"></i>
 					<span>Seccion 2</span>
 				</a>
-			</c:when>
-			<c:when test="${ROL == 'Empleado'}">
-				<!-- Divider -->
+			</li>
+		</c:when>
+		<c:when test="${ROL == 'Empleado'}">
+			<!-- Divider -->
+			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/stock"><i
-					class="fas fa-boxes"></i> <span>Stock</span> </a>
-			</c:when>
-		</c:choose></li>
+				<a class="nav-link" href="${contextPath}/stock">
+					<i class="fas fa-boxes"></i>
+					<span>Stock</span>
+				</a>
+			</li>
+		</c:when>
+	</c:choose>
 
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item"><c:choose>
-			<c:when test="${ROL == 'Admin'}">
+	<c:choose>
+		<c:when test="${ROL == 'Admin'}">
+			<li class="nav-item">
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/estadisticas"> <i
 					class="fas fa-chart-pie"></i> <span>Estadísticas</span>
 				</a>
-			</c:when>
-			<c:when test="${ROL == 'Veterinario'}">
+			</li>
+		</c:when>
+		<c:when test="${ROL == 'Veterinario'}">
+			<li class="nav-item">
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/seccion3"> <i
 					class="fas fa-user"></i> <span>Seccion 3</span>
 				</a>
-			</c:when>
-		</c:choose></li>
+			</li>
+		</c:when>
+	</c:choose>
 
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item">
-		<hr class="sidebar-divider d-none d-md-block"> <a
-		class="nav-link" href="${contextPath}/mapa"> <i
-			class="fas fa-map-marked-alt"></i> <span>Mapa</span>
-	</a>
-	</li>
+	<c:choose>
+		<c:when test="${ROL == 'Veterinario' || ROL == 'Empleado'}">
+			<li class="nav-item">
+				<hr class="sidebar-divider d-none d-md-block">
+				<a class="nav-link" href="${contextPath}/mapa">
+					<i class="fas fa-map-marked-alt"></i>
+					<span>Mapa</span>
+				</a>
+			</li>
+		</c:when>
+	</c:choose>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">
