@@ -88,6 +88,14 @@
 														</div>
 													</div>
 												</div>
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="identificadorGps">Identificador GPS</label>
+															<form:input id="identificadorGps" path="identificadorGps" class="form-control"/>
+														</div>
+													</div>
+												</div>
 												<form:button class="btn btn-primary btn-user btn-block text-white">Registrar</form:button>
 											</form:form>
 										</div>
