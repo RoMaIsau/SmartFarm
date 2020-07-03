@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.*,java.util.*"%>
 <%!DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -38,11 +38,12 @@
 				<div class="container-fluid">
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Estadísticas</h1>
+						<h1 class="h3 mb-0 text-gray-800">EstadÃ­sticas</h1>
 						<a href="#" id="descargarPDF"
 							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
 							class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
 					</div>
+					<div class="mb-1" id="alertaPDF"></div>
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
@@ -164,7 +165,7 @@
 						</c:forEach> ]
 					},
 					{
-						label : 'Médico',
+						label : 'MÃ©dico',
 						backgroundColor : '#89C7B6',
 						borderColor : '#89C7B6',
 						borderWidth : 1,
@@ -173,7 +174,7 @@
 						</c:forEach> ]
 					},
 					{
-						label : 'Tecnológico',
+						label : 'TecnolÃ³gico',
 						backgroundColor : '#7998C9',
 						borderColor : '#7998C9',
 						borderWidth : 1,
@@ -203,8 +204,8 @@
 				labels: [
 					'Alimenticio',
 					'Empresarial',
-					'Médico',
-					'Tecnológico'
+					'MÃ©dico',
+					'TecnolÃ³gico'
 				]
 			},
 			options: {
@@ -403,10 +404,15 @@
 		  
 		  // download the pdf
 		  pdf.save('filename.pdf');
+		  
+		  document.getElementById('alertaPDF').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
+			  'Reporte de gastos generado exitosamente!'+
+			  '<button type="button" class="close" data-dismiss="alert" aria-label="Close"'+
+			    '<span aria-hidden="true">&times;</span></button></div>';
 		});
 		
 		/* Fin generar pdf */
-	
+		
 	</script>
 
 </body>
