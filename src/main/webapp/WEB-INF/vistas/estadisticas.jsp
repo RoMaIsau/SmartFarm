@@ -220,7 +220,7 @@
 				]
 			},
 			options: {
-				responsive: true
+				responsive: true,
 			}
 		};
 		
@@ -359,7 +359,7 @@
 		
 		  // keep track canvas position
 		  var pdfctx = $(pdfCanvas)[0].getContext('2d');
-		  var pdfctxX = 200;
+		  var pdfctxX = 40;
 		  var pdfctxY = 100;
 		  var buffer = 100;
 			
@@ -377,24 +377,23 @@
 		    
  		    // our report page is in a grid pattern so replicate that in the new canvas
 		    if (index % 2 === 1) {
-		      pdfctxX = 200;
+		      pdfctxX = 100;
 		      pdfctxY += canvasHeight + buffer;
 		    }
 		  });
 		  
-		  
-		
 		  // create new pdf and add our new canvas as an image
-		  var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+		  var pdf = new jsPDF('l', 'pt', [870, 733]);
 		  pdf.setFontSize(24)
-		  pdf.text(10, 35, 'Reporte de gastos - SmartFarm')
+		  pdf.text(20, 45, 'SmartFarm - Reporte de gastos')
+		  
 		  pdf.setFontSize(11)
-		  pdf.text(10, 55, 'Generado el dia: '+ "<%=now%>")
+		  pdf.text(20, 65, 'Generado el dia: '+ "<%=now%>")
+		  
 		  pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+		  
 		  pdf.setProperties({title: 'SmartFarm - Gastos'});
 		  
-		  
-
 		  // download the pdf
 		  pdf.save('filename.pdf');
 		});
