@@ -109,7 +109,11 @@ public class ControladorAdmin {
 		}
 
 		ModelMap modelo = new ModelMap();
-
+		
+		Long idUsuario = (Long) request.getSession().getAttribute("ID");
+		
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);
+		
 		TreeMap<Integer, Double> alimenticio = servicioGastos.consultarGastosPorMes("Alimenticio");
 		TreeMap<Integer, Double> tecnologico = servicioGastos.consultarGastosPorMes("Tecnológico");
 		TreeMap<Integer, Double> medico = servicioGastos.consultarGastosPorMes("Médico");
@@ -118,7 +122,8 @@ public class ControladorAdmin {
 		List<Gastos> gastosEnTotalPorTipo = servicioGastos.consultarGastosEnTotalPorTipo();
 		
 		TreeMap<Integer, Double> gastosEnTotalPorMes = servicioGastos.consultarGastosEnTotal();
-
+		
+		modelo.put("usuario", usuario);
 		modelo.put("alimenticio", alimenticio);
 		modelo.put("tecnologico", tecnologico);
 		modelo.put("medico", medico);

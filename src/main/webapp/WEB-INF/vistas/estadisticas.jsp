@@ -361,17 +361,16 @@
 		  // create a new canvas object that we will populate with all other canvas objects
 		  var pdfCanvas = $('<canvas />').attr({
 		    id: "canvaspdf",
-		    width: reportPageWidth,
-		    height: reportPageHeight
+		    width: reportPageWidth + 30,
+		    height: reportPageHeight + 30
 		  });
 		
 		  // keep track canvas position
 		  var pdfctx = $(pdfCanvas)[0].getContext('2d');
-		  var pdfctxX = 40;
-		  var pdfctxY = 100;
-		  var buffer = 100;
+		  var pdfctxX = 30;
+		  var pdfctxY = 140;
+		  var buffer = 70;
 			
-		  console.log(pdfctx);
 		  // for each chart.js chart
 		  $("canvas").each(function(index) {
 		    // get the chart height/width
@@ -382,21 +381,21 @@
 		    pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
 		    pdfctxX += canvasWidth + buffer;
 			
-		    
  		    // our report page is in a grid pattern so replicate that in the new canvas
 		    if (index % 2 === 1) {
-		      pdfctxX = 100;
+		      pdfctxX = 150;
 		      pdfctxY += canvasHeight + buffer;
 		    }
 		  });
 		  
 		  // create new pdf and add our new canvas as an image
-		  var pdf = new jsPDF('l', 'pt', [870, 733]);
+		  var pdf = new jsPDF('l', 'pt', [870, 735]);
+		  
 		  pdf.setFontSize(24)
-		  pdf.text(20, 45, 'SmartFarm - Reporte de gastos')
+		  pdf.text(20, 55, 'SmartFarm - Reporte de gastos')
 		  
 		  pdf.setFontSize(11)
-		  pdf.text(20, 65, 'Generado el dia: '+ "<%=now%>")
+		  pdf.text(20, 75, "Generado el dia "+"<%=now%>" + ", por "+"${usuario.nombre} ${usuario.apellido}")
 		  
 		  pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
 		  
