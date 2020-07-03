@@ -36,7 +36,7 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Estadísticas</h1>
-						<a href="#"
+						<a href="#" id="descargarPDF"
 							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
 							class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
 					</div>
@@ -145,6 +145,7 @@
 	<%@ include file="../../parts/scripts.jsp"%>
 
 	<script type="text/javascript" src="<c:url value="/js/Chart.min.js"/>"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
 	<script>
 		/* Grafico gastos por mes */ 		
@@ -315,6 +316,7 @@
 		});
 		
 		/* Fin grafico line gastos en total */ 
+		
 
 		window.onload = function() {
 			var chartTotal = document.getElementById('gastosEnTotalPorTipo').getContext('2d');
@@ -337,6 +339,56 @@
 			});
 		};
 		
+		/* Generar pdf */
+		$('#descargarPDF').click(function(event) {
+		  
+		  // get size of report page
+		  var reportPageHeight = $('.container-fluid').innerHeight();
+		  var reportPageWidth = $('.container-fluid').innerWidth();
+		
+		  // create a new canvas object that we will populate with all other canvas objects
+		  var pdfCanvas = $('<canvas />').attr({
+		    id: "canvaspdf",
+		    width: reportPageWidth,
+		    height: reportPageHeight
+		  });
+		
+		  // keep track canvas position
+		  var pdfctx = $(pdfCanvas)[0].getContext('2d');
+		  var pdfctxX = 200;
+		  var pdfctxY = 100;
+		  var buffer = 100;
+			
+		  console.log(pdfctx);
+		  // for each chart.js chart
+		  $("canvas").each(function(index) {
+		    // get the chart height/width
+		    var canvasHeight = $(this).innerHeight();
+		    var canvasWidth = $(this).innerWidth();
+		
+		 // draw the chart into the new canvas
+		    pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
+		    pdfctxX += canvasWidth + buffer;
+
+		    // our report page is in a grid pattern so replicate that in the new canvas
+		    if (index % 2 === 1) {
+		      pdfctxX = 0;
+		      pdfctxY += canvasHeight + buffer;
+		    }
+		  });
+
+		  // create new pdf and add our new canvas as an image
+		  var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+		  pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+		  pdf.setProperties({title: 'Some DocumentTitle'});
+		  
+
+		  // download the pdf
+		  pdf.save('filename.pdf');
+		});
+		
+		/* Fin generar pdf */
+	
 	</script>
 
 </body>
