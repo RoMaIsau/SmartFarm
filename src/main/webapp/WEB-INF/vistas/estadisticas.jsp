@@ -221,6 +221,16 @@
 			},
 			options: {
 				responsive: true,
+				legend : {
+					position : 'bottom',
+				},
+				title : {
+					display : true,
+					text : 'Gastos en total por tipo',
+					fontStyle: 'bold',
+					fontSize: 16,
+					fontColor: '#22A45A'
+				}
 			}
 		};
 		
@@ -315,7 +325,14 @@
 		          return datasetLabel + ': $' + tooltipItem.yLabel;
 		        }
 		      }
-		    }
+		    },
+		    title : {
+				display : true,
+				text : 'Gastos en total por mes',
+				fontStyle: 'bold',
+				fontSize: 16,
+				fontColor: '#22A45A'
+			}
 		  }
 		});
 		
@@ -333,11 +350,14 @@
 				options : {
 					responsive : true,
 					legend : {
-						position : 'top',
+						position : 'bottom',
 					},
 					title : {
 						display : true,
-						text : 'Gastos por mes en pesos'
+						text : 'Tipos de gastos por mes',
+						fontStyle: 'bold',
+						fontSize: 16,
+						fontColor: '#22A45A'
 					}
 				}
 			});
