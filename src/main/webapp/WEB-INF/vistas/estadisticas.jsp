@@ -46,11 +46,7 @@
 					<div class="row">
 						<div class="col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos en
-										total por tipo</h6>
-								</div>
-								<div class="card-body">
+								<div class="card-body p-2">
 									<div class="chart-bar">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -69,11 +65,7 @@
 						</div>
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Gastos en
-										total por mes</h6>
-								</div>
-								<div class="card-body">
+								<div class="card-body p-2">
 									<div class="chart-bar">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -93,11 +85,7 @@
 					<div class="row justify-content-center">
 						<div class="col-xl-10 col-lg-7">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Tipos de
-										gastos por mes</h6>
-								</div>
-								<div class="card-body">
+								<div class="card-body p-3">
 									<div class="chart-bar">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -331,7 +319,7 @@
 				text : 'Gastos en total por mes',
 				fontStyle: 'bold',
 				fontSize: 16,
-				fontColor: '#22A45A'
+				fontColor: '#22A45A',
 			}
 		  }
 		});
