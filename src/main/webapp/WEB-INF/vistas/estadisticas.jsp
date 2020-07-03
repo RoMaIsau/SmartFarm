@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.text.*,java.util.*" session="false"%>
+<%@ page import="java.text.*,java.util.*"%>
 <%!DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 	String now = fmt.format(new Date());%>
 <!DOCTYPE html>
