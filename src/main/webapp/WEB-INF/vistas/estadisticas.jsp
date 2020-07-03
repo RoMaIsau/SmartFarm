@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.text.*,java.util.*" session="false"%>
+<%!DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+	String now = fmt.format(new Date());%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,7 +148,8 @@
 	<%@ include file="../../parts/scripts.jsp"%>
 
 	<script type="text/javascript" src="<c:url value="/js/Chart.min.js"/>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
 	<script>
 		/* Grafico gastos por mes */ 		
@@ -345,7 +349,7 @@
 		  // get size of report page
 		  var reportPageHeight = $('.container-fluid').innerHeight();
 		  var reportPageWidth = $('.container-fluid').innerWidth();
-		
+		  
 		  // create a new canvas object that we will populate with all other canvas objects
 		  var pdfCanvas = $('<canvas />').attr({
 		    id: "canvaspdf",
@@ -369,18 +373,26 @@
 		 // draw the chart into the new canvas
 		    pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
 		    pdfctxX += canvasWidth + buffer;
-
-		    // our report page is in a grid pattern so replicate that in the new canvas
+			
+		    
+ 		    // our report page is in a grid pattern so replicate that in the new canvas
 		    if (index % 2 === 1) {
-		      pdfctxX = 0;
+		      pdfctxX = 200;
 		      pdfctxY += canvasHeight + buffer;
 		    }
 		  });
-
+		  
+		  
+		
 		  // create new pdf and add our new canvas as an image
 		  var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+		  pdf.setFontSize(24)
+		  pdf.text(10, 35, 'Reporte de gastos - SmartFarm')
+		  pdf.setFontSize(11)
+		  pdf.text(10, 55, 'Generado el dia: '+ "<%=now%>")
 		  pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
-		  pdf.setProperties({title: 'Some DocumentTitle'});
+		  pdf.setProperties({title: 'SmartFarm - Gastos'});
+		  
 		  
 
 		  // download the pdf
