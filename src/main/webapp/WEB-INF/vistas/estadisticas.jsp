@@ -389,7 +389,7 @@
 		  });
 		  
 		  // create new pdf and add our new canvas as an image
-		  var pdf = new jsPDF('l', 'pt', [870, 735]);
+		  var pdf = new jsPDF('l', 'pt', [870, 700]);
 		  
 		  pdf.setFontSize(24)
 		  pdf.text(20, 55, 'SmartFarm - Reporte de gastos')
