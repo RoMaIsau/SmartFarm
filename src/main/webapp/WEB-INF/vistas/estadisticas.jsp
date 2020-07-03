@@ -403,7 +403,7 @@
 		  pdf.setProperties({title: 'SmartFarm - Gastos'});
 		  
 		  // download the pdf
-		  pdf.save('filename.pdf');
+		  pdf.save('SmartFarm - Reporte de gastos.pdf');
 		  
 		  document.getElementById('alertaPDF').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
 			  'Reporte de gastos generado exitosamente!'+
