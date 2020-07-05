@@ -6,7 +6,7 @@ var corralSeleccionado;
 function dibujarCorrales() {
 	$('#corral-seleccionado').html("");
 	draw.deleteAll();
-	$.getJSON('corrales', function(featuresCollection) {
+	$.getJSON(contextPath + '/corrales', function(featuresCollection) {
 		var corrales = featuresCollection.features;
 		for (i = 0; i < corrales.length; i++) {
 			draw.add(corrales[i]);
@@ -53,7 +53,7 @@ function eliminarCorral(evento) {
 		var corralParaEliminar = { "id" : id };
 		$.ajax({
 			type: 'post',
-			url: 'corrales/eliminar',
+			url: contextPath + '/corrales/eliminar',
 			contentType : 'application/json',
 			dataType: 'text',
 			data: JSON.stringify(corralParaEliminar),
@@ -73,7 +73,7 @@ function eliminarCorral(evento) {
 			corralSeleccionado.properties.nombre = $("#corral").val();
 			$.ajax({
 				type:'post',
-				url: 'corrales/guardar',
+				url: contextPath + '/corrales/guardar',
 				contentType: 'application/json',
 				dataType: 'text',
 				data: JSON.stringify(corralSeleccionado),
@@ -87,7 +87,7 @@ function eliminarCorral(evento) {
 			var idCorral = $(this).data('corral');
 			$.ajax({
 				type:'get',
-				url:'corrales/detalle',
+				url: contextPath + '/corrales/detalle',
 				data:{
 					"idCorral":idCorral
 				},
@@ -102,7 +102,7 @@ function eliminarCorral(evento) {
 			var formulario = $('#formAsignacionDeCorral');
 			$.ajax({
 				type: 'POST',
-				url: 'corrales/asignar',
+				url: contextPath + '/corrales/asignar',
 				data: formulario.serialize(),
 				success:function(respuesta) {
 					$('#modalDetalleCorral').modal('toggle');
