@@ -104,6 +104,13 @@
 					<span>Mapa</span>
 				</a>
 			</li>
+			<li class="nav-item">
+				<hr class="sidebar-divider d-none d-md-block">
+				<a class="nav-link" href="${contextPath}/ubicaciones/mapa">
+					<i class="fas fa-map-marked-alt"></i>
+					<span>Ubicación en tiempo real</span>
+				</a>
+			</li>
 		</c:when>
 	</c:choose>
 
