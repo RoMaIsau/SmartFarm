@@ -1,7 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class AnimalUbicacion {
 	@ManyToOne(optional = false)
 	private Ubicacion ultimaUbicacion;
 
-	private LocalDate fecha;
+	private LocalDateTime fecha;
 	
 	private Integer metrosRecorridos;
 
@@ -50,11 +50,11 @@ public class AnimalUbicacion {
 		this.ultimaUbicacion = ultimaUbicacion;
 	}
 
-	public LocalDate getFecha() {
+	public LocalDateTime getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
 

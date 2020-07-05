@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,18 +68,18 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			ubicacion.setLongitud(crearLongitudAleatorea(animal));
 			repositorioUbicacion.guardarUbicacion(ubicacion);
 			
-			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now())) == null) {
+			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now())) == null) {
 				AnimalUbicacion animalUbicacion = new AnimalUbicacion();
 				
 				animalUbicacion.setAnimal(animal);
 				animalUbicacion.setUltimaUbicacion(ubicacion);
 				animalUbicacion.setMetrosRecorridos(0);
-				animalUbicacion.setFecha(LocalDate.now());
+				animalUbicacion.setFecha(LocalDateTime.now());
 				
 				repositorioAnimalUbicacion.guardar(animalUbicacion);
 				animalesUbicaciones.add(animalUbicacion);
 			}else {
-				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now());
+				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now());
 				
 				Ubicacion ultimaUbicacion = animalUbicacionObtenido.getUltimaUbicacion();
 
@@ -92,7 +92,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				animalUbicacionObtenido.setAnimal(animal);
 				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
 				animalUbicacionObtenido.setMetrosRecorridos(metrosEnTotal);
-				animalUbicacionObtenido.setFecha(LocalDate.now());
+				animalUbicacionObtenido.setFecha(LocalDateTime.now());
 				
 				repositorioAnimalUbicacion.guardar(animalUbicacionObtenido);
 				animalesUbicaciones.add(animalUbicacionObtenido);
@@ -254,7 +254,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 			AnimalUbicacion animalUbicacion = new AnimalUbicacion();
 			animalUbicacion.setAnimal(animal);
-			animalUbicacion.setFecha(LocalDate.now());
+			animalUbicacion.setFecha(LocalDateTime.now());
 			animalUbicacion.setUltimaUbicacion(ubicacion);
 			this.repositorioAnimalUbicacion.guardar(animalUbicacion);
 
