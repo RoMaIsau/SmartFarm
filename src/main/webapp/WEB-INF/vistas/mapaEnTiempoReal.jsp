@@ -121,5 +121,6 @@
 		});
 	</script>
 	<script src="<c:url value="/js/corrales.js"/>"></script>
+	<script src="<c:url value="/js/ubicacionEnTiempoReal.js"/>"></script>
 </body>
 </html>
