@@ -61,5 +61,17 @@ public class ServicioAlimentoTest {
 		verify(this.repositorioAlimento).consultarAlimentoPorId(eq(id));
 		assertThat(alimentoObtenido).isNotNull();
 	}
+	
+	@Test
+	public void deberiaActualizarAlimento() {
+		Alimento alimento = new Alimento();
+		alimento.setId(1L);
+		
+		this.servicioAlimento.actualizarAlimento(alimento);
+		
+		verify(this.repositorioAlimento).actualizarAlimento(alimento);
+	}
+	
+	
 
 }
