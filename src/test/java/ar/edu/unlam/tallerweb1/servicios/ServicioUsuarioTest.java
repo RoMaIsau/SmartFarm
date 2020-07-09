@@ -75,6 +75,16 @@ public class ServicioUsuarioTest {
 		assertThat(usuario).isNotNull();
 	}
 	
+	@Test
+	public void deberiaEliminarUnUsuario() {
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		
+		this.servicioUsuario.eliminarUsuario(usuario);
+		
+		verify(this.repositorioUsuario).eliminarUsuario(eq(usuario));
+	}
 	
 	
 	
