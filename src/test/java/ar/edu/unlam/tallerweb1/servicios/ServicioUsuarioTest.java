@@ -86,7 +86,4 @@ public class ServicioUsuarioTest {
 		verify(this.repositorioUsuario).eliminarUsuario(eq(usuario));
 	}
 	
-	
-	
-	
 }
