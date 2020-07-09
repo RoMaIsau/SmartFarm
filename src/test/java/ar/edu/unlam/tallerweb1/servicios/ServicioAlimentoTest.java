@@ -41,11 +41,11 @@ public class ServicioAlimentoTest {
 
 		when(this.repositorioTipoAlimento.obtenerTiposDeAlimentos()).thenReturn(tiposDeAlimentos);
 
-		List<TipoAlimento> tiposDeAlimentoObtenido = this.servicioAlimento.obtenerTiposDeAlimentos();
+		List<TipoAlimento> tiposDeAlimentosObtenidos = this.servicioAlimento.obtenerTiposDeAlimentos();
 
 		verify(this.repositorioTipoAlimento).obtenerTiposDeAlimentos();
-		assertThat(tiposDeAlimentos).hasSize(1);
-		assertThat(tiposDeAlimentos).extracting("nombre").contains("Granos");
+		assertThat(tiposDeAlimentosObtenidos ).hasSize(1);
+		assertThat(tiposDeAlimentosObtenidos ).extracting("nombre").contains("Granos");
 
 	}
 
