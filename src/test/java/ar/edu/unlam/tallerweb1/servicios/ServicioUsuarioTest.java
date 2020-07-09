@@ -63,8 +63,17 @@ public class ServicioUsuarioTest {
 
 	}
 	
-	
-	
+	@Test
+	public void deberiaConsultarUsuarioPorId() {
+		Long idUsuario = 1L;
+		
+		when(this.repositorioUsuario.consultarUsuarioPorId(idUsuario)).thenReturn(new Usuario());
+		
+		Usuario usuario = this.servicioUsuario.consultarUsuarioPorId(idUsuario);
+		
+		verify(this.repositorioUsuario).consultarUsuarioPorId(eq(idUsuario));
+		assertThat(usuario).isNotNull();
+	}
 	
 	
 	
