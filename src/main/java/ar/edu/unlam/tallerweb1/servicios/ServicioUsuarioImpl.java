@@ -22,38 +22,38 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Transactional
 public class ServicioUsuarioImpl implements ServicioUsuario {
 
-	private RepositorioUsuario servicioUsuarioDao;
+	private RepositorioUsuario repositorioUsuario;
 
 	@Autowired
 	public ServicioUsuarioImpl(RepositorioUsuario servicioUsuarioDao){
-		this.servicioUsuarioDao = servicioUsuarioDao;
+		this.repositorioUsuario = servicioUsuarioDao;
 	}
 
 	@Override
 	public Usuario consultarUsuario (Usuario usuario) {
-		return servicioUsuarioDao.consultarUsuario(usuario);
+		return repositorioUsuario.consultarUsuario(usuario);
 	}
 
 	@Override
 	public Long registrarUsuario(Usuario usuario) {
 		Date myDate = new Date();
 		usuario.setFechaAlta(new java.text.SimpleDateFormat("dd-MM-yyyy").format(myDate));
-		return (Long) servicioUsuarioDao.registrarUsuario(usuario);
+		return (Long) repositorioUsuario.registrarUsuario(usuario);
 	}
 
 	@Override
 	public List<Usuario> listarUsuarios() {
-		return (List<Usuario>) servicioUsuarioDao.listarUsuarios();
+		return (List<Usuario>) repositorioUsuario.listarUsuarios();
 	}
 
 	@Override
 	public Usuario consultarUsuarioPorId(Long id) {
-		return (Usuario) servicioUsuarioDao.consultarUsuarioPorId(id);
+		return (Usuario) repositorioUsuario.consultarUsuarioPorId(id);
 	}
 
 	@Override
 	public void eliminarUsuario(Usuario usuario) {
-		servicioUsuarioDao.eliminarUsuario(usuario);
+		repositorioUsuario.eliminarUsuario(usuario);
 		
 	}
 
