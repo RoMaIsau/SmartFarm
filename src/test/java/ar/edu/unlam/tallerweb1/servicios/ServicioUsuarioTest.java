@@ -22,5 +22,17 @@ public class ServicioUsuarioTest {
 		this.servicioUsuario = new ServicioUsuarioImpl(this.repositorioUsuario);
 	}
 	
-
+	@Test
+	public void debeObtenerUsuario() {
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		
+		when(this.repositorioUsuario.consultarUsuario(usuario)).thenReturn(usuario);
+		
+		Usuario usuarioObtenido = this.servicioUsuario.consultarUsuario(usuario);
+		
+		verify(this.repositorioUsuario).consultarUsuario(eq(usuario));
+		assertEquals(usuario, usuarioObtenido);
+		assertThat(usuarioObtenido).isNotNull();
+	}
 }
