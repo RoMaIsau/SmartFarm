@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Date;
+
 public class ServicioUsuarioTest {
 	
 	private ServicioUsuario servicioUsuario;
@@ -35,4 +37,27 @@ public class ServicioUsuarioTest {
 		assertEquals(usuario, usuarioObtenido);
 		assertThat(usuarioObtenido).isNotNull();
 	}
+	
+	@Test
+	public void deberiaRegistrarUnUsuario() {
+		Usuario usuario = new Usuario();
+		Date date = new Date();
+		
+		usuario.setFechaAlta(new java.text.SimpleDateFormat("dd-MM-yyyy").format(date));
+		
+		this.servicioUsuario.registrarUsuario(usuario);
+		
+		verify(this.repositorioUsuario).registrarUsuario(eq(usuario));
+		assertThat(usuario.getFechaAlta()).isNotNull();
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
