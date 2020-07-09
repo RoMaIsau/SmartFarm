@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioTipoAlimento;
@@ -113,5 +114,17 @@ public class ServicioAlimentoTest {
 		alimentoObtenido.setCantidad(nuevoStock);
 		assertTrue(alimentoObtenido.getCantidad().equals(5.0));
 
+	}
+	
+	@Test
+	public void deberiaEnlistarTodosLosAlimentosConsumidosPorAnimal() {
+		Long idAnimal = 1L;
+		AnimalDeGranja animal = new AnimalDeGranja();
+		animal.setId(idAnimal);
+		
+		List<Alimento> alimentos = this.servicioAlimento.listarAlimentosConsumidosPorAnimal(idAnimal);
+		
+		verify(this.repositorioAlimento).listarAlimentosConsumidosPorAnimal(eq(idAnimal));
+		assertThat(alimentos).isNotNull();
 	}
 }
