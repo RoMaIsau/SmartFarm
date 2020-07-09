@@ -69,7 +69,7 @@ public class ServicioAlimentoTest {
 		
 		this.servicioAlimento.actualizarAlimento(alimento);
 		
-		verify(this.repositorioAlimento).actualizarAlimento(alimento);
+		verify(this.repositorioAlimento).actualizarAlimento(eq(alimento));
 	}
 	
 	
