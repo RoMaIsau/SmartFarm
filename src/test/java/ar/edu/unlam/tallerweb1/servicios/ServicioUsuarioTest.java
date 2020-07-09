@@ -1,0 +1,26 @@
+package ar.edu.unlam.tallerweb1.servicios;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+public class ServicioUsuarioTest {
+	
+	private ServicioUsuario servicioUsuario;
+	private RepositorioUsuario repositorioUsuario;
+	
+	@Before
+	public void inicializar() {
+		this.repositorioUsuario = mock(RepositorioUsuario.class);
+		
+		this.servicioUsuario = new ServicioUsuarioImpl(this.repositorioUsuario);
+	}
+	
+
+}
