@@ -92,4 +92,26 @@ public class ServicioAlimentoTest {
 		assertTrue(stock.equals(8.0));
 	}
 
+	@Test
+	public void deberiaDecrementarStockDeAlimento() {
+		int cantidad = 5;
+		Alimento alimento = new Alimento();
+		alimento.setCantidad(10.0);
+		alimento.setStockMinimo(2.0);
+
+		when(this.repositorioAlimento.consultarAlimento(alimento)).thenReturn(alimento);
+
+		Alimento alimentoObtenido = this.servicioAlimento.consultarAlimento(alimento);
+
+		Double nuevoStock = alimentoObtenido.getCantidad() - cantidad;
+
+		verify(this.repositorioAlimento).consultarAlimento(eq(alimentoObtenido));
+		assertThat(alimentoObtenido).isNotNull();
+		assertTrue(alimentoObtenido.getCantidad().equals(10.0));
+		assertTrue(nuevoStock.equals(5.0));
+
+		alimentoObtenido.setCantidad(nuevoStock);
+		assertTrue(alimentoObtenido.getCantidad().equals(5.0));
+
+	}
 }
