@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
+import java.util.List;
 
 public class ServicioUsuarioTest {
 	
@@ -52,6 +53,15 @@ public class ServicioUsuarioTest {
 	
 	}
 	
+	@Test
+	public void deberiaListarLosUsuarios() {
+		
+		List<Usuario> usuarios = this.servicioUsuario.listarUsuarios();
+		
+		verify(this.repositorioUsuario).listarUsuarios();
+		assertThat(usuarios).isNotNull();
+
+	}
 	
 	
 	
