@@ -100,9 +100,9 @@ public class ControladorVeterinario{
            
           
           
-		return new ModelAndView("indexVeterinario",modelo);}
+		return new ModelAndView("historiaClinica",modelo);}
 		else if(!rol.equals("Veterinario")) {
-            return new ModelAndView("indexVeterinario", model);
+            return new ModelAndView("historiaClinica", model);
 		} else {
 
 			return new ModelAndView("redirect:/login");
@@ -446,5 +446,14 @@ public class ControladorVeterinario{
              return new ModelAndView("HomeAnimal", modelo);
              
 	}
-
+	
+	@RequestMapping("/signosVitales")
+ 	public ModelAndView signosVitales(HttpServletRequest request) {
+		ModelMap modelo= new ModelMap();
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		
+        return new ModelAndView("historiaClinica", modelo);
+	}
+	
+	
 }

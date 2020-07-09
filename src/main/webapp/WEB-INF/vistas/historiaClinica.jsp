@@ -65,25 +65,6 @@
 								</div>
 							</div>
 						</div>
-					
-						<div class="row">
-							<div class="col-xl-12 col-md-12 mb-4">
-								<div class="card border-left-primary shadow h-100 py-2">
-									<div class="card-body">
-										<div class="row no-gutters align-items-center">
-											<div class="col mr-2">
-												<div class="font-weight-bold text-primary text-uppercase mb-1">
-													<a href="/SmartFarm/enfermedades">Ir al historial de enfermedades.</a>
-													<div class="text-xs text-muted mt-2">
-														Se mostrará el registro de las enfermedades a lo largo del año.
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</c:if>
 					
 					<h3 class="text-info">${enfermedad}</h3>
@@ -113,21 +94,6 @@
 				  	 	<br><br>
 				  	 	</c:forEach>
 						
-						<div class="row">
-							<div class="col-xl-12 col-md-12 mb-4">
-								<div class="card border-left-primary shadow h-100 py-2">
-									<div class="card-body">
-										<div class="row no-gutters align-items-center">
-											<div class="col mr-2">
-												<div class="font-weight-bold text-primary text-uppercase mb-1">
-													<a href="/SmartFarm/historiaClinica">Volver a los historiales clínicos</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</c:if>							
 				
 				</div>

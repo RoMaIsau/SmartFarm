@@ -28,8 +28,8 @@
 					class="fas fa-user"></i> <span>Usuarios/as</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
-				<a class="nav-link" href="${contextPath}/animales"><i
-					class="fab fa-sticker-mule"></i> <span>Animales</span> </a>
+				<a class="nav-link" href="${contextPath}/historiaClinica"><i
+					class="fab fa-sticker-mule"></i> <span>Historiales clínicos</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Empleado'}">
 				<a class="nav-link" href="${contextPath}/animales"><i
@@ -54,9 +54,9 @@
 			<!-- Divider -->
 			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="seccion2">
+				<a class="nav-link" href="${contextPath}/enfermedades">
 					<i class="fas fa-user"></i>
-					<span>Seccion 2</span>
+					<span>Historial de enfermedades</span>
 				</a>
 			</li>
 		</c:when>
@@ -86,8 +86,8 @@
 		<c:when test="${ROL == 'Veterinario'}">
 			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/seccion3"> <i
-					class="fas fa-user"></i> <span>Seccion 3</span>
+				<a class="nav-link" href="${contextPath}/signosVitales"> <i
+					class="fas fa-user"></i> <span>Signos vitales</span>
 				</a>
 			</li>
 		</c:when>
