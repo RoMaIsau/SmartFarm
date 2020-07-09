@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioTipoAlimento;
@@ -47,6 +48,18 @@ public class ServicioAlimentoTest {
 		assertThat(tiposDeAlimentosObtenidos ).hasSize(1);
 		assertThat(tiposDeAlimentosObtenidos ).extracting("nombre").contains("Granos");
 
+	}
+	
+	@Test
+	public void deberiaObtenerAlimentoSegunId() {
+		Long id = 1L;
+		
+		when(this.repositorioAlimento.consultarAlimentoPorId(id)).thenReturn(new Alimento());
+		
+		Alimento alimentoObtenido = this.servicioAlimento.consultarAlimentoPorId(id);
+		
+		verify(this.repositorioAlimento).consultarAlimentoPorId(eq(id));
+		assertThat(alimentoObtenido).isNotNull();
 	}
 
 }
