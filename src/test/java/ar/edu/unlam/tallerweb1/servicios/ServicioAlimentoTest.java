@@ -9,6 +9,7 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioAlimento;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioTipoAlimento;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -45,33 +46,50 @@ public class ServicioAlimentoTest {
 		List<TipoAlimento> tiposDeAlimentosObtenidos = this.servicioAlimento.obtenerTiposDeAlimentos();
 
 		verify(this.repositorioTipoAlimento).obtenerTiposDeAlimentos();
-		assertThat(tiposDeAlimentosObtenidos ).hasSize(1);
-		assertThat(tiposDeAlimentosObtenidos ).extracting("nombre").contains("Granos");
+		assertThat(tiposDeAlimentosObtenidos).hasSize(1);
+		assertThat(tiposDeAlimentosObtenidos).extracting("nombre").contains("Granos");
 
 	}
-	
+
 	@Test
 	public void deberiaObtenerAlimentoSegunId() {
 		Long id = 1L;
-		
+
 		when(this.repositorioAlimento.consultarAlimentoPorId(id)).thenReturn(new Alimento());
-		
+
 		Alimento alimentoObtenido = this.servicioAlimento.consultarAlimentoPorId(id);
-		
+
 		verify(this.repositorioAlimento).consultarAlimentoPorId(eq(id));
 		assertThat(alimentoObtenido).isNotNull();
 	}
-	
+
 	@Test
 	public void deberiaActualizarAlimento() {
 		Alimento alimento = new Alimento();
 		alimento.setId(1L);
-		
+
 		this.servicioAlimento.actualizarAlimento(alimento);
-		
+
 		verify(this.repositorioAlimento).actualizarAlimento(eq(alimento));
 	}
-	
-	
+
+	@Test
+	public void deberiaConsultarStockDelAlimento() {
+		Alimento alimento = new Alimento();
+		alimento.setCantidad(10.0);
+		alimento.setStockMinimo(2.0);
+
+		when(this.repositorioAlimento.consultarAlimento(alimento)).thenReturn(alimento);
+
+		Alimento alimentoObtenido = this.servicioAlimento.consultarAlimento(alimento);
+
+		Double stock = alimentoObtenido.getCantidad() - alimentoObtenido.getStockMinimo();
+
+		verify(this.repositorioAlimento).consultarAlimento(eq(alimentoObtenido));
+		assertThat(alimentoObtenido).isNotNull();
+		assertTrue(alimentoObtenido.getCantidad().equals(10.0));
+		assertTrue(alimentoObtenido.getStockMinimo().equals(2.0));
+		assertTrue(stock.equals(8.0));
+	}
 
 }
