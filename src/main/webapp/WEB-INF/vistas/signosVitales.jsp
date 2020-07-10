@@ -30,9 +30,11 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+				<!-- ================================================================================== -->
 					
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 					
-					
+				<!-- ================================================================================== -->
 				</div>
 				<!-- /.container-fluid -->
 
@@ -59,7 +61,59 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
+	
+	<!-- Gráfico de ritmo cardíaco del animal -->
+	<script type="text/javascript">
+		window.onload = function() {
+			function getRndInteger(min, max) {
+				return Math.floor(Math.random() * (max - min + 1) ) + min;
+				}
+			
+			var dataPoints = [];
+			var y = 80;
+			for(var i = 0; i < 12; i++){
+				y = 80
+				y += getRndInteger(-3, 3);
+				dataPoints.push({x: i, y: y});
+			}
+			 
+			var chart = new CanvasJS.Chart("chartContainer", {
+				title: {
+					text: "Ritmo cardíaco del animal"
+				},
+				axisX:{
+					title: "Tiempo en segundos"
+				},
+				axisY:{
+					includeZero: false,
+					suffix: " PPM"
+				},
+				data: [{
+					type: "line",
+					color: "green",
+					yValueFormatString: "#,##0.0#",
+					toolTipContent: "{y} PPM",
+					dataPoints: dataPoints
+				}]
+			});
+			chart.render();
+			 
+			var updateInterval = 1000;
+			setInterval(function () { updateChart() }, updateInterval);
+			 
+			var xValue = dataPoints.length;
+			var yValue = dataPoints[dataPoints.length - 1].y;
+			 
+			function updateChart() {
+				yValue = 80
+				yValue += getRndInteger(-3, 3);
+				dataPoints.push({ x: xValue, y: yValue });
+				xValue++;
+				chart.render();
+			};
+		}
+	</script>
+	
 	<!-- Logout Modal-->
 	<%@ include file="../../parts/modalCerrarSesion.jsp" %>
 	
