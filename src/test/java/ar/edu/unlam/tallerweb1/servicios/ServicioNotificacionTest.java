@@ -81,6 +81,21 @@ public class ServicioNotificacionTest {
 		assertNotNull(notificacionObtenida);
 	}
 	
+	@Test
+	public void deberiaObtenerNotificacionPorId() {
+		Long idNoti = 1L;
+		
+		Notificacion notificacion = new Notificacion();
+		notificacion.setId(idNoti);
+		
+		when(this.repositorioNotificacion.notificacionPorId(idNoti)).thenReturn(notificacion);
+		
+		Notificacion notificacionObtenida = this.servicioNotificacion.notificacionPorId(idNoti);
+		
+		verify(this.repositorioNotificacion).notificacionPorId(eq(idNoti));
+		assertNotNull(notificacionObtenida);
+	}
+	
 	
 	
 }
