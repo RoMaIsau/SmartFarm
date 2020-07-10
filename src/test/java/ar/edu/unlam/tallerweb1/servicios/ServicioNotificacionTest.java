@@ -61,5 +61,26 @@ public class ServicioNotificacionTest {
 		assertNotNull(notificaciones);
 	}
 	
+	@Test
+	public void deberiaObtenerNotificacionPorDetalles() {
+		String detalles = "Pasto ha llegado a su stock minimo";
+		String fecha = "10/07/2020";
+		
+		Notificacion notificacion = new Notificacion();
+		notificacion.setDetalles(detalles);
+		notificacion.setFecha(fecha);
+		
+		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		notificaciones.add(notificacion);
+		
+		when(this.repositorioNotificacion.notificacionPorDetalles(detalles, fecha)).thenReturn(notificacion);
+		
+		Notificacion notificacionObtenida = this.servicioNotificacion.notificacionPorDetalles(detalles, fecha);
+		
+		verify(this.repositorioNotificacion).notificacionPorDetalles(eq(detalles), eq(fecha));
+		assertNotNull(notificacionObtenida);
+	}
+	
+	
 	
 }
