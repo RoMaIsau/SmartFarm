@@ -96,6 +96,16 @@ public class ServicioNotificacionTest {
 		assertNotNull(notificacionObtenida);
 	}
 	
+	@Test
+	public void deberiaActualizarNotificacion() {
+		Notificacion notificacion = new Notificacion();
+		notificacion.setId(1L);
+		
+		this.servicioNotificacion.actualizarNotificacion(notificacion);
+		
+		verify(this.repositorioNotificacion).actualizarNotificacion(eq(notificacion));
+	}
+	
 	
 	
 }
