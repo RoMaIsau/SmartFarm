@@ -39,6 +39,19 @@ public class ControladorUsuarioTest {
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexAdmin");
 	}
+	
+	@Test
+	public void cuandoElRolEsEmpleadoRedirigeALaVistaIndexEmpleado() {
+		HttpServletRequest request = configurarRolLogueado("Empleado");
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+
+		when(servicioUsuario.consultarUsuario(usuario)).thenReturn(usuario);
+
+		ModelAndView modelAndView = this.controladorUsuario.validarLogin(usuario, request);
+
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexEmpleado");
+	}
 
 	private HttpServletRequest configurarRolLogueado(String rol) {
 		HttpServletRequest request = mock(HttpServletRequest.class);
