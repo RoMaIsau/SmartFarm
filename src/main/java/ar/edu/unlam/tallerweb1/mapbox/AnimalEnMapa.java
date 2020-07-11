@@ -2,10 +2,17 @@ package ar.edu.unlam.tallerweb1.mapbox;
 
 public class AnimalEnMapa {
 
+	private long id;
 	private double latitud;
 	private double longitud;
 	private String tipoAnimal;
 
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getId() {
+		return id;
+	}
 	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
