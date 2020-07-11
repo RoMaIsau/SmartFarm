@@ -52,6 +52,19 @@ public class ControladorUsuarioTest {
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexEmpleado");
 	}
+	
+	@Test
+	public void cuandoElRolEsVeterinarioRedirigeALaVistaIndexVeterinario() {
+		HttpServletRequest request = configurarRolLogueado("Veterinario");
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+
+		when(servicioUsuario.consultarUsuario(usuario)).thenReturn(usuario);
+
+		ModelAndView modelAndView = this.controladorUsuario.validarLogin(usuario, request);
+
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexVeterinario");
+	}
 
 	private HttpServletRequest configurarRolLogueado(String rol) {
 		HttpServletRequest request = mock(HttpServletRequest.class);
