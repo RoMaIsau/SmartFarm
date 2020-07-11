@@ -459,11 +459,6 @@ public class ControladorVeterinario{
 		
         return new ModelAndView("signosVitales", modelo);
 	}
-
-	@RequestMapping("/aaa")
- 	public ModelAndView aaa() {
-        return new ModelAndView("aaa");
-	}
 	
 	
 }
