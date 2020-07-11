@@ -86,8 +86,8 @@
 		<c:when test="${ROL == 'Veterinario'}">
 			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/signosVitales"> <i
-					class="fas fa-user"></i> <span>Signos vitales</span>
+				<a class="nav-link" href="#"> <i
+					class="fas fa-user"></i> <span>PARA HABILITAR</span>
 				</a>
 			</li>
 		</c:when>
