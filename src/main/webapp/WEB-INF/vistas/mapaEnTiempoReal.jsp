@@ -23,23 +23,23 @@
 }
 
 #vacuno {
-	background-image: url('img/vacuno.png');
+	background-image: url('<c:out value="${contextPath}"/>/img/vacuno.png');
 }
 
 #ovino {
-	background-image: url('img/ovino.png');
+	background-image: url('<c:out value="${contextPath}"/>/img/ovino.png');
 }
 
 #caprino {
-	background-image: url('img/caprino.png');
+	background-image: url('<c:out value="${contextPath}"/>/img/caprino.png');
 }
 
 #equino {
-	background-image: url('img/equino.png');
+	background-image: url('<c:out value="${contextPath}"/>/img/equino.png');
 }
 
 #porcino {
-	background-image: url('img/porcino.png');
+	background-image: url('<c:out value="${contextPath}"/>/img/porcino.png');
 }
 
 .mapboxgl-popup {
