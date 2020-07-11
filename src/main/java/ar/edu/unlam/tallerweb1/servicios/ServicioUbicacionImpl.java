@@ -263,6 +263,11 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		}
 	}
 
+	@Override
+	public List<AnimalUbicacion> obtenerUbicacionesRecientes() {
+		return this.repositorioUbicacion.obtenerUbicacionesRecientes();
+	}
+
 }
 
 /*
