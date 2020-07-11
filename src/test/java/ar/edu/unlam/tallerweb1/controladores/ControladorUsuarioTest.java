@@ -28,7 +28,23 @@ public class ControladorUsuarioTest {
 
 		this.controladorUsuario = new ControladorUsuario(this.servicioUsuario);
 	}
-
+	
+	@Test 
+	public void dirigeALaVistaLogin() {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpSession session = mock(HttpSession.class);
+		
+		when(request.getSession()).thenReturn(session);
+		
+		ModelAndView modelAndView = this.controladorUsuario.irALogin(request);
+		
+		ModelMap modelo = modelAndView.getModelMap();
+		
+		assertThat(modelo).containsKey("usuario");
+		assertThat(modelAndView.getViewName()).isEqualTo("login");
+		assertThat(modelAndView.getModelMap()).isEqualTo(modelo);
+	}
+	
 	@Test
 	public void cuandoElRolEsAdminRedirigeALaVistaIndexAdmin() {
 		HttpServletRequest request = configurarRolLogueado("Admin");
@@ -85,13 +101,13 @@ public class ControladorUsuarioTest {
 		assertThat(modelAndView.getViewName()).isEqualTo("login");
 		assertThat(modelo).containsKey("error");
 	}
-	
+
 	@Test
 	public void deberiaEliminarAtributosDeLaSesionYRedigirALogin() {
 		HttpServletRequest request = this.configurarRolLogueado("Admin");
-	
+
 		ModelAndView modelAndView = this.controladorUsuario.cerrarSesion(request);
-		
+
 		assertNull(request.getAttribute("ROL"));
 		assertNull(request.getAttribute("ID"));
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/login");
