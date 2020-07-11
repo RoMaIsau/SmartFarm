@@ -46,6 +46,14 @@ public class ControladorUsuarioTest {
 	}
 	
 	@Test
+	public void cuandoElValorDePathEsVacioSeRedirigeALaVistaLogin() {
+		
+		ModelAndView modelAndView = this.controladorUsuario.inicio();
+		
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/login");
+	}
+	
+	@Test
 	public void cuandoElRolEsAdminRedirigeALaVistaIndexAdmin() {
 		HttpServletRequest request = configurarRolLogueado("Admin");
 		Usuario usuario = new Usuario();
