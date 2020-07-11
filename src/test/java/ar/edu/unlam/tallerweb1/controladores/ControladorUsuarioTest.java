@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.mockito.Mockito.*;
@@ -39,7 +40,7 @@ public class ControladorUsuarioTest {
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexAdmin");
 	}
-	
+
 	@Test
 	public void cuandoElRolEsEmpleadoRedirigeALaVistaIndexEmpleado() {
 		HttpServletRequest request = configurarRolLogueado("Empleado");
@@ -52,7 +53,7 @@ public class ControladorUsuarioTest {
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexEmpleado");
 	}
-	
+
 	@Test
 	public void cuandoElRolEsVeterinarioRedirigeALaVistaIndexVeterinario() {
 		HttpServletRequest request = configurarRolLogueado("Veterinario");
@@ -64,6 +65,24 @@ public class ControladorUsuarioTest {
 		ModelAndView modelAndView = this.controladorUsuario.validarLogin(usuario, request);
 
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/indexVeterinario");
+	}
+
+	@Test
+	public void cuandoElUsuarioNoExisteInformaUnError() {
+		HttpServletRequest request = this.configurarRolLogueado("");
+
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+
+		when(this.servicioUsuario.consultarUsuario(usuario)).thenReturn(null);
+
+		ModelAndView modelAndView = this.controladorUsuario.validarLogin(usuario, request);
+
+		ModelMap modelo = modelAndView.getModelMap();
+
+		verify(this.servicioUsuario).consultarUsuario(eq(usuario));
+		assertThat(modelAndView.getViewName()).isEqualTo("login");
+		assertThat(modelo).containsKey("error");
 	}
 
 	private HttpServletRequest configurarRolLogueado(String rol) {
