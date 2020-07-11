@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertNull;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,6 +84,17 @@ public class ControladorUsuarioTest {
 		verify(this.servicioUsuario).consultarUsuario(eq(usuario));
 		assertThat(modelAndView.getViewName()).isEqualTo("login");
 		assertThat(modelo).containsKey("error");
+	}
+	
+	@Test
+	public void deberiaEliminarAtributosDeLaSesionYRedigirALogin() {
+		HttpServletRequest request = this.configurarRolLogueado("Admin");
+	
+		ModelAndView modelAndView = this.controladorUsuario.cerrarSesion(request);
+		
+		assertNull(request.getAttribute("ROL"));
+		assertNull(request.getAttribute("ID"));
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/login");
 	}
 
 	private HttpServletRequest configurarRolLogueado(String rol) {
