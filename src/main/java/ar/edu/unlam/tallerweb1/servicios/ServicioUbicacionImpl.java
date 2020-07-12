@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.modelo.Corral;
 import ar.edu.unlam.tallerweb1.modelo.Posicion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
@@ -36,6 +37,8 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 	
 	@Inject
 	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
+
+	private ServicioCorral servicioCorral;
 	/*
 	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(35.280943, 59.242249, 35.275880, 59.232271, 35.273971, 59.256475, 35.269674, 59.244542, 35.275999, 59.244134);
 	*/
@@ -258,8 +261,21 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			animalUbicacion.setUltimaUbicacion(ubicacion);
 			this.repositorioAnimalUbicacion.guardar(animalUbicacion);
 
+			comprobarAnimalDentroDeCorral(animal, ubicacion);
+
 		} catch(AnimalSinIdentificadorGpsException e) {
 			logger.error("No se puede registrar la posición. Causa: {}", e.getMessage());
+		}
+	}
+
+	private void comprobarAnimalDentroDeCorral(AnimalDeGranja animal, Ubicacion ubicacion) {
+		Corral corral = servicioCorral.obtenerCorralAsignado(animal);
+		if (corral != null) {
+			boolean estaDentro = corral.contiene(ubicacion.getLatitud(), ubicacion.getLongitud());
+			if(!estaDentro) {
+				logger.info("El animal {} se escapo del corral {}!!!", animal, corral);
+				this.servicioNotificacion.crearNotificacionAnimalFueraDeLugar(animal.getId());
+			}
 		}
 	}
 
@@ -268,6 +284,15 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 		return this.repositorioUbicacion.obtenerUbicacionesRecientes();
 	}
 
+	@Autowired
+	public void setServicioCorral(ServicioCorral servicioCorral) {
+		this.servicioCorral = servicioCorral;
+	}
+
+	@Autowired
+	public void setServicioNotificacion(ServicioNotificacion servicioNotificacion) {
+		this.servicioNotificacion = servicioNotificacion;
+	}
 }
 
 /*

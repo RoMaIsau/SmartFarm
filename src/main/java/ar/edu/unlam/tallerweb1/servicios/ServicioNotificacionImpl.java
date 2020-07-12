@@ -94,7 +94,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String fecha = (LocalDate.now().format(dateFormat));
 
-		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicación habitual";
+		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicaciÃ³n habitual";
 		
 		Notificacion notificacion = new Notificacion();
 		notificacion.setFecha(fecha);
