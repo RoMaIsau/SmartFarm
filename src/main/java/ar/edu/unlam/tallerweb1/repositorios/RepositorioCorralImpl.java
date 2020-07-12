@@ -88,4 +88,10 @@ public class RepositorioCorralImpl implements RepositorioCorral {
 			.setParameter("corral", corral)
 			.executeUpdate();
 	}
+
+	@Override
+	public Corral obtenerCorralPorAnimal(AnimalDeGranja animal) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT a.corral FROM AnimalDeGranja a", Corral.class)
+				.getSingleResult();
+	}
 }
