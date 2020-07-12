@@ -24,4 +24,6 @@ public interface RepositorioCorral {
 	void asignarAnimales(Long idCorral, Long[] idAnimales);
 
 	void quitarAnimales(Corral corral);
+
+	Corral obtenerCorralPorAnimal(AnimalDeGranja animal);
 }

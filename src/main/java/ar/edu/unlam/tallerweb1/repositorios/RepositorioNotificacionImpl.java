@@ -76,7 +76,6 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 	@Override
 	public void actualizarNotificacion(Notificacion notificacion) {
 		Session session = sessionFactory.getCurrentSession();
-		
 		session.update(notificacion);
 	}
 
@@ -94,12 +93,12 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 		}
 	}
 
-//	@Override
-//	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
-//		Session session = sessionFactory.getCurrentSession();
-//		return (Notificacion) session.createCriteria(Notificacion.class)
-//				.add(Restrictions.eq("detalles", detalles))
-//				.uniqueResult();
-//	}
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Notificacion> listarNotificacionesPendientesPorTitulo(String titulo) {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("SELECT n FROM Notificacion n WHERE n.estado = false AND n.titulo = :titulo")
+				.setParameter("titulo", titulo)
+				.getResultList();
+	}
 }

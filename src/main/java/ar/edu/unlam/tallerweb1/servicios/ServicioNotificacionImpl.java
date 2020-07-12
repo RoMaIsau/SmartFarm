@@ -21,6 +21,8 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioNotificacion;
 @Transactional
 public class ServicioNotificacionImpl implements ServicioNotificacion {
 
+	private static final String ANIMAL_FUERA_DE_LUGAR = "Animal fuera de rango";
+
 	private RepositorioNotificacion repositorioNotificacion;
 	private RepositorioAlimento repositorioAlimento;
 	
@@ -84,7 +86,6 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	@Override
 	public void actualizarNotificacion(Notificacion notificacion) {
 		repositorioNotificacion.actualizarNotificacion(notificacion);
-		
 	}
 
 	@Override
@@ -94,19 +95,25 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String fecha = (LocalDate.now().format(dateFormat));
 
-		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicación habitual";
+		String detalles = "El " + animal.getTipo().getNombre() + " con ID " + animal.getId() + " ha salido de su ubicaciÃ³n habitual";
 		
 		Notificacion notificacion = new Notificacion();
 		notificacion.setFecha(fecha);
-		notificacion.setTitulo("Animal fuera de rango");
+		notificacion.setTitulo(ANIMAL_FUERA_DE_LUGAR);
 		notificacion.setDetalles(detalles);
 		notificacion.setEstado(false);
 		repositorioNotificacion.crearNotificacionAnimal(notificacion);
 	}
 
-//	@Override
-//	public Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha) {
-//		return repositorioNotificacion.BuscarNotificacionDeAnimalPorDetalles(detalles, fecha);
-//	}
+	@Override
+	public List<Notificacion> obtenerNotificacionesPendientesDeAnimalFueraDeCorral() {
+		return this.repositorioNotificacion.listarNotificacionesPendientesPorTitulo(ANIMAL_FUERA_DE_LUGAR);
+	}
 
+	@Override
+	public void marcarComoVista(Notificacion notificacion) {
+		Notificacion notificacionVista = this.repositorioNotificacion.notificacionPorId(notificacion.getId());
+		notificacionVista.setEstado(true);
+		actualizarNotificacion(notificacionVista);
+	}
 }

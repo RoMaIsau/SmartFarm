@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioCorral;
 @Transactional
 public class ServicioCorralImpl implements ServicioCorral {
 
+	private Logger logger = LoggerFactory.getLogger(ServicioCorralImpl.class);
 	private RepositorioCorral repositorioCorral;
 
 	@Autowired
@@ -66,5 +69,16 @@ public class ServicioCorralImpl implements ServicioCorral {
 	@Override
 	public void quitarAnimales(Corral corral) {
 		this.repositorioCorral.quitarAnimales(corral);
+	}
+
+	@Override
+	public Corral obtenerCorralAsignado(AnimalDeGranja animal) {
+		Corral corral = null;
+		try {
+			corral = this.repositorioCorral.obtenerCorralPorAnimal(animal);
+		} catch(Exception e) {
+			logger.error("Ocurrió un error obteniendo el corral del animal {}. {}", animal, e);
+		}
+		return corral;
 	}
 }

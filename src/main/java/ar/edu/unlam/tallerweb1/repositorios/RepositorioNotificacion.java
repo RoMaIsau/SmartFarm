@@ -18,6 +18,5 @@ public interface RepositorioNotificacion {
 
 	void crearNotificacionAnimal(Notificacion notificacion);
 
-//	Notificacion BuscarNotificacionDeAnimalPorDetalles(String detalles, String fecha);
-
+	List<Notificacion> listarNotificacionesPendientesPorTitulo(String titulo);
 }
