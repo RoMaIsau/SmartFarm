@@ -1,6 +1,28 @@
-$(document).ready(function(){
-    setInterval(buscarPosiciones, 10000);
-});
+(function($) {
+	"use strict";
+	jQuery(window).on("load", function() {
+		setInterval(buscarPosiciones, 5000);
+		setInterval(buscarNotificaciones, 10000);
+
+		$(document).on("click", ".btn-notificacion-vista", function(evento) {
+			var id = $(this).attr('id').split("-")[1];
+			var notificacion = {
+				"id": id
+			};
+
+			$.ajax({
+				type:'post',
+				url: contextPath + '/ubicaciones/notificacionVista',
+				data: JSON.stringify(notificacion),
+				contentType: 'application/json',
+				success: function(respuesta) {
+					console.log(respuesta);
+					buscarNotificaciones();
+				}
+			})
+		});
+	});
+})(jQuery);
 
 var markers = [];
 function buscarPosiciones() {
@@ -28,7 +50,7 @@ function buscarPosiciones() {
 			}
 		},
 		complete:function(data){
-   			setTimeout(buscarPosiciones, 10000);
+			setTimeout(buscarPosiciones, 5000);
    		}
 	});
 }
@@ -46,4 +68,19 @@ function buscarMarkerPorId(id) {
 		iteracion++;
 	}
 	return markerBuscado;
+}
+
+function buscarNotificaciones() {
+	$.ajax({
+		type: 'get',
+		url: contextPath + '/ubicaciones/notificaciones',
+		success: function(notificaciones) {
+			$('.toast').toast('hide');
+			$('#contenedorNotificaciones').html(notificaciones);
+			$('.toast').toast('show');
+		},
+		complete:function(data){
+			setTimeout(buscarNotificaciones, 15000);
+		}
+	});
 }

@@ -67,10 +67,11 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
 				<%@ include file="../../parts/topbar.jsp"%>
+				<div id="contenedorNotificaciones"></div>
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-2 col-xs-6 col-sm-6 mb-4">
-							<h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+						<div class="col-md-6 col-xs-6 col-sm-6 mb-4">
+							<h1 class="h3 mb-2 text-gray-800">Ubicaciones en tiempo real</h1>
 						</div>
 					</div>
 					<div id="corral-seleccionado"></div>
@@ -116,7 +117,7 @@
 		    });
 
 		map.on('load', function(){
-			map.addControl(draw);
+			map.addControl(draw, 'bottom-right');
 			dibujarCorrales();
 		});
 	</script>
