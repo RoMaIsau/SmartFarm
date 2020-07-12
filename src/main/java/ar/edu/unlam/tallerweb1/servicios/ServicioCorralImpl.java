@@ -77,7 +77,7 @@ public class ServicioCorralImpl implements ServicioCorral {
 		try {
 			corral = this.repositorioCorral.obtenerCorralPorAnimal(animal);
 		} catch(Exception e) {
-			logger.error("Ocurrió un error obteniendo el corral del animal {}", animal);
+			logger.error("Ocurrió un error obteniendo el corral del animal {}. {}", animal, e);
 		}
 		return corral;
 	}
