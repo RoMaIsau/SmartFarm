@@ -40,6 +40,7 @@
 												<th>Raza</th>
 												<th>Ver historial</th>
 												<th>Diagnosticar</th>
+												<th>Signos vitales</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -55,6 +56,11 @@
 													</td>
 													<td>
 														<a href="diagnosticar?id=${a.id}">
+															<i class="fas fa-user-md"></i>
+														</a>
+													</td>
+													<td>
+														<a href="signosVitales?id=${a.id}">
 															<i class="fas fa-heartbeat"></i>
 														</a>
 													</td>

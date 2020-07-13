@@ -103,12 +103,10 @@ public class ControladorVeterinario{
            
           
           
-
-		return new ModelAndView("historiaClinica",modelo);}
-		/*else if(!rol.equals("Veterinario")) {
-            return new ModelAndView("historiaClinica", model);}
-		
-		 return new ModelAndView("historiaClinica", model);}*/
+		return new ModelAndView("redirect:/historiaClinica",modelo);}
+		else if(!rol.equals("Veterinario")) {
+            return new ModelAndView("redirect:/historiaClinica", model);
+		} else {
 
 	
 
@@ -640,11 +638,16 @@ public class ControladorVeterinario{
 	}
 	
 	@RequestMapping("/signosVitales")
- 	public ModelAndView signosVitales(HttpServletRequest request) {
+ 	public ModelAndView signosVitales(HttpServletRequest request, @RequestParam(value="id", required=true) Long id) {
+  		String rol = (String) request.getSession().getAttribute("ROL");
+  		if (!rol.equals("Veterinario") || rol == null) {
+			return new ModelAndView("redirect:/login");
+		}
+  		
 		ModelMap modelo= new ModelMap();
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
-        return new ModelAndView("historiaClinica", modelo);
+        return new ModelAndView("signosVitales", modelo);
 	}
 	
 	

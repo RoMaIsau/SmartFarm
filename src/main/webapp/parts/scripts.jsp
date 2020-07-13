@@ -11,3 +11,8 @@
 
 <!-- Page level custom scripts -->
 <script src="<c:url value="/js/datatables-demo.js"/>"></script>
+
+<!-- Scripts para tabla de "pulsaciones" de los animales -->
+<script src="<c:url value="/js/canvasjs/canvasjs.min.js"/>"></script>
+<script src="<c:url value="/js/canvasjs/jquery.canvasjs.min.js"/>"></script>
+			<!-- script src="<c:url value="/js/canvasjs/canvasjs.react.js"/>"></script-->

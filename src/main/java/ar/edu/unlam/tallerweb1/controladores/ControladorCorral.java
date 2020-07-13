@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ControladorCorral {
 		for (Corral corral :corrales) {			
 			List<Point> points = new LinkedList<>();
 			for(Vertice vertice : corral.getVertices()) {
-				points.add(new Point(vertice.getLatitud(), vertice.getLongitud()));
+				points.add(new Point(vertice.getLatitud().doubleValue(), vertice.getLongitud().doubleValue()));
 			}
 			Feature feature = new Feature(corral.getId(), corral.getNombre(), points);
 			mapa.agregarFeature(feature);
@@ -65,8 +66,8 @@ public class ControladorCorral {
 		for (int i = 0; i < puntos.size(); i++) {
 			Vertice vertice = new Vertice();
 			vertice.setNumero(i+1);
-			vertice.setLatitud(puntos.get(i).getLatitud());
-			vertice.setLongitud(puntos.get(i).getLongitud());
+			vertice.setLatitud(BigDecimal.valueOf(puntos.get(i).getLatitud()));
+			vertice.setLongitud(BigDecimal.valueOf(puntos.get(i).getLongitud()));
 			vertices.add(vertice);
 		}
 

@@ -1,17 +1,15 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
-import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 
 public interface RepositorioAnimalUbicacion {
 
 	void guardar(AnimalUbicacion animalUbicacion);
 
-	AnimalUbicacion obtenerAnimalUbicacion(Long id, LocalDate fecha);
+	AnimalUbicacion obtenerAnimalUbicacion(Long id, LocalDateTime fecha);
 	
 	List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal);
 

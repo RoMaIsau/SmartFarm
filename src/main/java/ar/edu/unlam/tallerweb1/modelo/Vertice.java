@@ -1,5 +1,8 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,25 +16,27 @@ public class Vertice {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private double latitud;
+	@Column(precision=10, scale=8)
+	private BigDecimal latitud;
 
-	private double longitud;
+	@Column(precision=11, scale=8)
+	private BigDecimal longitud;
 
 	private int numero;
 
 	@ManyToOne
 	private Corral corral;
 
-	public double getLatitud() {
+	public BigDecimal getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(double latitud) {
+	public void setLatitud(BigDecimal latitud) {
 		this.latitud = latitud;
 	}
-	public double getLongitud() {
+	public BigDecimal getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(double longitud) {
+	public void setLongitud(BigDecimal longitud) {
 		this.longitud = longitud;
 	}
 	public int getNumero() {

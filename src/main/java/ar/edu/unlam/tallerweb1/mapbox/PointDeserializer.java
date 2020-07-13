@@ -13,8 +13,8 @@ public class PointDeserializer extends JsonDeserializer<Point> {
 	@Override
 	public Point deserialize(JsonParser parser, DeserializationContext contexto) throws IOException, JsonProcessingException {
 
+		double longitud = this.extraerValor(parser);
 		double latitud = this.extraerValor(parser);
-		double longitud = this.extraerValor(parser);		
 		parser.nextToken();
 		return new Point(latitud, longitud);
 	}

@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.awt.geom.Path2D;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 @Entity
 public class Corral {
@@ -46,5 +48,20 @@ public class Corral {
 	}
 	public void setVertices(List<Vertice> vertices) {
 		this.vertices = vertices;
+	}
+
+	@Transient
+	public boolean contiene(double latitud, double longitud) {
+
+		Path2D.Double poligono = new Path2D.Double();
+		Vertice primerPunto = this.vertices.get(0);
+
+		poligono.moveTo(primerPunto.getLongitud().doubleValue(), primerPunto.getLatitud().doubleValue());
+		for (int i = 1; i < this.vertices.size() - 1; i++) {
+			Vertice punto = this.vertices.get(i);
+			poligono.lineTo(punto.getLongitud().doubleValue(), punto.getLatitud().doubleValue());
+		}
+		poligono.closePath();
+		return poligono.contains(longitud, latitud);
 	}
 }

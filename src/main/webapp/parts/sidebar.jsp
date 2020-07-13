@@ -86,8 +86,8 @@
 		<c:when test="${ROL == 'Veterinario'}">
 			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/signosVitales"> <i
-					class="fas fa-user"></i> <span>Signos vitales</span>
+				<a class="nav-link" href="#"> <i
+					class="fas fa-user"></i> <span>PARA HABILITAR</span>
 				</a>
 			</li>
 		</c:when>
@@ -102,6 +102,13 @@
 				<a class="nav-link" href="${contextPath}/mapa">
 					<i class="fas fa-map-marked-alt"></i>
 					<span>Mapa</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<hr class="sidebar-divider d-none d-md-block">
+				<a class="nav-link" href="${contextPath}/ubicaciones/mapa">
+					<i class="fas fa-map-marked-alt"></i>
+					<span>Ubicación en tiempo real</span>
 				</a>
 			</li>
 		</c:when>

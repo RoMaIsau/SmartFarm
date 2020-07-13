@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
+import ar.edu.unlam.tallerweb1.modelo.Corral;
 import ar.edu.unlam.tallerweb1.modelo.Posicion;
 import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 //import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
@@ -36,6 +37,8 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 	
 	/*@Inject
 	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
+
+	private ServicioCorral servicioCorral;
 	/*
 	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(35.280943, 59.242249, 35.275880, 59.232271, 35.273971, 59.256475, 35.269674, 59.244542, 35.275999, 59.244134);
 	*/
@@ -68,18 +71,18 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			ubicacion.setLongitud(crearLongitudAleatorea(animal));
 			repositorioUbicacion.guardarUbicacion(ubicacion);
 			
-			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now())) == null) {
+			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now())) == null) {
 				AnimalUbicacion animalUbicacion = new AnimalUbicacion();
 				
 				animalUbicacion.setAnimal(animal);
 				animalUbicacion.setUltimaUbicacion(ubicacion);
 				animalUbicacion.setMetrosRecorridos(0);
-				animalUbicacion.setFecha(LocalDate.now());
+				animalUbicacion.setFecha(LocalDateTime.now());
 				
 				repositorioAnimalUbicacion.guardar(animalUbicacion);
 				animalesUbicaciones.add(animalUbicacion);
 			}else {
-				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDate.now());
+				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now());
 				
 				Ubicacion ultimaUbicacion = animalUbicacionObtenido.getUltimaUbicacion();
 
@@ -92,7 +95,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				animalUbicacionObtenido.setAnimal(animal);
 				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
 				animalUbicacionObtenido.setMetrosRecorridos(metrosEnTotal);
-				animalUbicacionObtenido.setFecha(LocalDate.now());
+				animalUbicacionObtenido.setFecha(LocalDateTime.now());
 				
 				repositorioAnimalUbicacion.guardar(animalUbicacionObtenido);
 				animalesUbicaciones.add(animalUbicacionObtenido);
@@ -254,15 +257,42 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 			AnimalUbicacion animalUbicacion = new AnimalUbicacion();
 			animalUbicacion.setAnimal(animal);
-			animalUbicacion.setFecha(LocalDate.now());
+			animalUbicacion.setFecha(LocalDateTime.now());
 			animalUbicacion.setUltimaUbicacion(ubicacion);
 			this.repositorioAnimalUbicacion.guardar(animalUbicacion);
+
+			comprobarAnimalDentroDeCorral(animal, ubicacion);
 
 		} catch(AnimalSinIdentificadorGpsException e) {
 			logger.error("No se puede registrar la posición. Causa: {}", e.getMessage());
 		}
 	}
 
+	private void comprobarAnimalDentroDeCorral(AnimalDeGranja animal, Ubicacion ubicacion) {
+		Corral corral = servicioCorral.obtenerCorralAsignado(animal);
+		if (corral != null) {
+			boolean estaDentro = corral.contiene(ubicacion.getLatitud(), ubicacion.getLongitud());
+			if(!estaDentro) {
+				logger.info("El animal {} se escapo del corral {}!!!", animal, corral);
+				this.servicioNotificacion.crearNotificacionAnimalFueraDeLugar(animal.getId());
+			}
+		}
+	}
+
+	@Override
+	public List<AnimalUbicacion> obtenerUbicacionesRecientes() {
+		return this.repositorioUbicacion.obtenerUbicacionesRecientes();
+	}
+
+	@Autowired
+	public void setServicioCorral(ServicioCorral servicioCorral) {
+		this.servicioCorral = servicioCorral;
+	}
+
+	@Autowired
+	public void setServicioNotificacion(ServicioNotificacion servicioNotificacion) {
+		this.servicioNotificacion = servicioNotificacion;
+	}
 }
 
 /*

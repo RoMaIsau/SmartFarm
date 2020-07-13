@@ -9,4 +9,6 @@ public interface RepositorioUbicacion {
 
 	void guardarUbicacion(Ubicacion ubicacion);
 
+	List<AnimalUbicacion> obtenerUbicacionesRecientes();
+
 }

@@ -12,4 +12,5 @@ public interface ServicioUbicacion {
 
 	void registrar(Posicion posicion);
 
+	List<AnimalUbicacion> obtenerUbicacionesRecientes();
 }

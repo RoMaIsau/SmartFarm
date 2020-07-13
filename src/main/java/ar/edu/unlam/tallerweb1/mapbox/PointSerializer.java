@@ -13,8 +13,8 @@ public class PointSerializer extends JsonSerializer<Point> {
 	public void serialize(Point point, JsonGenerator gen, SerializerProvider serializers)
 			throws IOException, JsonProcessingException {
 		gen.writeStartArray();
-		gen.writeNumber(point.getLatitud());
 		gen.writeNumber(point.getLongitud());
+		gen.writeNumber(point.getLatitud());
 		gen.writeEndArray();		
 	}
 

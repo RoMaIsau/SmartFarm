@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html>
@@ -79,6 +80,9 @@
 </style>
 
 <body id="page-top">
+	<script type="text/javascript">
+		var contextPath = '<c:out value="${contextPath}"/>';
+	</script>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
