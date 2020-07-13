@@ -167,6 +167,35 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 				.list();
 	}
 
+	@Override
+	public Enfermedad buscarEnfermedad(Long id) {
+
+		final Session session = sessionFactory.getCurrentSession();
+		return (Enfermedad) session.createCriteria(Enfermedad.class)
+				.add(Restrictions.eq("id", id))
+				
+				.uniqueResult();
+	}
+
+	@Override
+	public void updateEnfermedad(Enfermedad e) {
+		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(e);
+		
+	}
+
+	@Override
+	public HistoriaClinica verHC(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (HistoriaClinica) session.createCriteria(HistoriaClinica.class)
+				.add(Restrictions.eq("id", id))
+				
+				.uniqueResult();
+	}
+
+	
+
 
 
 }

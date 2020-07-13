@@ -67,9 +67,32 @@
 						</div>
 					</c:if>
 					
-					<h3 class="text-info">${enfermedad}</h3>
+					<h3 class="text-info">${enfermedad}</h3><br>
+					<c:if test="${not empty hcId}">
+					<c:if test="${empty tratamientoB}">
+						
+						<a class="text-danger" href="guardarEnfermedad?id=${hcId}&&nombre=${nombre}&&tratamiento=${tratamiento}">Guardar enfermedad</a>
 					
+					</c:if>
+					</c:if>
+					<c:if test="${not empty guardada}">
+					<h3 class="text-info">${guardada}</h3><br>
+					<c:if test="${not empty tratamiento}">
+						<h3 class="text-info">${tratamiento}</h3>
+						<a class="text-danger" href="tratamientoA?id=${e1Id}">Comenzar tratamiento</a>
 					
+					</c:if>
+					</c:if>
+					<c:if test="${not empty tratamientoB}">
+						<h3 class="text-info">${tratamientoB}</h3>
+						<a class="text-danger" href="tratamientoB?id=${e1Id}">Reanudar tratamiento</a>
+					
+					</c:if>
+					<c:if test="${not empty curada}">
+						<h3 class="text-info">${curada}</h3>
+					<a class="text-danger" href="finTratamiento?id=${e1Id}">Finalizar tratamiento</a>
+					
+					</c:if>
 					
 					<c:if test="${not empty hc}">
 	 					<h3>Historia Clinica:</h3>	       
@@ -82,6 +105,7 @@
 					 	<br>
 						</c:forEach>
 					</c:if>	<br>
+					<h3 class="text-info">${mensaje}</h3><br>
 					
 					
 					

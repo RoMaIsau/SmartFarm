@@ -41,6 +41,14 @@ public interface RepositorioGanado {
 	List<Enfermedad> enfermedadesComunes(HistoriaClinica hc);
 
 	List<Enfermedad> todasEnfermedades();
+
+	Enfermedad buscarEnfermedad(Long id);
+
+	void updateEnfermedad(Enfermedad e);
+
+	HistoriaClinica verHC(Long id);
+
+	
 	
 
 	

@@ -29,9 +29,12 @@
 					SALIVACION ESPUMOSA<form:radiobutton path="salivacionEspumosa" id="saliva"  value="true" class="form-control" /><br><br>
 					SECRECION NASAL<form:radiobutton path="secrecionNasal" id="secrecion"  value="true" class="form-control" /><br><br>
 					</div>
+					
+					
+					<c:if test="${empty fecha}">
 					<h4>¿A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
 					<form:input path="fechaSignosVitales" id="fecha" type="date"  class="form-control" /> <br><br>
-	
+	                </c:if>
 					<button class="btn btn-success  btn-block" Type="Submit"/>Consultar</button>
 				</form:form>
 

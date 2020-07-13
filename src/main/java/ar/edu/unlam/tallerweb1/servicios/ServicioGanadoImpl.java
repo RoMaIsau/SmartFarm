@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
@@ -133,13 +134,7 @@ public class ServicioGanadoImpl implements ServicioGanado {
 		enfermedad="Rinotraqueitis infecciosa";
 	}
 	
-	Enfermedad e= new Enfermedad();
-	Date actual= new Date();
-	e.setNombre(enfermedad);
-	e.setFecha(actual);
-	HistoriaClinica h=signos.get(0).getHistoria();
-	e.setHistoria(h);
-	this.guardarEnfermedad(e);
+	
 	
 		
 		return enfermedad;}
@@ -216,4 +211,108 @@ public List<Enfermedad> enfermedadesComunesRanking(List<Enfermedad> enfermedades
 public List<Enfermedad> todasEnfermedades() {
 	// TODO Auto-generated method stub
 	return servicioGanadoDao.todasEnfermedades();
-}}
+}
+
+@Override
+public String tratamientoA(String enfermedad) {
+	// TODO Auto-generated method stub
+	String tratamiento = "";
+	switch (enfermedad) {
+	case "Miocardiopatia congenita":
+		tratamiento="Cardiosina";
+		break;
+	case "Fiebre Aftosa":
+		tratamiento="Gotas aftosicas";
+		break;
+	case "Leptospirosis":
+		tratamiento="Leptospirina";
+		break;
+	case "Rinotraqueitis infecciosa":
+		tratamiento="Nebulizaciones";
+		break;
+	case "Intoxicacion por consumo de plantas toxicas":
+		tratamiento="Buscapina";
+	break;
+	default: tratamiento="No se conoce un tratamiento";
+	break;
+		
+	}
+		
+	
+	return tratamiento;
+}
+
+@Override
+public Enfermedad buscarEnfermedad(Long id) {
+	
+	return servicioGanadoDao.buscarEnfermedad(id);
+}
+
+@Override
+public void updateEnfermedad(Enfermedad e) {
+	// TODO Auto-generated method stub
+	
+	servicioGanadoDao.updateEnfermedad(e);
+	
+}
+
+@Override
+public boolean alarmaTratamientoA(HistoriaClinica historia) {
+	// TODO Auto-generated method stub
+	List<Enfermedad>enfermedades=servicioGanadoDao.enfermedadesComunes(historia);
+	Enfermedad enfermedad=null;
+	for(Enfermedad e: enfermedades) {
+		if(e.getFinTratamiento()== null && e.getInicioTratamiento() != null) {
+			 enfermedad=e;
+		}
+	}
+	Date actual= new Date(2020,07,10);
+	int dia=actual.getDay()-4;
+	int anio=actual.getYear();
+	int mes=actual.getMonth();
+	Date compare=new Date(anio,mes,dia);
+	
+	if(enfermedad != null &&(compare.after(enfermedad.getInicioTratamiento()))){
+		return true;
+	}else {
+		return false;
+	}
+	
+}
+
+@Override
+public String tratamientoB(String enfermedad) {
+	// TODO Auto-generated method stub
+		String tratamiento = "";
+		switch (enfermedad) {
+		case "Miocardiopatia congenita":
+			tratamiento="Cirugia";
+			break;
+		case "Fiebre Aftosa":
+			tratamiento="Fiebrol";
+			break;
+		case "Leptospirosis":
+			tratamiento="Vitamina D";
+			break;
+		case "Rinotraqueitis infecciosa":
+			tratamiento="Anticuerpos";
+			break;
+		case "Intoxicacion por consumo de plantas toxicas":
+			tratamiento="Hepatalgina";
+			break;
+	   default : tratamiento="No hay un tratamiento conocido";
+		break;
+			
+		}
+			
+		
+		return tratamiento;
+}
+
+@Override
+public HistoriaClinica verHC(Long id) {
+	// TODO Auto-generated method stub
+	return servicioGanadoDao.verHC(id);
+}
+
+}

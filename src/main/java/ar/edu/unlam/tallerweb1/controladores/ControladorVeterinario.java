@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -74,12 +76,12 @@ public class ControladorVeterinario{
 	@RequestMapping(path = "/indexVeterinario")
 	public ModelAndView irAIndexVeterinario(HttpServletRequest request) {
 		// Verifica que sea un usuario de tipo Veterinario, si no lo es, lo redirige al login
-		String rol = (String) request.getSession().getAttribute("ROL");
+	//String rol = (String) request.getSession().getAttribute("ROL");
 		
-		ModelMap model = new ModelMap();
-		model.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		/*ModelMap model = new ModelMap();
+		model.put("notificaciones", listarNotificacionesDelVeterinario(request));*/
 		
-		if(rol.equals("Veterinario")) {
+		//if(rol.equals("Veterinario")) {
 
 			
 		
@@ -97,17 +99,17 @@ public class ControladorVeterinario{
 	      
            ModelMap modelo= new ModelMap();
            modelo.put("vencidos",animalesVencidos);
+           modelo.put("animales",animales);
            
           
           
-		return new ModelAndView("historiaClinica",modelo);}
-		else if(!rol.equals("Veterinario")) {
-            return new ModelAndView("historiaClinica", model);
-		} else {
 
-			return new ModelAndView("redirect:/login");
-		}
-	}
+		return new ModelAndView("historiaClinica",modelo);}
+		/*else if(!rol.equals("Veterinario")) {
+            return new ModelAndView("historiaClinica", model);}
+		
+		 return new ModelAndView("historiaClinica", model);}*/
+
 	
 
 	@RequestMapping("/detalle")
@@ -197,8 +199,11 @@ public class ControladorVeterinario{
 	
              
 		AnimalDeGranja gv= servicioGanado.ver(id);
-	     
+		String alarma="";
 	      HistoriaClinica historia=gv.getHistoria();
+	      Boolean tratamiento= servicioGanado.alarmaTratamientoA(historia);
+	      if(tratamiento == true) {
+	      alarma="Ya han pasado 4 dias desde que el animal "+ id + " ha comenzado su tratamiento. Se requiere un nuevo diagnostico";}
              
 	      List<SignosVitales> signos= servicioGanado.signos(historia);
 	      
@@ -209,7 +214,9 @@ public class ControladorVeterinario{
             	 int pos2=pos-1;
              SignosVitales signo= signos.get(pos2);
              modelo.put("signos",signo);
-             
+             modelo.put("alarmaTratamiento",alarma);
+             modelo.put("idAnimalTratamiento",id);
+            
            
            
              return new ModelAndView("HomeAnimal", modelo);}
@@ -221,7 +228,7 @@ public class ControladorVeterinario{
   	   
   	 @RequestMapping("/historiaClinica")
  	public ModelAndView verHistoria(HttpServletRequest request) {
-  		String rol = (String) request.getSession().getAttribute("ROL");
+  		//String rol = (String) request.getSession().getAttribute("ROL");
  	       
               
               
@@ -237,7 +244,7 @@ public class ControladorVeterinario{
    	ModelMap modelo= new ModelMap();
     
     modelo.put("animales",animalesNoRepetidos);
-    modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+   // modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
     modelo.put("mostrarTabla", "si");
  
   
@@ -295,6 +302,40 @@ public class ControladorVeterinario{
           return new ModelAndView("consultaVeterinario", modelo);
           
 	}
+	
+	@RequestMapping("/guardarEnfermedad")
+	public ModelAndView guardarEnfermedad(@RequestParam(value="id", required=true) Long id,@RequestParam(value="nombre", required=true) String nombre,@RequestParam(value="tratamiento", required=true) String tratamiento){
+		 
+		HistoriaClinica historia = servicioGanado.verHC(id);
+		 List<Enfermedad> guardadas= servicioGanado.enfermedadesComunes(historia); 
+		 Long idEnf= 0L;
+	
+		
+		 Enfermedad enfermedad1= new Enfermedad();
+	       enfermedad1.setHistoria(historia);
+	      enfermedad1.setNombre(nombre);
+	      
+	      Date actual= new Date();
+	      enfermedad1.setFecha(actual);
+		       servicioGanado.guardarEnfermedad(enfermedad1);
+		      
+		       List<Enfermedad> guardadas1= servicioGanado.enfermedadesComunes(historia);
+			   for(Enfermedad e: guardadas1) {
+			    	if(e.getNombre().equals(nombre)) {
+			    		
+			    		idEnf=e.getId();
+			    	}
+			    }
+		       
+		       ModelMap modelo= new ModelMap();
+		       modelo.put("guardada", "La enfermedad ha sido registrada en la historia clinica");
+		       modelo.put("e1Id",idEnf);
+		       modelo.put("tratamiento",tratamiento);
+		       return new ModelAndView("historiaClinica", modelo);    
+	
+	}
+	
+	
 	   
 	@RequestMapping("/diagnosticarPost")
 	public ModelAndView diagnostico(@ModelAttribute("sintomas") Sintomas sintomas){
@@ -303,26 +344,174 @@ public class ControladorVeterinario{
 	  HistoriaClinica hc= new HistoriaClinica();
 	AnimalDeGranja animal= servicioGanado.ver(sintomas.getIdAnimal());
 	      
-  
+	 String tratamiento=null;
+	 String tratamientoB=null;
+	 String curada=null;
+	   String sugerenciaB=null;
+	   String sugerencia=null;
+	  
      hc = servicioGanado.verHC(animal);
     List<SignosVitales>signos= servicioGanado.signos(hc);
+    List<Enfermedad> guardadas= servicioGanado.enfermedadesComunes(hc);
+    Enfermedad guardada= null;
+    Enfermedad sinTratar= null;
+    for(Enfermedad e: guardadas) {
+    	if(e.getFinTratamiento()== null && e.getInicioTratamiento()!= null) {
+    		guardada=e;
+    	}else if(e.getFinTratamiento()== null && e.getInicioTratamiento()== null){
+    		sinTratar=e;
+    	}
+    }
     
-    	
-	   String enfermedad= servicioGanado.diagnosticar(signos,sintomas);    
-	   
+    if(guardada!= null) {
+    	Date fechaSignos= new Date(2020,01,01);
+    	sintomas.setFechaSignosVitales(fechaSignos);}
+    
+	   String enfermedad= servicioGanado.diagnosticar(signos,sintomas); 
 	   String diagnostico="El animal podria tener "+ enfermedad;
-      Enfermedad enfermedad1= new Enfermedad();
-      enfermedad1.setHistoria(hc);
-      enfermedad1.setNombre(enfermedad);
-      Date actual= new Date();
-      enfermedad1.setFecha(actual);
-	       servicioGanado.guardarEnfermedad(enfermedad1);
+	   
+	   if(enfermedad != "No hay suficientes sintomas de enfermedad") {
+	   if(guardada == null && guardadas != null) {
+	   tratamiento= servicioGanado.tratamientoA(enfermedad);
+	   sugerencia="Se sugiere realizar un tratamiento con "+ tratamiento;}
+	  
+	   else if(guardada != null && guardada.getTratamientoB()==null){
+		   tratamientoB= servicioGanado.tratamientoB(enfermedad); 
+		   sugerenciaB="Se sugiere cambiar a tratamiento con "+ tratamientoB;
+	   }
+		   
+	   }else if(enfermedad == "No hay suficientes sintomas de enfermedad" && guardada != null) {
+		   curada="El animal se ha recuperado";}
+	   else if(enfermedad != "No hay suficientes sintomas de enfermedad" && guardada != null && guardada.getTratamientoB().equals("Iniciado")) {
+		   curada="El animal no se ha recuperado. Realice una interconsulta";
+	   }
 	   
             
             ModelMap modelo= new ModelMap();
           
+            modelo.put("nombre",enfermedad);
             modelo.put("enfermedad",diagnostico);
+            modelo.put("tratamiento",sugerencia);
+            modelo.put("tratamientoB",tratamientoB);
+            modelo.put("curada",curada);
+            modelo.put("hcId",hc.getId());
+         
           
+            	if(guardada != null) {
+            	modelo.put("e1Id",guardada.getId());
+            }else if(guardada == null  && sinTratar != null) {
+            	modelo.put("e1Id",sinTratar.getId());
+            }
+           
+          
+         
+          
+        
+          return new ModelAndView("historiaClinica", modelo);
+          
+	}
+	
+	@RequestMapping("/nuevoDiagnostico")
+	public ModelAndView diagnosticarA(@RequestParam(value="id", required=true) Long id) throws ParseException{
+	     
+	       
+	   Long idAnimal = id;
+	   AnimalDeGranja animal=servicioGanado.ver(id);
+	   HistoriaClinica historia= servicioGanado.verHC(animal);
+	   List<Enfermedad>enfermedades=servicioGanado.enfermedadesComunes(historia);
+		Enfermedad enfermedad=null;
+		for(Enfermedad e: enfermedades) {
+			if(e.getFinTratamiento()== null && e.getInicioTratamiento() != null) {
+				 enfermedad=e;
+			}
+		}
+		
+	   Date fechaInicioTratamiento= enfermedad.getInicioTratamiento();
+	   
+	   SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy"); 
+	   String date = dt.format(fechaInicioTratamiento);
+	   Date fecha= dt.parse(date);
+	   Sintomas sintomas= new Sintomas();
+	   sintomas.setFechaSignosVitales(fecha);
+            ModelMap modelo= new ModelMap();
+          
+            modelo.put("sintomas",sintomas);
+          modelo.put("idAnimal", idAnimal);
+          modelo.put("fecha", fecha);
+         
+          
+        
+          return new ModelAndView("consultaVeterinario", modelo);
+          
+	}
+	
+	@RequestMapping("/tratamientoA")
+	public ModelAndView tratamientoA(@RequestParam(value="id", required=true) Long id) {
+	
+	
+	 Enfermedad enfermedad= servicioGanado.buscarEnfermedad(id) ;   
+	   Date actual= new Date(2020,06,07);
+	   enfermedad.setId(id);
+	   
+	   enfermedad.setInicioTratamiento(actual);
+		 enfermedad.setTratamientoA("Iniciado"); 
+     servicioGanado.updateEnfermedad(enfermedad);
+        
+        ModelMap modelo= new ModelMap();
+        
+        modelo.put("mensaje","El tratamiento fue iniciado");
+         
+         
+          
+        
+          return new ModelAndView("historiaClinica", modelo);
+          
+	}
+	
+	@RequestMapping("/tratamientoB")
+	public ModelAndView tratamientoB(@RequestParam(value="id", required=true) Long id) {
+	
+	
+	 Enfermedad enfermedad= servicioGanado.buscarEnfermedad(id) ;   
+	   Date actual= new Date(2020,06,07);   
+	   enfermedad.setInicioTratamiento(actual);
+	   enfermedad.setId(id);
+	   enfermedad.setTratamientoA("finalizado");
+	   enfermedad.setTratamientoB("Iniciado");
+	   enfermedad.setInicioTratamiento(actual);
+		  
+     servicioGanado.updateEnfermedad(enfermedad);
+        
+        ModelMap modelo= new ModelMap();
+        
+        modelo.put("mensaje","El tratamiento fue reiniciado");
+         
+         
+          
+        
+          return new ModelAndView("historiaClinica", modelo);
+          
+	}
+	
+
+	@RequestMapping("/finTratamiento")
+	public ModelAndView fin(@RequestParam(value="id", required=true) Long id) {
+	
+	
+	 Enfermedad enfermedad= servicioGanado.buscarEnfermedad(id) ;   
+	   Date actual= new Date();   
+	   
+	   enfermedad.setTratamientoA("finalizado");
+	   enfermedad.setTratamientoB("finalizado");
+	   enfermedad.setId(id);
+	   enfermedad.setFinTratamiento(actual);
+		
+     servicioGanado.updateEnfermedad(enfermedad);
+        
+        ModelMap modelo= new ModelMap();
+        
+        modelo.put("mensaje","El tratamiento fue finalizado");
+         
          
           
         
@@ -343,7 +532,7 @@ public class ControladorVeterinario{
         }
         
         List<Enfermedad> enfermedades= new ArrayList<Enfermedad>();
-        
+        List<Enfermedad>enfermedadesTodas= new ArrayList<Enfermedad>();
         Integer cantFiebre= 0;
         Integer cantLeptos= 0;
         Integer cantMio= 0;
@@ -352,6 +541,8 @@ public class ControladorVeterinario{
         
           	 
         enfermedades=servicioGanado.todasEnfermedades(); 
+        
+      
         
         for(Enfermedad e: enfermedades) {
         	if(e.getNombre().equals("Fiebre Aftosa")) {
@@ -384,12 +575,13 @@ public class ControladorVeterinario{
             ModelMap modelo= new ModelMap();
           
             modelo.put("ranking",todos);
-            modelo.put("enfermedades",enfermedades);
+           // modelo.put("enfermedades",enfermedades);
+           // modelo.put("enfermedades",todos);
          
          
           
         
-          return new ModelAndView("historiaClinica", modelo);
+          return new ModelAndView("Enfermedades", modelo);
           
 	}
 	

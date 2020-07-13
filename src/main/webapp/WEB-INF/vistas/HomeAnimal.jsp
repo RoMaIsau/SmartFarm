@@ -84,9 +84,10 @@
   <c:if test="${signos.temperatura gt 40.0}">
  <H3 class="text-danger"> Temperatura (°C): </H3><h2 class="text-danger"> ${signos.temperatura} </h2>
  </c:if>
+ <c:if test="${signos.temperatura lt 40.0}">
  <H3>Temperatura (°C)</H3>
  <h3> ${signos.temperatura} </h3>
- 
+ </c:if>
  <H3>Frecuencia Cardiaca(lpm)</H3>
   <h3> ${signos.frecuenciaCardiaca} </h3>
   
@@ -96,8 +97,12 @@
    <H3>Pulso </H3>
     <h3> ${signos.pulso} </h3>
     <br>
-    <a href="modificarSignos?id=${signos.id}"> MODIFICAR </a>
-   
+    <a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
+    </c:if>	<br>
+    
+    	<c:if test="${not empty alarmaTratamiento}">
+    	<h3> ${alarmaTratamiento} </h3>
+    <a href="nuevoDiagnostico?id=${idAnimalTratamiento}"> NUEVO DIAGNOSTICO </a><br>
   	</c:if>	<br>
   	<h4 class="text-success"><a href="/SmartFarm/indexVeterinario" >Home Veterinario</a></h4>
 							

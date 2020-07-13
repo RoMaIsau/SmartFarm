@@ -168,6 +168,18 @@ INSERT INTO animalDeGranja (tipo_id, raza_id, genero_id, peso, fechaNacimiento) 
 (5, 17, 1, 5, "2020.01.10"),
 (5, 17, 1, 5, "2020.02.10");
 
+--ENFERMEDADES
+INSERT INTO Enfermedad (id,fecha,finTratamiento,inicioTratamiento,nombre,tratamientoA,tratamientoB,historia_id) VALUES
+(2,"2020.06.10",null,null,'Leptospirosis',null,null,2),
+(3,"2020.06.19",null,null,'Fiebre Aftosa',null,null,2),
+(4,"2020.06.17",null,null,'Miocardiopatiacongenita',null,null,1),
+(5,"2020.06.10",null,null,'Rinotraqueitis infecciosa',null,null,2),
+(6,"2020.08.10",null,null,'Leptospirosis',null,null,2),
+(7,"2020.08.19",null,null,'Fiebre Aftosa',null,null,2),
+(8,"2020.08.17",null,null,'Miocardiopatiacongenita',null,null,1),
+(9,"2020.08.10",null,null,'Rinotraqueitis infecciosa',null,null,2);
+
+
 select * from signosvitales;
 delete from animaldegranja;
 delete from usuario;
@@ -175,3 +187,4 @@ select* from animaldegranja;
 select * from usuario;
 
 SELECT * FROM ubicacion 
+

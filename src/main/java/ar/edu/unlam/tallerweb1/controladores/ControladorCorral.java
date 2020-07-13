@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.formularios.FormularioDeAsignacionDeAnimales;
+//import ar.edu.unlam.tallerweb1.formularios.FormularioDeAsignacionDeAnimales;
 import ar.edu.unlam.tallerweb1.mapbox.Feature;
 import ar.edu.unlam.tallerweb1.mapbox.FeatureCollection;
 import ar.edu.unlam.tallerweb1.mapbox.Point;
@@ -87,21 +87,22 @@ public class ControladorCorral {
 		String nombreCorral = this.servicioCorral.obtenerNombre(idCorral);
 		List<AnimalDeGranja> animalesEnCorral = this.servicioCorral.obtenerAnimalesPorCorral(idCorral);
 		List<AnimalDeGranja> animalesSinCorral = this.servicioCorral.obtenerAnimalesSinCorral();
-		FormularioDeAsignacionDeAnimales asignacion = new FormularioDeAsignacionDeAnimales();
-		asignacion.setIdCorral(idCorral);
+		/*FormularioDeAsignacionDeAnimales asignacion = new FormularioDeAsignacionDeAnimales();
+		asignacion.setIdCorral(idCorral);*/
 
 		ModelMap modelo = new ModelMap();
 		modelo.put("nombre", nombreCorral);
 		modelo.put("animalesDelCorral", animalesEnCorral);
 		modelo.put("animalesSueltos", animalesSinCorral);
-		modelo.put("asignacion", asignacion);
+		//modelo.put("asignacion", asignacion);
 		return new ModelAndView("modalDetalleCorral", modelo);
 	}
 
 	@RequestMapping(value = "corrales/asignar", method = RequestMethod.POST, produces = "text/plain")
 	@ResponseBody
-	public String asignarAnimales(@ModelAttribute FormularioDeAsignacionDeAnimales asignacion) {
-		this.servicioCorral.asignarAnimales(asignacion.getIdCorral(), asignacion.getAnimalesSeleccionados());
+	public String asignarAnimales()//@ModelAttribute FormularioDeAsignacionDeAnimales asignacion)
+	{
+		//this.servicioCorral.asignarAnimales(asignacion.getIdCorral(), asignacion.getAnimalesSeleccionados());
 		return "ok";
 	}
 
