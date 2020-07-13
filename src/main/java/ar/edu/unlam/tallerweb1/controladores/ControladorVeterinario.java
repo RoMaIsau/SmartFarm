@@ -455,9 +455,10 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		String enfermedad = "";
+		String enfermedad = "Fiebre Aftosa";/* OTRA ENFERMEDAD usarlo para cambiar resultados */
 		modelo.put("enfermedad", enfermedad);
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		modelo.addAttribute("enfermedadClase", enfermedad);
 		
         return new ModelAndView("signosVitales", modelo);
 	}
