@@ -46,7 +46,7 @@ String dataPoints2 = gsonObj2.toJson(list2);
 %>
 <!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE TEMPERATURA -->
 
-<!-- PRINCIPIO: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE TEMPERATURA -->
+<!-- PRINCIPIO: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE FRECUENCIA CARDÍACA -->
 <%
 Gson gsonObj3 = new Gson();
 Map<Object,Object> map3 = null;
@@ -56,7 +56,7 @@ map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo")
 
 String dataPoints3 = gsonObj.toJson(list3);
 %>
-<!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE TEMPERATURA -->
+<!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE FRECUENCIA CARDÍACA -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,63 +177,125 @@ String dataPoints3 = gsonObj.toJson(list3);
 				return Math.floor(Math.random() * (max - min + 1) ) + min;
 			}
 			
-			var dataPoints = [];
-			var y = 80;
-			for(var i = 0; i < 12; i++){
-				y = 80
-				y += getRndInteger(-3, 3);
-				dataPoints.push({x: i, y: y});
-			}
-			 
-			var RitmoCardiaco = new CanvasJS.Chart("RitmoCardiaco", {
-				title: {
-					text: "Ritmo cardíaco"
-				},
-				axisX:{
-					title: "Tiempo en segundos"
-				},
-				axisY:{
-					includeZero: false,
-					suffix: " PPM"
-				},
-				data: [{
-					type: "spline",
-					color: "green",
-					yValueFormatString: "#,##0.0#",
-					toolTipContent: "{y} PPM",
-					dataPoints: dataPoints
-				}]
-			});
-			RitmoCardiaco.render();
-			 
-			var updateInterval = 1000;
-			setInterval(function () { updateChart() }, updateInterval);
-			 
-			var xValue = dataPoints.length;
-			var yValue = dataPoints[dataPoints.length - 1].y;
-			
-			function updateChart() {
-				yValue = 80
-				yValue += getRndInteger(-3, 3);
-				dataPoints.push({ x: xValue, y: yValue });
-				xValue++;
+			<c:choose>
+				<c:when test="${enfermedad == null or enfermedad == ''}">
+					var dataPoints = [];
+					var y = 80;
+					for(var i = 0; i < 12; i++){
+						y = 80
+						y += getRndInteger(-3, 3);
+						dataPoints.push({x: i, y: y});
+					}
+					 
+					var RitmoCardiaco = new CanvasJS.Chart("RitmoCardiaco", {
+						title: {
+							fontFamily: "Nunito",
+							fontStyle: "bold",
+							text: "Ritmo cardíaco"
+						},
+						axisX:{
+							title: "Tiempo en segundos"
+						},
+						axisY:{
+							includeZero: false,
+							suffix: " PPM"
+						},
+						data: [{
+							type: "spline",
+							color: "green",
+							yValueFormatString: "#,##0.0#",
+							toolTipContent: "{y} PPM",
+							dataPoints: dataPoints
+						}]
+					});
+					RitmoCardiaco.render();
+					 
+					var updateInterval = 1000;
+					setInterval(function () { updateChart() }, updateInterval);
+					 
+					var xValue = dataPoints.length;
+					var yValue = dataPoints[dataPoints.length - 1].y;
+					
+					function updateChart() {
+						yValue = 80
+						yValue += getRndInteger(-3, 3);
+						dataPoints.push({ x: xValue, y: yValue });
+						xValue++;
+						RitmoCardiaco.render();
+						cambiarPulso(yValue);
+					};
+					
+					function cambiarPulso(valor) {
+						var pulso = document.getElementById("pulso");
+						pulso.value = valor;
+					};
+				</c:when>
+				<c:when test="${enfermedad == 'Fiebre Aftosa'}">
+				var dataPoints = [];
+				var y = 95;
+				for(var i = 0; i < 12; i++){
+					y = 95
+					y += getRndInteger(-3, 3);
+					dataPoints.push({x: i, y: y});
+				}
+				 
+				var RitmoCardiaco = new CanvasJS.Chart("RitmoCardiaco", {
+					title: {
+						fontFamily: "Nunito",
+						fontStyle: "bold",
+						text: "Ritmo cardíaco"
+					},
+					axisX:{
+						title: "Tiempo en segundos"
+					},
+					axisY:{
+						includeZero: false,
+						suffix: " PPM"
+					},
+					data: [{
+						type: "spline",
+						color: "red",
+						yValueFormatString: "#,##0.0#",
+						toolTipContent: "{y} PPM",
+						dataPoints: dataPoints
+					}]
+				});
 				RitmoCardiaco.render();
-				cambiarPulso(yValue);
-			};
+				 
+				var updateInterval = 1000;
+				setInterval(function () { updateChart() }, updateInterval);
+				 
+				var xValue = dataPoints.length;
+				var yValue = dataPoints[dataPoints.length - 1].y;
+				
+				function updateChart() {
+					yValue = 95
+					yValue += getRndInteger(-3, 3);
+					dataPoints.push({ x: xValue, y: yValue });
+					xValue++;
+					RitmoCardiaco.render();
+					cambiarPulso(yValue);
+				};
+				
+				function cambiarPulso(valor) {
+					var pulso = document.getElementById("pulso");
+					pulso.value = valor;
+				};
+			</c:when>
+			</c:choose>
+		
 			
-			function cambiarPulso(valor) {
-				var pulso = document.getElementById("pulso");
-				pulso.value = valor;
-			};
 			
 			
 			/* ===== VALORES URINARIOS ===== */
 			var valoresUrinarios = new CanvasJS.Chart("valoresUrinarios", {
 				theme: "light2",
-				animationEnabled: true,
+				animationEnabled: false,
 				exportFileName: "Valores urinarios",
-				exportEnabled: true,
+				exportEnabled: false,
 				title:{
+					fontFamily: "Nunito",
+					fontStyle: "normal",
 					text: "Valores urinarios"
 				},
 				data: [{
@@ -250,9 +312,11 @@ String dataPoints3 = gsonObj.toJson(list3);
 			
 			/* ===== TEMPERATURA ===== */
 			var temperaturaCorporal = new CanvasJS.Chart("temperaturaCorporal", {
-				animationEnabled: true,
-				exportEnabled: true,
+				animationEnabled: false,
+				exportEnabled: false,
 				title: {
+					fontFamily: "Nunito",
+					fontStyle: "bold",
 					text: "Temperatura corporal"
 				},
 				subtitles: [{
@@ -281,6 +345,8 @@ String dataPoints3 = gsonObj.toJson(list3);
 			/* ===== FRECUENCIA RESPIRATORIA ===== */
 			var frecuenciaRespiratoria = new CanvasJS.Chart("frecuenciaRespiratoria", {
 				title: {
+					fontFamily: "Nunito",
+					fontStyle: "bold",
 					text: "Frecuencia respiratoria"
 				},
 				subtitles:[{

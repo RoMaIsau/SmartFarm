@@ -453,8 +453,10 @@ public class ControladorVeterinario{
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
-  		
 		ModelMap modelo= new ModelMap();
+		
+		String enfermedad = "";
+		modelo.put("enfermedad", enfermedad);
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
         return new ModelAndView("signosVitales", modelo);
