@@ -34,6 +34,19 @@ public class RepositorioAlimentoTest extends SpringTest {
 		assertNotNull(alimento.getTipo().getId());
 	}
 	
+	@Test
+	public void deberiaObtenerUnAlimento() {
+		Alimento arroz = this.crearAlimento("Arroz", 220.0, 50.0, "Granos");
+		Alimento quinoa = this.crearAlimento("Quinoa", 125.0, 10.0, "Granos");
+		
+		this.repositorioAlimento.registrarAlimento(arroz);
+		this.repositorioAlimento.registrarAlimento(quinoa);
+		
+		Alimento alimentoObtenido = this.repositorioAlimento.consultarAlimento(arroz);
+		
+		assertEquals(arroz, alimentoObtenido);
+	}
+	
 	private Alimento crearAlimento(String nombre, Double cantidad, Double stockMinimo, String tipo) {
 		TipoAlimento tipoAlimento = new TipoAlimento();
 		tipoAlimento.setNombre(tipo);
