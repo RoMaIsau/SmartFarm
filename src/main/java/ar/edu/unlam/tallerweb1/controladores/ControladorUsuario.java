@@ -36,7 +36,7 @@ public class ControladorUsuario {
 	@RequestMapping("/login")
 	public ModelAndView irALogin(HttpServletRequest request) {
 
-		/*String rol = request.getSession().getAttribute("ROL") != null
+		String rol = request.getSession().getAttribute("ROL") != null
 				? (String) request.getSession().getAttribute("ROL")
 				: "";
 
@@ -47,9 +47,9 @@ public class ControladorUsuario {
 		case "Empleado":
 			return new ModelAndView("redirect:/indexEmpleado");
 
-		case "Veterinario":*/
+		case "Veterinario":
 			return new ModelAndView("redirect:/indexVeterinario");
-		}/*
+		}
 
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el
@@ -61,7 +61,7 @@ public class ControladorUsuario {
 		// el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma dentro del modelo
 		return new ModelAndView("login", modelo);
-	}*/
+	}
 
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la
 	// url /login directamente.

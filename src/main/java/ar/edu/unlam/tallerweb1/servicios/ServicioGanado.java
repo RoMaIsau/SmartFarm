@@ -8,6 +8,7 @@ import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
+import ar.edu.unlam.tallerweb1.modelo.Tratamiento;
 
 
 public interface ServicioGanado {
@@ -35,5 +36,6 @@ public interface ServicioGanado {
 	List<Enfermedad> todasEnfermedades();
 	public String tratamientoA(String enfermedad);
 	public String tratamientoB(String enfermedad);
+	public Tratamiento buscarTratamiento(String nombre);
 
 }

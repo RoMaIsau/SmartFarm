@@ -39,13 +39,13 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
 	private ServicioCorral servicioCorral;
-	/*
+	
 	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(35.280943, 59.242249, 35.275880, 59.232271, 35.273971, 59.256475, 35.269674, 59.244542, 35.275999, 59.244134);
-	*/
-	/*
+	
+	
 	private UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();*/
-	/*
-	private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(ubicacionesCentralesDeLaBA.getLatitudCaprinoCentral(), ubicacionesCentralesDeLaBA.getLongitudCaprinoCentral(),
+	
+	/*private UbicacionesCentrales ubicacionesCentrales = new UbicacionesCentrales(ubicacionesCentralesDeLaBA.getLatitudCaprinoCentral(), ubicacionesCentralesDeLaBA.getLongitudCaprinoCentral(),
 																			ubicacionesCentralesDeLaBA.getLatitudEquinoCentral(), ubicacionesCentralesDeLaBA.getLongitudEquinoCentral(),
 																			ubicacionesCentralesDeLaBA.getLatitudOvinoCentral(), ubicacionesCentralesDeLaBA.getLongitudOvinoCentral(),
 																			ubicacionesCentralesDeLaBA.getLatitudPorcinoCentral(), ubicacionesCentralesDeLaBA.getLongitudPorcinoCentral(),
@@ -269,14 +269,14 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 	}
 
 	private void comprobarAnimalDentroDeCorral(AnimalDeGranja animal, Ubicacion ubicacion) {
-		Corral corral = servicioCorral.obtenerCorralAsignado(animal);
+		/*Corral corral = servicioCorral.obtenerCorralAsignado(animal);
 		if (corral != null) {
 			boolean estaDentro = corral.contiene(ubicacion.getLatitud(), ubicacion.getLongitud());
 			if(!estaDentro) {
 				logger.info("El animal {} se escapo del corral {}!!!", animal, corral);
 				this.servicioNotificacion.crearNotificacionAnimalFueraDeLugar(animal.getId());
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -286,7 +286,7 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 
 	@Autowired
 	public void setServicioCorral(ServicioCorral servicioCorral) {
-		this.servicioCorral = servicioCorral;
+		//this.servicioCorral = servicioCorral;
 	}
 
 	@Autowired

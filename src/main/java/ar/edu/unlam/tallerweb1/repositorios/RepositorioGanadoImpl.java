@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
+import ar.edu.unlam.tallerweb1.modelo.Tratamiento;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -190,6 +191,15 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 		final Session session = sessionFactory.getCurrentSession();
 		return (HistoriaClinica) session.createCriteria(HistoriaClinica.class)
 				.add(Restrictions.eq("id", id))
+				
+				.uniqueResult();
+	}
+
+	@Override
+	public Tratamiento verTratamiento(String nombre) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Tratamiento) session.createCriteria(Tratamiento.class)
+				.add(Restrictions.eq("nombre", nombre))
 				
 				.uniqueResult();
 	}

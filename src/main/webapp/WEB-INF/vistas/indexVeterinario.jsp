@@ -30,7 +30,7 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<h1>Lista de animales:</h1><br>
+					<h1>Animales:</h1><br>
 
 
 
@@ -43,7 +43,7 @@
 					 </br>		
 					
 							 
-</c:forEach>
+</c:forEach><br>
 
 
 
@@ -61,7 +61,7 @@
 <h3>${mensaje}</h3><br>
 
 <h3><a href="/SmartFarm/listaGanado" >MONITOREO DE SIGNOS VITALES</a></h3><BR>
-<h3><a href="/SmartFarm/historiaClinica" >HISTORIAS CLINICAS</a></h3><BR>
+<h3><a href="/SmartFarm/historiaClinica" >MAS INFORMACION SOBRE LOS ANIMALES</a></h3><BR>
 <a href="/SmartFarm/indexVeterinario" ><h3>${volver}</h3></a><br>					
 
 

@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
 //import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
@@ -24,6 +25,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
 //import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
@@ -49,8 +51,8 @@ public class ControladorMapa {
 		this.servicioVacunas = servicioVacunas;
 	}
 
-	//@Inject
-	//private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
+	@Inject
+	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
 	@RequestMapping("/mapa")
 	public ModelAndView irAMapa(HttpServletRequest request, ModelMap model) {
@@ -103,8 +105,8 @@ public class ControladorMapa {
 		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
 		model.put("notificaciones", notificaciones);
 
-		/*UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
-		model.put("ubicacionesCentrales", ubicacionesCentrales);*/
+		UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
+		model.put("ubicacionesCentrales", ubicacionesCentrales);
 
 		List<TipoAnimal> tipos = servicioDeAnimales.obtenerTiposDeAnimales();
 		model.put("tiposDeAnimales", tipos);
@@ -125,8 +127,8 @@ public class ControladorMapa {
 
 		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
 		model.put("notificaciones", notificaciones);
-		/*UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
-		model.put("ubicacionesCentrales", ubicacionesCentrales);*/
+		UbicacionesCentrales ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
+		model.put("ubicacionesCentrales", ubicacionesCentrales);
 		List<TipoAnimal> tipos = servicioDeAnimales.obtenerTiposDeAnimales();
 		model.put("tiposDeAnimales", tipos);
 
@@ -145,7 +147,7 @@ public class ControladorMapa {
 			return new ModelAndView("mapaCoordenadaAModificar", model);
 		}
 
-		/*switch (tipoDeAnimal) {
+		switch (tipoDeAnimal) {
 		case "CAPRINO":
 			servicioUbicacionesCentrales.caprinoModificarCoordenadas(latitud, longitud);
 			break;
@@ -164,7 +166,7 @@ public class ControladorMapa {
 		}
 
 		ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
-		model.put("ubicacionesCentrales", ubicacionesCentrales);*/
+		model.put("ubicacionesCentrales", ubicacionesCentrales);
 
 		model.put("mensaje", "Ubicaci�n modificada exitosamente.");
 		return new ModelAndView("mapaCoordenadaAModificar", model);

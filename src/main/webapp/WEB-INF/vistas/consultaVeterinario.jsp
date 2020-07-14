@@ -40,6 +40,7 @@
 					<hr class="colorgraph"><br>
 					<div class="text-primary">
                 <form:input path="idAnimal" id="idA" type="hidden" class="form-control" value="${idAnimal}" />
+			 	
 			 	 ULCERAS EN UBRES Y BOCA<form:radiobutton path="Ulceras" id="ulceras"  value="true"  class="form-control" /><br><br>
 	
 				    FALTA DE APETITO<form:radiobutton path="anorexia" id="anorexia"   value="true" class="form-control" /><br><br>
@@ -53,47 +54,20 @@
 					</div>
 					
 					
-					<c:if test="${empty fecha}">
-					<h4>ï¿½A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
-					<form:input path="fechaSignosVitales" id="fecha" type="date"  class="form-control" /> <br><br>
-	                </c:if>
+				<c:if test="${empty fecha}">
+					<h4>¿A partir de que momento desea chequear los signos vitales del animal?</h4><br>
+		        
+		        <form:select path="tiempo" >
+		        <form:option  value="Un mes" type="text"  class="form-control" />UN MES <br>
+	             <form:option  value="Un año" type="text"  class="form-control" />UN AÑO<BR> 
+	              <form:option value="Una semana" type="text"  class="form-control" />UNA SEMANA<br>
+	              </form:select>  
+	                </c:if> <br><br>
 					<button class="btn btn-success  btn-block" Type="Submit"/>Consultar</button>
 				</form:form>
 
 
-				<%@ include file="../../parts/topbar.jsp"%>
-
-				<!-- End of Topbar -->
-
-				<!-- Begin Page Content -->
-				<div class="container-fluid">
-					<div class = "container">
-						<div id="loginbox" style="margin-top:50px;" >
-							<h3 class="form-signin-heading"> INGRESE LOS SINTOMAS OBSERVADOS</h3>
-							<form:form action="diagnosticarPost" method="POST" modelAttribute="sintomas">
-						    	
-								<hr class="colorgraph"><br>
-								<div class="text-primary">
-			                <form:input path="idAnimal" id="idA" type="hidden" class="form-control" value="${idAnimal}" />
-						 	 ULCERAS EN UBRES Y BOCA<form:radiobutton path="Ulceras" id="ulceras"  value="true"  class="form-control" /><br><br>
 				
-							    FALTA DE APETITO<form:radiobutton path="anorexia" id="anorexia"   value="true" class="form-control" /><br><br>
-								DEBILIDAD<form:radiobutton path="debilidad" id="debilidad" value="true" class="form-control" /><br><br>
-								BAJA PRODUCCION DE LECHE<form:radiobutton path="bajaProduccionLeche" id="bajaProduccion"  value="true"  class="form-control" /><br><br>
-								DIARREA <form:radiobutton path="diarrea" id="diarrea"  value="true" class="form-control" /><br><br>
-								CONJUNTIVITIS<form:radiobutton path="conjuntivitis" id="conjuntivitis"  value="true" class="form-control" /><br><br>
-								TOS<form:radiobutton path="tos" id="tos"  value="true"  class="form-control" /><br><br>
-								SALIVACION ESPUMOSA<form:radiobutton path="salivacionEspumosa" id="saliva"  value="true" class="form-control" /><br><br>
-								SECRECION NASAL<form:radiobutton path="secrecionNasal" id="secrecion"  value="true" class="form-control" /><br><br>
-								</div>
-								<h4>ï¿½A partir de que fecha desea chequear los signos vitales del animal?</h4><br>
-								<form:input path="fechaSignosVitales" id="fecha" type="date"  class="form-control" /> <br><br>
-				
-								<button class="btn btn-success  btn-block mb-4" Type="Submit"/>Consultar</button>
-							</form:form>
-			
-							
-							</div>
 						</div>
 					</div>
 				</div>
