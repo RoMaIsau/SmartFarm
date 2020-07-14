@@ -4,12 +4,15 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import static org.assertj.core.api.Assertions.*;
+
+import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Gastos;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeGasto;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioGastos;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioGastosImpl;
 
@@ -44,6 +47,30 @@ public class RepositorioGastosTest extends SpringTest{
 		List<Gastos> gastosObtenidos = this.repositorioGastos.consultarGastos();
 		
 		assertThat(gastosObtenidos).hasSize(2);
+	}
+	
+	@Test
+	public void deberiaObtenerGastoPorUsuario() {
+		TipoDeGasto tipo = new TipoDeGasto();
+		tipo.setNombre("Alimentario");
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		session.save(tipo);
+		session.save(usuario);
+		
+		Gastos gastoUno = new Gastos();
+		gastoUno.setTipoDeGasto(tipo);
+		gastoUno.setUsuario(usuario);
+		
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		
+		List<Gastos> gastosObtenidos = this.repositorioGastos.consultarGastosPorUsuario(usuario);
+		
+		assertThat(gastosObtenidos).hasSize(1);
+		assertThat(gastosObtenidos).extracting("tipoDeGasto").extracting("nombre").contains("Alimentario");
 	}
 	
 }
