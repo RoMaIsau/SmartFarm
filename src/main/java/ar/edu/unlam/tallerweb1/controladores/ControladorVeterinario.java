@@ -631,8 +631,11 @@ public class ControladorVeterinario{
 		ModelMap model= new ModelMap();
 		
 		Tratamiento t= servicioGanado.buscarTratamiento(nombre);
+		if(t != null) {
 		model.put("trat",t.getTratamiento());
-		model.put("descripcion",t.getDescripcion());
+		model.put("descripcion",t.getDescripcion());}else {
+			model.put("trat","No se encuentra esa enfermedad");	
+		}
 		
 		return new ModelAndView("Enfermedades",model);
 	}

@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.*,java.util.*"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%!DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 	String now = fmt.format(new Date());%>
 <!DOCTYPE html>
@@ -39,16 +41,21 @@
 				
 				<c:if test="${not empty tratamiento}">
 				<h3>Buscar tratamientos</h3>
-				<form action="buscarEnfermedad" method="post" modelAttribute="tratamiento">
+		<div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-hidden="true"></div>
+				<form id="formBuscar" action="buscarEnfermedad" method="post" modelAttribute="tratamiento">
 				
 				Por enfermedad:<br>
 				
 				<input type="search" name="nombre" >
-				<button type="submit">Buscar</button>
+				<button type="submit" id="buscar">Buscar</button>
 				</form><br>
 				
-				<h2>${trat}</h2>
+				
+				<div id="busqueda" class="">
 				<h2>${descripcion}</h2>
+				<h2 >${trat}</h2>
+				
+                 </div>
 				</c:if>
 				<c:if test="${empty trat}">
 				
