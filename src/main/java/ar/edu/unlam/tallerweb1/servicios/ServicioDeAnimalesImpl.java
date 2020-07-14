@@ -28,16 +28,18 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	private RepositorioDeGeneros repositorioDeGeneros;
 	private RepositorioDeAnimales repositorioDeAnimales;
 	private ServicioPlanAlimentario servicioPlanAlimentario;
+	private ServicioAnimalUbicacion servicioAnimalUbicacion;
 	
 	@Autowired
 	public ServicioDeAnimalesImpl(RepositorioDeTipos repositorioDeTipos, RepositorioDeRazas repositorioDeRazas, 
 			RepositorioDeGeneros repositorioDeGeneros, RepositorioDeAnimales repositorioDeAnimales,
-			ServicioPlanAlimentario servicioPlanAlimentario) {
+			ServicioPlanAlimentario servicioPlanAlimentario, ServicioAnimalUbicacion servicioAnimalUbicacion) {
 		this.repositorioDeTipos = repositorioDeTipos;
 		this.repositorioDeRazas = repositorioDeRazas;
 		this.repositorioDeGeneros = repositorioDeGeneros;
 		this.repositorioDeAnimales = repositorioDeAnimales;
 		this.servicioPlanAlimentario = servicioPlanAlimentario;
+		this.servicioAnimalUbicacion = servicioAnimalUbicacion;
 	}
 
 	@Override
@@ -86,6 +88,7 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	public void eliminarPorId(Long idAnimal) {
 		AnimalDeGranja animal = obtenerPorId(idAnimal);
 		servicioPlanAlimentario.eliminarPlan(animal);
+		servicioAnimalUbicacion.eliminarUbicaciones(animal);
 		repositorioDeAnimales.eliminar(animal);
 	}
 

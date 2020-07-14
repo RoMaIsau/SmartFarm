@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 
 @Repository("repositorioAnimalUbicacion")
@@ -51,5 +52,13 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 		return (AnimalUbicacion) sessionFactory.getCurrentSession().createCriteria(AnimalUbicacion.class)
 				.add(Restrictions.eq("animal.id", idAnimal))
 				.add(Restrictions.eq("fecha", LocalDate.now())).uniqueResult();
+	}
+
+	@Override
+	public void eliminarUbicaciones(AnimalDeGranja animal) {
+		Session session = sessionFactory.getCurrentSession();
+		this.sessionFactory.getCurrentSession().createQuery("DELETE FROM AnimalUbicacion WHERE animal= :animal")
+												.setParameter("animal", animal)
+												.executeUpdate();
 	}
 }
