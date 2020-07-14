@@ -41,10 +41,4 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 				.list();
 	}
 
-	@Override
-	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
-		return (AnimalUbicacion) sessionFactory.getCurrentSession().createCriteria(AnimalUbicacion.class)
-				.add(Restrictions.eq("animal.id", idAnimal))
-				.uniqueResult();
-	}
 }

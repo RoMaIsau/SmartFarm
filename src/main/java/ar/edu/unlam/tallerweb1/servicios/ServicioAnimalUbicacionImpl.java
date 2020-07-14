@@ -25,10 +25,4 @@ public class ServicioAnimalUbicacionImpl implements ServicioAnimalUbicacion {
 	public List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal) {
 		return repositorioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
 	}
-
-	@Override
-	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
-		return repositorioAnimalUbicacion.obtenerUbicacionAnimal(idAnimal);
-	}
-
 }

@@ -10,6 +10,4 @@ public interface RepositorioAnimalUbicacion {
 
 	List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal);
 
-	AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal);
-
 }
