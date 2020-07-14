@@ -1,11 +1,15 @@
 package ar.edu.unlam.tallerweb1.persistencia;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
+import javax.transaction.Transactional;
+import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.modelo.Gastos;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeGasto;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioGastos;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioGastosImpl;
 
@@ -19,5 +23,27 @@ public class RepositorioGastosTest extends SpringTest{
 		
 		this.repositorioGastos = new RepositorioGastosImpl(this.sessionFactory);
 	}
-
+	
+	@Test
+	public void deberiaObtenerTodosLosGastos() {
+		
+		TipoDeGasto tipo = new TipoDeGasto();
+		tipo.setNombre("Alimentario");
+		
+		this.sessionFactory.getCurrentSession().save(tipo);
+		
+		Gastos gastoUno = new Gastos();
+		gastoUno.setTipoDeGasto(tipo);
+		
+		Gastos gastoDos = new Gastos();
+		gastoDos.setTipoDeGasto(tipo);
+		
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		this.repositorioGastos.guardarNuevoRegistro(gastoDos);
+		
+		List<Gastos> gastosObtenidos = this.repositorioGastos.consultarGastos();
+		
+		assertThat(gastosObtenidos).hasSize(2);
+	}
+	
 }
