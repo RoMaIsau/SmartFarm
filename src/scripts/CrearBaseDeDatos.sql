@@ -5,15 +5,17 @@ GRANT ALL ON SmartFarm.* TO 'SmartFarmApp'@'localhost';
 USE SmartFarm;
 
 -- VACUNAS
-INSERT INTO VACUNAS VALUES 
+INSERT INTO VACUNA (id, nombre, edadAplicacionMeses) VALUES 
 (1, "Aftosa", 2),
 (2, "Brucelosis", 5),
-(3, "Carbunco",3),(4,"Botulismo",12),(5,"Leptospirosis",4),(6,"Policlostridiales1",4),(7,"Policlostridiales2",12);
-
-
+(3, "Carbunco",3),
+(4,"Botulismo",12),
+(5,"Leptospirosis",4),
+(6,"Policlostridiales1",4),
+(7,"Policlostridiales2",12);
 
 -- TIPOS DE USUARIOS
-INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado");
+INSERT INTO tipodeusuario (nombre) VALUES ("Admin"), ("Veterinario"), ("Empleado");
 
 -- USUARIOS
 INSERT INTO usuario VALUES 
@@ -22,14 +24,11 @@ INSERT INTO usuario VALUES
 (3, "Prueba", "veterinario@gmail.com", "2020/05/12", "Usuario", "123", "Veterinario");
 
 -- TIPOS DE GASTOS
-
-INSERT INTO TipoDeGasto (nombre) VALUES ("Gastos alimenticios"), ("Gastos empresariales"), ("Gastos médicos"), ("Gastos tecnologicos");
 INSERT INTO TipoDeGasto (nombre) VALUES 
 ("Alimenticio"), 
 ("Empresarial"), 
 ("Médico"), 
 ("Tecnológico");
-
 
 -- TIPO ALIMENTO
 INSERT INTO TipoAlimento VALUES 
@@ -167,11 +166,3 @@ INSERT INTO animalDeGranja (tipo_id, raza_id, genero_id, peso, fechaNacimiento) 
 (5, 17, 1, 5, "2019.02.10"),
 (5, 17, 1, 5, "2020.01.10"),
 (5, 17, 1, 5, "2020.02.10");
-
-select * from signosvitales;
-delete from animaldegranja;
-delete from usuario;
-select* from animaldegranja;
-select * from usuario;
-
-SELECT * FROM ubicacion 
