@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,28 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 			ubicacion.setLongitud(crearLongitudAleatorea(animal));
 			repositorioUbicacion.guardarUbicacion(ubicacion);
 			
-			if((repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now())) == null) {
+			List<AnimalUbicacion> animUbiObtenidas = repositorioAnimalUbicacion.obtenerPorIdAnimal(animal.getId());
+			Boolean existe = false;
+			
+			for(AnimalUbicacion au : animUbiObtenidas) {
+				LocalDate fecha = LocalDate.now();
+				if(au.getFecha().toLocalDate().equals(fecha)) {
+					Ubicacion ultimaUbicacion = au.getUltimaUbicacion();
+
+					Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
+							ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
+					Integer metrosRecorridos = au.getMetrosRecorridos();
+					Integer metrosEnTotal = distancia + metrosRecorridos;
+					au.setUltimaUbicacion(ubicacion);
+					au.setMetrosRecorridos(metrosEnTotal);
+					au.setFecha(LocalDateTime.now());
+					repositorioAnimalUbicacion.guardar(au);
+					animalesUbicaciones.add(au);
+					existe = true;
+				}
+			}
+			
+			if(!existe) {
 				AnimalUbicacion animalUbicacion = new AnimalUbicacion();
 				
 				animalUbicacion.setAnimal(animal);
@@ -81,24 +103,6 @@ public class ServicioUbicacionImpl implements ServicioUbicacion {
 				
 				repositorioAnimalUbicacion.guardar(animalUbicacion);
 				animalesUbicaciones.add(animalUbicacion);
-			}else {
-				AnimalUbicacion animalUbicacionObtenido = repositorioAnimalUbicacion.obtenerAnimalUbicacion(animal.getId(), LocalDateTime.now());
-				
-				Ubicacion ultimaUbicacion = animalUbicacionObtenido.getUltimaUbicacion();
-
-				Integer distancia = calcularDistancia(ubicacion.getLatitud(), ubicacion.getLongitud(),
-						ultimaUbicacion.getLatitud(), ultimaUbicacion.getLongitud());
-
-				Integer metrosRecorridos = animalUbicacionObtenido.getMetrosRecorridos() == null? 0 : animalUbicacionObtenido.getMetrosRecorridos();
-				Integer metrosEnTotal = distancia + metrosRecorridos;
-
-				animalUbicacionObtenido.setAnimal(animal);
-				animalUbicacionObtenido.setUltimaUbicacion(ubicacion);
-				animalUbicacionObtenido.setMetrosRecorridos(metrosEnTotal);
-				animalUbicacionObtenido.setFecha(LocalDateTime.now());
-				
-				repositorioAnimalUbicacion.guardar(animalUbicacionObtenido);
-				animalesUbicaciones.add(animalUbicacionObtenido);
 			}
 		}
 

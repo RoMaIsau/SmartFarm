@@ -28,12 +28,7 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 		sessionFactory.getCurrentSession().saveOrUpdate(animalUbicacion);
 	}
 
-	@Override
-	public AnimalUbicacion obtenerAnimalUbicacion(Long id, LocalDateTime fecha) {
-		Session session = sessionFactory.getCurrentSession();
-		return (AnimalUbicacion) session.createCriteria(AnimalUbicacion.class).add(Restrictions.eq("animal.id", id))
-				.add(Restrictions.eq("fecha", fecha)).uniqueResult();
-	}
+	
 
 	@Override
 	public List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal) {
@@ -50,6 +45,6 @@ public class RepositorioAnimalUbicacionImpl implements RepositorioAnimalUbicacio
 	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
 		return (AnimalUbicacion) sessionFactory.getCurrentSession().createCriteria(AnimalUbicacion.class)
 				.add(Restrictions.eq("animal.id", idAnimal))
-				.add(Restrictions.eq("fecha", LocalDate.now())).uniqueResult();
+				.uniqueResult();
 	}
 }
