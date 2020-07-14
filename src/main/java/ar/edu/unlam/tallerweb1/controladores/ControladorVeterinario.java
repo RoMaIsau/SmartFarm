@@ -697,9 +697,12 @@ public class ControladorVeterinario{
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
-  		
 		ModelMap modelo= new ModelMap();
+		
+		String enfermedad = "Fiebre Aftosa";/* OTRA ENFERMEDAD usarlo para cambiar resultados */
+		modelo.put("enfermedad", enfermedad);
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		modelo.addAttribute("enfermedadClase", enfermedad);
 		
         return new ModelAndView("signosVitales", modelo);
 	}
