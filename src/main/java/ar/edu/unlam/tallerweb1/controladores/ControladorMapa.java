@@ -52,7 +52,7 @@ public class ControladorMapa {
 	@Inject
 	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
-	@RequestMapping("/mapa")
+	@RequestMapping(path = "/mapa")
 	public ModelAndView irAMapa(HttpServletRequest request, ModelMap model) {
 
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -166,7 +166,7 @@ public class ControladorMapa {
 		ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
 		model.put("ubicacionesCentrales", ubicacionesCentrales);
 
-		model.put("mensaje", "Ubicación modificada exitosamente.");
+		model.put("mensaje", "Ubicaciï¿½n modificada exitosamente.");
 		return new ModelAndView("mapaCoordenadaAModificar", model);
 	}
 
