@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.formularios.FormularioDeAsignacionDeAnimales;
+//import ar.edu.unlam.tallerweb1.formularios.FormularioDeAsignacionDeAnimales;
 import ar.edu.unlam.tallerweb1.mapbox.Feature;
 import ar.edu.unlam.tallerweb1.mapbox.FeatureCollection;
 import ar.edu.unlam.tallerweb1.mapbox.Point;
@@ -101,7 +102,8 @@ public class ControladorCorral {
 
 	@RequestMapping(value = "corrales/asignar", method = RequestMethod.POST, produces = "text/plain")
 	@ResponseBody
-	public String asignarAnimales(@ModelAttribute FormularioDeAsignacionDeAnimales asignacion) {
+	public String asignarAnimales(@ModelAttribute FormularioDeAsignacionDeAnimales asignacion)
+	{
 		this.servicioCorral.asignarAnimales(asignacion.getIdCorral(), asignacion.getAnimalesSeleccionados());
 		return "ok";
 	}

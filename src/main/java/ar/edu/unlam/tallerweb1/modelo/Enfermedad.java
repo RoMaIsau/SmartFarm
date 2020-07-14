@@ -20,12 +20,58 @@ public class Enfermedad implements Comparable<Enfermedad> {
 	
 	private String nombre;
 	
+	private String tratamientoA;
+	
+	private String tratamientoB;
+	
+	
+	
+	private Date inicioTratamiento;
+	
+	private Date finTratamiento;
+	
 	private Date fecha;
 	
 	@ManyToOne
     HistoriaClinica historia;
 
 
+	
+
+
+
+	public String getTratamientoA() {
+		return tratamientoA;
+	}
+
+	public void setTratamientoA(String tratamientoA) {
+		this.tratamientoA = tratamientoA;
+	}
+
+	public String getTratamientoB() {
+		return tratamientoB;
+	}
+
+	public void setTratamientoB(String tratamientoB) {
+		this.tratamientoB = tratamientoB;
+	}
+
+	
+	public Date getInicioTratamiento() {
+		return inicioTratamiento;
+	}
+
+	public void setInicioTratamiento(Date inicioTratamiento) {
+		this.inicioTratamiento = inicioTratamiento;
+	}
+
+	public Date getFinTratamiento() {
+		return finTratamiento;
+	}
+
+	public void setFinTratamiento(Date finTratamiento) {
+		this.finTratamiento = finTratamiento;
+	}
 
 	public HistoriaClinica getHistoria() {
 		return historia;

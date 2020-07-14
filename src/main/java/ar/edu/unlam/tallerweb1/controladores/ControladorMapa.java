@@ -18,6 +18,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
+//import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAnimalUbicacion;
@@ -25,6 +26,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
+//import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
 @Controller
@@ -166,7 +168,7 @@ public class ControladorMapa {
 		ubicacionesCentrales = servicioUbicacionesCentrales.obtenerUbicacionesCentrales();
 		model.put("ubicacionesCentrales", ubicacionesCentrales);
 
-		model.put("mensaje", "Ubicación modificada exitosamente.");
+		model.put("mensaje", "Ubicaciï¿½n modificada exitosamente.");
 		return new ModelAndView("mapaCoordenadaAModificar", model);
 	}
 

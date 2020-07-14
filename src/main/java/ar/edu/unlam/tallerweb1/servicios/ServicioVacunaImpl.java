@@ -61,6 +61,7 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 
 		List<Vacuna> vencidas = new ArrayList<Vacuna>();
 
+		if(animal.getVacunasParaAplicar() != null) {
 		for (Vacuna v : animal.getVacunasParaAplicar()) {
 			Vacunar av = this.getAnimalVacuna(v, animal);
 			if (av != null) {
@@ -68,13 +69,12 @@ public class ServicioVacunaImpl implements ServicioVacunas {
 					vencidas.add(v);
 				}
 			} else if (av == null) {
-				if (edadVacaMeses >= v.getEdadAplicacionMeses()) {
+				if(edadVacaMeses >= v.getEdadAplicacionMeses()) {
+					
 					vencidas.add(v);
-				}
-			} else {
-				vencidas = null;
 			}
-		}
+			
+			}}}
 
 		return vencidas;
 	}

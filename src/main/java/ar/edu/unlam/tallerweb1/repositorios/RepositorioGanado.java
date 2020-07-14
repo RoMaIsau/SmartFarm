@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.Sintomas;
+import ar.edu.unlam.tallerweb1.modelo.Tratamiento;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Interface que define los metodos del Repositorio de Usuarios.
@@ -41,6 +42,16 @@ public interface RepositorioGanado {
 	List<Enfermedad> enfermedadesComunes(HistoriaClinica hc);
 
 	List<Enfermedad> todasEnfermedades();
+
+	Enfermedad buscarEnfermedad(Long id);
+
+	void updateEnfermedad(Enfermedad e);
+
+	HistoriaClinica verHC(Long id);
+
+	Tratamiento verTratamiento(String nombre);
+
+	
 	
 
 	
