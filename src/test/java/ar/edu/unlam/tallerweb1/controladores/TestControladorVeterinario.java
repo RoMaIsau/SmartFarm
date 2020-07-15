@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.persistencia;
+package ar.edu.unlam.tallerweb1.controladores;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
