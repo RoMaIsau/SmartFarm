@@ -62,7 +62,10 @@
 	             <form:option  value="Un año" type="text"  class="form-control" />UN AÑO<BR> 
 	              <form:option value="Una semana" type="text"  class="form-control" />UNA SEMANA<br>
 	              </form:select>  
-	                </c:if> <br><br>
+	                </c:if>
+	                <c:if test="${not empty fecha}">
+	                <form:input type="hidden" value="Una semana" path="tiempo"></form:input>
+	                  </c:if> <br><br>
 					<button class="btn btn-success  btn-block" Type="Submit"/>Consultar</button>
 				</form:form>
 
