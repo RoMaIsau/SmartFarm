@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.hibernate.Session;
 import org.junit.Before;
@@ -75,18 +76,25 @@ public class RepositorioGastosTest extends SpringTest{
 	
 	@Test 
 	public void deberiaGuardarUnNuevoGgasto() {
-		TipoDeGasto tipo = new TipoDeGasto();
-		tipo.setNombre("Alimentario");
-		
-		this.sessionFactory.getCurrentSession().save(tipo);
-		
 		Gastos gastoUno = new Gastos();
 		gastoUno.setId(1L);
-		gastoUno.setTipoDeGasto(tipo);
 		
 		Long idGastoObtenido = this.repositorioGastos.guardarNuevoRegistro(gastoUno);
 		
 		assertThat(idGastoObtenido).isEqualTo(gastoUno.getId());
+	}
+	
+	@Test
+	public void deberiaObtenerGastoPorId() {
+		Gastos gastoUno = new Gastos();
+		Gastos gastoDos = new Gastos();
+		
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		this.repositorioGastos.guardarNuevoRegistro(gastoDos);
+		
+		Gastos gastoObtenido = this.repositorioGastos.consultaGastosPorID(gastoUno.getId());
+		
+		assertEquals(gastoUno, gastoObtenido);
 	}
 	
 }
