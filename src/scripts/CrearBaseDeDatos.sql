@@ -33,6 +33,8 @@ INSERT INTO tratamiento VALUES
 
 INSERT INTO tratamiento VALUES 
 (2,"Fiebre", "Aspirina","Comprimidos");
+INSERT INTO tratamiento VALUES 
+(2,"IBR", "Nebulizaciones","Durante diez dias");
 
 
 -- VACUNAS
