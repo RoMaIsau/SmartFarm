@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,21 +36,20 @@ public class ControladorMapa {
 	private ServicioAnimalUbicacion servicioAnimalUbicacion;
 	private ServicioAlimento servicioAlimento;
 	private ServicioVacunas servicioVacunas;
+	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
 	@Autowired
 	public ControladorMapa(ServicioUbicacion servicioUbicacion, ServicioNotificacion servicioNotificacion,
 			ServicioDeAnimales servicioDeAnimales, ServicioAnimalUbicacion servicioAnimalUbicacion,
-			ServicioAlimento servicioAlimento, ServicioVacunas servicioVacunas) {
+			ServicioAlimento servicioAlimento, ServicioVacunas servicioVacunas, ServicioUbicacionesCentrales servicioUbicacionesCentrales) {
 		this.servicioUbicacion = servicioUbicacion;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAnimalUbicacion = servicioAnimalUbicacion;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioVacunas = servicioVacunas;
+		this.servicioUbicacionesCentrales = servicioUbicacionesCentrales;
 	}
-
-	@Inject
-	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
 	@RequestMapping(path = "/mapa")
 	public ModelAndView irAMapa(HttpServletRequest request, ModelMap model) {
