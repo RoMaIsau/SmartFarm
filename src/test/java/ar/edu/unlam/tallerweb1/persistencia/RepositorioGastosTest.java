@@ -73,4 +73,20 @@ public class RepositorioGastosTest extends SpringTest{
 		assertThat(gastosObtenidos).extracting("tipoDeGasto").extracting("nombre").contains("Alimentario");
 	}
 	
+	@Test 
+	public void deberiaGuardarUnNuevoGgasto() {
+		TipoDeGasto tipo = new TipoDeGasto();
+		tipo.setNombre("Alimentario");
+		
+		this.sessionFactory.getCurrentSession().save(tipo);
+		
+		Gastos gastoUno = new Gastos();
+		gastoUno.setId(1L);
+		gastoUno.setTipoDeGasto(tipo);
+		
+		Long idGastoObtenido = this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		
+		assertThat(idGastoObtenido).isEqualTo(gastoUno.getId());
+	}
+	
 }
