@@ -11,13 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.Vacuna;
+import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAnimalUbicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
@@ -91,6 +96,63 @@ public class ControladorMapaTest {
 		
 		assertThat(aUbiObtenidos).isNotEmpty();
 		assertThat(notificacionesObtenidos).isNotEmpty();
+	}
+	
+	@Test
+	public void dirigeAVistaVerAnimalConSusDatos() {
+		AnimalDeGranja animal = new AnimalDeGranja();
+		animal.setId(1L);
+		
+		when(this.servicioDeAnimales.obtenerPorId(animal.getId())).thenReturn(animal);
+		
+		Double lon = -59.24220048508589;
+		Double lat= -35.28071337866617;
+		
+		AnimalUbicacion animalubicacion = new AnimalUbicacion();
+		animalubicacion.setAnimal(animal);
+		
+		Ubicacion ultimaUbicacion = new Ubicacion();
+		ultimaUbicacion.setLatitud(lat);
+		ultimaUbicacion.setLongitud(lon);
+		
+		animalubicacion.setUltimaUbicacion(ultimaUbicacion);
+		
+		List<AnimalUbicacion> listaAnimalUbicacion = new ArrayList<AnimalUbicacion>();
+		listaAnimalUbicacion.add(animalubicacion);
+		
+		when(this.servicioAnimalUbicacion.obtenerPorIdAnimal(animal.getId())).thenReturn(listaAnimalUbicacion);
+		
+		Vacuna vacuna = new Vacuna();
+		vacuna.setId(1L);
+		
+		Vacunar animalVacuna = new Vacunar();
+		animalVacuna.setAnimal(animal);
+		animalVacuna.setVacuna(vacuna);
+		
+		List<Vacunar> vacunasAplicadas = new ArrayList<Vacunar>();
+		vacunasAplicadas.add(animalVacuna);
+		
+		when(this.servicioVacunas.obtenerVacunasAplicadas(animal.getId())).thenReturn(vacunasAplicadas);
+		
+		ModelAndView modelAndView = this.controladorMapa.verAnimal(animal.getId(), lon, lat);
+		ModelMap modelo = modelAndView.getModelMap();
+		
+		verify(this.servicioDeAnimales).obtenerPorId(eq(animal.getId()));
+		verify(this.servicioAnimalUbicacion).obtenerPorIdAnimal(eq(animal.getId()));
+		verify(this.servicioVacunas).obtenerVacunasAplicadas(eq(animal.getId()));
+		
+		assertThat(modelo).containsKey("animal");
+		assertThat(modelo).containsKey("animalUbicacion");
+		assertThat(modelo).containsKey("vacunasAplicadas");
+		
+		AnimalDeGranja animalObt = (AnimalDeGranja) modelo.get("animal");
+		assertNotNull(animalObt);
+		
+		List<AnimalUbicacion> aUbiObtenidos = (List<AnimalUbicacion>) modelo.get("animalUbicacion");
+		assertThat(aUbiObtenidos).isNotEmpty();
+		
+		List<AnimalUbicacion> vacunasAplicadasObt = (List<AnimalUbicacion>) modelo.get("vacunasAplicadas");
+		assertThat(vacunasAplicadasObt).isNotEmpty();
 	}
 	
 	private HttpServletRequest configurarRolLogueado(String rol) {
