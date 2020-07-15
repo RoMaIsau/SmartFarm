@@ -44,7 +44,7 @@
 				    	 
 				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
 							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
-					</h3> </br>		
+					</h3>	
 							
 							 
 </c:forEach>
@@ -53,7 +53,7 @@
 
 				<div class="container-fluid">
 					<c:if test="${not empty mostrarTabla}">
-						<h1 class="h3 mb-3 text-gray-800">Nuestros animales</h1>
+						<h1 class="h3 mb-3 text-gray-800">Animales</h1>
 						
 						<div class="card shadow mb-4 mt-2">
 							<div class="card-body">
