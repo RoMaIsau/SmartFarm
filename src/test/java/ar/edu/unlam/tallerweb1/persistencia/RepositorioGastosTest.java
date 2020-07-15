@@ -97,4 +97,18 @@ public class RepositorioGastosTest extends SpringTest{
 		assertEquals(gastoUno, gastoObtenido);
 	}
 	
+	@Test
+	public void deberiaEliminarUnGasto() {
+		Gastos gastoUno = new Gastos();
+		gastoUno.setId(1L);
+	
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		
+		assertNotNull(this.repositorioGastos.consultaGastosPorID(gastoUno.getId()));
+		
+		this.repositorioGastos.eliminarGastos(gastoUno);
+		
+		assertNull(this.repositorioGastos.consultaGastosPorID(gastoUno.getId()));
+	}
+	
 }
