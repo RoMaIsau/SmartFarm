@@ -126,4 +126,28 @@ public class RepositorioGastosTest extends SpringTest{
 		
 		assertThat(gastoObtenido.getMonto()).isEqualTo(300.0);
 	}
+	
+	@Test
+	public void deberiaObtenerTodosLosGastosEnTotalPorTipo() {
+		TipoDeGasto tipo = new TipoDeGasto();
+		tipo.setNombre("Alimentario");
+		
+		this.sessionFactory.getCurrentSession().save(tipo);
+		
+		Gastos gastoUno = new Gastos();
+		gastoUno.setTipoDeGasto(tipo);
+		gastoUno.setMonto(100.0);
+		
+		Gastos gastoDos = new Gastos();
+		gastoDos.setTipoDeGasto(tipo);
+		gastoDos.setMonto(100.0);
+		
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		this.repositorioGastos.guardarNuevoRegistro(gastoDos);
+		
+		List<Gastos> gastos = this.repositorioGastos.consultarGastosEnTotalPorTipo();
+		
+		assertThat(gastos).hasSize(1);
+		assertThat(gastos).extracting("monto").contains(200.0);
+	}
 }
