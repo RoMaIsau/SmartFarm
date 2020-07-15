@@ -20,8 +20,7 @@ public class HistoriaClinica {
 	@OneToOne
     AnimalDeGranja animal;
 	
-	@OneToOne
-    Enfermedad enfermedad;
+	
 	
 	
 	
@@ -31,13 +30,7 @@ public class HistoriaClinica {
 
 
 
-	public Enfermedad getEnfermedad() {
-		return enfermedad;
-	}
-
-	public void setEnfermedad(Enfermedad enfermedad) {
-		this.enfermedad = enfermedad;
-	}
+	
 
 	public AnimalDeGranja getAnimal() {
 		return animal;

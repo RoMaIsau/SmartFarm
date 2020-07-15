@@ -4,6 +4,39 @@ GRANT ALL ON SmartFarm.* TO 'SmartFarmApp'@'localhost';
 
 USE SmartFarm;
 
+
+create table signosvitales (
+id bigint(20) not null ,
+fecha date null,
+frecuenciaCardiaca double null,
+frecuenciaRespiratoria double null,
+pulso double null,
+temperatura double null,
+historia_id bigint null,
+PRIMARY KEY (id) ,
+FOREIGN KEY (historia_id) REFERENCES historiaClinica(id));
+
+
+create table tratamiento (
+id bigint(20) not null ,
+nombre varchar(255) null,
+tratamiento varchar(255) null,
+descripcion varchar(255) null,
+
+PRIMARY KEY (id) );
+
+
+
+-- TRATAMIENTO
+INSERT INTO tratamiento VALUES 
+(1,"Leptospirosis", "Inyecciones","Intravenosas");
+
+INSERT INTO tratamiento VALUES 
+(2,"Fiebre", "Aspirina","Comprimidos");
+INSERT INTO tratamiento VALUES 
+(2,"IBR", "Nebulizaciones","Durante diez dias");
+
+
 -- VACUNAS
 INSERT INTO VACUNA (id, nombre, edadAplicacionMeses) VALUES 
 (1, "Aftosa", 2),
@@ -166,3 +199,48 @@ INSERT INTO animalDeGranja (tipo_id, raza_id, genero_id, peso, fechaNacimiento) 
 (5, 17, 1, 5, "2019.02.10"),
 (5, 17, 1, 5, "2020.01.10"),
 (5, 17, 1, 5, "2020.02.10");
+
+-- ENFERMEDADES
+INSERT INTO Enfermedad (id,fecha,finTratamiento,inicioTratamiento,nombre,tratamientoA,tratamientoB,historia_id) VALUES
+(5,"2020.06.10",null,null,'Leptospirosis',null,null,2),
+(6,"2020.06.19",null,null,'Fiebre Aftosa',null,null,2),
+(7,"2020.06.17",null,null,'Miocardiopatia congenita',null,null,1),
+(8,"2020.06.10",null,null,'Rinotraqueitis infecciosa',null,null,2),
+(9,"2020.08.10",null,null,'Leptospirosis',null,null,2),
+(10,"2020.08.19",null,null,'Fiebre Aftosa',null,null,2),
+(11,"2020.08.17",null,null,'Miocardiopatia congenita',null,null,1),
+(12,"2020.08.10",null,null,'Rinotraqueitis infecciosa',null,null,2),
+(13,"2020.08.18",null,null,'Rinotraqueitis infecciosa',null,null,3);
+
+INSERT INTO Enfermedad values (16,"2020.05.10",null,null,'Leptospirosis',null,null,9); 
+
+-- ANIMALDEGRANJA_VACUNA
+INSERT INTO animalDeGranja_vacuna VALUES 
+(211,1),(211,2),(211,5),(211,3),(212,1),(212,2),(212,5),(212,6),(213,1),(213,2),(213,3),(213,4),(213,5),(213,6),(213,7);
+
+-- HISTORIA CLINICA
+INSERT INTO historiaclinica VALUES (1,211),(2,212),(3,213);
+INSERT INTO historiaclinica VALUES (4,214),(5,215),(6,216),(7,217),(8,218),(9,219),(10,220);
+
+-- SIGNOS VITALES
+INSERT INTO SIGNOSVITALES VALUES (1,"2020.01.10",70.4,25.2,48.1,42.0,1),(2,"2020.04.10",70.4,25.2,48.1,42.0,1),
+(3,"2020.05.10",50.0,25.2,80.1,37.6,1),(4,"2020.02.10",40.0,25.2,80.1,37.6,1);
+
+INSERT INTO SIGNOSVITALES VALUES (5,"2020.01.13",40.0,25.2,80.1,37.6,1),(6,"2020.01.11",35.0,25.2,80.1,37.6,1);
+INSERT INTO SIGNOSVITALES VALUES (7,"2020.03.13",90.0,25.2,80.1,40.0,2),(8,"2020.03.10",80.0,25.2,80.1,39.6,2),
+(9,"2020.03.18",85.0,25.2,80.1,39.7,2),(10,"2020.11.10",90.0,25.2,80.1,39.6,2),(11,"2020.12.10",100.0,25.2,80.1,40.6,2),
+(12,"2020.01.23",57.4,29.2,43.4,36.4,3);
+INSERT INTO SIGNOSVITALES VALUES (13,"2020.01.10",70.4,25.2,48.1,42.8,1),(14,"2020.06.10",70.4,25.2,48.9,41.0,1),(15,"2020.01.23",70.4,25.2,48.1,40.8,1),
+(16,"2020.01.10",70.4,25.2,48.1,40.0,2),(17,"2020.11.10",71.4,25.2,48.1,41.0,2),(18,"2020.01.10",78.4,25.2,48.1,39.9,2),(19,"2020.01.10",70.4,25.2,48.1,41.6,2),
+(20,"2020.04.10",50.4,25.2,48.1,37.0,3),(21,"2020.01.19",45.4,25.2,48.1,38.0,3),(22,"2020.12.10",50.0,25.2,48.1,36.9,3),(23,"2020.05.04",44.4,25.2,48.1,40.0,3);
+
+INSERT INTO SIGNOSVITALES VALUES (24,"2020.01.10",70.4,25.2,48.1,42.8,4),(25,"2020.06.10",70.4,25.2,48.9,41.0,4),(26,"2020.01.23",70.4,25.2,48.1,40.8,4),
+(27,"2020.01.10",70.4,25.2,48.1,40.0,5),(28,"2020.11.10",71.4,25.2,48.1,41.0,5),(29,"2020.01.10",78.4,25.2,48.1,39.9,6),(30,"2020.01.10",70.4,25.2,48.1,41.6,7),
+(31,"2020.04.10",50.4,25.2,48.1,37.0,9),(32,"2020.01.19",45.4,25.2,48.1,38.0,9),(33,"2020.12.10",50.0,25.2,48.1,36.9,9),(34,"2020.05.04",44.4,25.2,48.1,40.0,9);
+
+INSERT INTO SIGNOSVITALES VALUES (35,"2020.01.10",67,25.2,100.1,37.8,10),(36,"2020.06.10",60.4,25.2,98.9,38.0,4),(37,"2020.01.23",68.4,25.2,108.1,38.8,10),
+(38,"2020.01.10",0.4,25.2,98.1,38.0,10);
+
+
+
+

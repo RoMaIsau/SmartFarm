@@ -25,9 +25,35 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
+				
+  <c:forEach items="${vencidos}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"El animal  ${v.id} tiene vacunas vencidas"
+						<a class="text-primary" href="detalle?id=${v.id}">Ver</a><br>	
+					</h3>
+					 </br>		
+					
+							 
+</c:forEach><br>
+
+
+
+ <c:forEach items="${vencidas}" var="v">
+  
+				    	 
+				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
+							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
+					</h3> </br>		
+							
+							 
+</c:forEach><BR>
+
+
+
 				<div class="container-fluid">
 					<c:if test="${not empty mostrarTabla}">
-						<h1 class="h3 mb-2 text-gray-800">Historiales clínicos</h1>
+						<h1 class="h3 mb-2 text-gray-800">Nuestros animales</h1>
 						
 						<div class="card shadow mb-4 mt-2">
 							<div class="card-body">
@@ -73,21 +99,49 @@
 						</div>
 					</c:if>
 					
-					<h3 class="text-info">${enfermedad}</h3>
+					<h3 class="text-info">${enfermedad}</h3><br>
+					<c:if test="${not empty hcId}">
+					<c:if test="${empty tratamientoB}">
+						
+						<a class="text-danger" href="guardarEnfermedad?id=${hcId}&&nombre=${nombre}&&tratamiento=${tratamiento}">Guardar enfermedad</a>
 					
+					</c:if>
+					</c:if>
+					<c:if test="${not empty guardada}">
+					<h3 class="text-info">${guardada}</h3><br>
+					<c:if test="${not empty tratamiento}">
+						<h3 class="text-info">${tratamiento}</h3>
+						<a class="text-danger" href="tratamientoA?id=${e1Id}">Comenzar tratamiento</a>
 					
+					</c:if>
+					</c:if>
+					<c:if test="${not empty tratamientoB}">
+						<h3 class="text-info">${tratamientoB}</h3>
+						<a class="text-danger" href="tratamientoB?id=${e1Id}">Reanudar tratamiento</a>
+					
+					</c:if>
+					<c:if test="${not empty curada}">
+						<h3 class="text-info">${curada}</h3>
+					<a class="text-danger" href="finTratamiento?id=${e1Id}">Finalizar tratamiento</a>
+					
+					</c:if>
 					
 					<c:if test="${not empty hc}">
-	 					<h3>Historia Clinica:</h3>	       
+	 					<h3>Historia Clinica:</h3><br>	
+	 						<div class="row">       
   						<c:forEach items="${signos}" var="s">
-  							Temperatura:<h3 class="text-danger">  ${s.temperatura}</h3>
+  						 <div class="col-md-6">	
+  				<h4 class="text-primary">Temperatura:</h4><h3 class="text-danger">  ${s.temperatura}</h3>
 							Pulso: <h3 class="text-danger">  ${s.pulso}</h3>
 							Frecuencia cardiaca: <h3 class="text-danger">  ${s.frecuenciaCardiaca}</h3>
 							Frecuencia respiratoria: <h3 class="text-danger">  ${s.frecuenciaRespiratoria}</h3>	
 							Fecha: <h3 class="text-danger">  ${s.fecha}</h3>
 					 	<br>
-						</c:forEach>
+					</div>
+						</c:forEach><br><br>
+					</div>	
 					</c:if>	<br>
+					<h3 class="text-info">${mensaje}</h3><br>
 					
 					
 					

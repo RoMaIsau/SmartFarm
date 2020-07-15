@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioAnimalUbicacion;
 
@@ -24,5 +25,15 @@ public class ServicioAnimalUbicacionImpl implements ServicioAnimalUbicacion {
 	@Override
 	public List<AnimalUbicacion> obtenerPorIdAnimal(Long idAnimal) {
 		return repositorioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
+	}
+
+	@Override
+	public AnimalUbicacion obtenerUbicacionAnimal(Long idAnimal) {
+		return repositorioAnimalUbicacion.obtenerUbicacionAnimal(idAnimal);
+	}
+
+	@Override
+	public void eliminarUbicaciones(AnimalDeGranja animal) {
+		this.repositorioAnimalUbicacion.eliminarUbicaciones(animal);
 	}
 }

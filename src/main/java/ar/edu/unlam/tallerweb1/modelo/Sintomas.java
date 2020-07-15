@@ -19,7 +19,6 @@ public class Sintomas {
     
     private Calendar fecha;
     
-    private Date fechaSignosVitales;
     
     private boolean Ulceras;
     
@@ -39,10 +38,23 @@ public class Sintomas {
     
     private boolean secrecionNasal;
     
+    private String tiempo;
+    
+    private Date fechaSignosVitales;
     
     
-    
-    
+
+	public String getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	
+
+	
 
 	public boolean isUlceras() {
 		return Ulceras;
