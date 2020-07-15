@@ -203,7 +203,7 @@
 	    	}).setHTML('<div><div class="row no-gutters align-items-center"><div class="col mr-2">'+
 					'<div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 15px;">'+${lista.animal.id}+'</div>'+
 	                 '<div class="h6 mb-0 text-gray-900" style="font-size: 12px;">'+ tipo +' - '+ raza +'</div> ' +
-	                 '<div class="mt-2 text-center"><a href="verAnimal?id='+${lista.animal.id}+'" style="font-size: 11px;" class="badge badge-success p-1">Ver animal</a></div></div> ' +
+	                 '<div class="mt-2 text-center"><a href="verAnimal?id='+${lista.animal.id}+'&lon='+${lista.ultimaUbicacion.longitud}+'&lat='+${lista.ultimaUbicacion.latitud}+'" style="font-size: 11px;" class="badge badge-success p-1">Ver animal</a></div></div> ' +
 	                  '<div class="col-auto mt-2"><img class="img-profile" style="height:35px; width: 35px;" src="/SmartFarm/img/'+imagen+'.png"/></div></div> </div>');
 		
 	    	new mapboxgl.Marker(icono).setLngLat([ ${lista.ultimaUbicacion.longitud}, ${lista.ultimaUbicacion.latitud} ])

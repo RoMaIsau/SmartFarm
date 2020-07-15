@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.persistencia;
+package ar.edu.unlam.tallerweb1.servicios;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;

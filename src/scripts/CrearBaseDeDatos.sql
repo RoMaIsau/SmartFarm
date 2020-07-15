@@ -38,15 +38,17 @@ INSERT INTO tratamiento VALUES
 
 
 -- VACUNAS
-INSERT INTO VACUNA VALUES 
-(1,2, "Aftosa"),
-(2, 5,"Brucelosis"),
-(3,3 ,"Carbunco"),(4,12,"Botulismo"),(5,4,"Leptospirosis"),(6,4,"Policlostridiales1"),(7,12,"Policlostridiales2");
-
-
+INSERT INTO VACUNA (id, nombre, edadAplicacionMeses) VALUES 
+(1, "Aftosa", 2),
+(2, "Brucelosis", 5),
+(3, "Carbunco",3),
+(4,"Botulismo",12),
+(5,"Leptospirosis",4),
+(6,"Policlostridiales1",4),
+(7,"Policlostridiales2",12);
 
 -- TIPOS DE USUARIOS
-INSERT INTO tipodeusuario (nombre) VALUES ("admin"), ("veterinario"), ("empleado");
+INSERT INTO tipodeusuario (nombre) VALUES ("Admin"), ("Veterinario"), ("Empleado");
 
 -- USUARIOS
 INSERT INTO usuario VALUES 
@@ -55,14 +57,11 @@ INSERT INTO usuario VALUES
 (3, "Prueba", "veterinario@gmail.com", "2020/05/12", "Usuario", "123", "Veterinario");
 
 -- TIPOS DE GASTOS
-
-INSERT INTO TipoDeGasto (nombre) VALUES ("Gastos alimenticios"), ("Gastos empresariales"), ("Gastos médicos"), ("Gastos tecnologicos");
 INSERT INTO TipoDeGasto (nombre) VALUES 
 ("Alimenticio"), 
 ("Empresarial"), 
 ("Médico"), 
 ("Tecnológico");
-
 
 -- TIPO ALIMENTO
 INSERT INTO TipoAlimento VALUES 
