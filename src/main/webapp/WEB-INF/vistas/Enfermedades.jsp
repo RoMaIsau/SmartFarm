@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.*,java.util.*"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -38,78 +38,73 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-				
-				<c:if test="${not empty tratamiento}">
-				<h3>Buscar tratamientos</h3>
-		<div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-hidden="true"></div>
-				<form id="formBuscar" action="buscarEnfermedad" method="post" modelAttribute="tratamiento">
-				
-				Por enfermedad:<br>
-				
-				<input type="search" name="nombre" >
-				<button type="submit" id="buscar">Buscar</button>
-				</form><br>
-				
-				
-				<div id="busqueda" class="">
-				<h2>${descripcion}</h2>
-				<h2 >${trat}</h2>
-				
-                 </div>
-				</c:if>
-				<c:if test="${empty trat}">
-				
-				<br>
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Enfermedades</h1>
-						
+					<div class="row">
+						<c:if test="${not empty tratamiento}">
+							<div class="col-md-4 col-xl-4">
+								<h5>Buscar tratamientos</h5>
+								<form id="formBuscar" action="buscarEnfermedad" method="post"
+									modelAttribute="tratamiento">
+									<input type="search" name="nombre" class="d-inline p-1 form-control" style="width: 60%"
+										placeholder="Ingrese enfermedad">
+									<button type="submit" id="buscar" class="btn btn-primary text-white">Buscar</button>
+								</form>
+								<br>
+								<div id="busqueda" class="">
+									<h2>${descripcion}</h2>
+									<h2>${trat}</h2>
+								</div>
+							</div>
+						</c:if>
 					</div>
-					
-						<div class="col-xl-10 col-lg-7">
-							<div class="card shadow mb-4">
-								<div class="card-body p-2">
-									<div class="chart-bar">
-										<div class="chartjs-size-monitor">
-											<div class="chartjs-size-monitor-expand">
-												<div class=""></div>
+					<c:if test="${empty trat}">
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-0 text-gray-800">Enfermedades</h1>
+
+						</div>
+						<div class="row">
+							<div class="col-xl-6 col-lg-6 col-md-6">
+								<div class="card shadow mb-4">
+									<div class="card-body p-2">
+										<div class="chart-bar">
+											<div class="chartjs-size-monitor">
+												<div class="chartjs-size-monitor-expand">
+													<div class=""></div>
+												</div>
+												<div class="chartjs-size-monitor-shrink">
+													<div class=""></div>
+												</div>
 											</div>
-											<div class="chartjs-size-monitor-shrink">
-												<div class=""></div>
-											</div>
+											<canvas id="enfermedadesMes" class="chartjs-render-monitor"
+												style="display: block; width: 100%; height: 100%;"></canvas>
 										</div>
-										<canvas id="enfermedadesMes" class="chartjs-render-monitor"
-											style="display: block; width: 100%; height: 100%;"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6">
+								<div class="card shadow mb-4">
+									<div class="card-body p-3">
+										<div class="chart-bar">
+											<div class="chartjs-size-monitor">
+												<div class="chartjs-size-monitor-expand">
+													<div class=""></div>
+												</div>
+												<div class="chartjs-size-monitor-shrink">
+													<div class=""></div>
+												</div>
+											</div>
+											<canvas id="mes" class="chartjs-render-monitor"
+												style="display: block; width: 100%; height: 100%;"></canvas>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row justify-content-center">
-						<div class="col-xl-10 col-lg-7">
-							<div class="card shadow mb-4">
-								<div class="card-body p-3">
-									<div class="chart-bar">
-										<div class="chartjs-size-monitor">
-											<div class="chartjs-size-monitor-expand">
-												<div class=""></div>
-											</div>
-											<div class="chartjs-size-monitor-shrink">
-												<div class=""></div>
-											</div>
-										</div>
-										<canvas id="mes" class="chartjs-render-monitor"
-											style="display: block; width: 100%; height: 100%;"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<!-- /.container-fluid -->
 
 			</div>
-			
+
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
@@ -376,67 +371,6 @@
 				}
 			});
 		};
-		
-		/* Generar pdf */
-		$('#descargarPDF').click(function(event) {
-		  
-		  // get size of report page
-		  var reportPageHeight = $('.container-fluid').innerHeight();
-		  var reportPageWidth = $('.container-fluid').innerWidth();
-		  
-		  // create a new canvas object that we will populate with all other canvas objects
-		  var pdfCanvas = $('<canvas />').attr({
-		    id: "canvaspdf",
-		    width: reportPageWidth + 30,
-		    height: reportPageHeight + 30
-		  });
-		
-		  // keep track canvas position
-		  var pdfctx = $(pdfCanvas)[0].getContext('2d');
-		  var pdfctxX = 30;
-		  var pdfctxY = 140;
-		  var buffer = 70;
-			
-		  // for each chart.js chart
-		  $("canvas").each(function(index) {
-		    // get the chart height/width
-		    var canvasHeight = $(this).innerHeight();
-		    var canvasWidth = $(this).innerWidth();
-		
-		 // draw the chart into the new canvas
-		    pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
-		    pdfctxX += canvasWidth + buffer;
-			
- 		    // our report page is in a grid pattern so replicate that in the new canvas
-		    if (index % 2 === 1) {
-		      pdfctxX = 150;
-		      pdfctxY += canvasHeight + buffer;
-		    }
-		  });
-		  
-		  // create new pdf and add our new canvas as an image
-		  var pdf = new jsPDF('l', 'pt', [870, 700]);
-		  
-		  pdf.setFontSize(24)
-		  pdf.text(20, 55, 'SmartFarm - Reporte de gastos')
-		  
-		  pdf.setFontSize(11)
-		  pdf.text(20, 75, "Generado el dia "+"<%=now%>" + ", por "+"${usuario.nombre} ${usuario.apellido}")
-		  
-		  pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
-		  
-		  pdf.setProperties({title: 'SmartFarm - Gastos'});
-		  
-		  // download the pdf
-		  pdf.save('SmartFarm - Reporte de gastos.pdf');
-		  
-		  document.getElementById('alertaPDF').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
-			  'Reporte de gastos generado exitosamente!'+
-			  '<button type="button" class="close" data-dismiss="alert" aria-label="Close"'+
-			    '<span aria-hidden="true">&times;</span></button></div>';
-		});
-		
-		/* Fin generar pdf */
 		
 	</script>
 
