@@ -111,4 +111,19 @@ public class RepositorioGastosTest extends SpringTest{
 		assertNull(this.repositorioGastos.consultaGastosPorID(gastoUno.getId()));
 	}
 	
+	@Test 
+	public void deberiaModificarGasto() {
+		Gastos gastoUno = new Gastos();
+		gastoUno.setMonto(100.0);
+		
+		this.repositorioGastos.guardarNuevoRegistro(gastoUno);
+		
+		gastoUno.setMonto(300.0);
+		
+		this.repositorioGastos.modificarGasto(gastoUno);
+		
+		Gastos gastoObtenido = this.repositorioGastos.consultaGastosPorID(gastoUno.getId());
+		
+		assertThat(gastoObtenido.getMonto()).isEqualTo(300.0);
+	}
 }
