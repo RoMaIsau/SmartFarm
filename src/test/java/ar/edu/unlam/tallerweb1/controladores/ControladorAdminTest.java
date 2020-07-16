@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertNotNull;
 
 import ar.edu.unlam.tallerweb1.modelo.Gastos;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeGasto;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGastos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeGasto;
@@ -151,6 +152,30 @@ public class ControladorAdminTest {
 		assertThat(gastosEnTotalPorMesObtenidos).hasSize(2);
 		assertNotNull(gastosEnTotalPorTipoObtenidos);
 		assertThat(gastosEnTotalPorTipoObtenidos).hasSize(2);
+	}
+	
+	@Test
+	public void laVistaRegistrarGastoMuestraListaDeTiposDeGastos() {
+		TipoDeGasto tipoUno = new TipoDeGasto();
+		tipoUno.setNombre("Medico");
+		TipoDeGasto tipoDos = new TipoDeGasto();
+		tipoDos.setNombre("Alimenticio");
+		
+		List<TipoDeGasto> tipos = new ArrayList<TipoDeGasto>();
+		tipos.add(tipoUno);
+		tipos.add(tipoDos);
+		
+		when(this.servicioTipoDeGasto.obtenerTiposDeGastos()).thenReturn(tipos);
+		
+		ModelAndView modelAndV = this.controladorAdmin.irANuevaEstadistica();
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioTipoDeGasto).obtenerTiposDeGastos();
+		assertThat(modelo).containsKey("tipoDeGastos");
+		
+		List<TipoDeGasto> tiposObtenidos = (List<TipoDeGasto>) modelo.get("tipoDeGastos");
+		
+		assertThat(tiposObtenidos).hasSize(2);
 	}
 	
 	private HttpServletRequest configurarRolLogueado(String rol) {
