@@ -83,14 +83,6 @@
 				</a>
 			</li>
 		</c:when>
-		<c:when test="${ROL == 'Veterinario'}">
-			<li class="nav-item">
-				<hr class="sidebar-divider">
-				<a class="nav-link" href="#"> <i
-					class="fas fa-user"></i> <span>PARA HABILITAR</span>
-				</a>
-			</li>
-		</c:when>
 	</c:choose>
 
 
