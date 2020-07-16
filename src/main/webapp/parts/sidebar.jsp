@@ -79,15 +79,7 @@
 			<li class="nav-item">
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/estadisticas"> <i
-					class="fas fa-chart-pie"></i> <span>Estadísticas</span>
-				</a>
-			</li>
-		</c:when>
-		<c:when test="${ROL == 'Veterinario'}">
-			<li class="nav-item">
-				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/listaGanado"> <i
-					class="fas fa-medkit"></i> <span>Salud</span>
+					class="fas fa-chart-pie"></i> <span>Estadï¿½sticas</span>
 				</a>
 			</li>
 		</c:when>
@@ -108,7 +100,7 @@
 				<hr class="sidebar-divider d-none d-md-block">
 				<a class="nav-link" href="${contextPath}/ubicaciones/mapa">
 					<i class="fas fa-map-marked-alt"></i>
-					<span>Ubicación en tiempo real</span>
+					<span>Ubicaciï¿½n en tiempo real</span>
 				</a>
 			</li>
 		</c:when>

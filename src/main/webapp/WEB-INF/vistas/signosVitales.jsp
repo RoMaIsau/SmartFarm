@@ -14,7 +14,7 @@ List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
 String dataPoints;
 String e = (String) request.getAttribute("enfermedadClase");
 
-if(e == "" || e == null || e == "Fiebre Aftosa"){/* VALORES DE ORINA NORMALES */
+if(e == "" || e == null || e == "Fiebre Aftosa" || e == "Miocardiopatia congenita" || e == "Rinotraqueitis infecciosa"){/* VALORES DE ORINA NORMALES */
 	map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 18.7); list.add(map);/*  map.put("exploded", true); */
 	map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 27); list.add(map);
 	map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 27); list.add(map);
@@ -39,37 +39,25 @@ Gson gsonObj2 = new Gson();
 Map<Object,Object> map2 = null;
 List<Map<Object,Object>> list2 = new ArrayList<Map<Object,Object>>();
 String dataPoints2;
-String e2 = (String) request.getAttribute("enfermedadClase");
 
-if(e2 == "" || e2 == null || e2 == "Fiebre Aftosa"){/* TEMPERATURA NORMAL */
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1484209000000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1486887400000L); map2.put("y", new Integer[] {38,41}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1489306600000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1491985000000L); map2.put("y", new Integer[] {36,39}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1494577000000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1497255400000L); map2.put("y", new Integer[] {38,41}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1499847400000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1502525800000L); map2.put("y", new Integer[] {36,39}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1505204200000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1507796200000L); map2.put("y", new Integer[] {38,41}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1510474600000L); map2.put("y", new Integer[] {37,40}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1513066600000L); map2.put("y", new Integer[] {36,39}); list2.add(map2);
-	dataPoints2 = gsonObj2.toJson(list2);
-} else {/* TEMPERATURA ANORMAL */
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1484209000000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1486887400000L); map2.put("y", new Integer[] {48,51}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1489306600000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1491985000000L); map2.put("y", new Integer[] {46,49}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1494577000000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1497255400000L); map2.put("y", new Integer[] {48,51}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1499847400000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1502525800000L); map2.put("y", new Integer[] {46,49}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1505204200000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1507796200000L); map2.put("y", new Integer[] {48,51}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1510474600000L); map2.put("y", new Integer[] {47,50}); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("x", 1513066600000L); map2.put("y", new Integer[] {46,49}); list2.add(map2);
-	dataPoints2 = gsonObj2.toJson(list2);
+if(e == "" || e == null || e == "Fiebre Aftosa" || e == "Miocardiopatia congenita"){/* VALORES NORMALES */
+	map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 37.7); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 38.0); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 38.1); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 36.9); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 37.5); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 37.3); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 36.0); list2.add(map2);
+}else{/* VALORES ANORMALES */
+	map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 47.7); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 48.0); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 48.1); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 46.9); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 47.5); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 47.3); list2.add(map2);
+	map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 46.0); list2.add(map2);
 }
+dataPoints2 = gsonObj.toJson(list2);
 %>
 <!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE TEMPERATURA -->
 
@@ -81,7 +69,7 @@ List<Map<Object,Object>> list3 = new ArrayList<Map<Object,Object>>();
 String dataPoints3;
 String e1 = (String) request.getAttribute("enfermedadClase");
 
-if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
+if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 	map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 25); list3.add(map3);
 	dataPoints3 = gsonObj.toJson(list3);
 } else {/* FRECUENCIA ANORMAL */
@@ -122,53 +110,58 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 				<div class="container-fluid">
 				<!-- ================================================================================== -->
 					
-					<!-- Ritmo Cardíaco -->
+					<!-- Ritmo cardíaco y frecuencia respiratoria -->
+					<!-- PPM -->
 					<div class="row">
-						<div class="col-md-12 col-sm-12 col-12 mb-4">
-							<div id="RitmoCardiaco"></div>
-							<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-1 col-sm-1 col-1 mb-4 mt-4"><br>
+						<div class="col-xl-1 offset-xl-3 col-md-1 offset-md-2 col-sm-2 offset-sm-3 col-2 offset-3 mb-4">
 							<i class="fas fa-heartbeat"></i>
 						</div>
-						<div class="col-md-1 col-sm-1 col-1 mb-4 mt-4"><br>
+						<div class="col-xl-1 col-md-1 offset-md-1 col-sm-1 col-2 mb-4">
 							<span>PPM</span>
 						</div>
-						<div class="col-md-2 col-sm-2 col-5 mb-4 mt-5">
-							<input class="form-control" type="text" id="pulso" name="pulso" value=""></input>
+						<div class="col-xl-1 col-md-1 col-sm-1 offset-sm-1 col-4 mb-4">
+							<input class="form-control" style="height: 30px; width: 45px;" type="text" id="pulso" name="pulso" value=""></input>
 						</div>
 					</div>
 					
-					
-					<!-- Valores urinarios y Temperatura corporal -->
+					<!-- Ritmo cardíaco -->
 					<div class="row">
-						<!-- Valores urinarios -->
-						<div class="col-md-6 col-sm-12 col-12 mb-4">
-							<div id="valoresUrinarios"></div>
+						<div class="col-md-9 col-sm-12 col-12 mb-4">
+							<div id="RitmoCardiaco"></div>
+						</div>
+						
+						<div class="hidden-md-down">
+							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+						</div>
+						
+						<!-- Frecuencia respiratoria -->
+						<div class="col-md-3 col-sm-12 col-12 mb-4">
+							<div id="frecuenciaRespiratoria"></div>
+						</div>
+						
+						<div class="hidden-md-down">
+							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+						</div>
+					</div>
+					
+					<!-- Temperatura corporal y valores urinarios -->
+					<div class="row">
+						<!-- Temperatura corporal -->
+						<div class="col-md-7 col-sm-12 col-12 mb-4">
+							<div id="temperaturaCorporal"></div>
 						</div>
 						
 						<div class="hidden-md-down">
 							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
 						</div>
 						
-						<!-- Frecuencia Respiratoria -->
-						<div class="col-md-6 col-sm-12 col-12 mb-4">
-							<div id="frecuenciaRespiratoria"></div>
+						<!-- Valores urinarios -->
+						<div class="col-md-5 col-sm-12 col-12 mb-4">
+							<div id="valoresUrinarios"></div>
 						</div>
 						
 						<div class="hidden-md-down">
-							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-						</div>
-						
-						<!-- Temperatura corporal -->
-						<div class="col-md-12 col-sm-12 col-12 mb-4">
-							<div id="temperaturaCorporal"></div>
-						</div>
-						
-						<div class="hidden-md-down">
-							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+							<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 						</div>
 					</div>
 					
@@ -211,7 +204,7 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 			
 			/* ===== RITMO CARDÍACO ===== */
 			<c:choose>
-				<c:when test="${enfermedad == null or enfermedad == '' or enfermedad == 'OTRA ENFERMEDAD'}">/* RITMO CARDÍACO NORMAL */
+				<c:when test="${cardio1 == true}">/* RITMO CARDÍACO NORMAL */
 					var dataPoints = [];
 					var y = 80;
 					for(var i = 0; i < 12; i++){
@@ -263,7 +256,7 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 						pulso.value = valor;
 					};
 				</c:when>
-				<c:when test="${enfermedad == 'Fiebre Aftosa'}">/* RITMO CARDÍACO ACELERADO */
+				<c:when test="${cardio1 == false}">/* RITMO CARDÍACO ACELERADO */
 					var dataPoints = [];
 					var y = 95;
 					for(var i = 0; i < 12; i++){
@@ -321,9 +314,12 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 			
 			
 			/* ===== VALORES URINARIOS ===== */
+			CanvasJS.addColorSet("tortaNormal", ["#1ed1c2", "#16afad", "#72ca47", "#0d8800", "#1ed177"]);
+			CanvasJS.addColorSet("tortaAnormal", ["#ff0000", "#c60000", "#a10000", "#7f0000", "#620000"]);
 			<c:choose>
-				<c:when test="${enfermedad == null or enfermedad == '' or enfermedad == 'Fiebre Aftosa'}">/* VALORES NORMALES */
+				<c:when test="${orina1 == true}">/* VALORES NORMALES */
 					var valoresUrinarios = new CanvasJS.Chart("valoresUrinarios", {
+						colorSet: "tortaNormal",
 						theme: "light2",
 						animationEnabled: false,
 						exportFileName: "Valores urinarios",
@@ -344,8 +340,9 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 					});
 					valoresUrinarios.render();
 				</c:when>
-				<c:when test="${enfermedad == 'OTRA ENFERMEDAD'}">/* VALORES ANORMALES */
+				<c:when test="${orina1 == false}">/* VALORES ANORMALES */
 					var valoresUrinarios = new CanvasJS.Chart("valoresUrinarios", {
+						colorSet: "tortaAnormal",
 						theme: "light1",
 						animationEnabled: false,
 						exportFileName: "Valores urinarios",
@@ -372,77 +369,63 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 			
 			
 			/* ===== TEMPERATURA ===== */
+			CanvasJS.addColorSet("sombraDeVerdes", ["#008080", "#2E8B57", "#3CB371",  "#90EE90"]);
+			CanvasJS.addColorSet("sombraDeRojo", ["#fe0000", "#a10000", "#620000",  "#a10000"]);
+			
 			<c:choose>
-				<c:when test="${enfermedad == null or enfermedad == '' or enfermedad == 'Fiebre Aftosa'}">/* VALORES NORMALES */
-					var temperaturaCorporal = new CanvasJS.Chart("temperaturaCorporal", {
-						animationEnabled: false,
-						exportEnabled: false,
+				<c:when test="${temperatura1 == true}">/* VALORES NORMALES */
+					var graficoTemp = new CanvasJS.Chart("temperaturaCorporal", {
+						colorSet: "sombraDeVerdes",
 						title: {
 							fontFamily: "Nunito",
 							fontStyle: "bold",
 							text: "Temperatura corporal"
 						},
-						subtitles: [{
-							text: "Promedio por día"
-						}],
-						axisY: {
-							title: "Temperatura (°C)",
-							suffix: " °C"
-						},
 						axisX: {
-							valueFormatString: "M"
+							title: "Promedio en los últimos 7 días"
+						},
+						axisY: {
+							title: "Temperatura (°C)"
 						},
 						data: [{
-							type: "rangeColumn",
-							xValueFormatString: "MMMM",
-							xValueType: "dateTime",
-							yValueFormatString: "#,##0.## °C",
-							indexLabel: "{y[#index]}",
-							toolTipContent: " <span style=\"color:#4F81BC\">{x}</span><br><b>Min:</b> {y[0]}<br><b>Max:</b> {y[1]}",
+							type: "column",
+							yValueFormatString: "#,##0.0# °C",
 							dataPoints: <%out.print(dataPoints2);%>
 						}]
 					});
-					temperaturaCorporal.render();
+					graficoTemp.render();
 				</c:when>
-				<c:when test="${enfermedad == 'OTRA ENFERMEDAD'}">/* VALORES ANORMALES */
-					var temperaturaCorporal = new CanvasJS.Chart("temperaturaCorporal", {
-						animationEnabled: false,
-						exportEnabled: false,
+				<c:when test="${temperatura1 == false}">/* VALORES ANORMALES */
+					var graficoTemp = new CanvasJS.Chart("temperaturaCorporal", {
+						colorSet: "sombraDeRojo",
 						title: {
 							fontFamily: "Nunito",
 							fontStyle: "bold",
 							text: "Temperatura corporal"
 						},
-						subtitles: [{
-							text: "Promedio por día"
-						}],
-						axisY: {
-							title: "Temperatura (°C)",
-							suffix: " °C"
-						},
 						axisX: {
-							valueFormatString: "M"
+							title: "Promedio en los últimos 7 días"
+						},
+						axisY: {
+							title: "Temperatura (°C)"
 						},
 						data: [{
-							type: "rangeColumn",
-							color: "red",
-							xValueFormatString: "MMMM",
-							xValueType: "dateTime",
-							yValueFormatString: "#,##0.## °C",
-							indexLabel: "{y[#index]}",
-							toolTipContent: " <span style=\"color:#4F81BC\">{x}</span><br><b>Min:</b> {y[0]}<br><b>Max:</b> {y[1]}",
+							type: "column",
+							yValueFormatString: "#,##0.0# °C",
 							dataPoints: <%out.print(dataPoints2);%>
 						}]
 					});
-					temperaturaCorporal.render();
+					graficoTemp.render();
 				</c:when>
 			</c:choose>
 			
 			
 			/* ===== FRECUENCIA RESPIRATORIA ===== */
+			CanvasJS.addColorSet("respiracionNormal", ["#008080"]);
 			<c:choose>
-				<c:when test="${enfermedad == null or enfermedad == '' or enfermedad == 'Fiebre Aftosa'}">/* VALORES NORMALES */
+				<c:when test="${respiracion1 == true}">/* VALORES NORMALES */
 					var frecuenciaRespiratoria = new CanvasJS.Chart("frecuenciaRespiratoria", {
+						colorSet: "respiracionNormal",
 						title: {
 							fontFamily: "Nunito",
 							fontStyle: "bold",
@@ -477,7 +460,7 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 					updateChart3();
 					setInterval(function () { updateChart3() }, 1000);
 				</c:when>
-				<c:when test="${enfermedad == 'OTRA ENFERMEDAD'}">/* VALORES ANORMALES */
+				<c:when test="${respiracion1 == false}">/* VALORES ANORMALES */
 					var frecuenciaRespiratoria = new CanvasJS.Chart("frecuenciaRespiratoria", {
 						title: {
 							fontFamily: "Nunito",
@@ -508,7 +491,7 @@ if(e1 == "" || e1 == null || e1 == "Fiebre Aftosa"){/* FRECUENCIA NORMAL */
 							yVal = deltaY + dps[i].y > 0 ? dps[i].y + deltaY : 0;
 							dps[i].y = getRndInteger(33, 37);
 						}
-						frecuenciaRespiratoria.options.subtitles[0].text = "promedio estable: 25";
+						frecuenciaRespiratoria.options.subtitles[0].text = "promedio estable: 35";
 						frecuenciaRespiratoria.render();
 					};
 					updateChart3();
