@@ -151,7 +151,7 @@ public class ControladorVeterinario{
 	}
 	
 	@RequestMapping("/listaGanado")
-	public ModelAndView listaGanado() {
+	public ModelAndView listaGanado(HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
 		  return new ModelAndView("redirect:/login");
@@ -202,7 +202,7 @@ public class ControladorVeterinario{
     }
 	
 	@RequestMapping("/verEstadoSalud")
-	public ModelAndView verSalud(@RequestParam(value="id", required=true) Long id) {
+	public ModelAndView verSalud(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
@@ -283,26 +283,6 @@ public class ControladorVeterinario{
 		return new ModelAndView("historiaClinica", modelo);
 	}
 	
-	@RequestMapping("/verhistoria")
-	public ModelAndView hc(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
-		String rol = (String) request.getSession().getAttribute("ROL");
-		if (!rol.equals("Veterinario") || rol == null) {
-			return new ModelAndView("redirect:/login");
-		}
-
-		HistoriaClinica hc= new HistoriaClinica();
-		AnimalDeGranja animal= servicioGanado.ver(id);
-        hc = servicioGanado.verHC(animal);
-        List<SignosVitales> signos= servicioGanado.signos(hc);
-		
-		ModelMap modelo= new ModelMap();
-        modelo.put("hc",hc);
-		modelo.put("signos",signos);
-		odelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-		
-		return new ModelAndView("historiaClinica", modelo);
-	}
-	
    	@RequestMapping("/verhistoria")
 	public ModelAndView hc(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
   		String rol = (String) request.getSession().getAttribute("ROL");
@@ -323,26 +303,8 @@ public class ControladorVeterinario{
    		return new ModelAndView("historiaClinica", modelo);
    	}
    	
-   	@RequestMapping("/diagnosticar")
-	public ModelAndView diagnosticar(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
-  		String rol = (String) request.getSession().getAttribute("ROL");
-  		if (!rol.equals("Veterinario") || rol == null) {
-			return new ModelAndView("redirect:/login");
-		}
-  		
-   		Long idAnimal = id;
-   		Sintomas sintomas= new Sintomas();
-   		ModelMap modelo= new ModelMap();
-   		
-   		modelo.put("sintomas",sintomas);
-   		modelo.put("idAnimal", idAnimal);
-   		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-   		
-   		return new ModelAndView("consultaVeterinario", modelo);
-   	}
-   	
    	@RequestMapping("/diagnosticarPost")
-	public ModelAndView diagnostico(@ModelAttribute("sintomas") Sintomas sintomas, HttpServletRequest request){
+	public ModelAndView diagnostico(HttpServletRequest request, @ModelAttribute("sintomas") Sintomas sintomas){
   		String rol = (String) request.getSession().getAttribute("ROL");
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
