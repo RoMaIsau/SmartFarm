@@ -203,6 +203,38 @@ public class ControladorAdminTest {
 		assertThat(modelo).containsKey("mensaje");
 	}
 	
+	@Test
+	public void laVistaModificarGastoMuestraListaDeTiposDeGastos() {
+		TipoDeGasto tipoUno = new TipoDeGasto();
+		tipoUno.setNombre("Medico");
+		TipoDeGasto tipoDos = new TipoDeGasto();
+		tipoDos.setNombre("Alimenticio");
+		
+		List<TipoDeGasto> tipos = new ArrayList<TipoDeGasto>();
+		tipos.add(tipoUno);
+		tipos.add(tipoDos);
+		
+		when(this.servicioTipoDeGasto.obtenerTiposDeGastos()).thenReturn(tipos);
+		
+		Gastos gasto = new Gastos();
+		gasto.setId(1L);
+		
+		when(this.servicioGastos.consultaGastosPorID(gasto.getId())).thenReturn(gasto);
+		
+		ModelAndView modelAndV = this.controladorAdmin.irAModificarEstadistica(gasto.getId());
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioTipoDeGasto).obtenerTiposDeGastos();
+		verify(this.servicioGastos).consultaGastosPorID(eq(gasto.getId()));
+		assertThat(modelo).containsKey("tipoDeGastos");
+		
+		List<TipoDeGasto> tiposObtenidos = (List<TipoDeGasto>) modelo.get("tipoDeGastos");
+		Gastos gastoObtenido = (Gastos) modelo.get("gastos");
+		
+		assertThat(gastoObtenido).isEqualTo(gasto);
+		assertThat(tiposObtenidos).hasSize(2);
+	}
+	
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
