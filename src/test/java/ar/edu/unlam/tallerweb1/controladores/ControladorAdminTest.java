@@ -9,6 +9,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -105,7 +106,52 @@ public class ControladorAdminTest {
 		assertThat(gastosObtenidos).hasSize(2);
 	}
 	
-	
+	@Test
+	public void seDebeObtenerEstadisticasDeGastos() {
+		HttpServletRequest request = this.configurarRolLogueado("Admin");
+		request.getSession().setAttribute("ID", 1L);
+		
+		TreeMap<Integer, Double> gastosAlimenticios = new TreeMap<Integer, Double>();
+		gastosAlimenticios.put(1, 10.0);
+		gastosAlimenticios.put(2, 20.0);
+		
+		when(this.servicioGastos.consultarGastosPorMes("Alimenticio")).thenReturn(gastosAlimenticios);
+		
+		Gastos gastosUno = new Gastos();
+		Gastos gastosDos = new Gastos();
+		
+		List<Gastos> gastosEnTotalPorTipo = new ArrayList<Gastos>();
+		gastosEnTotalPorTipo.add(gastosUno);
+		gastosEnTotalPorTipo.add(gastosDos);
+		
+		when(this.servicioGastos.consultarGastosEnTotalPorTipo()).thenReturn(gastosEnTotalPorTipo);
+		
+		TreeMap<Integer, Double> gastosEnTotalPorMes = new TreeMap<Integer, Double>();
+		gastosEnTotalPorMes.put(1, 10.0);
+		gastosEnTotalPorMes.put(2, 20.0);
+		
+		when(this.servicioGastos.consultarGastosEnTotal()).thenReturn(gastosEnTotalPorMes);
+		
+		ModelAndView modelAndV = this.controladorAdmin.irAEstadisticas(request);
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioGastos).consultarGastosPorMes(eq("Alimenticio"));
+		assertThat(modelAndV.getViewName()).isEqualTo("estadisticas");
+		assertThat(modelo).containsKey("alimenticio");
+		assertThat(modelo).containsKey("gastosEnTotalPorTipo");
+		assertThat(modelo).containsKey("gastosEnTotalPorMes");
+		
+		TreeMap<Integer, Double> alimenticiosObtenidos = (TreeMap<Integer, Double>) modelo.get("alimenticio");
+		List<Gastos> gastosEnTotalPorTipoObtenidos =  (List<Gastos>) modelo.get("gastosEnTotalPorTipo");
+		TreeMap<Integer, Double> gastosEnTotalPorMesObtenidos = (TreeMap<Integer, Double>) modelo.get("gastosEnTotalPorMes");
+		
+		assertNotNull(alimenticiosObtenidos);
+		assertThat(alimenticiosObtenidos).hasSize(2);
+		assertNotNull(gastosEnTotalPorMesObtenidos);
+		assertThat(gastosEnTotalPorMesObtenidos).hasSize(2);
+		assertNotNull(gastosEnTotalPorTipoObtenidos);
+		assertThat(gastosEnTotalPorTipoObtenidos).hasSize(2);
+	}
 	
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
