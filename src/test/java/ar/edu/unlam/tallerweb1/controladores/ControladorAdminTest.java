@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNotNull;
 
 import ar.edu.unlam.tallerweb1.modelo.Gastos;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeGasto;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeUsuario;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGastos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeGasto;
@@ -233,6 +234,29 @@ public class ControladorAdminTest {
 		
 		assertThat(gastoObtenido).isEqualTo(gasto);
 		assertThat(tiposObtenidos).hasSize(2);
+	}
+	
+	@Test
+	public void laVistaRegistroDeberiaListarTodosLosRoles() {
+		TipoDeUsuario tipoUno = new TipoDeUsuario();
+		TipoDeUsuario tipoDos = new TipoDeUsuario();
+		
+		List<TipoDeUsuario> tipos = new ArrayList<TipoDeUsuario>();
+		tipos.add(tipoUno);
+		tipos.add(tipoDos);
+		
+		when(this.servicioTipoDeUsuario.ObtenerTodosLosRoles()).thenReturn(tipos);
+		
+		ModelAndView modelAndView = this.controladorAdmin.irARegistro();
+		ModelMap modelo = modelAndView.getModelMap();
+		
+		verify(this.servicioTipoDeUsuario).ObtenerTodosLosRoles();
+		assertThat(modelo).containsKey("roles");
+		
+		List<TipoDeUsuario> tiposObtenidos = (List<TipoDeUsuario>) modelo.get("roles");
+		
+		assertThat(tiposObtenidos).hasSize(2);
+		assertThat(tiposObtenidos).isEqualTo(tipos);
 	}
 	
 	private HttpServletRequest configurarRolLogueado(String rol) {
