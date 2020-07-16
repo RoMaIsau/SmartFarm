@@ -241,8 +241,8 @@ public class ControladorVeterinario{
             modelo.put("signos",signo);
             modelo.put("alarmaTratamiento",alarma);
             modelo.put("idAnimalTratamiento",id);
-            modelo.put("vacunas",vacunas);
-			modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+            modelo.put("vacunas",vacunas);/*
+			modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));*/
 
 			return new ModelAndView("HomeAnimal", modelo);
 		} else {
@@ -343,9 +343,9 @@ public class ControladorVeterinario{
 		
 		ModelMap modelo= new ModelMap();
         modelo.put("sintomas",sintomas);
-        modelo.put("idAnimal", idAnimal);
-		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-
+        modelo.put("idAnimal", idAnimal);/*
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));*/
+		
 		return new ModelAndView("consultaVeterinario", modelo);
     }
 	
@@ -713,7 +713,7 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		String enfermedad = "";
+		String enfermedad = "Intoxicacion por consumo de plantas toxicas";
 		Boolean cardio1 = true;
 		Boolean orina1 = true;
 		Boolean temperatura1 = true;
@@ -747,7 +747,6 @@ public class ControladorVeterinario{
 		modelo.put("orina1", orina1);
 		modelo.put("temperatura1", temperatura1);
 		modelo.put("respiracion1", respiracion1);
-		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		modelo.addAttribute("enfermedadClase", enfermedad);
 		
         return new ModelAndView("signosVitales", modelo);

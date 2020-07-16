@@ -3,16 +3,15 @@ package ar.edu.unlam.tallerweb1.controladores;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.controladores.ControladorGanado;
-import ar.edu.unlam.tallerweb1.controladores.ControladorVeterinario;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
-import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanadoImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunaImpl;
 
 import static org.mockito.Mockito.*;
@@ -46,8 +45,11 @@ public class TestControladorVeterinario {
 		cv.setServicioVacuna(servicioVacunaMock);
 		
 		//ejecucion
-		HttpServletRequest mockSession = mock(HttpServletRequest.class);
-		ModelAndView modelView = cv.verSalud(1L, mockSession);
+		HttpServletRequest requestMock = mock(HttpServletRequest.class);
+		HttpSession sessionMock = mock(HttpSession.class);
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
+		ModelAndView modelView = cv.verSalud(1L, requestMock);
 		String viewName= modelView.getViewName();
 		assertTrue(viewName == "Error");
 	}
@@ -73,10 +75,49 @@ public class TestControladorVeterinario {
 		cv.setServicioVacuna(servicioVacunaMock);
 		
 		//ejecucion
-		HttpServletRequest mockSession = mock(HttpServletRequest.class);
-		ModelAndView modelView2 = cv.verSalud(1L, mockSession);
+		HttpServletRequest requestMock = mock(HttpServletRequest.class);
+		HttpSession sessionMock = mock(HttpSession.class);
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
+		ModelAndView modelView2 = cv.verSalud(1L, requestMock);
 		String viewName2= modelView2.getViewName();
 		assertTrue(viewName2 == "HomeAnimal");
+	}
+	
+	@Test
+	public void testParaValidarElIngresoASignosVitales() {
+		ControladorVeterinario controladorVeterinario = new ControladorVeterinario();
+		
+		HttpServletRequest requestMock = mock(HttpServletRequest.class);
+		HttpSession sessionMock = mock(HttpSession.class);
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
+		when(sessionMock.getAttribute("ID")).thenReturn(1L);
+		
+		ModelAndView modelAndView = controladorVeterinario.signosVitales(requestMock, 1L);
+		ModelMap modelo = modelAndView.getModelMap();
+		
+		assertThat(modelAndView.getViewName()).isEqualTo("signosVitales");
+		assertThat(modelo).containsKey("cardio1");
+		assertThat(modelo).containsKey("orina1");
+		assertThat(modelo).containsKey("temperatura1");
+		assertThat(modelo).containsKey("respiracion1");
+		assertThat(modelo).containsKey("enfermedadClase");
+	}
+	
+	@Test
+	public void testParaValidarElIngresoADiagnosticar() {
+		ControladorVeterinario controladorVeterinario = new ControladorVeterinario();
+		Long id = 1L;
+		
+		HttpServletRequest requestMock = mock(HttpServletRequest.class);
+		HttpSession sessionMock = mock(HttpSession.class);
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
+		
+		ModelAndView modelAndView = controladorVeterinario.diagnosticar(id, requestMock);
+		
+		assertThat(modelAndView.getViewName()).isEqualTo("consultaVeterinario");
 	}
 	
 }

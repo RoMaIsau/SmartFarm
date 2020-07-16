@@ -53,8 +53,12 @@ public class TestVacunas {
 	@Test
 	@Transactional @Rollback
 		public void testServicioVacunar(){
-		//Preparacion  
-	    AnimalDeGranja animalMock=  mock(AnimalDeGranja.class);
+		//Preparacion
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpSession session = mock(HttpSession.class);
+		when(request.getSession()).thenReturn(session);
+		
+	    AnimalDeGranja animalMock = mock(AnimalDeGranja.class);
 	    
 	    ServicioGanado servicioGanadoMock= mock(ServicioGanado.class);
 	    when(servicioGanadoMock.ver(1L)).thenReturn(animalMock);
@@ -66,9 +70,8 @@ public class TestVacunas {
 	    cg.setServicioGanado(servicioGanadoMock);
 	    cg.setServicioVacuna(servicioVacunaMock);
 	    
-		HttpServletRequest mockSession = mock(HttpServletRequest.class);
 	    ModelAndView mv= new ModelAndView();   
-	    mv= cg.vacunar(1L, mockSession);
+	    mv= cg.vacunar(1L, request);
 	    
 	    List<Vacuna>vencidas= (List<Vacuna>) mv.getModelMap().get("vencidas");
 	    

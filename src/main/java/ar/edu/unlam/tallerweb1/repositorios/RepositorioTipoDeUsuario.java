@@ -10,4 +10,5 @@ public interface RepositorioTipoDeUsuario {
 
 	List<TipoDeUsuario> ObtenerTodosLosRoles();
 	
+	void guardarTipoDeUsuario(TipoDeUsuario tipoDeUsuario);
 }

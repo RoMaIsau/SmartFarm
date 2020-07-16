@@ -18,17 +18,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 // implelemtacion del repositorio de usuarios, la anotacion @Repository indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.dao
 // para encontrar esta clase.
 @Repository("repositorioGanado")
+@Transactional
 public class RepositorioGanadoImpl implements RepositorioGanado {
 
 	// Como todo repositorio maneja acciones de persistencia, normalmente estará inyectado el session factory de hibernate
 	// el mismo está difinido en el archivo hibernateContext.xml
+	@Inject
 	private SessionFactory sessionFactory;
-
+	
     @Autowired
 	public RepositorioGanadoImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
