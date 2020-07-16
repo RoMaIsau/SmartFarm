@@ -178,6 +178,31 @@ public class ControladorAdminTest {
 		assertThat(tiposObtenidos).hasSize(2);
 	}
 	
+	@Test
+	public void debeValidarUnNuevoGasto() {
+		HttpServletRequest request = this.configurarRolLogueado("Admin");
+		request.getSession().setAttribute("ID", 1L);
+		
+		TipoDeGasto tipoUno = new TipoDeGasto();
+		tipoUno.setId(1L);
+		tipoUno.setNombre("Medico");
+		
+		List<TipoDeGasto> tipos = new ArrayList<TipoDeGasto>();
+		tipos.add(tipoUno);
+		
+		when(this.servicioTipoDeGasto.obtenerTiposDeGastos()).thenReturn(tipos);
+		
+		Gastos gastoUno = new Gastos();
+		gastoUno.setMonto(100.0);
+		gastoUno.setTipoDeGasto(tipoUno);
+		
+		ModelAndView modelAndV = this.controladorAdmin.validarNuevaEstadistica(gastoUno, request);
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioTipoDeGasto).obtenerTiposDeGastos();
+		assertThat(modelo).containsKey("mensaje");
+	}
+	
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
