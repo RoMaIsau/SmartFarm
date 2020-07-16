@@ -259,6 +259,25 @@ public class ControladorAdminTest {
 		assertThat(tiposObtenidos).isEqualTo(tipos);
 	}
 	
+	@Test
+	public void deberiaValidarElRegistroDeUnUsuario() {
+		TipoDeUsuario tipoUno = new TipoDeUsuario();
+		tipoUno.setNombre("Admin");
+		
+		when(this.servicioTipoDeUsuario.consultarRol(tipoUno.getNombre())).thenReturn(tipoUno);
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		usuario.setPassword("123");
+		usuario.setRol("Admin");
+		
+		ModelAndView modelAndV = this.controladorAdmin.validarRegistro(usuario, usuario.getPassword());
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioTipoDeUsuario).consultarRol(eq(tipoUno.getNombre()));
+		assertThat(modelo).containsKey("mensaje").containsValue("Usuario creado correctamente");
+	}
+	
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
