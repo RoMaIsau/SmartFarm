@@ -75,12 +75,8 @@ public class ControladorAdmin {
 
 		List<Usuario> usuarios = servicioUsuario.listarUsuarios();
 
-		if (usuarios != null) {
-			model.put("usuarios", usuarios);
-		} else {
-			model.put("error", "No hay usuarios registrados");
-		}
-
+		model.put("usuarios", usuarios);
+	
 		return new ModelAndView("usuarios", model);
 	}
 
