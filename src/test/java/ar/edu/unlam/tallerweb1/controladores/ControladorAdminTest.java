@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
 
+import ar.edu.unlam.tallerweb1.modelo.Gastos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGastos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeGasto;
@@ -76,6 +78,34 @@ public class ControladorAdminTest {
 		
 		assertThat(usuariosObtenidos).hasSize(2);
 	}
+	
+	@Test
+	public void siElRolEsAdminEnlistaTodosLosGastos() {
+		HttpServletRequest request = this.configurarRolLogueado("Admin");
+		
+		Gastos gastosUno = new Gastos();
+		Gastos gastosDos = new Gastos();
+		
+		List<Gastos> gastos = new ArrayList<Gastos>();
+		gastos.add(gastosUno);
+		gastos.add(gastosDos);
+		
+		when(this.servicioGastos.consultarGastos()).thenReturn(gastos);
+		
+		ModelAndView modelAndV = this.controladorAdmin.irAGastos(request);
+		ModelMap modelo = modelAndV.getModelMap();
+		
+		verify(this.servicioGastos).consultarGastos();
+		assertThat(modelAndV.getViewName()).isEqualTo("gastos");
+		assertThat(modelo).containsKey("gastos");
+		
+		List<Gastos> gastosObtenidos = (List<Gastos>) modelo.get("gastos");
+		
+		assertNotNull(gastosObtenidos);
+		assertThat(gastosObtenidos).hasSize(2);
+	}
+	
+	
 	
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
