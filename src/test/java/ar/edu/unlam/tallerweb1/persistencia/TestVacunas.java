@@ -7,6 +7,9 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,72 +29,50 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 public class TestVacunas {
 	
 	@Test
-	 @Transactional @Rollback
-	    public void testVerVacunas(){
-	       
-			
-	     //Preparacion  
+	@Transactional @Rollback
+	public void testVerVacunas(){
+		//Preparacion  
 	    AnimalDeGranja animalMock=  mock(AnimalDeGranja.class);
 	    when(animalMock.getId()).thenReturn(1L);
-	       
-	      Vacuna vacunaMock=mock(Vacuna.class);
-	      when(vacunaMock.getNombre()).thenReturn("vacuna");
-	     
-	       RepositorioVacunas servicioVacunaDaoMock=mock(RepositorioVacunas.class);
-	       
-	       
-	       when(servicioVacunaDaoMock.getVacuna("vacuna")).thenReturn(vacunaMock);
-	       
-
-	       ServicioVacunaImpl servicio= new ServicioVacunaImpl(servicioVacunaDaoMock);
 	    
-	       
+	    Vacuna vacunaMock=mock(Vacuna.class);
+	    when(vacunaMock.getNombre()).thenReturn("vacuna");
+	    
+	    RepositorioVacunas servicioVacunaDaoMock=mock(RepositorioVacunas.class);
+	    when(servicioVacunaDaoMock.getVacuna("vacuna")).thenReturn(vacunaMock);
+	    
+	    ServicioVacunaImpl servicio= new ServicioVacunaImpl(servicioVacunaDaoMock);
+	    
 	    //Ejecucion   
 		Vacuna resultado= servicio.getVacuna("vacuna");
 	    
-	       
-	       //verificacion 
-	       assertTrue(resultado.getNombre()=="vacuna");
-	        
-	    }
+		//verificacion 
+	    assertTrue(resultado.getNombre()=="vacuna");
+	}
 	
 	@Test
-	 @Transactional @Rollback
-	    public void testServicioVacunar(){
-	       
-			
-	     //Preparacion  
+	@Transactional @Rollback
+		public void testServicioVacunar(){
+		//Preparacion  
 	    AnimalDeGranja animalMock=  mock(AnimalDeGranja.class);
 	    
-	   ServicioGanado servicioGanadoMock= mock(ServicioGanado.class);
-	   when(servicioGanadoMock.ver(1L)).thenReturn(animalMock);  
-	   
-	   ServicioVacunas servicioVacunaMock= mock(ServicioVacunas.class);
-	   List<Vacuna>listaVacunas= new ArrayList<Vacuna>();
-	   when(servicioVacunaMock.alarmaVacuna(animalMock)).thenReturn(listaVacunas);  
-	     
-	     
-	  ControladorVeterinario cg = new ControladorVeterinario();
-	  cg.setServicioGanado(servicioGanadoMock);
-	  cg.setServicioVacuna(servicioVacunaMock);
-	  
+	    ServicioGanado servicioGanadoMock= mock(ServicioGanado.class);
+	    when(servicioGanadoMock.ver(1L)).thenReturn(animalMock);
+	    ServicioVacunas servicioVacunaMock= mock(ServicioVacunas.class);
+	    List<Vacuna>listaVacunas= new ArrayList<Vacuna>();
+	    when(servicioVacunaMock.alarmaVacuna(animalMock)).thenReturn(listaVacunas);  
+	    
+	    ControladorVeterinario cg = new ControladorVeterinario();
+	    cg.setServicioGanado(servicioGanadoMock);
+	    cg.setServicioVacuna(servicioVacunaMock);
+	    
+		HttpServletRequest mockSession = mock(HttpServletRequest.class);
 	    ModelAndView mv= new ModelAndView();   
-	       
-	      mv= cg.vacunar(1L);
-	      
-	     List<Vacuna>vencidas= (List<Vacuna>) mv.getModelMap().get("vencidas");
-	       
-
+	    mv= cg.vacunar(1L, mockSession);
 	    
-	       
-	  
+	    List<Vacuna>vencidas= (List<Vacuna>) mv.getModelMap().get("vencidas");
 	    
-	       
-	       //verificacion 
-	       assertTrue(vencidas.equals(listaVacunas));
-	        
-	    }
-
+	    //verificacion 
+	    assertTrue(vencidas.equals(listaVacunas));
+	}
 }
-
-
