@@ -277,7 +277,17 @@ public class ControladorAdminTest {
 		verify(this.servicioTipoDeUsuario).consultarRol(eq(tipoUno.getNombre()));
 		assertThat(modelo).containsKey("mensaje").containsValue("Usuario creado correctamente");
 	}
-	
+	@Test
+	public void cuandoSeEliminaUnUsuarioSeRedirigeAIndexAdmin() {
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		
+		when(this.servicioUsuario.consultarUsuarioPorId(usuario.getId())).thenReturn(usuario);
+		
+		ModelAndView modelAndV = this.controladorAdmin.eliminarUsuario(usuario.getId());
+		
+		assertThat(modelAndV.getViewName()).isEqualTo("redirect:/indexAdmin");
+	}
 	private HttpServletRequest configurarRolLogueado(String rol) {
 
 		HttpServletRequest pedido = mock(HttpServletRequest.class);
