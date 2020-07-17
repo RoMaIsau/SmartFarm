@@ -141,7 +141,7 @@ public class ControladorVeterinario{
 	public ModelAndView listaGanado() {
 	     
 	       
-             Date actual= new Date(2020,01,10);
+             Date actual= new Date();
              
              List<AnimalDeGranja> animales= servicioGanado.listar();
              HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
@@ -183,10 +183,42 @@ public class ControladorVeterinario{
       return new ModelAndView("HomeAnimal", modelo);
       }
 	
+	@RequestMapping("/signos")
+	public ModelAndView signosAnormales(@RequestParam(value="id", required=true) Long id) {
+	
+		
+		 ModelMap modelo= new ModelMap();
+		AnimalDeGranja gv= servicioGanado.ver(id);
+		
+	      HistoriaClinica historia= servicioGanado.verHC(gv);
+	      if(historia != null){
+	    
+	          
+	      
+	      List<SignosVitales> signos= servicioGanado.signos(historia);
+	      
+            
+             
+             if(signos.size()>0) {
+            	 int pos= signos.size();
+            	 int pos2=pos-1;
+             SignosVitales signo= signos.get(pos2);
+             modelo.put("signos",signo);
+           }
+	      }
+            
+           
+           
+             return new ModelAndView("HomeAnimal", modelo);}
+	
+	
 	@RequestMapping("/verEstadoSalud")
 	public ModelAndView verSalud(@RequestParam(value="id", required=true) Long id) {
 	
-		Boolean tratamiento= false;   
+		Boolean tratamiento= false; 
+		Enfermedad enfermedadA=null;
+		Enfermedad enfermedadB=null;
+		String nombreTratamiento="";
 		AnimalDeGranja gv= servicioGanado.ver(id);
 		List<Vacunar>aplicadas= new ArrayList<Vacunar>();
 		aplicadas= servicioVacuna.obtenerVacunasAplicadas(id);
@@ -198,10 +230,19 @@ public class ControladorVeterinario{
 		String alarma="";
 	      HistoriaClinica historia= servicioGanado.verHC(gv);
 	      if(historia != null){
-	      tratamiento= servicioGanado.alarmaTratamientoA(historia);}
+	      tratamiento= servicioGanado.alarmaTratamientoA(historia);
+	      enfermedadA=servicioGanado.tipoTratamientoA(historia);
+	      enfermedadB=servicioGanado.tipoTratamientoB(historia);}
 	      if(tratamiento == true) {
-	      alarma="Ya han pasado 4 dias desde que el animal "+ id + " ha comenzado su tratamiento. Se requiere un nuevo diagnostico";}
-             
+	      alarma="Se requiere un nuevo diagnosico para el animal "+ id ;}
+          
+	      if(enfermedadA != null) {
+		      nombreTratamiento=servicioGanado.tratamientoA(enfermedadA.getNombre());}
+	      
+	      if(enfermedadB != null) {
+		      nombreTratamiento=servicioGanado.tratamientoB(enfermedadB.getNombre());}
+	          
+	      
 	      List<SignosVitales> signos= servicioGanado.signos(historia);
 	      
              ModelMap modelo= new ModelMap();
@@ -210,10 +251,15 @@ public class ControladorVeterinario{
             	 int pos= signos.size();
             	 int pos2=pos-1;
              SignosVitales signo= signos.get(pos2);
-             modelo.put("signos",signo);
+            // modelo.put("signos",signo);
              modelo.put("alarmaTratamiento",alarma);
              modelo.put("idAnimalTratamiento",id);
              modelo.put("vacunas",vacunas);
+             modelo.put("nombreTratamiento",nombreTratamiento);
+             if(enfermedadA != null){
+             modelo.put("enfermedadA",enfermedadA.getNombre());}
+             if(enfermedadB != null) {
+             modelo.put("enfermedadB",enfermedadB.getNombre());}
              
             
            
@@ -275,12 +321,14 @@ public class ControladorVeterinario{
      AnimalDeGranja animal= servicioGanado.ver(id);
         hc = servicioGanado.verHC(animal);
        List<SignosVitales> signos= servicioGanado.signos(hc);
-       	
+       	List<Enfermedad>enfermedades= servicioGanado.enfermedadesComunes(hc);
 	       
                ModelMap modelo= new ModelMap();
              
                modelo.put("hc",hc);
                modelo.put("signos",signos);
+               if(enfermedades != null) {
+               modelo.put("enfermedades",enfermedades);}
              
             
              
@@ -457,7 +505,7 @@ public class ControladorVeterinario{
 	
 	
 	 Enfermedad enfermedad= servicioGanado.buscarEnfermedad(id) ;   
-	   Date actual= new Date(2020,06,07);
+	   Date actual= new Date();
 	   enfermedad.setId(id);
 	   
 	   enfermedad.setInicioTratamiento(actual);
@@ -480,7 +528,7 @@ public class ControladorVeterinario{
 	
 	
 	 Enfermedad enfermedad= servicioGanado.buscarEnfermedad(id) ;   
-	   Date actual= new Date(2020,06,07);   
+	   Date actual= new Date();   
 	   enfermedad.setInicioTratamiento(actual);
 	   enfermedad.setId(id);
 	   enfermedad.setTratamientoA("finalizado");
