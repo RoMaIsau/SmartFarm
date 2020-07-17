@@ -60,13 +60,18 @@
 					</div>		
 					</div>	
 					</div>	 
-</c:forEach><BR>
+</c:forEach>
 </div>
 </c:if>
+				    	 
+
+
+
+
 
 				<div class="container-fluid">
 					<c:if test="${not empty mostrarTabla}">
-						<h1 class="h3 mb-2 text-gray-800">Nuestros animales</h1>
+						<h1 class="h3 mb-3 text-gray-800">Animales</h1>
 						
 						<div class="card shadow mb-4 mt-2">
 							<div class="card-body">
@@ -88,19 +93,19 @@
 													<td>${a.id}</td>
 													<td>${a.tipo.nombre}</td>
 													<td>${a.raza.nombre}</td>
-													<td>
+													<td class="text-center">
 														<a href="verhistoria?id=${a.id}">
-															<i class="fas fa-medkit"></i>
+															<i class="fas fa-medkit fa-lg" style="color: #22A45A"></i>
 														</a>
 													</td>
-													<td>
+													<td class="text-center">
 														<a href="diagnosticar?id=${a.id}">
-															<i class="fas fa-user-md"></i>
+															<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>
 														</a>
 													</td>
-													<td>
+													<td class="text-center">
 														<a href="signosVitales?id=${a.id}">
-															<i class="fas fa-heartbeat"></i>
+															<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>
 														</a>
 													</td>
 												</tr>

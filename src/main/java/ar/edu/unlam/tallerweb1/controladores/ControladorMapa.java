@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.AnimalUbicacion;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.modelo.Ubicacion;
 import ar.edu.unlam.tallerweb1.modelo.UbicacionesCentrales;
 
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
@@ -26,7 +26,6 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
-//import ar.edu.unlam.tallerweb1.servicios.ServicioUbicacionesCentrales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
 @Controller
@@ -38,29 +37,28 @@ public class ControladorMapa {
 	private ServicioAnimalUbicacion servicioAnimalUbicacion;
 	private ServicioAlimento servicioAlimento;
 	private ServicioVacunas servicioVacunas;
+	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
 
 	@Autowired
 	public ControladorMapa(ServicioUbicacion servicioUbicacion, ServicioNotificacion servicioNotificacion,
 			ServicioDeAnimales servicioDeAnimales, ServicioAnimalUbicacion servicioAnimalUbicacion,
-			ServicioAlimento servicioAlimento, ServicioVacunas servicioVacunas) {
+			ServicioAlimento servicioAlimento, ServicioVacunas servicioVacunas, ServicioUbicacionesCentrales servicioUbicacionesCentrales) {
 		this.servicioUbicacion = servicioUbicacion;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAnimalUbicacion = servicioAnimalUbicacion;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioVacunas = servicioVacunas;
+		this.servicioUbicacionesCentrales = servicioUbicacionesCentrales;
 	}
 
-	@Inject
-	private ServicioUbicacionesCentrales servicioUbicacionesCentrales;
-
-	@RequestMapping("/mapa")
+	@RequestMapping(path = "/mapa")
 	public ModelAndView irAMapa(HttpServletRequest request, ModelMap model) {
 
 		String rol = (String) request.getSession().getAttribute("ROL");
 		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 
-		if (rol.equals(null)) {
+		if (rol == "") {
 			return new ModelAndView("redirect:/login");
 		}
 
@@ -75,12 +73,17 @@ public class ControladorMapa {
 	}
 
 	@RequestMapping(path = "/verAnimal")
-	public ModelAndView verAnimal(@RequestParam("id") Long idAnimal) {
+	public ModelAndView verAnimal(@RequestParam("id") Long idAnimal, @RequestParam("lon") Double lon, @RequestParam("lat") Double lat) {
 
 		ModelMap model = new ModelMap();
 
 		AnimalDeGranja animal = servicioDeAnimales.obtenerPorId(idAnimal);
-		AnimalUbicacion ubicacion = servicioAnimalUbicacion.obtenerUbicacionAnimal(idAnimal);
+		AnimalUbicacion ubicacion = new AnimalUbicacion();
+		ubicacion.setAnimal(animal);
+		Ubicacion ultimaUbicacion = new Ubicacion();
+		ultimaUbicacion.setLatitud(lat);
+		ultimaUbicacion.setLongitud(lon);
+		ubicacion.setUltimaUbicacion(ultimaUbicacion);
 		List<AnimalUbicacion> animalUbicacion = servicioAnimalUbicacion.obtenerPorIdAnimal(idAnimal);
 		List<Alimento> alimentos = servicioAlimento.listarAlimentosConsumidosPorAnimal(idAnimal);
 		List<Vacunar> vacunasAplicadas = servicioVacunas.obtenerVacunasAplicadas(idAnimal);

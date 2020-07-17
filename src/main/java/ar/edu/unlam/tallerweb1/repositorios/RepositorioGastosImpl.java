@@ -2,25 +2,18 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.Update;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.xdevapi.UpdateParams;
-
-import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.Gastos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -28,8 +21,12 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Transactional
 public class RepositorioGastosImpl implements RepositorioGastos {
 	
-	@Inject
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	public RepositorioGastosImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	
 	@Override
 	public List<Gastos> consultarGastos() {

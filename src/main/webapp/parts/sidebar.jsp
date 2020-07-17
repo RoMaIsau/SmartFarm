@@ -29,7 +29,7 @@
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
 				<a class="nav-link" href="${contextPath}/historiaClinica"><i
-					class="fab fa-sticker-mule"></i> <span>Historiales clínicos</span> </a>
+					class="fab fa-sticker-mule"></i> <span>Animales</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Empleado'}">
 				<a class="nav-link" href="${contextPath}/animales"><i
@@ -55,7 +55,7 @@
 			<li class="nav-item">
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/enfermedades">
-					<i class="fas fa-user"></i>
+					<i class="fas fa-chart-pie"></i>
 					<span>Historial de enfermedades</span>
 				</a>
 			</li>
@@ -87,7 +87,7 @@
 			<li class="nav-item">
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/listaGanado"> <i
-					class="fas fa-user"></i> <span>SALUD</span>
+					class="fas fa-medkit"></i> <span>Salud</span>
 				</a>
 			</li>
 		</c:when>
