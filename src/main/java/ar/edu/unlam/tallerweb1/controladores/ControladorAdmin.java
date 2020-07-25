@@ -1,13 +1,12 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,17 +27,19 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 @Controller
 public class ControladorAdmin {
 
-	@Inject
 	private ServicioUsuario servicioUsuario;
-
-	@Inject
 	private ServicioGastos servicioGastos;
-
-	@Inject
 	private ServicioTipoDeGasto servicioTipoDeGasto;
-
-	@Inject
 	private ServicioTipoDeUsuario servicioTipoDeUsuario;
+	
+	@Autowired
+	public ControladorAdmin(ServicioUsuario servicioUsuario, ServicioGastos servicioGastos,
+			ServicioTipoDeGasto servicioTipoDeGasto, ServicioTipoDeUsuario servicioTipoDeUsuario) {
+		this.servicioUsuario = servicioUsuario;
+		this.servicioGastos = servicioGastos;
+		this.servicioTipoDeGasto = servicioTipoDeGasto;
+		this.servicioTipoDeUsuario = servicioTipoDeUsuario;
+	}
 
 	/*
 	 * El path de indexAdmin redirecciona a la primera seccion del sidebar, Usuarios
@@ -74,12 +75,8 @@ public class ControladorAdmin {
 
 		List<Usuario> usuarios = servicioUsuario.listarUsuarios();
 
-		if (usuarios != null) {
-			model.put("usuarios", usuarios);
-		} else {
-			model.put("error", "No hay usuarios registrados");
-		}
-
+		model.put("usuarios", usuarios);
+	
 		return new ModelAndView("usuarios", model);
 	}
 
