@@ -157,32 +157,45 @@
  
  
  	
- 	<c:if test="${not empty signos}">
-			        
-		        
- 	
- <h3 class="text-info">SIGNOS VITALES ACTUALES</h3>
+					<c:if test="${not empty signos}">
+					
+					
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h1 mb-0 text-gray-800">SIGNOS VITALES ACTUALES</h1>
+						</div>
+	 																	
  
   
-  
-  <c:if test="${signos.temperatura gt 40.0}">
+				  	 
+				<div class="card-body border-left-primary shadow">
+				
+				
+ <div
+	class="font-weight-bold text-primary text-uppercase mb-1">
+	 			  <c:if test="${signos.temperatura gt 40.0}">
  <H3 class="text-danger"> Temperatura (°C): </H3><h2 class="text-danger"> ${signos.temperatura} </h2>
  </c:if>
  <c:if test="${signos.temperatura lt 40.0}">
  <H3>Temperatura (°C)</H3>
  <h3> ${signos.temperatura} </h3>
  </c:if>
- <H3>Frecuencia Cardiaca(lpm)</H3>
-  <h3> ${signos.frecuenciaCardiaca} </h3>
-  
-  <H3>Frecuencia Respiratoria (rpm)</H3>
-   <h3> ${signos.frecuenciaRespiratoria} </h3>
-   
-   <H3>Pulso </H3>
-    <h3> ${signos.pulso} </h3>
-    <br>
-    <a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
-    </c:if>	<br><br>
+							Pulso: <h3 class="text-danger">  ${signos.pulso}</h3>
+							Frecuencia cardiaca: <h3 class="text-danger">  ${signos.frecuenciaCardiaca}</h3>
+							Frecuencia respiratoria: <h3 class="text-danger">  ${signos.frecuenciaRespiratoria}</h3>	
+							Fecha: <h3 class="text-danger">  ${signos.fecha}</h3>
+					 	<br>
+					 	<a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
+					</div>
+					</div>
+					
+					
+						
+					</c:if>	<br>
+ 	
+			        
+		        
+ 	
+ 
     
 
     
