@@ -681,7 +681,7 @@ public class ControladorVeterinario{
 		Tratamiento t= servicioGanado.buscarTratamiento(nombre);
 		if(t != null) {
 		model.put("trat",t.getTratamiento());
-		model.put("descripcion",t.getDescripcion());}else {
+		model.put("descripcion",t.getNombre());}else {
 			model.put("trat","No se encuentra esa enfermedad");	
 		}
 		
@@ -757,6 +757,8 @@ public class ControladorVeterinario{
 		
         return new ModelAndView("signosVitales", modelo);
 	}
+	
+
 	
 	
 }
