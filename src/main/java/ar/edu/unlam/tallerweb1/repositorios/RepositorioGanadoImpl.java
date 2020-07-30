@@ -202,7 +202,7 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 	public Tratamiento verTratamiento(String nombre) {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Tratamiento) session.createCriteria(Tratamiento.class)
-				.add(Restrictions.eq("nombre", nombre))
+				.add(Restrictions.eq("descripcion", nombre))
 				
 				.uniqueResult();
 	}

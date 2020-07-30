@@ -201,6 +201,35 @@ public class ControladorVeterinario{
         return new ModelAndView("HomeAnimal", modelo);
     }
 	
+	@RequestMapping("/signos")
+	public ModelAndView signosAnormales(@RequestParam(value="id", required=true) Long id) {
+	
+		
+		 ModelMap modelo= new ModelMap();
+		AnimalDeGranja gv= servicioGanado.ver(id);
+		
+	      HistoriaClinica historia= servicioGanado.verHC(gv);
+	      if(historia != null){
+	    
+	          
+	      
+	      List<SignosVitales> signos= servicioGanado.signos(historia);
+	      
+            
+             
+             if(signos.size()>0) {
+            	 int pos= signos.size();
+            	 int pos2=pos-1;
+             SignosVitales signo= signos.get(pos2);
+             modelo.put("signos",signo);
+           }
+	      }
+            
+           
+           
+             return new ModelAndView("HomeAnimal", modelo);}
+	
+	
 	@RequestMapping("/verEstadoSalud")
 	public ModelAndView verSalud(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -208,7 +237,10 @@ public class ControladorVeterinario{
 			return new ModelAndView("redirect:/login");
 		}
 	
-		Boolean tratamiento= false;   
+		Boolean tratamiento= false; 
+		Enfermedad enfermedadA=null;
+		Enfermedad enfermedadB=null;
+		String nombreTratamiento="";
 		AnimalDeGranja gv= servicioGanado.ver(id);
 		List<Vacunar>aplicadas= new ArrayList<Vacunar>();
 		aplicadas= servicioVacuna.obtenerVacunasAplicadas(id);

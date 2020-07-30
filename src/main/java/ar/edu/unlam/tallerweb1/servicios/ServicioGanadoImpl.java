@@ -79,7 +79,8 @@ public class ServicioGanadoImpl implements ServicioGanado {
 		// TODO Auto-generated method stub
 		String enfermedad= "No hay suficientes sintomas de enfermedad";
 		
-		 Date signosDate= new Date(2018,01,01);
+		 Date Prueba= new Date(2020-01-01);
+		 Date signosDate= new Date();
 		 Date actual= new Date();
 		int signosFiebreAftosa = 0;
 		int signosLeptospirosis =0;
@@ -92,7 +93,7 @@ public class ServicioGanadoImpl implements ServicioGanado {
 	   int mes= actual.getMonth();
 	   int dia= actual.getDay();
 		int nuevoDia=(dia-7);	
-      signosDate=new Date(anio,mes,nuevoDia);
+      signosDate=new Date(anio-mes-nuevoDia);
 	    
 		}else if(sintomas.getTiempo().equals("Un mes")) {
 			
@@ -100,7 +101,7 @@ public class ServicioGanadoImpl implements ServicioGanado {
 			   int mes= actual.getMonth();
 			   int dia= actual.getDay();
 				int nuevomes=(mes-1);	
-		      signosDate=new Date(anio,nuevomes,dia);
+		      signosDate=new Date(anio-nuevomes-dia);
 			
 		}else if(sintomas.getTiempo().equals("Un año")) {
 			
@@ -108,7 +109,7 @@ public class ServicioGanadoImpl implements ServicioGanado {
 			   int mes= actual.getMonth();
 			   int dia= actual.getDay();
 				int nuevoanio=(anio-1);	
-		      signosDate=new Date(nuevoanio,mes,dia);
+		      signosDate=new Date(nuevoanio-mes-dia);
 			
 		}
 	   
@@ -116,28 +117,29 @@ public class ServicioGanadoImpl implements ServicioGanado {
 		for(SignosVitales sv: signos) {
 			
 		
-		if(sv.getTemperatura()> 40.0 && (sv.getFecha().compareTo(signosDate) < 0)) {
+		if(sv.getTemperatura()> 40.0 && (sv.getFecha().after(Prueba))) {
 			
 			signosFiebreAftosa+=1;
+			
 		}
 		
-		if(sv.getTemperatura()> 39.0 && (sv.getFecha().compareTo(signosDate) < 0)&& sv.getFrecuenciaCardiaca()> 70.0) {
+		if(sv.getTemperatura()> 39.0 && (sv.getFecha().after(Prueba))&& sv.getFrecuenciaCardiaca()> 70.0) {
 		
 			signosLeptospirosis+=1;
 	} 
-		if((sv.getTemperatura()> 39.0 && (sv.getFecha().compareTo(signosDate) < 0) && sv.getFrecuenciaCardiaca()< 60.0)) {
+		if((sv.getTemperatura()> 39.0 && (sv.getFecha().after(Prueba)) && sv.getFrecuenciaCardiaca()< 60.0)) {
 		
 		signosIntoxicacion+=1;
 		
 	
    } 
-		if((sv.getFecha().compareTo(signosDate) < 0) && sv.getFrecuenciaCardiaca()< 60.0) {
+		if((sv.getFecha().after(Prueba)) && sv.getFrecuenciaCardiaca()< 60.0) {
 			
 			signosMiocardiopatia+=1;
 			
 		
 	   }
-	if(sv.getFecha().after(signosDate)&& sv.getFrecuenciaRespiratoria()> 40.0 && sv.getTemperatura()> 39.0) {
+	if(sv.getFecha().after(Prueba)&& sv.getFrecuenciaRespiratoria()> 40.0 && sv.getTemperatura()> 39.0) {
 			
 			signosIBR+=1;
 			
@@ -289,22 +291,53 @@ public boolean alarmaTratamientoA(HistoriaClinica historia) {
 	// TODO Auto-generated method stub
 	List<Enfermedad>enfermedades=servicioGanadoDao.enfermedadesComunes(historia);
 	Enfermedad enfermedad=null;
+	
 	for(Enfermedad e: enfermedades) {
 		if(e.getFinTratamiento()== null && e.getInicioTratamiento() != null) {
-			 enfermedad=e;
+			
+			enfermedad=e;
 		}
-	}
-	Date actual= new Date(2020,07,10);
-	int dia=actual.getDay()-4;
-	int anio=actual.getYear();
-	int mes=actual.getMonth();
-	Date compare=new Date(anio,mes,dia);
+		
 	
-	if(enfermedad != null &&(compare.after(enfermedad.getInicioTratamiento()))){
+	}
+	
+	
+	Date actual= new Date();
+	int dia=(actual.getDay()-4);
+	int mes= actual.getMonth();
+	int anio= actual.getYear();
+	
+	Date prueba=new Date(anio-mes-dia);
+	//(Hacer de cuenta q pasaron cuatro dias):
+	if(enfermedad != null &&(prueba.before(enfermedad.getInicioTratamiento()))){
 		return true;
 	}else {
 		return false;
 	}
+	
+}
+
+@Override
+public Enfermedad tipoTratamientoA(HistoriaClinica historia) {
+	// TODO Auto-generated method stub
+	List<Enfermedad>enfermedades=servicioGanadoDao.enfermedadesComunes(historia);
+	
+	Enfermedad A= null;
+	
+	for(Enfermedad e: enfermedades) {
+		
+  if(e.getTratamientoA() != null && e.getTratamientoA().equals("Iniciado")) {
+			
+			A=e;
+		}
+
+	
+	}
+	
+
+	
+		return A;
+	
 	
 }
 
@@ -347,6 +380,28 @@ public HistoriaClinica verHC(Long id) {
 public Tratamiento buscarTratamiento(String nombre) {
 	// TODO Auto-generated method stub
 	return servicioGanadoDao.verTratamiento(nombre);
+}
+
+@Override
+public Enfermedad tipoTratamientoB(HistoriaClinica historia) {
+	List<Enfermedad>enfermedades=servicioGanadoDao.enfermedadesComunes(historia);
+	
+	Enfermedad B= null;
+	
+	for(Enfermedad e: enfermedades) {
+		
+if(e.getTratamientoB() != null && e.getTratamientoB().equals("Iniciado")) {
+			
+			B=e;
+		}
+
+	
+	}
+	
+
+	
+		return B;
+	
 }
 
 }
