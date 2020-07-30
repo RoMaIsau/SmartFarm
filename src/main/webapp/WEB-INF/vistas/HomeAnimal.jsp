@@ -27,29 +27,59 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 	<body>
+	<div class="container-fluid mt-3">	
   <c:forEach items="${anormales}" var="a">
-  
-				    <h3 class="text-danger">"Chequee salud del animal ${a.id}!!!!</h3>
+  	   <div class="alert alert-warning" role="alert">	 
+			<strong>
+				   ¡¡Signos vitales anormales en el animal ${a.id}!!!</strong>
 						
-					<h4 class="text-danger">Signos vitales anormales...</h4><br>								 
+					
+					<a href="signos?id=${a.id}"> <i class="	fas fa-heartbeat"></i></a>	</div>							 
 </c:forEach>
-	
-	<div class = "container">
-			<div id="" style="margin-top:30px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">	       
-	<div class="row">
-       
-  <c:forEach items="${animales}" var="animal">
-  
-		 <div class="col-md-6">		    	 
-				  <h3 class="text-primary">"Animal numero  ${animal.id}"</h3>
-				   <h4><a href="verEstadoSalud?id=${animal.id}">VER SALUD ACTUAL</a></h4>
-					</div> 	
-							
-					 </br>		
-							
-							 
-</c:forEach>
-</div> 	
+</div>	
+	<c:if test="${not empty alarmaTratamiento}">
+	<div class="alert alert-warning" role="alert">	 
+			<strong>
+    	<h3 class="text-danger"> ${alarmaTratamiento} </h3>
+    <a href="nuevoDiagnostico?id=${idAnimalTratamiento}"> NUEVO DIAGNOSTICO <i class="fas fa-user-md"></i> </a><br>
+  	</strong>
+  	</c:if>
+	<div class="container-fluid">
+					<c:if test="${not empty animales}">
+						
+						
+						<div class="card shadow mb-4 mt-2">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+												<th>ID Animal</th>
+												
+												<th>SALUD ACTUAL</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${animales}" var="a">
+												<tr>
+													<td>${a.id}</td>
+													
+													<td>
+														<a href="verEstadoSalud?id=${a.id}">
+															<i class="	fas fa-plus-square"></i>
+														</a>
+													</td>
+												
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</c:if>
+
 
 
   <c:forEach items="${signos2}" var="a">
@@ -64,57 +94,112 @@
 </div>
 </div>	
 
-
-
- 
- 
- 	
- 	<c:if test="${not empty signos}">
-			        
-		        
- 	
- <h3 class="text-info">"SIGNOS VITALES ACTUALES"</h3>
- 
-  
-  
-  <c:if test="${signos.temperatura gt 40.0}">
- <H3 class="text-danger"> Temperatura (°C): </H3><h2 class="text-danger"> ${signos.temperatura} </h2>
- </c:if>
- <c:if test="${signos.temperatura lt 40.0}">
- <H3>Temperatura (°C)</H3>
- <h3> ${signos.temperatura} </h3>
- </c:if>
- <H3>Frecuencia Cardiaca(lpm)</H3>
-  <h3> ${signos.frecuenciaCardiaca} </h3>
-  
-  <H3>Frecuencia Respiratoria (rpm)</H3>
-   <h3> ${signos.frecuenciaRespiratoria} </h3>
-   
-   <H3>Pulso </H3>
-    <h3> ${signos.pulso} </h3>
-    <br>
-    <a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
-    </c:if>	<br><br>
-    
-    <c:if test="${not empty vacunas}">
+<div class="container-fluid">
+					<c:if test="${not empty idAnimalTratamiento}">
+						
+						
+						<div class="card shadow mb-4 mt-2">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+												<th>ID Animal</th>
+												
+												<th>VACUNAS APLICADAS</th>
+												
+												<th>ENFERMEDAD ACTUAL</th>
+												
+												<th>TRATAMIENTO EN CURSO</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td>${idAnimalTratamiento}</td>
+													
+													<td>
+														    <c:if test="${not empty vacunas}">
 			        
 		     
  	
- <h3 class="text-info">"VACUNAS APLICADAS"</h3>
+
    <c:forEach items="${vacunas}" var="vac">
   
-				    <h3 class="text-danger"> ${vac.nombre}</h3><BR>
+				    <h5 class="text-primary"> ${vac.nombre}</h5><BR>
 				  	
 													 
 </c:forEach>
   
  
     </c:if>	
+													</td>
+												<td>
+												<c:if test="${not empty enfermedadA}">${enfermedadA}</c:if>
+												<c:if test="${not empty enfermedadB}">${enfermedadB}</c:if>
+												
+												</td>
+											<td><c:if test="${not empty nombreTratamiento}">${nombreTratamiento}</c:if>
+											<c:if test="${empty nombreTratamiento}">NO</c:if>
+											</td>
+												</tr>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</c:if>
+
+
+
+ 
+ 
+ 	
+					<c:if test="${not empty signos}">
+					
+					
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h1 mb-0 text-gray-800">SIGNOS VITALES ACTUALES</h1>
+						</div>
+	 																	
+ 
+  
+				  	 
+				<div class="card-body border-left-primary shadow">
+				
+				
+ <div
+	class="font-weight-bold text-primary text-uppercase mb-1">
+	 			  <c:if test="${signos.temperatura gt 40.0}">
+ <H3 class="text-danger"> Temperatura (°C): </H3><h2 class="text-danger"> ${signos.temperatura} </h2>
+ </c:if>
+ <c:if test="${signos.temperatura lt 40.0}">
+ <H3>Temperatura (°C)</H3>
+ <h3> ${signos.temperatura} </h3>
+ </c:if>
+							Pulso: <h3 class="text-danger">  ${signos.pulso}</h3>
+							Frecuencia cardiaca: <h3 class="text-danger">  ${signos.frecuenciaCardiaca}</h3>
+							Frecuencia respiratoria: <h3 class="text-danger">  ${signos.frecuenciaRespiratoria}</h3>	
+							Fecha: <h3 class="text-danger">  ${signos.fecha}</h3>
+					 	<br>
+					 	<a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
+					</div>
+					</div>
+					
+					
+						
+					</c:if>	<br>
+ 	
+			        
+		        
+ 	
+ 
     
-    	<c:if test="${not empty alarmaTratamiento}">
-    	<h3> ${alarmaTratamiento} </h3>
-    <a href="nuevoDiagnostico?id=${idAnimalTratamiento}"> NUEVO DIAGNOSTICO </a><br>
-  	</c:if>	<br>
+
+    
+    	<br>
   	
 							
 					 

@@ -25,29 +25,47 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				
+	<div class="container-fluid mt-3">			
   <c:forEach items="${vencidos}" var="v">
   
-				    	 
-				  <h3 class="text-danger">"El animal  ${v.id} tiene vacunas vencidas"
-						<a class="text-primary" href="detalle?id=${v.id}">Ver</a><br>	
-					</h3>
+				   <div class="alert alert-warning" role="alert">	 
+			<strong>	  El animal  ${v.id} tiene vacunas vencidas
+						<a class="text-primary" href="detalle?id=${v.id}"> <i class="fas fa-briefcase-medical"></i></a></strong><br>	
+					</div>
 					 </br>		
 					
 							 
 </c:forEach><br>
+</div>
 
-
-
+<c:if test="${not empty vencidas}">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h3 mb-0 text-gray-800">Vacunas vencidas</h1>
+						</div>
+							
+							
+									
+										
+	<div class="row no-gutters align-items-center">											
  <c:forEach items="${vencidas}" var="v">
   
-				    	 
-				  <h3 class="text-danger">"Vacunas vencidas: ${v.nombre}"
-							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}">Vacunar</a><br>
-					</h3>	
-							
-							 
+				   <div class="col-md-6 mr-2"> 	 
+				<div class="card-body border-left-primary shadow">
+				
+				
+ <div
+	class="font-weight-bold text-primary text-uppercase mb-1"> ${v.nombre}
+							<a href="vacunar?id=${vacaId}&nombre=${v.nombre}"><i class="fas fa-syringe"></i></a>
+					 		
+					</div>		
+					</div>	
+					</div>	 
 </c:forEach>
+</div>
+</c:if>
+				    	 
+
+
 
 
 
@@ -125,12 +143,49 @@
 					<a class="text-danger" href="finTratamiento?id=${e1Id}">Finalizar tratamiento</a>
 					
 					</c:if>
+					<c:if test="${not empty enfermedades}">
+
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h1 mb-0 text-gray-800">ENFERMEDADES</h1>
+						</div>
+	 						<div class="row no-gutters align-items-center">											
+ <c:forEach items="${enfermedades}" var="s">
+  
+				   <div class="col-md-6"> 	 
+				<div class="card-body border-left-primary shadow">
+				
+				
+ <div
+	class="font-weight-bold text-primary text-uppercase mb-1">
+	 						
+  				<h4 class="text-dark">  ${s.nombre}</h4>
+							Fecha: <h3 class="text-success">  ${s.fecha}</h3>
+							
+					 	<br>
+					</div>
+					</div>
+					</div>
+						</c:forEach><br><br>
+					</div>
 					
+					</c:if>	<br><br>
+				
 					<c:if test="${not empty hc}">
-	 					<h3>Historia Clinica:</h3><br>	
-	 						<div class="row">       
-  						<c:forEach items="${signos}" var="s">
-  						 <div class="col-md-6">	
+					
+					
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h1 mb-0 text-gray-800">SIGNOS VITALES</h1>
+						</div>
+	 						<div class="row no-gutters align-items-center">											
+ <c:forEach items="${signos}" var="s">
+  
+				   <div class="col-md-6"> 	 
+				<div class="card-body border-left-primary shadow">
+				
+				
+ <div
+	class="font-weight-bold text-primary text-uppercase mb-1">
+	 						
   				<h4 class="text-primary">Temperatura:</h4><h3 class="text-danger">  ${s.temperatura}</h3>
 							Pulso: <h3 class="text-danger">  ${s.pulso}</h3>
 							Frecuencia cardiaca: <h3 class="text-danger">  ${s.frecuenciaCardiaca}</h3>
@@ -138,9 +193,16 @@
 							Fecha: <h3 class="text-danger">  ${s.fecha}</h3>
 					 	<br>
 					</div>
+					</div>
+					</div>
 						</c:forEach><br><br>
-					</div>	
+					</div>
+					
+						
 					</c:if>	<br>
+					
+
+					
 					<h3 class="text-info">${mensaje}</h3><br>
 					
 					

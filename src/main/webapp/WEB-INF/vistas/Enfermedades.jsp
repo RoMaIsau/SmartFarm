@@ -38,8 +38,9 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+				<div class="container-fluid">
 					<div class="row">
-						<c:if test="${not empty tratamiento}">
+						
 							<div class="col-md-4 col-xl-4">
 								<h5>Buscar tratamientos</h5>
 								<form id="formBuscar" action="buscarEnfermedad" method="post"
@@ -48,14 +49,49 @@
 										placeholder="Ingrese enfermedad">
 									<button type="submit" id="buscar" class="btn btn-primary text-white">Buscar</button>
 								</form>
-								<br>
+								</div>
+								</div>
+								</div>
+								<br><br><br>
+								<c:if test="${not empty trat}">
 								<div id="busqueda" class="">
-									<h2>${descripcion}</h2>
-									<h2>${trat}</h2>
+								<div class="container-fluid">
+					
+						<div class="card shadow mb-4 mt-2">
+							<div class="card-body">
+								<div class="">
+									<table class="table table-bordered" id="" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+												<th>Tratamiento</th>
+												
+												<th>Dosis</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td>${descripcion}</td>
+													
+													<td>
+														${trat}
+													</td>
+												
+												</tr>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					
+								
+									
 								</div>
 							</div>
 						</c:if>
-					</div>
+					
 					<c:if test="${empty trat}">
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4">
