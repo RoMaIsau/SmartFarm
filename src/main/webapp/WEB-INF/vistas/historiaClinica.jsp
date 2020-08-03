@@ -60,67 +60,6 @@
 				
 				
 				<div class="container-fluid">
-					<c:if test="${not empty mostrarTabla}">
-						<h1 class="h3 mb-3 text-gray-800">Animales</h1>
-						
-						<div class="card shadow mb-4 mt-2">
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-											<tr>
-												<th>ID Animal</th>
-												<th>Tipo de animal</th>
-												<th>Raza</th>
-												<th>Ver historial</th>
-												<th>Diagnosticar</th>
-												<th>Signos vitales</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${animales}" var="a">
-												<tr>
-													<td>${a.id}</td>
-													<td>${a.tipo.nombre}</td>
-													<td>${a.raza.nombre}</td>
-													<td class="text-center">
-														<a href="verhistoria?id=${a.id}">
-															<i class="fas fa-medkit fa-lg" style="color: #22A45A"></i>
-														</a>
-													</td>
-													<td class="text-center">
-														<a href="diagnosticar?id=${a.id}">
-															<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>
-														</a>
-													</td>
-													<td class="text-center">
-														<a href="signosVitales?id=${a.id}">
-															<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>
-														</a>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</c:if>
-					
-					<h3 class="text-info">${enfermedad}</h3><br>
-					<c:if test="${not empty hcId}">
-						<c:if test="${empty tratamientoB}">
-							<a class="text-danger" href="guardarEnfermedad?id=${hcId}&&nombre=${nombre}&&tratamiento=${tratamiento}">Guardar enfermedad</a>
-						</c:if>
-					</c:if>
-					
-					<c:if test="${not empty guardada}">
-						<h3 class="text-info">${guardada}</h3><br>
-						<c:if test="${not empty tratamiento}">
-							<h3 class="text-info">${tratamiento}</h3>
-							<a class="text-danger" href="tratamientoA?id=${e1Id}">Comenzar tratamiento</a>
-						</c:if>
-					</c:if>
 					
 					<c:if test="${not empty tratamientoB}">
 						<h3 class="text-info">${tratamientoB}</h3>

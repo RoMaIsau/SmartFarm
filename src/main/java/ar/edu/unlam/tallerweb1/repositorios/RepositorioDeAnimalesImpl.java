@@ -23,21 +23,11 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	}
 
 	@Override
-	public void guardar(AnimalDeGranja animal) {		
+	public void guardar(AnimalDeGranja animal, SignosVitales sv, HistoriaClinica hc) {		
 		this.sessionFactory.getCurrentSession().save(animal);
 		
-		HistoriaClinica hc = new HistoriaClinica();
-		hc.setAnimal(animal);
 		this.sessionFactory.getCurrentSession().save(hc);
 		
-		SignosVitales sv = new SignosVitales();
-		Date fecha = new Date();
-		sv.setFecha(fecha);
-		sv.setFrecuenciaCardiaca(80.0);
-		sv.setFrecuenciaRespiratoria(25.0);
-		sv.setPulso(80.0);
-		sv.setTemperatura(37.0);
-		sv.setHistoria(hc);
 		this.sessionFactory.getCurrentSession().save(sv);
 	}
 

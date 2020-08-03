@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
@@ -60,8 +63,19 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void registrar(AnimalDeGranja animal) {
-
-		this.repositorioDeAnimales.guardar(animal);
+		HistoriaClinica hc = new HistoriaClinica();
+		hc.setAnimal(animal);
+		
+		SignosVitales sv = new SignosVitales();
+		Date fecha = new Date();
+		sv.setFecha(fecha);
+		sv.setFrecuenciaCardiaca(80.0);
+		sv.setFrecuenciaRespiratoria(25.0);
+		sv.setPulso(80.0);
+		sv.setTemperatura(37.0);
+		sv.setHistoria(hc);
+		
+		this.repositorioDeAnimales.guardar(animal, sv, hc);
 		this.servicioPlanAlimentario.crearPlan(animal);
 	}
 

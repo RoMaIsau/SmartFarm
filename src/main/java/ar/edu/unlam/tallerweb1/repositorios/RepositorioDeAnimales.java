@@ -3,10 +3,12 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 
 public interface RepositorioDeAnimales {
 	
-	void guardar(AnimalDeGranja animal);
+	void guardar(AnimalDeGranja animal, SignosVitales sv, HistoriaClinica hc);
 
 	List<AnimalDeGranja> listar();
 

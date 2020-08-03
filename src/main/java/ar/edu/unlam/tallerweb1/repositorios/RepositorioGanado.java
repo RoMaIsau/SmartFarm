@@ -51,6 +51,9 @@ public interface RepositorioGanado {
 
 	Tratamiento verTratamiento(String nombre);
 
+	void generarNuevosSignosVitales(SignosVitales sv);
+
+
 	
 	
 

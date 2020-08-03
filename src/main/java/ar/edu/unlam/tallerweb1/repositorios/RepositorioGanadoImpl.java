@@ -183,7 +183,6 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 
 	@Override
 	public void updateEnfermedad(Enfermedad e) {
-		// TODO Auto-generated method stub
 		final Session session = sessionFactory.getCurrentSession();
 		session.update(e);
 		
@@ -206,7 +205,13 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 				
 				.uniqueResult();
 	}
-
+	
+	@Override
+	public void generarNuevosSignosVitales(SignosVitales sv) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(sv);
+	}
+	
 	
 
 

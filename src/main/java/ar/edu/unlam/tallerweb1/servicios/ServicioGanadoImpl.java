@@ -78,22 +78,22 @@ public class ServicioGanadoImpl implements ServicioGanado {
 	public String diagnosticar(List<SignosVitales>signos,Sintomas sintomas) {
 		String enfermedad = "No hay suficientes sintomas de enfermedad";
 		
-		if(sintomas.isAnorexia() == true && sintomas.isSalivacionEspumosa() == true) {
+		if(sintomas.isAnorexia() == true && sintomas.isSalivacionEspumosa() == true && sintomas.isTemperaturaElevada() == true) {
 			enfermedad = "Fiebre Aftosa";
 		}
-		if(sintomas.isAnorexia() == true && sintomas.isDebilidad() == true && sintomas.isSecrecionNasal() == true) {
+		if(sintomas.isAnorexia() == true && sintomas.isDebilidad() == true && sintomas.isSecrecionNasal() == true && sintomas.isTemperaturaElevada() == true) {
 			enfermedad = "Leptospirosis";
 		}
 		if(sintomas.isUlceras() == true && sintomas.isDebilidad() == true && sintomas.isTos() == true) {
 			enfermedad = "Miocardiopatia congenita";
 		}
 		if(sintomas.isAnorexia() == true && sintomas.isBajaProduccionLeche() == true
-		   && sintomas.isSecrecionNasal() == true && sintomas.isConjuntivitis() == true) {
+		   && sintomas.isSecrecionNasal() == true && sintomas.isConjuntivitis() == true && sintomas.isTemperaturaElevada() == true) {
 			enfermedad = "Rinotraqueitis infecciosa";
 		}
 		if(sintomas.isUlceras() == true && sintomas.isAnorexia() == true && sintomas.isDebilidad() == true
 		   && sintomas.isSalivacionEspumosa() == true && sintomas.isBajaProduccionLeche() == true && sintomas.isDiarrea() == true
-		   && sintomas.isConjuntivitis() == true && sintomas.isTos() == true && sintomas.isSecrecionNasal() == true) {
+		   && sintomas.isConjuntivitis() == true && sintomas.isTos() == true && sintomas.isSecrecionNasal() == true && sintomas.isTemperaturaElevada() == true) {
 			enfermedad = "Intoxicacion por consumo de plantas toxicas";
 		}
 		
@@ -208,14 +208,13 @@ public Enfermedad buscarEnfermedad(Long id) {
 	
 	return servicioGanadoDao.buscarEnfermedad(id);
 }
-
-@Override
-public void updateEnfermedad(Enfermedad e) {
-	// TODO Auto-generated method stub
 	
-	servicioGanadoDao.updateEnfermedad(e);
-	
-}
+	@Override
+	public void updateEnfermedad(Enfermedad e) {
+		
+		servicioGanadoDao.updateEnfermedad(e);
+		
+	}
 
 @Override
 public boolean alarmaTratamientoA(HistoriaClinica historia) {
@@ -334,5 +333,47 @@ if(e.getTratamientoB() != null && e.getTratamientoB().equals("Iniciado")) {
 		return B;
 	
 }
-
+	
+	@Override
+	public void generarNuevosSignosVitales(HistoriaClinica historia, String nombre) {
+		SignosVitales sv = new SignosVitales();
+		sv.setFecha(new Date());
+		sv.setHistoria(historia);
+		
+		switch(nombre) {
+		case "Fiebre Aftosa":
+			sv.setFrecuenciaCardiaca(95.0);
+			sv.setFrecuenciaRespiratoria(35.0);
+			sv.setPulso(95.0);
+			sv.setTemperatura(48.0);
+			break;
+		case "Leptospirosis":
+			sv.setFrecuenciaCardiaca(80.0);
+			sv.setFrecuenciaRespiratoria(25.0);
+			sv.setPulso(80.0);
+			sv.setTemperatura(48.0);
+			break;
+		case "Miocardiopatia congenita":
+			sv.setFrecuenciaCardiaca(95.0);
+			sv.setFrecuenciaRespiratoria(35.0);
+			sv.setPulso(95.0);
+			sv.setTemperatura(37.0);
+			break;
+		case "Rinotraqueitis infecciosa":
+			sv.setFrecuenciaCardiaca(80.0);
+			sv.setFrecuenciaRespiratoria(35.0);
+			sv.setPulso(80.0);
+			sv.setTemperatura(48.0);
+			break;
+		case "Intoxicacion por consumo de plantas toxicas":
+			sv.setFrecuenciaCardiaca(95.0);
+			sv.setFrecuenciaRespiratoria(35.0);
+			sv.setPulso(95.0);
+			sv.setTemperatura(48.0);
+			break;
+		}
+		
+		servicioGanadoDao.generarNuevosSignosVitales(sv);
+	}
+	
 }

@@ -28,7 +28,7 @@
 					class="fas fa-user"></i> <span>Usuarios/as</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Veterinario'}">
-				<a class="nav-link" href="${contextPath}/historiaClinica"><i
+				<a class="nav-link" href="${contextPath}/indexVeterinario"><i
 					class="fab fa-sticker-mule"></i> <span>Animales</span> </a>
 			</c:when>
 			<c:when test="${ROL == 'Empleado'}">
@@ -80,6 +80,14 @@
 				<hr class="sidebar-divider">
 				<a class="nav-link" href="${contextPath}/estadisticas"> <i
 					class="fas fa-chart-pie"></i> <span>Estad�sticas</span>
+				</a>
+			</li>
+		</c:when>
+		<c:when test="${ROL == 'Veterinario'}">
+			<li class="nav-item">
+				<hr class="sidebar-divider">
+				<a class="nav-link" href="${contextPath}/listaGanado">
+					<i class="fas fa-chart-pie"></i> <span>Salud</span>
 				</a>
 			</li>
 		</c:when>

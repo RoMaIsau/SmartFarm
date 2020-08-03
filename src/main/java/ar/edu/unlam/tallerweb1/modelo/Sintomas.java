@@ -38,6 +38,8 @@ public class Sintomas {
     
     private boolean secrecionNasal;
     
+    private boolean temperaturaElevada;
+    
     private String tiempo;
     
     private Date fechaSignosVitales;
@@ -55,6 +57,14 @@ public class Sintomas {
 	
 
 	
+
+	public boolean isTemperaturaElevada() {
+		return temperaturaElevada;
+	}
+
+	public void setTemperaturaElevada(boolean temperaturaElevada) {
+		this.temperaturaElevada = temperaturaElevada;
+	}
 
 	public boolean isUlceras() {
 		return Ulceras;

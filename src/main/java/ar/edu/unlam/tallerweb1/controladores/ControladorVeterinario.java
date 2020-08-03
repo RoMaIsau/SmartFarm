@@ -1,13 +1,10 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,15 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
@@ -34,10 +28,8 @@ import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
-
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
-
 
 @Controller
 public class ControladorVeterinario{
@@ -72,41 +64,61 @@ public class ControladorVeterinario{
 	public void setServicioGanado(ServicioGanado servicioGanado) {
 		this.servicioGanado = servicioGanado;
 	}
+
+	@RequestMapping("/indexVeterinario")
+ 	public ModelAndView veterinarioIndex(HttpServletRequest request) {
+  		String rol = (String) request.getSession().getAttribute("ROL");
+		if (!rol.equals("Veterinario") || rol == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		
+		List<AnimalDeGranja> animales= servicioGanado.listar();
+        HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
+		
+		for(AnimalDeGranja animal : animales) {
+			animalesNoRepetidos.add(animal);
+		}
+		
+		HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
+   	    for(AnimalDeGranja v: animalesNoRepetidos) {
+			   List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
+			   if(!vencidas.isEmpty()){
+				   animalesVencidos.add(v);
+				}
+		}
+   	    
+		ModelMap modelo= new ModelMap();
+        modelo.put("vencidos",animalesVencidos);
+    	modelo.put("animales",animalesNoRepetidos);
+    	modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		return new ModelAndView("veterinarioIndex", modelo);
+	}
 	
-	
-	@RequestMapping(path = "/indexVeterinario")
+	/*@RequestMapping(path = "/indexVeterinario")
 	public ModelAndView irAIndexVeterinario(HttpServletRequest request){
   		String rol = (String) request.getSession().getAttribute("ROL");
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
 		
-		ModelMap model = new ModelMap();
-		model.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		ModelMap modelo = new ModelMap();
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
-		if(rol.equals("Veterinario")) {
-			List<AnimalDeGranja> animales= servicioGanado.listar();
-			HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
-			
-	        for(AnimalDeGranja v: animales) {
-	        	List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
-	        	
-	        	if(!vencidas.isEmpty()){
-	        		animalesVencidos.add(v);
-	        	}
+		List<AnimalDeGranja> animales= servicioGanado.listar();
+		HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
+		
+	    for(AnimalDeGranja v: animales) {
+	    	List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
+	        if(!vencidas.isEmpty()){
+	        	animalesVencidos.add(v);
 	        }
-	        
-	        ModelMap modelo= new ModelMap();
-	        modelo.put("vencidos",animalesVencidos);
-	        modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-	        
-	        return new ModelAndView("redirect:/historiaClinica",modelo);
-		} else if(!rol.equals("Veterinario")) {
-            return new ModelAndView("redirect:/historiaClinica", model);
-		} else {
-			return new ModelAndView("redirect:/login");
-		}
-	}
+	    }
+	    
+	    modelo.put("vencidos",animalesVencidos);
+	    modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+	    
+	    return new ModelAndView("redirect:/historiaClinica",modelo);
+	}*/
 	
 	@RequestMapping("/detalle")
 	public ModelAndView vacunar(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
@@ -165,12 +177,12 @@ public class ControladorVeterinario{
 		for(AnimalDeGranja animal : animales) {
         	 animalesNoRepetidos.add(animal);
         }
-		  
+		
 		List< SignosVitales> signosAnormales= new ArrayList<SignosVitales>();
   	    HashSet< AnimalDeGranja> vacasAnormales= new HashSet<AnimalDeGranja>();
   	 	List<SignosVitales> signos1= new ArrayList<SignosVitales>(); 
   	 	SignosVitales signos2= new SignosVitales();
-			 
+  	 	
 		for(AnimalDeGranja v: animalesNoRepetidos) {
 			HistoriaClinica hc= servicioGanado.verHC(v);
 			  
@@ -273,8 +285,8 @@ public class ControladorVeterinario{
             modelo.put("signos",signo);
             modelo.put("alarmaTratamiento",alarma);
             modelo.put("idAnimalTratamiento",id);
-            modelo.put("vacunas",vacunas);/*
-			modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));*/
+            modelo.put("vacunas",vacunas);
+			modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 
 			return new ModelAndView("HomeAnimal", modelo);
 		} else {
@@ -282,13 +294,14 @@ public class ControladorVeterinario{
 		}
 	}
 	
+	/* ================================================================================ */
 	@RequestMapping("/historiaClinica")
  	public ModelAndView verHistoria(HttpServletRequest request) {
   		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
-
+		
 		List<AnimalDeGranja> animales= servicioGanado.listar();
         HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
 		
@@ -297,15 +310,14 @@ public class ControladorVeterinario{
 		}
 		
 		HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
-
+		
    	    for(AnimalDeGranja v: animalesNoRepetidos) {
-			   List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
-				
-			   if(!vencidas.isEmpty()){
-				   animalesVencidos.add(v);
-				}
+   	    	List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
+   	    	if(!vencidas.isEmpty()){
+   	    		animalesVencidos.add(v);
+   	    	}
 		}
-
+   	    
 		ModelMap modelo= new ModelMap();
         modelo.put("vencidos",animalesVencidos);
     	modelo.put("animales",animalesNoRepetidos);
@@ -334,35 +346,7 @@ public class ControladorVeterinario{
    		
    		return new ModelAndView("historiaClinica", modelo);
    	}
-   	
-   	@RequestMapping("/diagnosticarPost")
-	public ModelAndView diagnostico(HttpServletRequest request, @ModelAttribute("sintomas") Sintomas sintomas){
-  		String rol = (String) request.getSession().getAttribute("ROL");
-  		if (!rol.equals("Veterinario") || rol == null) {
-			return new ModelAndView("redirect:/login");
-		}
-  		
-   		HistoriaClinica hc= new HistoriaClinica();
-   		AnimalDeGranja animal= servicioGanado.ver(sintomas.getIdAnimal());
-   		hc = servicioGanado.verHC(animal);
-   		List<SignosVitales>signos= servicioGanado.signos(hc);
-   		String enfermedad= servicioGanado.diagnosticar(signos,sintomas);
-   		
-   		String diagnostico="El animal podria tener "+ enfermedad;
-   		Enfermedad enfermedad1= new Enfermedad();
-   		enfermedad1.setHistoria(hc);
-   		enfermedad1.setNombre(enfermedad);
-   		Date actual= new Date();
-   		enfermedad1.setFecha(actual);
-   		servicioGanado.guardarEnfermedad(enfermedad1);
-   		
-   		ModelMap modelo= new ModelMap();
-   		modelo.put("enfermedad",diagnostico);
-   		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-   		
-   		return new ModelAndView("historiaClinica", modelo);
-   	}
-   	
+
 	@RequestMapping("/diagnosticar")
 	public ModelAndView diagnosticar(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -381,44 +365,6 @@ public class ControladorVeterinario{
 		return new ModelAndView("consultaVeterinario", modelo);
     }
 	
-	@RequestMapping("/guardarEnfermedad")
-	public ModelAndView guardarEnfermedad(@RequestParam(value="id", required=true) Long id, HttpServletRequest request,
-										  @RequestParam(value="nombre", required=true) String nombre,@RequestParam(value="tratamiento", required=true) String tratamiento){
-		String rol = (String) request.getSession().getAttribute("ROL");
-		if (!rol.equals("Veterinario") || rol == null) {
-		return new ModelAndView("redirect:/login");
-		}
-		 
-		HistoriaClinica historia = servicioGanado.verHC(id);
-		List<Enfermedad> guardadas= servicioGanado.enfermedadesComunes(historia); 
-		Long idEnf= 0L;
-		
-		Enfermedad enfermedad1= new Enfermedad();
-	    enfermedad1.setHistoria(historia);
-	    enfermedad1.setNombre(nombre);
-		
-		Date actual= new Date();
-		enfermedad1.setFecha(actual);
-		servicioGanado.guardarEnfermedad(enfermedad1);
-
-		List<Enfermedad> guardadas1= servicioGanado.enfermedadesComunes(historia);
-		for(Enfermedad e: guardadas1) {
-			if(e.getNombre().equals(nombre)) {
-				idEnf=e.getId();
-			}
-		}
-
-		ModelMap modelo= new ModelMap();
-		modelo.put("guardada", "La enfermedad ha sido registrada en la historia clinica");
-		modelo.put("e1Id",idEnf);
-		modelo.put("tratamiento",tratamiento);
-		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-
-		return new ModelAndView("historiaClinica", modelo);
-	}
-	
-	
-	   
 	@RequestMapping(value="/diagnosticarPost", method = RequestMethod.POST)
 	public ModelAndView diagnostico(@ModelAttribute("sintomas") Sintomas sintomas, HttpServletRequest request){
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -463,14 +409,6 @@ public class ControladorVeterinario{
 			diagnostico = "El animal podria tener " + enfermedad;
 		}
 		
-		/*
-		Fiebre Aftosa = anorexia, salivacionEspumosa
-		Leptospirosis = anorexia, debilidad, secrecionNasal
-		Miocardiopatia congenita = 	Ulceras, debilidad, tos
-		Rinotraqueitis infecciosa = anorexia, bajaProduccionLeche, secrecionNasal, conjuntivitis
-		Intoxicacion por consumo de plantas toxicas = Ulceras, anorexia, debilidad, salivacionEspumosa, bajaProduccionLeche, diarrea, conjuntivitis, tos, secrecionNasal
-		*/
-		
 		if(enfermedad != "No hay suficientes sintomas de enfermedad") {
 			if(guardada == null && guardadas != null) {
 	   			tratamiento= servicioGanado.tratamientoA(enfermedad);
@@ -498,9 +436,75 @@ public class ControladorVeterinario{
 			modelo.put("e1Id",sinTratar.getId());
         }
            
-		return new ModelAndView("historiaClinica", modelo);
+		return new ModelAndView("diagnosticarResultado1", modelo);
 	}
 	
+   	/*@RequestMapping("/diagnosticarPost")
+	public ModelAndView diagnostico(HttpServletRequest request, @ModelAttribute("sintomas") Sintomas sintomas){
+  		String rol = (String) request.getSession().getAttribute("ROL");
+  		if (!rol.equals("Veterinario") || rol == null) {
+			return new ModelAndView("redirect:/login");
+		}
+  		
+   		HistoriaClinica hc= new HistoriaClinica();
+   		AnimalDeGranja animal= servicioGanado.ver(sintomas.getIdAnimal());
+   		hc = servicioGanado.verHC(animal);
+   		List<SignosVitales>signos= servicioGanado.signos(hc);
+   		String enfermedad= servicioGanado.diagnosticar(signos,sintomas);
+   		
+   		String diagnostico="El animal podria tener "+ enfermedad;
+   		Enfermedad enfermedad1= new Enfermedad();
+   		enfermedad1.setHistoria(hc);
+   		enfermedad1.setNombre(enfermedad);
+   		Date actual= new Date();
+   		enfermedad1.setFecha(actual);
+   		servicioGanado.guardarEnfermedad(enfermedad1);
+   		
+   		ModelMap modelo= new ModelMap();
+   		modelo.put("enfermedad",diagnostico);
+   		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+   		
+   		return new ModelAndView("diagnosticarResultado1", modelo);
+   	}*/
+   	
+	@RequestMapping("/guardarEnfermedad")
+	public ModelAndView guardarEnfermedad(@RequestParam(value="id", required=true) Long id, HttpServletRequest request,
+										  @RequestParam(value="nombre", required=true) String nombre,
+										  @RequestParam(value="tratamiento", required=true) String tratamiento){
+		String rol = (String) request.getSession().getAttribute("ROL");
+		if (!rol.equals("Veterinario") || rol == null) {
+		return new ModelAndView("redirect:/login");
+		}
+		
+		HistoriaClinica historia = servicioGanado.verHC(id);
+		List<Enfermedad> guardadas= servicioGanado.enfermedadesComunes(historia); 
+		Long idEnf= 0L;
+
+		Date actual = new Date();
+		Enfermedad enfermedad1= new Enfermedad();
+
+		enfermedad1.setFecha(actual);
+	    enfermedad1.setInicioTratamiento(actual);
+	    enfermedad1.setNombre(nombre);
+	    enfermedad1.setHistoria(historia);
+		enfermedad1.setTratamientoA("Iniciado");
+		servicioGanado.guardarEnfermedad(enfermedad1);
+		
+		List<Enfermedad> guardadas1= servicioGanado.enfermedadesComunes(historia);
+		for(Enfermedad e: guardadas1) {
+			if(e.getNombre().equals(nombre)) {
+				idEnf=e.getId();
+			}
+		}
+		
+     	servicioGanado.generarNuevosSignosVitales(historia, nombre);
+     	
+        ModelMap modelo= new ModelMap();
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		return new ModelAndView("diagnosticarResultado2", modelo);
+	}
+	
+	/* ESTE REQUEST SEGURAMENTE NO TIENE USO */
 	@RequestMapping("/nuevoDiagnostico")
 	public ModelAndView diagnosticarA(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) throws ParseException{
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -536,7 +540,7 @@ public class ControladorVeterinario{
 		return new ModelAndView("consultaVeterinario", modelo);
 	}
 	
-	@RequestMapping("/tratamientoA")
+	/*@RequestMapping("/tratamientoA")
 	public ModelAndView tratamientoA(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
@@ -555,7 +559,7 @@ public class ControladorVeterinario{
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
 		return new ModelAndView("historiaClinica", modelo);
-	}
+	}*/
 	
 	@RequestMapping("/tratamientoB")
 	public ModelAndView tratamientoB(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {

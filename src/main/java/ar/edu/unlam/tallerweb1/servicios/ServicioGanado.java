@@ -39,5 +39,6 @@ public interface ServicioGanado {
 	public Tratamiento buscarTratamiento(String nombre);
 	Enfermedad tipoTratamientoB(HistoriaClinica historia);
 	Enfermedad tipoTratamientoA(HistoriaClinica historia);
+	public void generarNuevosSignosVitales(HistoriaClinica historia, String nombre);
 
 }

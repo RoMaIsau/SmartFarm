@@ -134,14 +134,22 @@
 															</div>
 														</div>
 													</div>
+													<div class="col-sm-12 col-md-6 mb-3 mb-sm-0">
+														<div class="form-group">
+															<div class="form-check form-check-inline">
+															  <form:checkbox path="temperaturaElevada" class="form-check-input" id="temperaturaElevada" name="temperaturaElevada" value="true"/>
+															  <label class="form-check-label" for="temperaturaElevada">Temperatura elevada</label>
+															</div>
+														</div>
+													</div>
 												</div>
 												
 												<c:if test="${empty fecha}"><br>
-													<h5>¿A partir de que momento desea chequear los signos vitales del animal?</h5>
+													<h5>¿Hace cuánto constató estos síntomas?</h5>
 							       					<form:select path="tiempo" class="form-control">
-												       	<form:option value="Una semana" type="text" class="form-control"/>UNA SEMANA	
-												    	<form:option value="Un mes" type="text" class="form-control"/>UN MES
-												       	<form:option value="Un año" type="text" class="form-control"/>UN AÑO
+												       	<form:option value="Un día" type="text" class="form-control"/>
+												    	<form:option value="Una semana" type="text" class="form-control"/>
+												       	<form:option value="Un mes" type="text" class="form-control"/>
 						              				</form:select>  
 						               			</c:if>
 						                		<c:if test="${not empty fecha}">
