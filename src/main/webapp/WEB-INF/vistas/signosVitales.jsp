@@ -126,7 +126,7 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 					
 					<!-- Ritmo cardíaco -->
 					<div class="row">
-						<div class="col-md-9 col-sm-12 col-12 mb-4">
+						<div class="col-md-9 col-sm-12 col-12 mb-4 shadow">
 							<div id="RitmoCardiaco"></div>
 						</div>
 						
@@ -135,7 +135,7 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 						</div>
 						
 						<!-- Frecuencia respiratoria -->
-						<div class="col-md-3 col-sm-12 col-12 mb-4">
+						<div class="col-md-3 col-sm-12 col-12 mb-4 shadow">
 							<div id="frecuenciaRespiratoria"></div>
 						</div>
 						
@@ -147,7 +147,7 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 					<!-- Temperatura corporal y valores urinarios -->
 					<div class="row">
 						<!-- Temperatura corporal -->
-						<div class="col-md-7 col-sm-12 col-12 mb-4">
+						<div class="col-md-7 col-sm-12 col-12 mb-4 shadow">
 							<div id="temperaturaCorporal"></div>
 						</div>
 						
@@ -156,7 +156,7 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 						</div>
 						
 						<!-- Valores urinarios -->
-						<div class="col-md-5 col-sm-12 col-12 mb-4">
+						<div class="col-md-5 col-sm-12 col-12 mb-4 shadow">
 							<div id="valoresUrinarios"></div>
 						</div>
 						

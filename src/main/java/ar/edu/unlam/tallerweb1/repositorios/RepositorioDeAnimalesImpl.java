@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 
 @Repository
 public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
@@ -22,6 +25,20 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	@Override
 	public void guardar(AnimalDeGranja animal) {		
 		this.sessionFactory.getCurrentSession().save(animal);
+		
+		HistoriaClinica hc = new HistoriaClinica();
+		hc.setAnimal(animal);
+		this.sessionFactory.getCurrentSession().save(hc);
+		
+		SignosVitales sv = new SignosVitales();
+		Date fecha = new Date();
+		sv.setFecha(fecha);
+		sv.setFrecuenciaCardiaca(80.0);
+		sv.setFrecuenciaRespiratoria(25.0);
+		sv.setPulso(80.0);
+		sv.setTemperatura(37.0);
+		sv.setHistoria(hc);
+		this.sessionFactory.getCurrentSession().save(sv);
 	}
 
 	@Override

@@ -76,98 +76,29 @@ public class ServicioGanadoImpl implements ServicioGanado {
 
 	@Override
 	public String diagnosticar(List<SignosVitales>signos,Sintomas sintomas) {
-		// TODO Auto-generated method stub
-		String enfermedad= "No hay suficientes sintomas de enfermedad";
+		String enfermedad = "No hay suficientes sintomas de enfermedad";
 		
-		 Date Prueba= new Date(2020-01-01);
-		 Date signosDate= new Date();
-		 Date actual= new Date();
-		int signosFiebreAftosa = 0;
-		int signosLeptospirosis =0;
-		int signosMiocardiopatia =0;
-		int signosIntoxicacion = 0;
-		int signosIBR = 0;
-		
-		if(sintomas.getTiempo().equals("Una semana")) {
-	   int anio= actual.getYear();
-	   int mes= actual.getMonth();
-	   int dia= actual.getDay();
-		int nuevoDia=(dia-7);	
-      signosDate=new Date(anio-mes-nuevoDia);
-	    
-		}else if(sintomas.getTiempo().equals("Un mes")) {
-			
-			  int anio= actual.getYear();
-			   int mes= actual.getMonth();
-			   int dia= actual.getDay();
-				int nuevomes=(mes-1);	
-		      signosDate=new Date(anio-nuevomes-dia);
-			
-		}else if(sintomas.getTiempo().equals("Un año")) {
-			
-			  int anio= actual.getYear();
-			   int mes= actual.getMonth();
-			   int dia= actual.getDay();
-				int nuevoanio=(anio-1);	
-		      signosDate=new Date(nuevoanio-mes-dia);
-			
+		if(sintomas.isAnorexia() == true && sintomas.isSalivacionEspumosa() == true) {
+			enfermedad = "Fiebre Aftosa";
 		}
-	   
-		
-		for(SignosVitales sv: signos) {
-			
-		
-		if(sv.getTemperatura()> 40.0 && (sv.getFecha().after(Prueba))) {
-			
-			signosFiebreAftosa+=1;
-			
+		if(sintomas.isAnorexia() == true && sintomas.isDebilidad() == true && sintomas.isSecrecionNasal() == true) {
+			enfermedad = "Leptospirosis";
+		}
+		if(sintomas.isUlceras() == true && sintomas.isDebilidad() == true && sintomas.isTos() == true) {
+			enfermedad = "Miocardiopatia congenita";
+		}
+		if(sintomas.isAnorexia() == true && sintomas.isBajaProduccionLeche() == true
+		   && sintomas.isSecrecionNasal() == true && sintomas.isConjuntivitis() == true) {
+			enfermedad = "Rinotraqueitis infecciosa";
+		}
+		if(sintomas.isUlceras() == true && sintomas.isAnorexia() == true && sintomas.isDebilidad() == true
+		   && sintomas.isSalivacionEspumosa() == true && sintomas.isBajaProduccionLeche() == true && sintomas.isDiarrea() == true
+		   && sintomas.isConjuntivitis() == true && sintomas.isTos() == true && sintomas.isSecrecionNasal() == true) {
+			enfermedad = "Intoxicacion por consumo de plantas toxicas";
 		}
 		
-		if(sv.getTemperatura()> 39.0 && (sv.getFecha().after(Prueba))&& sv.getFrecuenciaCardiaca()> 70.0) {
-		
-			signosLeptospirosis+=1;
-	} 
-		if((sv.getTemperatura()> 39.0 && (sv.getFecha().after(Prueba)) && sv.getFrecuenciaCardiaca()< 60.0)) {
-		
-		signosIntoxicacion+=1;
-		
-	
-   } 
-		if((sv.getFecha().after(Prueba)) && sv.getFrecuenciaCardiaca()< 60.0) {
-			
-			signosMiocardiopatia+=1;
-			
-		
-	   }
-	if(sv.getFecha().after(Prueba)&& sv.getFrecuenciaRespiratoria()> 40.0 && sv.getTemperatura()> 39.0) {
-			
-			signosIBR+=1;
-			
-		
-	   }
-
-
-}
-	if(signosFiebreAftosa > 3 && sintomas.isUlceras()== true && sintomas.isBajaProduccionLeche()==true ) 	
-	{	enfermedad="Fiebre Aftosa";
+		return enfermedad;
 	}
-	if(signosLeptospirosis > 3 && sintomas.isDebilidad()== true && sintomas.isAnorexia()==true ) {	
-		enfermedad="Leptospirosis";
-	}
-	if(signosMiocardiopatia > 3 && sintomas.isDebilidad()==true) {	
-		enfermedad="Miocardiopatia congenita";
-	}
-	if(signosIntoxicacion > 3 && sintomas.isDiarrea() && sintomas.isSalivacionEspumosa()) {	
-		enfermedad="Intoxicacion por consumo de plantas toxicas";
-	}
-	if(signosIBR > 3 && sintomas.isTos()== true && sintomas.isSecrecionNasal()== true) {	
-		enfermedad="Rinotraqueitis infecciosa";
-	}
-		
-	
-	
-		
-		return enfermedad;}
 
 	@Override
 	public void guardarSV(SignosVitales sv) {

@@ -375,8 +375,8 @@ public class ControladorVeterinario{
 		
 		ModelMap modelo= new ModelMap();
         modelo.put("sintomas",sintomas);
-        modelo.put("idAnimal", idAnimal);/*
-		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));*/
+        modelo.put("idAnimal", idAnimal);
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
 		return new ModelAndView("consultaVeterinario", modelo);
     }
@@ -423,8 +423,10 @@ public class ControladorVeterinario{
 	public ModelAndView diagnostico(@ModelAttribute("sintomas") Sintomas sintomas, HttpServletRequest request){
 		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
-		  return new ModelAndView("redirect:/login");
-		  }
+			return new ModelAndView("redirect:/login");
+		}
+		ModelMap modelo= new ModelMap();
+        modelo.put("notificaciones", listarNotificacionesDelVeterinario(request)); 
 		  
 		HistoriaClinica hc= new HistoriaClinica();
 		AnimalDeGranja animal= servicioGanado.ver(sintomas.getIdAnimal());
@@ -439,7 +441,7 @@ public class ControladorVeterinario{
     	List<SignosVitales>signos= servicioGanado.signos(hc);
 		
 		if(signos == null) {
-			return new ModelAndView("historiaClinica");
+			return new ModelAndView("historiaClinica", modelo);
 		}
 
 		List<Enfermedad> guardadas= servicioGanado.enfermedadesComunes(hc);
@@ -454,11 +456,23 @@ public class ControladorVeterinario{
     		}
 		}
 		
-		String enfermedad= servicioGanado.diagnosticar(signos,sintomas); 
-	    String diagnostico="El animal podria tener "+ enfermedad;
+		String enfermedad = servicioGanado.diagnosticar(signos,sintomas);
+		String diagnostico = "No hay suficientes síntomas de enfermedad";
 		
 		if(enfermedad != "No hay suficientes sintomas de enfermedad") {
-	   		if(guardada == null && guardadas != null) {
+			diagnostico = "El animal podria tener " + enfermedad;
+		}
+		
+		/*
+		Fiebre Aftosa = anorexia, salivacionEspumosa
+		Leptospirosis = anorexia, debilidad, secrecionNasal
+		Miocardiopatia congenita = 	Ulceras, debilidad, tos
+		Rinotraqueitis infecciosa = anorexia, bajaProduccionLeche, secrecionNasal, conjuntivitis
+		Intoxicacion por consumo de plantas toxicas = Ulceras, anorexia, debilidad, salivacionEspumosa, bajaProduccionLeche, diarrea, conjuntivitis, tos, secrecionNasal
+		*/
+		
+		if(enfermedad != "No hay suficientes sintomas de enfermedad") {
+			if(guardada == null && guardadas != null) {
 	   			tratamiento= servicioGanado.tratamientoA(enfermedad);
 				sugerencia="Se sugiere realizar un tratamiento con "+ tratamiento;
 			} else if(guardada != null && guardada.getTratamientoB()==null){
@@ -471,14 +485,12 @@ public class ControladorVeterinario{
 				curada="El animal no se ha recuperado. Realice una interconsulta";
 		   }
 		
-		ModelMap modelo= new ModelMap();
         modelo.put("nombre",enfermedad);
         modelo.put("enfermedad",diagnostico);
         modelo.put("tratamiento",sugerencia);
         modelo.put("tratamientoB",tratamientoB);
         modelo.put("curada",curada);
         modelo.put("hcId",hc.getId());
-        modelo.put("notificaciones", listarNotificacionesDelVeterinario(request)); 
 		
 		if(guardada != null) {
 			modelo.put("e1Id",guardada.getId());
@@ -745,7 +757,7 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		String enfermedad = "Intoxicacion por consumo de plantas toxicas";
+		String enfermedad = "";
 		Boolean cardio1 = true;
 		Boolean orina1 = true;
 		Boolean temperatura1 = true;
@@ -754,6 +766,7 @@ public class ControladorVeterinario{
 		case "Fiebre Aftosa":
 			cardio1 = false;
 			respiracion1 = false;
+			temperatura1 = false;
 			break;
 		case "Leptospirosis":
 			orina1 = false;
