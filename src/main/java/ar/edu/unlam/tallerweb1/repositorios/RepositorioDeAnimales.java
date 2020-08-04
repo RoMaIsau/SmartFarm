@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 
@@ -19,4 +20,6 @@ public interface RepositorioDeAnimales {
 	void eliminar(AnimalDeGranja animal);
 
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador);
+
+	Enfermedad buscarAnimalPorEnfermedades(Long id);
 }

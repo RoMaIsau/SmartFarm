@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
@@ -27,4 +28,6 @@ public interface ServicioDeAnimales {
 	void eliminarPorId(Long idAnimal);
 
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador) throws AnimalSinIdentificadorGpsException;
+
+	Enfermedad buscarAnimalPorEnfermedades(Long id);
 }

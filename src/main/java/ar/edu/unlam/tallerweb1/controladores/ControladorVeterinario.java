@@ -26,6 +26,7 @@ import ar.edu.unlam.tallerweb1.modelo.Sintomas;
 import ar.edu.unlam.tallerweb1.modelo.Tratamiento;
 import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -48,6 +49,9 @@ public class ControladorVeterinario{
 	
 	@Inject
 	ServicioVacunas servicioVacuna;
+	
+	@Inject
+	private ServicioDeAnimales servicioDeAnimales;
 	
 	public ServicioVacunas getServicioVacuna() {
 		return servicioVacuna;
@@ -761,43 +765,49 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		String enfermedad = "";
+		Enfermedad enfermedad = servicioDeAnimales.buscarAnimalPorEnfermedades(id);
 		Boolean cardio1 = true;
 		Boolean orina1 = true;
 		Boolean temperatura1 = true;
 		Boolean respiracion1 = true;
-		switch(enfermedad){
-		case "Fiebre Aftosa":
-			cardio1 = false;
-			respiracion1 = false;
-			temperatura1 = false;
-			break;
-		case "Leptospirosis":
-			orina1 = false;
-			temperatura1 = false;
-			break;
-		case "Miocardiopatia congenita":
-			cardio1 = false;
-			respiracion1 = false;
-			break;
-		case "Rinotraqueitis infecciosa":
-			temperatura1 = false;
-			respiracion1 = false;
-			break;
-		case "Intoxicacion por consumo de plantas toxicas":
-			cardio1 = false;
-			orina1 = false;
-			temperatura1 = false;
-			respiracion1 = false;
-			break;
+		
+		if(enfermedad != null){
+			if(enfermedad.getFinTratamiento() == null) {
+				switch(enfermedad.getNombre()){
+				case "Fiebre Aftosa":
+					cardio1 = false;
+					respiracion1 = false;
+					temperatura1 = false;
+					break;
+				case "Leptospirosis":
+					orina1 = false;
+					temperatura1 = false;
+					break;
+				case "Miocardiopatia congenita":
+					cardio1 = false;
+					respiracion1 = false;
+					break;
+				case "Rinotraqueitis infecciosa":
+					temperatura1 = false;
+					respiracion1 = false;
+					break;
+				case "Intoxicacion por consumo de plantas toxicas":
+					cardio1 = false;
+					orina1 = false;
+					temperatura1 = false;
+					respiracion1 = false;
+					break;
+				}
+			}
+			modelo.addAttribute("enfermedadClase", enfermedad.getNombre());
+		} else {
+			modelo.addAttribute("enfermedadClase", "");
 		}
 		
 		modelo.put("cardio1", cardio1);
 		modelo.put("orina1", orina1);
 		modelo.put("temperatura1", temperatura1);
 		modelo.put("respiracion1", respiracion1);
-		modelo.addAttribute("enfermedadClase", enfermedad);
-		
         return new ModelAndView("signosVitales", modelo);
 	}
 	

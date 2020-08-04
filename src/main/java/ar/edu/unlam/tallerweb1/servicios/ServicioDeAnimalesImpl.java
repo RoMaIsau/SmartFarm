@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
@@ -119,5 +120,10 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 		}
 
 		return animal;
+	}
+
+	@Override
+	public Enfermedad buscarAnimalPorEnfermedades(Long id) {
+		return this.repositorioDeAnimales.buscarAnimalPorEnfermedades(id);
 	}
 }

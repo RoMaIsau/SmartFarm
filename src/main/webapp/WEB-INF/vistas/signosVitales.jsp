@@ -109,6 +109,16 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 				<!-- ================================================================================== -->
+					<c:if test="${enfermedadClase == ''}">
+						<div class="d-flex justify-content-center">
+							<h1 class="h3 mb-3 text-gray-800">En este momento no se registran enfermedades en el animal</h1>
+						</div>
+					</c:if>
+					<c:if test="${enfermedadClase != ''}">
+						<div class="d-flex justify-content-center">
+							<h1 class="h3 mb-3 text-gray-800">El animal tiene "<c:out value="${enfermedadClase}" />"</h1>
+						</div>
+					</c:if>
 					
 					<!-- Ritmo cardíaco y frecuencia respiratoria -->
 					<!-- PPM -->
