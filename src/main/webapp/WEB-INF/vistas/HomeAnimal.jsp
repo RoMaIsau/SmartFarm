@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,78 +27,38 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-	<body>
-	<div class="container-fluid mt-3">	
-  <c:forEach items="${anormales}" var="a">
-  	   <div class="alert alert-warning" role="alert">	 
-			<strong>
-				   ¡¡Signos vitales anormales en el animal ${a.id}!!!</strong>
-						
-					
-					<a href="signos?id=${a.id}"> <i class="	fas fa-heartbeat"></i></a>	</div>							 
-</c:forEach>
-</div>	
-	<c:if test="${not empty alarmaTratamiento}">
-	<div class="alert alert-warning" role="alert">	 
-			<strong>
-    	<h3 class="text-danger"> ${alarmaTratamiento} </h3>
-    <a href="nuevoDiagnostico?id=${idAnimalTratamiento}"> NUEVO DIAGNOSTICO <i class="fas fa-user-md"></i> </a><br>
-  	</strong>
-  	</c:if>
-	<div class="container-fluid">
-					<c:if test="${not empty animales}">
-						
-						
-						<div class="card shadow mb-4 mt-2">
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-											<tr>
-												<th>ID Animal</th>
-												
-												<th>SALUD ACTUAL</th>
-												
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${animales}" var="a">
-												<tr>
-													<td>${a.id}</td>
-													
-													<td>
-														<a href="verEstadoSalud?id=${a.id}">
-															<i class="	fas fa-plus-square"></i>
-														</a>
-													</td>
-												
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
+					<div class="container-fluid mt-3">
+						<c:forEach items="${anormales}" var="a">
+							<div class="alert alert-warning" role="alert">
+								<strong>¡Signos vitales anormales en el animal ${a.id}!</strong>
+								<a href="signos?id=${a.id}"> <i class="	fas fa-heartbeat"></i></a>
 							</div>
+						</c:forEach>
+					</div>
+					
+					<c:if test="${not empty alarmaTratamiento}">
+						<div class="alert alert-warning" role="alert">
+							<strong>
+						    	<h3 class="text-danger">${alarmaTratamiento}</h3>
+						    	<a href="nuevoDiagnostico?id=${idAnimalTratamiento}">NUEVO DIAGNOSTICO
+						    		<i class="fas fa-user-md"></i>
+						    	</a><br>
+						  	</strong>
 						</div>
-					</c:if>
-
-
-
-  <c:forEach items="${signos2}" var="a">
-  TEMPERATURA:
-				    <h3 class="text-danger"> ${a.temperatura}!!!!</h3><BR>
-				    frecuencia cardiaca:
-					  <h3 class="text-danger"> ${a.frecuenciaCardiaca}!!!!</h3><br>	
-													 
-</c:forEach>
-
-
-</div>
-</div>	
-
-<div class="container-fluid">
+  					</c:if>
+  					
+  					<div class="container-fluid">
+  						<c:forEach items="${signos2}" var="a">
+	  						TEMPERATURA:
+					   		<h3 class="text-danger"> ${a.temperatura}!!!!</h3><br>
+					   		Frecuencia cardiaca:
+					   		<h3 class="text-danger"> ${a.frecuenciaCardiaca}!!!!</h3><br>	
+					   	</c:forEach>
+					</div>
+				</div>
+				
+				<div class="container-fluid">
 					<c:if test="${not empty idAnimalTratamiento}">
-						
-						
 						<div class="card shadow mb-4 mt-2">
 							<div class="card-body">
 								<div class="table-responsive">
@@ -105,110 +66,77 @@
 										<thead>
 											<tr>
 												<th>ID Animal</th>
-												
 												<th>VACUNAS APLICADAS</th>
-												
 												<th>ENFERMEDAD ACTUAL</th>
-												
 												<th>TRATAMIENTO EN CURSO</th>
-												
 											</tr>
 										</thead>
 										<tbody>
-											
-												<tr>
-													<td>${idAnimalTratamiento}</td>
-													
-													<td>
-														    <c:if test="${not empty vacunas}">
-			        
-		     
- 	
-
-   <c:forEach items="${vacunas}" var="vac">
-  
-				    <h5 class="text-primary"> ${vac.nombre}</h5><BR>
-				  	
-													 
-</c:forEach>
-  
- 
-    </c:if>	
-													</td>
+											<tr>
+												<td>${idAnimalTratamiento}</td>
 												<td>
-												<c:if test="${not empty enfermedadA}">${enfermedadA}</c:if>
-												<c:if test="${not empty enfermedadB}">${enfermedadB}</c:if>
-												
+													<c:if test="${not empty vacunas}">
+														<c:forEach items="${vacunas}" var="vac">
+															<h5 class="text-primary"> ${vac.nombre}</h5><br>
+														</c:forEach>
+													</c:if>
 												</td>
-											<td><c:if test="${not empty nombreTratamiento}">${nombreTratamiento}</c:if>
-											<c:if test="${empty nombreTratamiento}">NO</c:if>
-											</td>
-												</tr>
-											
+												<td>
+													<c:if test="${not empty enfermedadA}">${enfermedadA}</c:if>
+													<c:if test="${not empty enfermedadB}">${enfermedadB}</c:if>
+												</td>
+												<td>
+													<c:if test="${not empty nombreTratamiento}">${nombreTratamiento}</c:if>
+													<c:if test="${empty nombreTratamiento}">NO</c:if>
+												</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 					</c:if>
-
-
-
- 
- 
- 	
-					<c:if test="${not empty signos}">
-					
 					
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-<h1 class="h1 mb-0 text-gray-800">SIGNOS VITALES ACTUALES</h1>
-						</div>
-	 																	
- 
-  
-				  	 
-				<div class="card-body border-left-primary shadow">
-				
-				
- <div
-	class="font-weight-bold text-primary text-uppercase mb-1">
-	 			  <c:if test="${signos.temperatura gt 40.0}">
- <H3 class="text-danger"> Temperatura (°C): </H3><h2 class="text-danger"> ${signos.temperatura} </h2>
- </c:if>
- <c:if test="${signos.temperatura lt 40.0}">
- <H3>Temperatura (°C)</H3>
- <h3> ${signos.temperatura} </h3>
- </c:if>
-							Pulso: <h3 class="text-danger">  ${signos.pulso}</h3>
-							Frecuencia cardiaca: <h3 class="text-danger">  ${signos.frecuenciaCardiaca}</h3>
-							Frecuencia respiratoria: <h3 class="text-danger">  ${signos.frecuenciaRespiratoria}</h3>	
-							Fecha: <h3 class="text-danger">  ${signos.fecha}</h3>
-					 	<br>
-					 	<a href="modificarSignos?id=${signos.id}"> MODIFICAR </a><br>
-					</div>
+						<h1 class="h1 mb-0 text-gray-800">Signos vitales actuales</h1>
 					</div>
 					
+					<c:if test="${not empty signos}">
+						<div class="row no-gutters align-items-center">
+							<div class="col-md-12">
+								<div class="card border-left-primary shadow mr-3 h-100 py-2">
+									<div class="card-body">
+										<div class="font-weight-bold">
+										
+						 					<fmt:formatDate value="${signos.fecha}" pattern="yyyy-MM-dd" var="currentYear"/>
+											<h4 class="text-primary">Fecha: <small class="text-danger"><c:out value="${currentYear}"/></small></h4>
+																	
+											<c:if test="${signos.temperatura gt 40.0}">
+												<h4 class="text-primary">Temperatura: <small class="text-danger">${signos.temperatura} °C</small></h4>
+											</c:if>
+											
+											<c:if test="${signos.temperatura lt 40.0}">
+												<h4 class="text-primary">Temperatura: <small class="text-danger">${signos.temperatura} °C</small></h4>
+						 					</c:if>
+						 					
+						 					<h4 class="text-primary">Pulso: <small class="text-danger">${signos.pulso} PPM</small></h4>
+						 					<h4 class="text-primary">Frecuencia cardiaca: <small class="text-danger">${signos.frecuenciaCardiaca} PPM</small></h4>
+						 					<h4 class="text-primary">Frecuencia respiratoria: <small class="text-danger">${signos.frecuenciaRespiratoria}</small></h4>
+						 				</div>
+						 			</div>
+						 		</div>
+						 	</div>
+						 </div>
+					</c:if>
 					
-						
-					</c:if>	<br>
- 	
-			        
-		        
- 	
- 
-    
-
-    
-    	<br>
-  	
-							
-					 
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
-		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-		<script src="js/bootstrap.min.js" type="text/javascript"></script>
-	</body>
-			</div>
+					<br>
+					<br>
+					
+					<!-- Placed at the end of the document so the pages load faster -->
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
+					<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+					<script src="js/bootstrap.min.js" type="text/javascript"></script>
+				</div>
 				<!-- /.container-fluid -->
 
 			</div>
@@ -240,4 +168,5 @@
 	
 	<!-- Bootstrap core JavaScript-->
 	<%@ include file="../../parts/scripts.jsp" %>
+</body>
 </html>
