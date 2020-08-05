@@ -25,19 +25,6 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid mt-3">
-					<c:forEach items="${vencidos}" var="v">
-						<div class="alert alert-warning" role="alert">
-							<strong>
-								El animal ${v.id} tiene vacunas vencidas
-								<a class="text-primary" href="detalle?id=${v.id}">
-									<i class="fas fa-briefcase-medical"></i>
-								</a>
-							</strong><br>
-						</div>
-					</c:forEach><br>
-				</div>
-				
 				<c:if test="${not empty vencidas}">
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Vacunas vencidas</h1>
@@ -93,15 +80,6 @@
 					<br>
 					
 					<h3 class="text-info">${mensaje}</h3><br>
-					
-					<c:if test="${not empty ranking}">
-						<h4 class="text-success">Registro de enfermedades:</h4><br><br>
-						<c:forEach items="${ranking}" var="r">
-							<h4>La enfermedad <span class="font-weight-bold text-uppercase">${r.key}</span> se registro ${r.value} veces este año.</h4>
-						<hr class="sidebar-divider my-0">
-				  	 	<br><br>
-				  	 	</c:forEach>
-					</c:if>							
 				
 				</div>
 				<!-- /.container-fluid -->

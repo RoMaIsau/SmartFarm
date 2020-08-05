@@ -39,6 +39,7 @@
 												<th>Ver historial</th>
 												<th>Diagnosticar</th>
 												<th>Signos vitales</th>
+												<th>Salud actual</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -60,6 +61,11 @@
 													<td class="text-center">
 														<a href="signosVitales?id=${a.id}">
 															<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>
+														</a>
+													</td>
+													<td class="text-center">
+														<a href="verEstadoSalud?id=${a.id}">
+															<i class="fas fa-plus-square" style="color: #22A45A"></i>
 														</a>
 													</td>
 												</tr>
