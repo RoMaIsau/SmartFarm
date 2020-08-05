@@ -19,4 +19,6 @@ public interface RepositorioNotificacion {
 	void crearNotificacionAnimal(Notificacion notificacion);
 
 	List<Notificacion> listarNotificacionesPendientesPorTitulo(String titulo);
+
+	void crearNotificacionDeVacunaVencida(Notificacion notificacion);
 }

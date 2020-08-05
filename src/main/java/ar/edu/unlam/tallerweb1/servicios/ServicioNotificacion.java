@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 public interface ServicioNotificacion {
@@ -14,4 +15,5 @@ public interface ServicioNotificacion {
 	void crearNotificacionAnimalFueraDeLugar(Long id);
 	List<Notificacion> obtenerNotificacionesPendientesDeAnimalFueraDeCorral();
 	void marcarComoVista(Notificacion notificacion);
+	void crearNotificacionDeVacunaVencida(AnimalDeGranja v);
 }

@@ -101,4 +101,18 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion {
 				.setParameter("titulo", titulo)
 				.getResultList();
 	}
+
+	@Override
+	public void crearNotificacionDeVacunaVencida(Notificacion notificacion) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(notificacion);
+		List<Usuario> empleados = repositorioUsuario.consultarUsuariosVeterinarios();
+
+		for (Usuario e : empleados) {
+			UsuarioNotificacion usuarioNotificacion = new UsuarioNotificacion();
+			usuarioNotificacion.setNotificacion(notificacion);
+			usuarioNotificacion.setUsuario(e);
+			session.save(usuarioNotificacion);
+		}
+	}
 }

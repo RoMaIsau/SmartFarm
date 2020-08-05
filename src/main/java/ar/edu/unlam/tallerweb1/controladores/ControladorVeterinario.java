@@ -88,6 +88,7 @@ public class ControladorVeterinario{
 			   List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
 			   if(!vencidas.isEmpty()){
 				   animalesVencidos.add(v);
+				   servicioNotificacion.crearNotificacionDeVacunaVencida(v);
 				}
 		}
    	    
@@ -807,6 +808,7 @@ public class ControladorVeterinario{
 		modelo.put("orina1", orina1);
 		modelo.put("temperatura1", temperatura1);
 		modelo.put("respiracion1", respiracion1);
+		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
         return new ModelAndView("signosVitales", modelo);
 	}
 	

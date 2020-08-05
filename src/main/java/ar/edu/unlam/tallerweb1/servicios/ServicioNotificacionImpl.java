@@ -116,4 +116,24 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		notificacionVista.setEstado(true);
 		actualizarNotificacion(notificacionVista);
 	}
+	
+	@Override
+	public void crearNotificacionDeVacunaVencida(AnimalDeGranja v) {
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String fecha = (LocalDate.now().format(dateFormat));
+
+		String detalles = "El animal " + v.getRaza().getNombre() + " tiene vacunas vencidas.";
+		Notificacion notificacionGuardada = notificacionPorDetalles(detalles, fecha);
+		
+		if (notificacionGuardada == null) {
+			Notificacion notificacion = new Notificacion();
+			notificacion.setFecha(fecha);
+			notificacion.setTitulo("Vacuna vencida");
+			notificacion.setDetalles(detalles);
+			notificacion.setEstado(false);
+			
+			repositorioNotificacion.crearNotificacionDeVacunaVencida(notificacion);
+		}
+	}
+	
 }

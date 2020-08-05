@@ -108,7 +108,7 @@
 				<hr class="sidebar-divider d-none d-md-block">
 				<a class="nav-link" href="${contextPath}/ubicaciones/mapa">
 					<i class="fas fa-map-marked-alt"></i>
-					<span>Ubicaciï¿½n en tiempo real</span>
+					<span>Ubicación en tiempo real</span>
 				</a>
 			</li>
 		</c:when>
