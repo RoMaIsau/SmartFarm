@@ -347,8 +347,7 @@ public class ControladorVeterinario{
    		modelo.put("hc",hc);
    		modelo.put("signos",signos);
    		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
-   		
-   		return new ModelAndView("historiaClinica", modelo);
+   		return new ModelAndView("verhistoria", modelo);
    	}
 
 	@RequestMapping("/diagnosticar")

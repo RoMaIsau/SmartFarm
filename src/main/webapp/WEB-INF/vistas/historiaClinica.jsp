@@ -90,28 +90,7 @@
 						</div>
 					</c:if>	<br><br>
 				
-					<c:if test="${not empty hc}">
-						<div class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h1 mb-0 text-gray-800">SIGNOS VITALES</h1>
-						</div>
-	 					<div class="row no-gutters align-items-center">											
- 							<c:forEach items="${signos}" var="s">
- 								<div class="col-md-6">
- 									<div class="card-body border-left-primary shadow">
- 										<div class="font-weight-bold text-primary text-uppercase mb-1">
- 											<h4 class="text-primary">Temperatura:</h4>
- 											<h3 class="text-danger">  ${s.temperatura}</h3>
-											Pulso: <h3 class="text-danger">  ${s.pulso}</h3>
-											Frecuencia cardiaca: <h3 class="text-danger">  ${s.frecuenciaCardiaca}</h3>
-											Frecuencia respiratoria: <h3 class="text-danger">  ${s.frecuenciaRespiratoria}</h3>	
-											Fecha: <h3 class="text-danger">  ${s.fecha}</h3>
-					 						<br>
-										</div>
-									</div>
-								</div>
-							</c:forEach><br><br>
-						</div>
-					</c:if>	<br>
+					<br>
 					
 					<h3 class="text-info">${mensaje}</h3><br>
 					
