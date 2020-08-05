@@ -98,15 +98,15 @@ public class ControladorVeterinario{
 		return new ModelAndView("veterinarioIndex", modelo);
 	}
 	
-	/*@RequestMapping(path = "/indexVeterinario")
-	public ModelAndView irAIndexVeterinario(HttpServletRequest request){
+	@RequestMapping(path = "/vacunasVencidas")
+	public ModelAndView vencidas(HttpServletRequest request){
   		String rol = (String) request.getSession().getAttribute("ROL");
   		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
 		
 		ModelMap modelo = new ModelMap();
-		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
+		
 		
 		List<AnimalDeGranja> animales= servicioGanado.listar();
 		HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
@@ -119,10 +119,10 @@ public class ControladorVeterinario{
 	    }
 	    
 	    modelo.put("vencidos",animalesVencidos);
-	    modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 	    
-	    return new ModelAndView("redirect:/historiaClinica",modelo);
-	}*/
+	    
+	    return new ModelAndView("vacunasVencidas",modelo);
+	}
 	
 	@RequestMapping("/detalle")
 	public ModelAndView vacunar(@RequestParam(value="id", required=true) Long id, HttpServletRequest request){
@@ -140,7 +140,7 @@ public class ControladorVeterinario{
         modelo.put("volver","VOLVER");
         modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
         
-        return new ModelAndView("indexVeterinario", modelo);
+        return new ModelAndView("vacunasVencidas", modelo);
 	}
 	
 	@RequestMapping("/vacunar")
@@ -163,7 +163,7 @@ public class ControladorVeterinario{
 		modelo.put("volver","VOLVER");
         modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
         
-        return new ModelAndView("indexVeterinario", modelo);
+        return new ModelAndView("vacunasVencidas", modelo);
 	}
 	
 	@RequestMapping("/listaGanado")
@@ -407,7 +407,7 @@ public class ControladorVeterinario{
 		}
 		
 		String enfermedad = servicioGanado.diagnosticar(signos,sintomas);
-		String diagnostico = "No hay suficientes síntomas de enfermedad";
+		String diagnostico = "No hay suficientes sï¿½ntomas de enfermedad";
 		
 		if(enfermedad != "No hay suficientes sintomas de enfermedad") {
 			diagnostico = "El animal podria tener " + enfermedad;

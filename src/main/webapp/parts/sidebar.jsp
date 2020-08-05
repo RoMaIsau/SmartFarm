@@ -86,8 +86,8 @@
 		<c:when test="${ROL == 'Veterinario'}">
 			<li class="nav-item">
 				<hr class="sidebar-divider">
-				<a class="nav-link" href="${contextPath}/listaGanado">
-					<i class="fas fa-chart-pie"></i> <span>Salud</span>
+				<a class="nav-link" href="${contextPath}/vacunasVencidas">
+					<i class="fas fa-chart-pie"></i> <span>Vacunas vencidas</span>
 				</a>
 			</li>
 		</c:when>
