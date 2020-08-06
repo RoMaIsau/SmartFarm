@@ -29,5 +29,5 @@ public interface ServicioDeAnimales {
 
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador) throws AnimalSinIdentificadorGpsException;
 
-	Enfermedad buscarAnimalPorEnfermedades(Long id);
+	Enfermedad buscarUltimaEnfermedadDelAnimal(Long id);
 }

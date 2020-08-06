@@ -28,6 +28,7 @@ import ar.edu.unlam.tallerweb1.modelo.Vacuna;
 import ar.edu.unlam.tallerweb1.modelo.Vacunar;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
+import ar.edu.unlam.tallerweb1.servicios.ServicioHistoriaClinica;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
@@ -52,6 +53,9 @@ public class ControladorVeterinario{
 	
 	@Inject
 	private ServicioDeAnimales servicioDeAnimales;
+
+	@Inject
+	private ServicioHistoriaClinica servicioHistoriaClinica;
 	
 	public ServicioVacunas getServicioVacuna() {
 		return servicioVacuna;
@@ -68,13 +72,17 @@ public class ControladorVeterinario{
 	public void setServicioGanado(ServicioGanado servicioGanado) {
 		this.servicioGanado = servicioGanado;
 	}
-
+	
 	@RequestMapping("/indexVeterinario")
  	public ModelAndView veterinarioIndex(HttpServletRequest request) {
   		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
 			return new ModelAndView("redirect:/login");
 		}
+
+		List<Enfermedad> enfermedades = new ArrayList<Enfermedad>();
+		HistoriaClinica hc = new HistoriaClinica();
+		Enfermedad enfermedad = new Enfermedad();
 		
 		List<AnimalDeGranja> animales= servicioGanado.listar();
         HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
@@ -85,14 +93,26 @@ public class ControladorVeterinario{
 		
 		HashSet<AnimalDeGranja> animalesVencidos= new HashSet<AnimalDeGranja>();
    	    for(AnimalDeGranja v: animalesNoRepetidos) {
-			   List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
-			   if(!vencidas.isEmpty()){
-				   animalesVencidos.add(v);
-				   servicioNotificacion.crearNotificacionDeVacunaVencida(v);
-				}
+   	    	List<Vacuna> vencidas= servicioVacuna.alarmaVacuna(v);
+			if(!vencidas.isEmpty()){
+				animalesVencidos.add(v);
+				servicioNotificacion.crearNotificacionDeVacunaVencida(v);
+			}
+			
+			enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(v.getId());
+			if(enfermedad == null){
+				hc = servicioHistoriaClinica.buscarHistoriaClinicaPorId(v.getId());
+				enfermedad = new Enfermedad();
+				enfermedad.setHistoria(hc);
+				enfermedades.add(enfermedad);
+			} else {
+				enfermedades.add(enfermedad);
+			}
+			enfermedad = new Enfermedad();
 		}
    	    
 		ModelMap modelo= new ModelMap();
+    	modelo.put("enfermedades",enfermedades);
         modelo.put("vencidos",animalesVencidos);
     	modelo.put("animales",animalesNoRepetidos);
     	modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
@@ -765,7 +785,7 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		Enfermedad enfermedad = servicioDeAnimales.buscarAnimalPorEnfermedades(id);
+		Enfermedad enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);
 		Boolean cardio1 = true;
 		Boolean orina1 = true;
 		Boolean temperatura1 = true;

@@ -123,7 +123,7 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	}
 
 	@Override
-	public Enfermedad buscarAnimalPorEnfermedades(Long id) {
-		return this.repositorioDeAnimales.buscarAnimalPorEnfermedades(id);
+	public Enfermedad buscarUltimaEnfermedadDelAnimal(Long id) {
+		return this.repositorioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);
 	}
 }

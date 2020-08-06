@@ -27,6 +27,19 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 						<h1 class="h3 mb-3 text-gray-800">Animales</h1>
+						
+						<div class="row">
+							<div class="col-12 col-md-3 mb-1">
+								<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>   Sin enfermedades registradas &nbsp;
+							</div>
+							<div class="col-12 col-md-3 mb-1">
+								<i class="fas fa-user-md fa-lg" style="color: #a60000"></i>   Tratamiento en curso &nbsp;
+							</div>
+							<div class="col-12 col-md-3 mb-1">
+								<i class="fas fa-user-md fa-lg" style="color: #0710cc"></i>   Animal recuperado
+							</div>
+						</div>
+						
 						<div class="card shadow mb-4 mt-2">
 							<div class="card-body">
 								<div class="table-responsive">
@@ -53,11 +66,35 @@
 															<i class="fas fa-medkit fa-lg" style="color: #22A45A"></i>
 														</a>
 													</td>
-													<td class="text-center">
-														<a href="diagnosticar?id=${a.id}">
-															<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>
-														</a>
-													</td>
+													
+													<c:forEach items="${enfermedades}" var="enf">
+														<c:if test="${enf.historia.id == a.id}">
+															<c:choose>
+																<c:when test="${enf.nombre == null}">
+																	<td class="text-center">
+																		<a href="diagnosticar?id=${a.id}">
+																			<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>
+																		</a>
+																	</td>
+																</c:when>
+																
+																<c:when test="${enf.nombre != null && enf.finTratamiento == null}">
+																	<td class="text-center">
+																		<i class="fas fa-user-md fa-lg" style="color: #a60000"></i>
+																	</td>
+																</c:when>
+																
+																<c:when test="${enf.nombre != null && enf.finTratamiento != null}">
+																	<td class="text-center">
+																		<a href="diagnosticar?id=${a.id}">
+																			<i class="fas fa-user-md fa-lg" style="color: #0710cc"></i>
+																		</a>
+																	</td>
+																</c:when>
+															</c:choose>
+														</c:if>
+													</c:forEach>
+													
 													<td class="text-center">
 														<a href="signosVitales?id=${a.id}">
 															<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>

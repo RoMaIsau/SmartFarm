@@ -73,8 +73,7 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	}
 	
 	@Override
-	public Enfermedad buscarAnimalPorEnfermedades(Long id) {
-		HistoriaClinica hc = this.sessionFactory.getCurrentSession().get(HistoriaClinica.class, id);
+	public Enfermedad buscarUltimaEnfermedadDelAnimal(Long id) {
 		String query = "select e from Enfermedad as e where historia_id = " + id + " order by id desc";
 		Enfermedad enfermedad = (Enfermedad) this.sessionFactory.getCurrentSession()
 				.createQuery(query, Enfermedad.class).setMaxResults(1).uniqueResult();
