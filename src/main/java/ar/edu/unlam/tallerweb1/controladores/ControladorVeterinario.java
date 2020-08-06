@@ -76,6 +76,10 @@ public class ControladorVeterinario{
 			return new ModelAndView("redirect:/login");
 		}
 		
+		HistoriaClinica hc1= servicioGanado.verHC(7L);
+		servicioGanado.crearSVNormales(hc1);
+		servicioGanado.crearPulsoAnormal(hc1);
+		
 		List<AnimalDeGranja> animales= servicioGanado.listar();
         HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
 		
@@ -172,6 +176,7 @@ public class ControladorVeterinario{
 		if (!rol.equals("Veterinario") || rol == null) {
 		  return new ModelAndView("redirect:/login");
 		}
+		
 		
 		Date actual= new Date(2020,01,10);
         List<AnimalDeGranja> animales= servicioGanado.listar();
@@ -508,7 +513,6 @@ public class ControladorVeterinario{
 		return new ModelAndView("diagnosticarResultado2", modelo);
 	}
 	
-	/* ESTE REQUEST SEGURAMENTE NO TIENE USO */
 	@RequestMapping("/nuevoDiagnostico")
 	public ModelAndView diagnosticarA(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) throws ParseException{
 		String rol = (String) request.getSession().getAttribute("ROL");
@@ -544,7 +548,7 @@ public class ControladorVeterinario{
 		return new ModelAndView("consultaVeterinario", modelo);
 	}
 	
-	/*@RequestMapping("/tratamientoA")
+	@RequestMapping("/tratamientoA")
 	public ModelAndView tratamientoA(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {
 		String rol = (String) request.getSession().getAttribute("ROL");
 		if (!rol.equals("Veterinario") || rol == null) {
@@ -563,7 +567,7 @@ public class ControladorVeterinario{
 		modelo.put("notificaciones", listarNotificacionesDelVeterinario(request));
 		
 		return new ModelAndView("historiaClinica", modelo);
-	}*/
+	}
 	
 	@RequestMapping("/tratamientoB")
 	public ModelAndView tratamientoB(@RequestParam(value="id", required=true) Long id, HttpServletRequest request) {
@@ -810,5 +814,7 @@ public class ControladorVeterinario{
 		modelo.put("respiracion1", respiracion1);
         return new ModelAndView("signosVitales", modelo);
 	}
+	
+
 	
 }

@@ -40,5 +40,10 @@ public interface ServicioGanado {
 	Enfermedad tipoTratamientoB(HistoriaClinica historia);
 	Enfermedad tipoTratamientoA(HistoriaClinica historia);
 	public void generarNuevosSignosVitales(HistoriaClinica historia, String nombre);
+	public void crearTemperaturaAnormal(HistoriaClinica historia);
+	public void crearPulsoAnormal(HistoriaClinica historia);
+	public void crearFCAnormal(HistoriaClinica historia);
+	public void crearFRAnormal(HistoriaClinica historia);
+	public void crearSVNormales(HistoriaClinica historia);
 
 }

@@ -375,5 +375,197 @@ if(e.getTratamientoB() != null && e.getTratamientoB().equals("Iniciado")) {
 		
 		servicioGanadoDao.generarNuevosSignosVitales(sv);
 	}
+
+	@Override
+	public void crearTemperaturaAnormal(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+		Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		
+		int a=0;
+		
+		while(a<5)	{
+		 temperatura= (double) Math.round(100 * Math.random());
+		 fr= (double) Math.round(100 * Math.random());
+		 fc= (double) Math.round(100 * Math.random());
+		 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura > 40.0 && temperatura < 50.0 && 
+				fc< 70.0 && fc> 60 && fr < 40.0 && fr > 20.0 
+				&& pulso< 130.0 && pulso > 70.0 ) {
+			
+			SignosVitales signos= new SignosVitales();
+			signos.setFecha(actual);
+			signos.setPulso(pulso);
+			signos.setFrecuenciaCardiaca(fc);
+			signos.setFrecuenciaRespiratoria(fr);
+			signos.setHistoria(historia);
+			signos.setTemperatura(temperatura);
+			
+		this.guardarSV(signos);
+		a++;
+		}
+		
+		}
+		
+		}
+		
 	
-}
+
+	@Override
+	public void crearPulsoAnormal(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+	Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		
+		int a=0;
+		
+		while(a<5)	{
+		 temperatura= (double) Math.round(100 * Math.random());
+		 fr= (double) Math.round(100 * Math.random());
+		 fc= (double) Math.round(100 * Math.random());
+		 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura < 40.0 && temperatura > 36.7 && 
+				fc< 70.0 && fc> 60 && fr < 40.0 && fr > 20.0 
+				&& ((pulso> 130.0 && pulso <180.0)|| (pulso < 70.0  && pulso > 30.0)) ) {
+			
+			SignosVitales signos= new SignosVitales();
+			signos.setFecha(actual);
+			signos.setPulso(pulso);
+			signos.setFrecuenciaCardiaca(fc);
+			signos.setFrecuenciaRespiratoria(fr);
+			signos.setHistoria(historia);
+			signos.setTemperatura(temperatura);
+			
+		this.guardarSV(signos);
+		a++;
+		}
+		
+		}
+		
+	}
+
+	@Override
+	public void crearFCAnormal(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		int a=0;
+		while(a<5) {
+			
+			temperatura= (double) Math.round(100 * Math.random());
+			 fr= (double) Math.round(100 * Math.random());
+			 fc= (double) Math.round(100 * Math.random());
+			 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura< 40.0 && temperatura> 37.0 && 
+				(fc> 70.0 || fc< 60.0) && fr < 40.0 && fr > 20.0 
+				&& pulso< 130.0 && pulso > 70.0) {
+			a++;
+		
+			 
+			
+				SignosVitales signos= new SignosVitales();
+				signos.setFecha(actual);
+				signos.setPulso(pulso);
+				signos.setFrecuenciaCardiaca(fc);
+				signos.setFrecuenciaRespiratoria(fr);
+				signos.setHistoria(historia);
+				signos.setTemperatura(temperatura);
+				
+			this.guardarSV(signos);
+			}}
+		
+	
+		
+	}
+
+	@Override
+	public void crearFRAnormal(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		int a=0;
+		while(a<5) {
+			
+			temperatura= (double) Math.round(100 * Math.random());
+			 fr= (double) Math.round(100 * Math.random());
+			 fc= (double) Math.round(100 * Math.random());
+			 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura< 40.0 && temperatura> 37.0 && 
+				fc< 70.0 && fc> 60 && (fr > 40.0 || fr < 20.0) 
+				&& pulso< 130.0 && pulso > 70.0) {
+			a++;
+		
+			 
+			
+				SignosVitales signos= new SignosVitales();
+				signos.setFecha(actual);
+				signos.setPulso(pulso);
+				signos.setFrecuenciaCardiaca(fc);
+				signos.setFrecuenciaRespiratoria(fr);
+				signos.setHistoria(historia);
+				signos.setTemperatura(temperatura);
+				
+			this.guardarSV(signos);
+			}}
+		
+	}
+
+	@Override
+	public void crearSVNormales(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		int a=0;
+		while(a<5) {
+			
+			temperatura= (double) Math.round(100 * Math.random());
+			 fr= (double) Math.round(100 * Math.random());
+			 fc= (double) Math.round(100 * Math.random());
+			 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura< 40.0 && temperatura> 37.0 && 
+				fc< 70.0 && fc> 60 && fr < 40.0 && fr > 20.0 
+				&& pulso< 130.0 && pulso > 70.0) {
+			a++;
+		
+			 
+			
+				SignosVitales signos= new SignosVitales();
+				signos.setFecha(actual);
+				signos.setPulso(pulso);
+				signos.setFrecuenciaCardiaca(fc);
+				signos.setFrecuenciaRespiratoria(fr);
+				signos.setHistoria(historia);
+				signos.setTemperatura(temperatura);
+				
+			this.guardarSV(signos);
+			}}
+		
+	}}
+	
+	
+
