@@ -377,7 +377,7 @@ if(e.getTratamientoB() != null && e.getTratamientoB().equals("Iniciado")) {
 	}
 
 	@Override
-	public void crearTemperaturaAnormal(HistoriaClinica historia) {
+	public void crearTemperaturaAlta(HistoriaClinica historia) {
 		// TODO Auto-generated method stub
 		Double temperatura=0.0;
 		
@@ -565,7 +565,84 @@ Double temperatura=0.0;
 			this.guardarSV(signos);
 			}}
 		
-	}}
+	}
+
+	@Override
+	public void crearSVLeptospirosisORinotraqueitisOAftosaOIntoxicacion(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		int a=0;
+		while(a<5) {
+			
+			temperatura= (double) Math.round(100 * Math.random());
+			 fr= (double) Math.round(100 * Math.random());
+			 fc= (double) Math.round(100 * Math.random());
+			 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura> 40.0 && temperatura< 53.0 && 
+				fc> 70.0 && fc< 95.0 
+				&& pulso< 130.0 && pulso > 70.0) {
+			a++;
+		
+			 
+			
+				SignosVitales signos= new SignosVitales();
+				signos.setFecha(actual);
+				signos.setPulso(pulso);
+				signos.setFrecuenciaCardiaca(fc);
+				signos.setFrecuenciaRespiratoria(fr);
+				signos.setHistoria(historia);
+				signos.setTemperatura(temperatura);
+				
+			this.guardarSV(signos);
+			}}
+		
+		
+	}
+
+	@Override
+	public void crearSVMiocardiopatia(HistoriaClinica historia) {
+		// TODO Auto-generated method stub
+Double temperatura=0.0;
+		
+		Double pulso=0.0;
+		Double fc=0.0;
+		Double fr= 0.0;
+		
+		Date actual= new Date();
+		int a=0;
+		while(a<5) {
+			
+			temperatura= (double) Math.round(100 * Math.random());
+			 fr= (double) Math.round(100 * Math.random());
+			 fc= (double) Math.round(100 * Math.random());
+			 pulso= (double) Math.round(200 * Math.random());
+		if(temperatura< 40.0 && temperatura> 37.0 && 
+				fc> 70.0 
+				&& pulso< 130.0 && pulso > 70.0) {
+			a++;
+		
+			 
+			
+				SignosVitales signos= new SignosVitales();
+				signos.setFecha(actual);
+				signos.setPulso(pulso);
+				signos.setFrecuenciaCardiaca(fc);
+				signos.setFrecuenciaRespiratoria(fr);
+				signos.setHistoria(historia);
+				signos.setTemperatura(temperatura);
+				
+			this.guardarSV(signos);
+			}}
+		
+	}
+
+}
 	
 	
 
