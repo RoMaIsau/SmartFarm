@@ -30,13 +30,13 @@
 						
 						<div class="row">
 							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>   Sin enfermedades registradas &nbsp;
+								<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>   Sin enfermedades registradas <br>(puede diagnosticar) &nbsp;
 							</div>
 							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #a60000"></i>   Tratamiento en curso &nbsp;
+								<i class="fas fa-user-md fa-lg" style="color: #0710cc"></i>   Animal recuperado <br>(puede diagnosticar)
 							</div>
 							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #0710cc"></i>   Animal recuperado
+								<i class="fas fa-user-md fa-lg" style="color: #a60000"></i>   Tratamiento en curso <br>(no puede diagnosticar) &nbsp;
 							</div>
 						</div>
 						
