@@ -109,7 +109,8 @@ public class ControladorVeterinario{
 				hc = servicioHistoriaClinica.buscarHistoriaClinicaPorId(v.getId());
 				enfermedad = new Enfermedad();
 				enfermedad.setHistoria(hc);
-				enfermedades.add(enfermedad);
+				enfermedades.add(enfermedad);/*
+				servicioGanado.metodoParaGenerarSignosVitalesAnormalesAAnimalesSanos(hc);*/
 			} else {
 				enfermedades.add(enfermedad);
 			}
@@ -799,15 +800,15 @@ public class ControladorVeterinario{
 		
 		if(signosVitalesReales.getTemperatura() != 37) {
 			temperatura1 = false;
+			orina1 = false;
 		}
 		if(signosVitalesReales.getFrecuenciaRespiratoria() != 25) {
-			temperatura1 = false;
+			respiracion1 = false;
+			orina1 = false;
 		}
-		if(signosVitalesReales.getFrecuenciaCardiaca() != 80) {
-			temperatura1 = false;
-		}
-		if(signosVitalesReales.getPulso() != 80) {
-			temperatura1 = false;
+		if(signosVitalesReales.getFrecuenciaCardiaca() != 80 || signosVitalesReales.getPulso() != 80) {
+			cardio1 = false;
+			orina1 = false;
 		}
 
 		Enfermedad enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);

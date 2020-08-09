@@ -376,4 +376,19 @@ if(e.getTratamientoB() != null && e.getTratamientoB().equals("Iniciado")) {
 		servicioGanadoDao.generarNuevosSignosVitales(sv);
 	}
 	
+	@Override
+	public void metodoParaGenerarSignosVitalesAnormalesAAnimalesSanos(HistoriaClinica hc) {
+		int a = (int) (Math.random() * ((1000 - 1) + 1)) + 1;
+		SignosVitales signosVitales = new SignosVitales();
+		
+		if(a >= 998) {
+			signosVitales.setTemperatura(47.0);
+			signosVitales.setPulso(100.0);
+			signosVitales.setFrecuenciaCardiaca(100.0);
+			signosVitales.setFrecuenciaRespiratoria(35.0);
+			signosVitales.setHistoria(hc);
+			servicioGanadoDao.guardarSV(signosVitales);
+		}
+	}
+	
 }

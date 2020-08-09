@@ -40,5 +40,5 @@ public interface ServicioGanado {
 	Enfermedad tipoTratamientoB(HistoriaClinica historia);
 	Enfermedad tipoTratamientoA(HistoriaClinica historia);
 	public void generarNuevosSignosVitales(HistoriaClinica historia, String nombre);
-
+	void metodoParaGenerarSignosVitalesAnormalesAAnimalesSanos(HistoriaClinica hc);
 }
