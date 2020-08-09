@@ -29,14 +29,39 @@
 						<h1 class="h3 mb-3 text-gray-800">Animales</h1>
 						
 						<div class="row">
-							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #22A45A"></i>   Sin enfermedades registradas <br>(puede diagnosticar) &nbsp;
+							<div class="col-12 col-md-3 offset-md-1 mb-1">
+								<div class="d-flex justify-content-center">
+									<i class="fas fa-user-md fa-lg mt-3" style="color: #22A45A"></i>   Sin enfermedades registradas<br>(puede diagnosticar)
+								</div>
+							</div>
+							<div class="col-12 col-md-4 mb-1">
+								<div class="d-flex justify-content-center">
+									<i class="fas fa-user-md fa-lg mt-3" style="color: #0710cc"></i>   Animal recuperado<br>(puede diagnosticar)
+								</div>
 							</div>
 							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #0710cc"></i>   Animal recuperado <br>(puede diagnosticar)
+								<div class="d-flex justify-content-center">
+									<i class="fas fa-user-md fa-lg mt-3" style="color: #a60000"></i>   Tratamiento en curso<br>(no puede diagnosticar)
+								</div>
 							</div>
-							<div class="col-12 col-md-3 mb-1">
-								<i class="fas fa-user-md fa-lg" style="color: #a60000"></i>   Tratamiento en curso <br>(no puede diagnosticar) &nbsp;
+						</div>
+						
+						<div class="row">
+							<div class="offset-2 col-8">
+								<hr class="colorgraph">
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-12 col-md-6 mb-1">
+								<div class="d-flex justify-content-center">
+									<i class="fas fa-heartbeat fa-lg mt-1" style="color: #22A45A"></i>   Signos vitales normales
+								</div>
+							</div>
+							<div class="col-12 col-md-6 mb-1">
+								<div class="d-flex justify-content-center">
+									<i class="fas fa-heartbeat fa-lg mt-1" style="color: #a60000"></i>   Signos vitales anormales
+								</div>
 							</div>
 						</div>
 						
@@ -95,11 +120,27 @@
 														</c:if>
 													</c:forEach>
 													
-													<td class="text-center">
-														<a href="signosVitales?id=${a.id}">
-															<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>
-														</a>
-													</td>
+													<c:forEach items="${signosVitales}" var="signos">
+														<c:if test="${signos.historia.id == a.id}">
+															<c:if test="${signos.temperatura == 37 and signos.frecuenciaRespiratoria == 25
+															and signos.pulso == 80 and signos.frecuenciaCardiaca == 80}">
+																<td class="text-center">
+																	<a href="signosVitales?id=${a.id}">
+																		<i class="fas fa-heartbeat fa-lg" style="color: #22A45A"></i>
+																	</a>
+																</td>
+															</c:if>
+															<c:if test="${signos.temperatura != 37 or signos.frecuenciaRespiratoria != 25
+															or signos.pulso != 80 or signos.frecuenciaCardiaca != 80}">
+																<td class="text-center">
+																	<a href="signosVitales?id=${a.id}">
+																		<i class="fas fa-heartbeat fa-lg" style="color: #a60000"></i>
+																	</a>
+																</td>
+															</c:if>
+														</c:if>
+													</c:forEach>
+													
 													<td class="text-center">
 														<a href="verEstadoSalud?id=${a.id}">
 															<i class="fas fa-plus-square" style="color: #22A45A"></i>

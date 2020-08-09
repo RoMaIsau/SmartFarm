@@ -79,4 +79,13 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 				.createQuery(query, Enfermedad.class).setMaxResults(1).uniqueResult();
 		return enfermedad;
 	}
+
+	@Override
+	public SignosVitales buscarUltimosSignosVitalesDelAnimal(Long id) {
+		String query = "select s from SignosVitales as s where historia_id = " + id + " order by id desc";
+		SignosVitales sv = (SignosVitales) this.sessionFactory.getCurrentSession()
+				.createQuery(query, SignosVitales.class).setMaxResults(1).uniqueResult();
+		return sv;
+	}
+	
 }

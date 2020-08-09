@@ -83,6 +83,8 @@ public class ControladorVeterinario{
 		List<Enfermedad> enfermedades = new ArrayList<Enfermedad>();
 		HistoriaClinica hc = new HistoriaClinica();
 		Enfermedad enfermedad = new Enfermedad();
+		List<SignosVitales> signosVitales = new ArrayList<SignosVitales>();
+		SignosVitales sv = new SignosVitales();
 		
 		List<AnimalDeGranja> animales= servicioGanado.listar();
         HashSet<AnimalDeGranja> animalesNoRepetidos= new HashSet<>();
@@ -100,6 +102,9 @@ public class ControladorVeterinario{
 			}
 			
 			enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(v.getId());
+			sv = servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(v.getId());
+			signosVitales.add(sv);
+			
 			if(enfermedad == null){
 				hc = servicioHistoriaClinica.buscarHistoriaClinicaPorId(v.getId());
 				enfermedad = new Enfermedad();
@@ -112,6 +117,7 @@ public class ControladorVeterinario{
 		}
    	    
 		ModelMap modelo= new ModelMap();
+    	modelo.put("signosVitales",signosVitales);
     	modelo.put("enfermedades",enfermedades);
         modelo.put("vencidos",animalesVencidos);
     	modelo.put("animales",animalesNoRepetidos);
@@ -785,15 +791,33 @@ public class ControladorVeterinario{
 		}
 		ModelMap modelo= new ModelMap();
 		
-		Enfermedad enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);
+		SignosVitales signosVitalesReales = servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(id);
 		Boolean cardio1 = true;
 		Boolean orina1 = true;
 		Boolean temperatura1 = true;
 		Boolean respiracion1 = true;
 		
-		if(enfermedad != null){
-			if(enfermedad.getFinTratamiento() == null) {
-				switch(enfermedad.getNombre()){
+		if(signosVitalesReales.getTemperatura() != 37) {
+			temperatura1 = false;
+		}
+		if(signosVitalesReales.getFrecuenciaRespiratoria() != 25) {
+			temperatura1 = false;
+		}
+		if(signosVitalesReales.getFrecuenciaCardiaca() != 80) {
+			temperatura1 = false;
+		}
+		if(signosVitalesReales.getPulso() != 80) {
+			temperatura1 = false;
+		}
+
+		Enfermedad enfermedad = servicioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);
+		if(enfermedad == null){
+			modelo.addAttribute("enfermedadNombre", "curado");
+		} else {
+			if(enfermedad.getFinTratamiento() != null) {
+				modelo.addAttribute("enfermedadNombre", "curado");
+			} else {
+				switch(enfermedad.getNombre()) {
 				case "Fiebre Aftosa":
 					cardio1 = false;
 					respiracion1 = false;
@@ -818,12 +842,22 @@ public class ControladorVeterinario{
 					respiracion1 = false;
 					break;
 				}
+				modelo.addAttribute("enfermedadNombre", enfermedad.getNombre());
 			}
-			modelo.addAttribute("enfermedadClase", enfermedad.getNombre());
-		} else {
-			modelo.addAttribute("enfermedadClase", "");
 		}
+
+		Double signoTemperatura = signosVitalesReales.getTemperatura();
+		Double signoRespiracion = signosVitalesReales.getFrecuenciaRespiratoria();
+		Double signoPulso = signosVitalesReales.getPulso();
+		Double signoFrecuenciaCardiaca = signosVitalesReales.getFrecuenciaCardiaca();
 		
+		modelo.addAttribute("signoTemperatura", signoTemperatura);
+		modelo.addAttribute("signoRespiracion", signoRespiracion);
+		modelo.addAttribute("signoPulso", signoPulso);
+		modelo.addAttribute("signoFrecuenciaCardiaca", signoFrecuenciaCardiaca);
+		modelo.put("idDelAnimal", id);
+		modelo.put("enfermedadClase", enfermedad);
+		modelo.put("signosVitalesReales", signosVitalesReales);
 		modelo.put("cardio1", cardio1);
 		modelo.put("orina1", orina1);
 		modelo.put("temperatura1", temperatura1);

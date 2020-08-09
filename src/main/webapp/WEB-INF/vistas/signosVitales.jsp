@@ -12,23 +12,46 @@ Gson gsonObj = new Gson();
 Map<Object,Object> map = null;
 List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
 String dataPoints;
-String e = (String) request.getAttribute("enfermedadClase");
+String e = (String) request.getAttribute("enfermedadNombre");
+Double signoTemperatura = (Double) request.getAttribute("signoTemperatura");
+Double signoRespiracion = (Double) request.getAttribute("signoRespiracion");
+Double signoPulso = (Double) request.getAttribute("signoPulso");
+Double signoFrecuenciaCardiaca = (Double) request.getAttribute("signoFrecuenciaCardiaca");
 
-if(e == "" || e == null || e == "Fiebre Aftosa" || e == "Miocardiopatia congenita" || e == "Rinotraqueitis infecciosa"){/* VALORES DE ORINA NORMALES */
-	map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 18.7); list.add(map);/*  map.put("exploded", true); */
+if(e == "Fiebre Aftosa" || e == "Miocardiopatia congenita" || e == "Rinotraqueitis infecciosa"){
+	/* VALORES DE ORINA NORMALES */
+	map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 18.7); list.add(map);
 	map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 27); list.add(map);
 	map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 27); list.add(map);
 	map = new HashMap<Object,Object>(); map.put("label", "Setonas"); map.put("y", 27); list.add(map);
 	map = new HashMap<Object,Object>(); map.put("label", "Sangre oculta"); map.put("y", 0.3); list.add(map);
-	dataPoints = gsonObj.toJson(list);
-}else{/* VALORES DE ORINA ANORMALES */
-	map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 20.7); list.add(map);/*  map.put("exploded", true); */
-	map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 40); list.add(map);
-	map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 20); list.add(map);
-	map = new HashMap<Object,Object>(); map.put("label", "Setonas"); map.put("y", 18); list.add(map);
-	map = new HashMap<Object,Object>(); map.put("label", "Sangre oculta"); map.put("y", 1.3); list.add(map);
-	dataPoints = gsonObj.toJson(list);
+}else{
+	if(e == "curado"){
+		if(signoTemperatura == 37 && signoRespiracion == 25 && signoPulso == 80 && signoFrecuenciaCardiaca == 80){
+			/* VALORES DE ORINA NORMALES */
+			map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 18.7); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 27); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 27); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Setonas"); map.put("y", 27); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Sangre oculta"); map.put("y", 0.3); list.add(map);
+		} else{
+			/* VALORES DE ORINA ANORMALES */
+			map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 20.7); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 40); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 20); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Setonas"); map.put("y", 18); list.add(map);
+			map = new HashMap<Object,Object>(); map.put("label", "Sangre oculta"); map.put("y", 1.3); list.add(map);
+		}
+	} else{
+		/* VALORES DE ORINA ANORMALES */
+		map = new HashMap<Object,Object>(); map.put("label", "Densidad"); map.put("y", 20.7); list.add(map);
+		map = new HashMap<Object,Object>(); map.put("label", "pH"); map.put("y", 40); list.add(map);
+		map = new HashMap<Object,Object>(); map.put("label", "Proteinas"); map.put("y", 20); list.add(map);
+		map = new HashMap<Object,Object>(); map.put("label", "Setonas"); map.put("y", 18); list.add(map);
+		map = new HashMap<Object,Object>(); map.put("label", "Sangre oculta"); map.put("y", 1.3); list.add(map);
+	}
 }
+dataPoints = gsonObj.toJson(list);
 %>
 <!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE ORINA -->
 
@@ -40,7 +63,8 @@ Map<Object,Object> map2 = null;
 List<Map<Object,Object>> list2 = new ArrayList<Map<Object,Object>>();
 String dataPoints2;
 
-if(e == "" || e == null || e == "Fiebre Aftosa" || e == "Miocardiopatia congenita"){/* VALORES NORMALES */
+if(e == "Fiebre Aftosa" || e == "Miocardiopatia congenita"){
+	/* VALORES NORMALES */
 	map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 37.7); list2.add(map2);
 	map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 38.0); list2.add(map2);
 	map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 38.1); list2.add(map2);
@@ -48,14 +72,37 @@ if(e == "" || e == null || e == "Fiebre Aftosa" || e == "Miocardiopatia congenit
 	map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 37.5); list2.add(map2);
 	map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 37.3); list2.add(map2);
 	map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 36.0); list2.add(map2);
-}else{/* VALORES ANORMALES */
-	map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 47.7); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 48.0); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 48.1); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 46.9); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 47.5); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 47.3); list2.add(map2);
-	map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 46.0); list2.add(map2);
+}else{
+	if(e == "curado"){
+		if(signoTemperatura == 37){
+			/* VALORES NORMALES */
+			map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 37.7); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 38.0); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 38.1); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 36.9); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 37.5); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 37.3); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 36.0); list2.add(map2);
+		} else {
+			/* VALORES ANORMALES */
+			map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 47.7); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 48.0); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 48.1); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 46.9); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 47.5); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 47.3); list2.add(map2);
+			map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 46.0); list2.add(map2);
+		}
+	} else{
+		/* VALORES ANORMALES */
+		map2 = new HashMap<Object,Object>(); map2.put("label", "1"); map2.put("y", 47.7); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "2"); map2.put("y", 48.0); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "3"); map2.put("y", 48.1); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "4"); map2.put("y", 46.9); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "5"); map2.put("y", 47.5); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "6"); map2.put("y", 47.3); list2.add(map2);
+		map2 = new HashMap<Object,Object>(); map2.put("label", "7"); map2.put("y", 46.0); list2.add(map2);
+	}
 }
 dataPoints2 = gsonObj.toJson(list2);
 %>
@@ -67,15 +114,25 @@ Gson gsonObj3 = new Gson();
 Map<Object,Object> map3 = null;
 List<Map<Object,Object>> list3 = new ArrayList<Map<Object,Object>>();
 String dataPoints3;
-String e1 = (String) request.getAttribute("enfermedadClase");
 
-if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
+if(e == "Leptospirosis"){
+	/* FRECUENCIA NORMAL */
 	map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 25); list3.add(map3);
-	dataPoints3 = gsonObj.toJson(list3);
-} else {/* FRECUENCIA ANORMAL */
-	map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 35); list3.add(map3);
-	dataPoints3 = gsonObj.toJson(list3);
+} else {
+	if(e == "curado"){
+		if(signoPulso == 80 && signoFrecuenciaCardiaca == 80){
+			/* FRECUENCIA NORMAL */
+			map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 25); list3.add(map3);
+		} else{
+			/* FRECUENCIA ANORMAL */
+			map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 35); list3.add(map3);
+		}
+	} else{
+		/* FRECUENCIA ANORMAL */
+		map3 = new HashMap<Object,Object>(); map3.put("label", "Frecuencia por segundo"); map3.put("y", 35); list3.add(map3);
+	}
 }
+dataPoints3 = gsonObj.toJson(list3);
 %>
 <!-- FIN: REQUERIDO PARA EL FUNCIONAMIENTO DEL GRÁFICO DE FRECUENCIA CARDÍACA -->
 <!DOCTYPE html>
@@ -109,15 +166,57 @@ if(e1 == "" || e1 == null || e1 == "Leptospirosis"){/* FRECUENCIA NORMAL */
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 				<!-- ================================================================================== -->
-					<c:if test="${enfermedadClase == ''}">
-						<div class="d-flex justify-content-center">
-							<h1 class="h3 mb-3 text-gray-800">En este momento no se registran enfermedades en el animal</h1>
-						</div>
+					<c:if test="${enfermedadClase == null}">
+						<c:if test="${signosVitalesReales.temperatura == 37 and signosVitalesReales.frecuenciaCardiaca == 80
+						and signosVitalesReales.frecuenciaRespiratoria == 25 and signosVitalesReales.pulso == 80}">
+							<div class="d-flex justify-content-center">
+								<h1 class="h3 mb-3 text-gray-800">En este momento no se registran enfermedades en el animal</h1>
+							</div>
+						</c:if>
+						
+						<c:if test="${signosVitalesReales.temperatura != 37 or signosVitalesReales.frecuenciaCardiaca != 80
+						or signosVitalesReales.frecuenciaRespiratoria != 25 or signosVitalesReales.pulso != 80}">
+							<div class="d-flex justify-content-center">
+								<h1 class="h3 mb-3 text-gray-800">Es recomendable realizar un diagnóstico al animal</h1>
+							</div>
+							<div class="d-flex justify-content-center mb-5">
+								<u><strong>
+									<a href="diagnosticar?id=${idDelAnimal}">diagnosticar ahora</a>
+								</strong></u>
+							</div>
+						</c:if>
 					</c:if>
-					<c:if test="${enfermedadClase != ''}">
-						<div class="d-flex justify-content-center">
-							<h1 class="h3 mb-3 text-gray-800">El animal tiene "<c:out value="${enfermedadClase}" />"</h1>
-						</div>
+					
+					<c:if test="${enfermedadClase != null}">
+						<c:if test="${enfermedadNombre != 'curado'}">
+							<div class="d-flex justify-content-center">
+								<h1 class="h3 mb-3 text-gray-800">
+									El animal tiene "<c:out value="${enfermedadClase.nombre}"/>".
+								</h1>
+							</div>
+						</c:if>
+						
+						<c:if test="${enfermedadNombre == 'curado'}">
+							<c:if test="${signosVitalesReales.temperatura == 37 and signosVitalesReales.frecuenciaCardiaca == 80
+							and signosVitalesReales.frecuenciaRespiratoria == 25 and signosVitalesReales.pulso == 80}">
+								<div class="d-flex justify-content-center">
+									<h1 class="h3 mb-3 text-gray-800">
+										La última enfermedad registrada fue "<c:out value="${enfermedadClase.nombre}"/>" el <c:out value="${enfermedadClase.fecha}"/>
+									</h1>
+								</div>
+							</c:if>
+							<c:if test="${signosVitalesReales.temperatura != 37 or signosVitalesReales.frecuenciaCardiaca != 80
+							or signosVitalesReales.frecuenciaRespiratoria != 25 or signosVitalesReales.pulso != 80}">
+								<div class="d-flex justify-content-center">
+									<h1 class="h3 mb-3 text-gray-800">Es recomendable realizar un diagnóstico al animal</h1>
+								</div>
+								<div class="d-flex justify-content-center mb-5">
+									<u><strong>
+										<a href="diagnosticar?id=${idDelAnimal}">diagnosticar ahora</a>
+									</strong></u>
+								</div>
+							</c:if>
+						</c:if>
 					</c:if>
 					
 					<!-- Ritmo cardíaco y frecuencia respiratoria -->

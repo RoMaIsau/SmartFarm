@@ -22,4 +22,6 @@ public interface RepositorioDeAnimales {
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador);
 
 	Enfermedad buscarUltimaEnfermedadDelAnimal(Long id);
+
+	SignosVitales buscarUltimosSignosVitalesDelAnimal(Long id);
 }

@@ -126,4 +126,9 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 	public Enfermedad buscarUltimaEnfermedadDelAnimal(Long id) {
 		return this.repositorioDeAnimales.buscarUltimaEnfermedadDelAnimal(id);
 	}
+
+	@Override
+	public SignosVitales buscarUltimosSignosVitalesDelAnimal(Long id) {
+		return repositorioDeAnimales.buscarUltimosSignosVitalesDelAnimal(id);
+	}
 }

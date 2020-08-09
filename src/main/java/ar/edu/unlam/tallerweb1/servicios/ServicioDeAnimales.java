@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 
 public interface ServicioDeAnimales {
@@ -30,4 +31,6 @@ public interface ServicioDeAnimales {
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador) throws AnimalSinIdentificadorGpsException;
 
 	Enfermedad buscarUltimaEnfermedadDelAnimal(Long id);
+
+	SignosVitales buscarUltimosSignosVitalesDelAnimal(Long id);
 }
