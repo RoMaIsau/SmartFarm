@@ -35,7 +35,7 @@
 	 					<div class="row no-gutters align-items-center">											
  							<c:forEach items="${signos}" var="s">
  								<div class="col-md-6">
-									<div class="card border-left-primary shadow mr-3 h-100 py-2">
+									<div class="card border-left-primary shadow mr-3 mb-3 h-100 py-2">
 	 									<div class="card-body">
 	 										<div class="font-weight-bold">
 	 											<fmt:formatDate value="${s.fecha}" pattern="yyyy-MM-dd" var="currentYear"/>

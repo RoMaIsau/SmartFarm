@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!-- REQUERIDO PARA LOS GRÁFICOS DE ORINA Y TEMPERATURA -->
 <%@ page import="java.util.*" %>
@@ -200,8 +201,9 @@ dataPoints3 = gsonObj.toJson(list3);
 							<c:if test="${signosVitalesReales.temperatura == 37 and signosVitalesReales.frecuenciaCardiaca == 80
 							and signosVitalesReales.frecuenciaRespiratoria == 25 and signosVitalesReales.pulso == 80}">
 								<div class="d-flex justify-content-center">
+									<fmt:formatDate value="${enfermedadClase.fecha}" pattern="yyyy-MM-dd" var="currentYear"/>
 									<h1 class="h3 mb-3 text-gray-800">
-										La última enfermedad registrada fue "<c:out value="${enfermedadClase.nombre}"/>" el <c:out value="${enfermedadClase.fecha}"/>
+										La última enfermedad registrada fue "<c:out value="${enfermedadClase.nombre}"/>" el <c:out value="${currentYear}"/>
 									</h1>
 								</div>
 							</c:if>
