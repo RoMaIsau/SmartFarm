@@ -19,5 +19,15 @@ public class RepositorioHistoriaClinicaImpl implements RepositorioHistoriaClinic
 	public HistoriaClinica buscarHistoriaClinicaPorId(Long id) {
 		return (HistoriaClinica) sessionFactory.getCurrentSession().get(HistoriaClinica.class, id);
 	}
-
+	
+	@Override
+	public void guardarHistoriaClinica(HistoriaClinica historiaClinica) {
+		sessionFactory.getCurrentSession().save(historiaClinica);
+	}
+	
+	@Override
+	public void eliminarHistoriaClinica(HistoriaClinica historiaClinica) {
+		sessionFactory.getCurrentSession().delete(historiaClinica);
+	}
+	
 }

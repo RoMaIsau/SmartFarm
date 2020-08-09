@@ -17,7 +17,7 @@ public interface RepositorioDeAnimales {
 
 	void actualizar(AnimalDeGranja animal);
 
-	void eliminar(AnimalDeGranja animal);
+	void eliminar(AnimalDeGranja animal, SignosVitales signosVitales, HistoriaClinica historiaClinica);
 
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador);
 

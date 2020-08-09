@@ -3,6 +3,9 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -17,15 +20,16 @@ import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 
 @Repository
+@Transactional
 public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	
 	private SessionFactory sessionFactory;
-
+	
 	@Autowired
 	public RepositorioDeAnimalesImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
 	}
-
+	
 	@Override
 	public void guardar(AnimalDeGranja animal, SignosVitales sv, HistoriaClinica hc) {		
 		this.sessionFactory.getCurrentSession().save(animal);
@@ -60,7 +64,21 @@ public class RepositorioDeAnimalesImpl implements RepositorioDeAnimales {
 	}
 
 	@Override
-	public void eliminar(AnimalDeGranja animal) {
+	public void eliminar(AnimalDeGranja animal, SignosVitales signosVitales, HistoriaClinica historiaClinica) {
+		List<SignosVitales> listaSV = sessionFactory.getCurrentSession().createCriteria(SignosVitales.class)
+		.add(Restrictions.eq("historia", historiaClinica)).list();
+		
+		List<HistoriaClinica> listaHC = sessionFactory.getCurrentSession().createCriteria(HistoriaClinica.class)
+		.add(Restrictions.eq("animal", animal)).list();
+		
+		for(SignosVitales s : listaSV) {
+			this.sessionFactory.getCurrentSession().delete(s);
+		}
+
+		for(HistoriaClinica hc : listaHC) {
+			this.sessionFactory.getCurrentSession().delete(hc);
+		}
+		
 		this.sessionFactory.getCurrentSession().delete(animal);
 	}
 

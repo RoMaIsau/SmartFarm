@@ -22,11 +22,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioHistoriaClinica;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
@@ -40,6 +43,7 @@ public class ControladorEmpleadoTest {
 	private ValidadorDeAnimalDeGranja validadorDeAnimales;
 	private ServicioUsuario servicioUsuario;
 	private ServicioNotificacion servicioNotificacion;
+	private ServicioHistoriaClinica servicioHistoriaClinica;
 	
 	@Before	
 	public void inicializar() {
@@ -49,10 +53,11 @@ public class ControladorEmpleadoTest {
 		this.validadorDeAnimales = crearMockValidadorDeAnimales();
 		this.servicioUsuario = mock(ServicioUsuario.class);
 		this.servicioNotificacion = mock(ServicioNotificacion.class);
+		this.servicioHistoriaClinica = mock(ServicioHistoriaClinica.class);
 		
 		this.controlador = new ControladorEmpleado(this.servicioDeAnimales,
 				this.servicioAlimento, this.servicioUsuario, this.servicioNotificacion,
-				this.validadorDeAnimales);
+				this.validadorDeAnimales, this.servicioHistoriaClinica);
 	}
 
 	/*@Test
@@ -357,13 +362,23 @@ public class ControladorEmpleadoTest {
 
 	@Test
 	public void cuandoUnEmpleadoEliminaUnAnimalSeRedirigeAlListadoDeAnimales() {
-
-		Long idAnimal = 2L;
 		HttpServletRequest request = configurarRolLogueado("Empleado");
-
+		
+		AnimalDeGranja animal = new AnimalDeGranja();
+		Long idAnimal = 2L;
+		animal.setId(idAnimal);
+		
+		HistoriaClinica hc = mock(HistoriaClinica.class);
+		SignosVitales sv = mock(SignosVitales.class);
+		when(this.servicioHistoriaClinica.buscarHistoriaClinicaPorId(idAnimal)).thenReturn(hc);
+		when(this.servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(idAnimal)).thenReturn(sv);
+		
+		HistoriaClinica historia = this.servicioHistoriaClinica.buscarHistoriaClinicaPorId(idAnimal);
+		SignosVitales signos = this.servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(idAnimal);
+		
 		ModelAndView modelAndView = this.controlador.eliminarAnimal(idAnimal, request);
-
-		verify(this.servicioDeAnimales).eliminarPorId(eq(idAnimal));
+		
+		verify(this.servicioDeAnimales).eliminarPorId(eq(idAnimal),eq(signos),eq(historia));
 		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/animales");
 	}
 

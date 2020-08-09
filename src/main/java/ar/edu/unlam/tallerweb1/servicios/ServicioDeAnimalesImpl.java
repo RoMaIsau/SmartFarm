@@ -100,11 +100,11 @@ public class ServicioDeAnimalesImpl implements ServicioDeAnimales {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void eliminarPorId(Long idAnimal) {
+	public void eliminarPorId(Long idAnimal, SignosVitales sv, HistoriaClinica hc) {
 		AnimalDeGranja animal = obtenerPorId(idAnimal);
 		servicioPlanAlimentario.eliminarPlan(animal);
 		servicioAnimalUbicacion.eliminarUbicaciones(animal);
-		repositorioDeAnimales.eliminar(animal);
+		repositorioDeAnimales.eliminar(animal, sv, hc);
 	}
 
 	@Override

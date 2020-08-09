@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ar.edu.unlam.tallerweb1.modelo.Alimento;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAlimento;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioHistoriaClinica;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlimento;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioHistoriaClinica;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
@@ -33,6 +39,13 @@ import ar.edu.unlam.tallerweb1.validadores.ValidadorDeAnimalDeGranja;
 @Controller
 public class ControladorEmpleado {
 
+	@Inject
+	private RepositorioHistoriaClinica repositorioHistoriaClinica;
+
+	@Inject
+	private RepositorioDeAnimales repositorioDeAnimales;
+	
+	private ServicioHistoriaClinica servicioHistoriaClinica;
 	private ServicioDeAnimales servicioDeAnimales;
 	private ServicioAlimento servicioAlimento;
 	private ServicioNotificacion servicioNotificacion;
@@ -42,12 +55,13 @@ public class ControladorEmpleado {
 	@Autowired
 	public ControladorEmpleado(ServicioDeAnimales servicioDeAnimales, ServicioAlimento servicioAlimento,
 			ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion,
-			ValidadorDeAnimalDeGranja validadorDeAnimales) {
+			ValidadorDeAnimalDeGranja validadorDeAnimales, ServicioHistoriaClinica servicioHistoriaClinica) {
 		this.servicioDeAnimales = servicioDeAnimales;
 		this.servicioAlimento = servicioAlimento;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioUsuario = servicioUsuario;
 		this.validadorDeAnimales = validadorDeAnimales;
+		this.servicioHistoriaClinica = servicioHistoriaClinica;
 	}
 	
 	public List<Notificacion> listarNotificacionesDelEmpleado(HttpServletRequest request) {
@@ -281,10 +295,15 @@ public class ControladorEmpleado {
 	public ModelAndView eliminarAnimal(@ModelAttribute("idAnimal") Long idAnimal, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/login");
 		String rol = (String) request.getSession().getAttribute("ROL");
-
+		
+		HistoriaClinica hc = new HistoriaClinica();
+		SignosVitales sv = new SignosVitales();
+		
 		if("Empleado".equals(rol)) {
-
-			this.servicioDeAnimales.eliminarPorId(idAnimal);
+			sv = servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(idAnimal);
+			hc = servicioHistoriaClinica.buscarHistoriaClinicaPorId(idAnimal);
+			
+			this.servicioDeAnimales.eliminarPorId(idAnimal, sv, hc);
 			modelAndView =  new ModelAndView("redirect:/animales");
 		}
 		return modelAndView;

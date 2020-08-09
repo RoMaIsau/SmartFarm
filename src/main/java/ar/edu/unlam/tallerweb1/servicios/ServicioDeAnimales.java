@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.excepciones.AnimalSinIdentificadorGpsException;
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Enfermedad;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
@@ -26,7 +27,7 @@ public interface ServicioDeAnimales {
 
 	void actualizarAnimal(AnimalDeGranja animal);
 
-	void eliminarPorId(Long idAnimal);
+	void eliminarPorId(Long idAnimal, SignosVitales sv, HistoriaClinica hc);
 
 	AnimalDeGranja obtenerPorIdentificadorGps(String identificador) throws AnimalSinIdentificadorGpsException;
 

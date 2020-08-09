@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
 import ar.edu.unlam.tallerweb1.modelo.Raza;
+import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
 import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeAnimales;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioDeGeneros;
@@ -86,12 +89,11 @@ public class ServicioDeAnimalesTest {
 
 	@Test
 	public void registrarDeberiaGuardarLosAnimalesYCrearUnPlanAlimentario() {
-
 		AnimalDeGranja animalNuevo = new AnimalDeGranja();
-
+		
 		this.servicio.registrar(animalNuevo);
-
-		verify(this.repositorioDeAnimales).guardar(eq(animalNuevo));
+		
+		verify(this.repositorioDeAnimales).guardar(eq(animalNuevo),isA(SignosVitales.class),isA(HistoriaClinica.class));
 		verify(this.servicioPlanAlimentario).crearPlan(eq(animalNuevo));
 	}
 
@@ -128,18 +130,28 @@ public class ServicioDeAnimalesTest {
 
 	@Test
 	public void deberiaEliminarAUnAnimal() {
-
 		Long idAnimal = 2L;
 		AnimalDeGranja animalConIdDos = new AnimalDeGranja();
 		animalConIdDos.setId(idAnimal);
 		when(this.repositorioDeAnimales.buscarPorId(idAnimal)).thenReturn(animalConIdDos);
-
-		this.servicio.eliminarPorId(idAnimal);
-
+		HistoriaClinica historiaClinica = new HistoriaClinica();
+		SignosVitales signosVitales = new SignosVitales();
+		
+		historiaClinica.setAnimal(animalConIdDos);
+		historiaClinica.setId(animalConIdDos.getId());
+		signosVitales.setHistoria(historiaClinica);
+		signosVitales.setId(animalConIdDos.getId());
+		this.servicio.eliminarPorId(idAnimal, signosVitales, historiaClinica);
+		
 		AnimalDeGranja animalParaBorrar = new AnimalDeGranja();
 		animalParaBorrar.setId(idAnimal);
+		historiaClinica.setAnimal(animalParaBorrar);
+		historiaClinica.setId(animalParaBorrar.getId());
+		signosVitales.setHistoria(historiaClinica);
+		signosVitales.setId(animalParaBorrar.getId());
+		
 		verify(this.servicioPlanAlimentario).eliminarPlan(eq(animalParaBorrar));
 		verify(this.servicioAnimalUbicacion).eliminarUbicaciones(eq(animalParaBorrar));
-		verify(this.repositorioDeAnimales).eliminar(eq(animalParaBorrar));
+		verify(this.repositorioDeAnimales).eliminar(eq(animalParaBorrar),eq(signosVitales),eq(historiaClinica));
 	}
 }
