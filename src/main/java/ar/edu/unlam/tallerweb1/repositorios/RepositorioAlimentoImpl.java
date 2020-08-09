@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion;
 import ar.edu.unlam.tallerweb1.modelo.CronogramaDeAlimentacion.EstadoCronograma;
 
 @Repository("repositorioalimento")
+@Transactional
 public class RepositorioAlimentoImpl implements RepositorioAlimento {
 
 	private SessionFactory sessionFactory;

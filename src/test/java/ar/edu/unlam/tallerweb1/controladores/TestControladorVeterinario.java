@@ -1,35 +1,105 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.AnimalDeGranja;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.HistoriaClinica;
-import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.Raza;
 import ar.edu.unlam.tallerweb1.modelo.SignosVitales;
+import ar.edu.unlam.tallerweb1.modelo.TipoAnimal;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDeAnimales;
+import ar.edu.unlam.tallerweb1.servicios.ServicioGanado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGanadoImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioHistoriaClinica;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVacunaImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioVacunas;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class TestControladorVeterinario {
+	private ControladorVeterinario controladorVeterinario;
+	
+	private ServicioNotificacion servicioNotificacion;
+	private ServicioGanado servicioGanado;
+	private ServicioVacunas servicioVacunas;
+	private ServicioDeAnimales servicioDeAnimales;
+	private ServicioHistoriaClinica servicioHistoriaClinica;
+	
+	private List<Raza> crearRazas() {
+		Raza caballoArabe = new Raza();
+		caballoArabe.setId(1L);
+		caballoArabe.setNombre("CABALLO ARABE");
+		List<Raza> razas = new LinkedList<Raza>();
+		razas.add(caballoArabe);
+		return razas;
+	}
+	private List<TipoAnimal> crearTiposDeAnimales() {
+		TipoAnimal vacuno = new TipoAnimal();
+		vacuno.setId(1L);
+		vacuno.setNombre("VACUNO");
+		List<TipoAnimal> tiposDeAnimales = new LinkedList<TipoAnimal>();
+		tiposDeAnimales.add(vacuno);
+		return tiposDeAnimales;
+	}
+	private List<Genero> crearGeneros() {
+		Genero femenino = new Genero();
+		femenino.setId(1L);
+		femenino.setNombre("FEMENINO");
+		List<Genero> generos = new LinkedList<Genero>();
+		generos.add(femenino);
+		return generos;
+	}
+	private ServicioDeAnimales crearMockServicioDeAnimales() {
+		List<TipoAnimal> tiposDeAnimales = this.crearTiposDeAnimales();
+		List<Raza> razas = this.crearRazas();
+		List<Genero> sexos = this.crearGeneros();
+		ServicioDeAnimales servicio = mock(ServicioDeAnimales.class);
+		when(servicio.obtenerTiposDeAnimales()).thenReturn(tiposDeAnimales);
+		when(servicio.obtenerRazasPorTipoAnimal(any(TipoAnimal.class))).thenReturn(razas);
+		when(servicio.obtenerGeneros()).thenReturn(sexos);
+		return servicio;
+	}
+	private HttpServletRequest configurarRolLogueado(String rol) {
+		HttpServletRequest pedido = mock(HttpServletRequest.class);
+		HttpSession sesionHttp = mock(HttpSession.class);
+		when(pedido.getSession()).thenReturn(sesionHttp);
+		when(sesionHttp.getAttribute("ROL")).thenReturn(rol);
+		return pedido;
+	}
+	
+	@Before	
+	public void inicializar() {
+		this.servicioDeAnimales = crearMockServicioDeAnimales();
+		this.servicioNotificacion = mock(ServicioNotificacion.class);
+		this.servicioHistoriaClinica = mock(ServicioHistoriaClinica.class);
+		this.servicioGanado = mock(ServicioGanado.class);
+		this.servicioVacunas = mock(ServicioVacunas.class);
+		
+		this.controladorVeterinario = new ControladorVeterinario(this.servicioNotificacion, this.servicioGanado,
+				this.servicioVacunas, this.servicioDeAnimales, this.servicioHistoriaClinica);
+	}
+	
+	
+	
+	
 	
 	@Test
-	@Transactional @Rollback
-		public void testVerSaludViewError(){
+	public void testVerSaludViewError(){
 		HistoriaClinica hc = new HistoriaClinica();
 		ServicioVacunaImpl servicioVacunaMock= mock(ServicioVacunaImpl.class);
 		ServicioGanadoImpl servicioNullMock= mock(ServicioGanadoImpl.class);
@@ -40,23 +110,19 @@ public class TestControladorVeterinario {
 		when(servicioVacunaMock.obtenerVacunasAplicadas(1L)).thenReturn(null);
 		when(servicioNullMock.ver(1L)).thenReturn(animalNullMock);
 		
-		ControladorVeterinario cv = new ControladorVeterinario();
-		cv.setServicioGanado(servicioNullMock);
-		cv.setServicioVacuna(servicioVacunaMock);
+		this.controladorVeterinario.setServicioGanado(servicioNullMock);
+		this.controladorVeterinario.setServicioVacuna(servicioVacunaMock);
 		
-		//ejecucion
 		HttpServletRequest requestMock = mock(HttpServletRequest.class);
 		HttpSession sessionMock = mock(HttpSession.class);
 		when(requestMock.getSession()).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
-		ModelAndView modelView = cv.verSalud(1L, requestMock);
-		String viewName= modelView.getViewName();
-		assertTrue(viewName == "Error");
+		ModelAndView modelView = this.controladorVeterinario.verSalud(1L, requestMock);
+		assertThat(modelView.getViewName()).isEqualTo("Error");
 	}
 	
 	@Test
-	@Transactional @Rollback
-		public void testVerSaludViewHomeAnimal(){
+	public void testVerSaludViewHomeAnimal(){
 		HistoriaClinica hc = new HistoriaClinica();
 		ServicioVacunaImpl servicioVacunaMock= mock(ServicioVacunaImpl.class);
 		ServicioGanadoImpl servicioMock= mock(ServicioGanadoImpl.class);
@@ -70,31 +136,27 @@ public class TestControladorVeterinario {
 		AnimalDeGranja animalMock= mock(AnimalDeGranja.class);
 		when(servicioMock.verHC(animalMock)).thenReturn(hc);
 		when(servicioMock.ver(1L)).thenReturn(animalMock);
-        ControladorVeterinario cv = new ControladorVeterinario();
-    	cv.setServicioGanado(servicioMock);
-		cv.setServicioVacuna(servicioVacunaMock);
+		this.controladorVeterinario.setServicioGanado(servicioMock);
+		this.controladorVeterinario.setServicioVacuna(servicioVacunaMock);
 		
 		//ejecucion
 		HttpServletRequest requestMock = mock(HttpServletRequest.class);
 		HttpSession sessionMock = mock(HttpSession.class);
 		when(requestMock.getSession()).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
-		ModelAndView modelView2 = cv.verSalud(1L, requestMock);
-		String viewName2= modelView2.getViewName();
-		assertTrue(viewName2 == "HomeAnimal");
+		ModelAndView modelView2 = this.controladorVeterinario.verSalud(1L, requestMock);
+		assertThat(modelView2.getViewName()).isEqualTo("HomeAnimal");
 	}
 	
 	@Test
 	public void testParaValidarElIngresoASignosVitales() {
-		ControladorVeterinario controladorVeterinario = new ControladorVeterinario();
+		HttpServletRequest request = configurarRolLogueado("Veterinario");
+		Long idAnimal = 1l;
 		
-		HttpServletRequest requestMock = mock(HttpServletRequest.class);
-		HttpSession sessionMock = mock(HttpSession.class);
-		when(requestMock.getSession()).thenReturn(sessionMock);
-		when(sessionMock.getAttribute("ROL")).thenReturn("Veterinario");
-		when(sessionMock.getAttribute("ID")).thenReturn(1L);
+		SignosVitales signosVitalesReales = mock(SignosVitales.class);
+		when(this.servicioDeAnimales.buscarUltimosSignosVitalesDelAnimal(idAnimal)).thenReturn(signosVitalesReales);
 		
-		ModelAndView modelAndView = controladorVeterinario.signosVitales(requestMock, 1L);
+		ModelAndView modelAndView = controladorVeterinario.signosVitales(request, 1L);
 		ModelMap modelo = modelAndView.getModelMap();
 		
 		assertThat(modelAndView.getViewName()).isEqualTo("signosVitales");
@@ -106,8 +168,18 @@ public class TestControladorVeterinario {
 	}
 	
 	@Test
+	public void testParaValidarQueNoIngreseASignosVitalesSiNoEsVeterinario() {
+		HttpServletRequest request = configurarRolLogueado("Empleado");
+		Long idAnimal = 1l;
+		
+		ModelAndView modelAndView = new ModelAndView("redirect:/login");
+		modelAndView = controladorVeterinario.signosVitales(request, idAnimal);
+		
+		assertThat(modelAndView.getViewName()).isEqualTo("redirect:/login");
+	}
+	
+	@Test
 	public void testParaValidarElIngresoADiagnosticar() {
-		ControladorVeterinario controladorVeterinario = new ControladorVeterinario();
 		Long id = 1L;
 		
 		HttpServletRequest requestMock = mock(HttpServletRequest.class);

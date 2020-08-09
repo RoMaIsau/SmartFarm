@@ -29,7 +29,7 @@ public class RepositorioGanadoImpl implements RepositorioGanado {
 
 	// Como todo repositorio maneja acciones de persistencia, normalmente estará inyectado el session factory de hibernate
 	// el mismo está difinido en el archivo hibernateContext.xml
-	@Inject
+	
 	private SessionFactory sessionFactory;
 	
     @Autowired

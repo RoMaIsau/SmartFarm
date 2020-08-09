@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,26 +37,27 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 @Controller
 public class ControladorVeterinario{
 	
+	private ServicioNotificacion servicioNotificacion;
+	private ServicioGanado servicioGanado;
+	private ServicioVacunas servicioVacuna;
+	private ServicioDeAnimales servicioDeAnimales;
+	private ServicioHistoriaClinica servicioHistoriaClinica;
+	
+	@Autowired
+	public ControladorVeterinario(ServicioNotificacion servicioNotificacion, ServicioGanado servicioGanado,
+	ServicioVacunas servicioVacuna, ServicioDeAnimales servicioDeAnimales, ServicioHistoriaClinica servicioHistoriaClinica) {
+		this.servicioNotificacion = servicioNotificacion;
+		this.servicioGanado = servicioGanado;
+		this.servicioVacuna = servicioVacuna;
+		this.servicioDeAnimales = servicioDeAnimales;
+		this.servicioHistoriaClinica = servicioHistoriaClinica;
+	}
+
 	public List<Notificacion> listarNotificacionesDelVeterinario(HttpServletRequest request) {
 		Long idUsuario = (Long) request.getSession().getAttribute("ID");
 		List<Notificacion> notificaciones = servicioNotificacion.listarNotificaciones(idUsuario);
 		return notificaciones;
 	}
-	
-	@Inject
-	private ServicioNotificacion servicioNotificacion;
-	
-	@Inject
-	ServicioGanado servicioGanado;
-	
-	@Inject
-	ServicioVacunas servicioVacuna;
-	
-	@Inject
-	private ServicioDeAnimales servicioDeAnimales;
-
-	@Inject
-	private ServicioHistoriaClinica servicioHistoriaClinica;
 	
 	public ServicioVacunas getServicioVacuna() {
 		return servicioVacuna;

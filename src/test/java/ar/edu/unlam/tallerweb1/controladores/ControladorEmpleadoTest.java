@@ -59,21 +59,6 @@ public class ControladorEmpleadoTest {
 				this.servicioAlimento, this.servicioUsuario, this.servicioNotificacion,
 				this.validadorDeAnimales, this.servicioHistoriaClinica);
 	}
-
-	/*@Test
-	public void inicioDeSesionTest() {
-		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		Usuario mockUsuario = mock(Usuario.class);
-		
-		when(servicioUsuario.consultarUsuario(mockUsuario)).thenReturn(mockUsuario);
-		when(mockRequest.getSession()).thenReturn(mockSession);
-		
-		ModelAndView resultado = controladorUsuario.validarLogin(mockUsuario, mockRequest);
-		String esperado = "redirect:/indexAdmin";
-		
-		assertThat(resultado.getViewName()).isEqualTo(esperado);
-	}*/
 	
 	private ServicioDeAnimales crearMockServicioDeAnimales() {
 
